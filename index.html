@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>Taiwan 2026</title>
 <style>
-
   :root {
     --bg: #fafaf7;
     --text: #1a1a1a;
@@ -82,11 +81,10 @@
   .sched-row.s4 { background: var(--coral-fill); }
   .sched-row.gray { background: var(--gray-fill); }
   .sched-row.hdr { font-weight: 700; font-size: 10px; color: #fff; background: #3a3a4a !important; letter-spacing: .06em; text-transform: uppercase; border-radius: 3px; margin-top: 8px; }
-  .sched-row.ta { background: transparent; }
-  .sched-row.tb { background: transparent; }
-  .sched-row.tc { background: transparent; }
-  .sched-row.tg { background: transparent; }
-  .sched-row:nth-child(even) { background: var(--gray-fill); }
+  .sched-row.ta { background: rgba(185,28,28,0.18); }
+  .sched-row.tb { background: rgba(37,99,235,0.18); }
+  .sched-row.tc { background: rgba(22,163,74,0.18); }
+  .sched-row.tg { background: rgba(124,58,237,0.18); }
   .sched-row.hdr + .sched-row { background: transparent; }
 
   /* 5-day breakdown */
@@ -157,82 +155,53 @@
   .footer { margin-top: 32px; font-size: 11px; color: var(--text3); text-align: center; }
   @media print { body { padding: 0; } .footer { display: none; } }
 
-
-  .tab-nav { display: flex; gap: 0; margin-top: 16px; margin-bottom: 0; border-bottom: 2px solid var(--border); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .tab-nav::-webkit-scrollbar { display: none; }
-  .tab-btn { padding: 10px 20px; font-size: 13px; font-weight: 600; border: none; background: transparent; cursor: pointer; color: var(--text3); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s; letter-spacing: .02em; white-space: nowrap; flex-shrink: 0; }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active.ta { border-bottom-color: #b91c1c; color: #b91c1c; }
-  .tab-btn.active.tb { border-bottom-color: #2563eb; color: #2563eb; }
-  .tab-btn.active.tc { border-bottom-color: #16a34a; color: #16a34a; }
-  .tab-btn.active.tg { border-bottom-color: #7c3aed; color: #7c3aed; }
-  .tab-pane { display: none; }
-  .tab-pane.active { display: block; }
-
-
-  @media (max-width: 600px) {
-    body { padding: 12px 8px 48px; font-size: 12px; }
-    .wrap { max-width: 100%; }
-    .obj-grid { grid-template-columns: 1fr; }
-    .sched-wrap { grid-template-columns: 1fr; }
-    .days-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
-    .team-grid { grid-template-columns: 1fr; }
-    .task-grid { grid-template-columns: 1fr; }
-    .cap-grid { grid-template-columns: 1fr 1fr; }
-    .daygrid { font-size: 10px; }
-    .daygrid th, .daygrid td { padding: 3px 4px; }
-    h2 { font-size: 12px; }
-    .tab-btn { padding: 8px 12px; font-size: 12px; }
-    svg { display: none; }
-    .sched-row .time { min-width: 60px; font-size: 9px; }
-  }
-
+  .tab-nav{display:flex;border-bottom:2px solid var(--border);overflow-x:auto;scrollbar-width:none;margin-top:12px;}
+  .tab-nav::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:9px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text3);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+  .tab-btn.active.ta{color:#b91c1c;border-bottom-color:#b91c1c;}
+  .tab-btn.active.tb{color:#2563eb;border-bottom-color:#2563eb;}
+  .tab-btn.active.tc{color:#16a34a;border-bottom-color:#16a34a;}
+  .tab-btn.active.tg{color:#7c3aed;border-bottom-color:#7c3aed;}
+  .tab-pane{display:none;}.tab-pane.active{display:block;padding-top:16px;}
+  .tab-pane.active{display:block;}
+  @media(max-width:700px){body{padding:10px 8px 48px;}.obj-grid,.team-grid{grid-template-columns:1fr;}.sched-wrap{grid-template-columns:1fr !important;}.sched-row{font-size:11px;padding:5px 8px;}.sched-row .time{width:72px;font-size:10px;}.days-grid{grid-template-columns:1fr 1fr;}.task-grid{grid-template-columns:1fr;}.daygrid{font-size:9px;overflow-x:auto;display:block;}.daygrid th,.daygrid td{padding:3px 4px;white-space:nowrap;}.tab-btn{padding:8px 12px;font-size:12px;}svg{display:none;}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div style="margin-bottom:4px;padding-bottom:0">
-  <div style="font-size:18px;font-weight:700">Taiwan 2026</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:2px;">
+  <div style="font-size:18px;font-weight:700;">Taiwan 2026</div>
+  <div style="display:flex;align-items:center;gap:8px;"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?style=flat-square&label=views&color=888&labelColor=333" alt="views" style="height:18px;"><span style="font-size:11px;color:var(--text3);">v12 · May 30, 2026</span></div>
 </div>
 <nav class="tab-nav">
-  <button class="tab-btn active ta" onclick="showTab('team-a', this)">Team A</button>
-  <button class="tab-btn tb" onclick="showTab('team-b', this)">Team B</button>
-  <button class="tab-btn tc" onclick="showTab('team-c', this)">Team C</button>
-  <button class="tab-btn tg" onclick="showTab('global', this)">Global</button>
+  <button class="tab-btn active ta" onclick="go('team-a',this)">Team A</button>
+  <button class="tab-btn tb" onclick="go('team-b',this)">Team B</button>
+  <button class="tab-btn tc" onclick="go('team-c',this)">Team C</button>
+  <button class="tab-btn tg" onclick="go('global',this)">Global</button>
 </nav>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 14px;font-size:11px;color:var(--text3)">
-  <span>Taiwan 2026 · Master Plan</span>
-  <span>v2 · May 30, 2026</span>
+<div id="team-a" class="tab-pane active"><!-- ═══ WEEK OVERVIEW ═══ -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 20px;">
+  <div style="background:var(--coral-fill);border:1px solid var(--coral-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 1 · Jul 6–10</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Street EV</div>
+    <div style="font-size:11px;color:var(--text2);">Outreach</div>
+  </div>
+  <div style="background:var(--amber-fill);border:1px solid var(--amber-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 2 · Jul 13–17</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">VBS</div>
+    <div style="font-size:11px;color:var(--text2);">Kids' Bible school</div>
+  </div>
+  <div style="background:var(--purple-fill);border:1px solid var(--purple-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 3 · Jul 20–24</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Youth Retreat</div>
+    <div style="font-size:11px;color:var(--text2);">Faithful God</div>
+  </div>
+  <div style="background:var(--teal-fill);border:1px solid var(--teal-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 4 · Jul 27–31</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Prayer Week</div>
+    <div style="font-size:11px;color:var(--text2);">Church-wide</div>
+  </div>
 </div>
-<div id="team-a" class="tab-pane active">
-
-<div style="margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-  <div style="font-size:18px;font-weight:700;margin-bottom:4px">Taiwan 2026 · Team A</div>
-  <div style="font-size:12px;color:var(--text3)">Updated May 30, 2026</div>
-</div>
-
-<!-- ═══ WEEK OVERVIEW (SVG — kept for visual cards) ═══ -->
-<svg viewBox="0 0 640 110" style="margin-bottom:8px">
-  <g class="c-coral"><rect x="0" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="72" y="18" text-anchor="middle">Week 1 · Jul 6–10</text>
-  <text class="th" x="72" y="40" text-anchor="middle">Street EV</text>
-  <text class="ts" x="72" y="58" text-anchor="middle">Outreach</text>
-
-  <g class="c-amber"><rect x="165" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="237" y="18" text-anchor="middle">Week 2 · Jul 13–17</text>
-  <text class="th" x="237" y="40" text-anchor="middle">VBS</text>
-  <text class="ts" x="237" y="58" text-anchor="middle">Kids' Bible school</text>
-
-  <g class="c-purple"><rect x="330" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="402" y="18" text-anchor="middle">Week 3 · Jul 20–24</text>
-  <text class="th" x="402" y="40" text-anchor="middle">Youth Retreat</text>
-  <text class="ts" x="402" y="58" text-anchor="middle">Faithful God</text>
-
-  <g class="c-teal"><rect x="495" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="567" y="18" text-anchor="middle">Week 4 · Jul 27–31</text>
-  <text class="th" x="567" y="40" text-anchor="middle">Prayer Week</text>
-  <text class="ts" x="567" y="58" text-anchor="middle">Church-wide</text>
-</svg>
 
 <!-- ═══ EVENT EXPLANATIONS ═══ -->
 <h2>Event Explanations</h2>
@@ -279,7 +248,7 @@
     <h4>Youth Retreat</h4>
     <ul><li>Build real relationships</li><li>Mentor not just program</li><li>Execute content well</li></ul>
   </div>
-</div>
+
 
 <!-- ═══ DAILY SCHEDULES ═══ -->
 <h2>Daily Schedules</h2>
@@ -534,39 +503,30 @@
 <p class="note" style="margin-top:4px">Mainly occupied by skits and dance learning · daily time block and per-day breakdown TBD</p>
 
 <h2>Intensive Week Schedule · Jun 22–26</h2>
-<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p>
-
-<div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
+<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p></div>
+<div id="team-b" class="tab-pane"><!-- ═══ WEEK OVERVIEW ═══ -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 20px;">
+  <div style="background:var(--coral-fill);border:1px solid var(--coral-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 1 · Jul 6–10</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Street EV</div>
+    <div style="font-size:11px;color:var(--text2);">Outreach</div>
+  </div>
+  <div style="background:var(--amber-fill);border:1px solid var(--amber-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 2 · Jul 13–17</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">VBS</div>
+    <div style="font-size:11px;color:var(--text2);">Kids' Bible school</div>
+  </div>
+  <div style="background:var(--purple-fill);border:1px solid var(--purple-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 3 · Jul 20–24</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Youth Retreat</div>
+    <div style="font-size:11px;color:var(--text2);">Faithful God</div>
+  </div>
+  <div style="background:var(--teal-fill);border:1px solid var(--teal-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 4 · Jul 27–31</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Prayer Week</div>
+    <div style="font-size:11px;color:var(--text2);">Church-wide</div>
+  </div>
 </div>
-<div id="team-b" class="tab-pane">
-
-<div style="margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-  <div style="font-size:18px;font-weight:700;margin-bottom:4px">Taiwan 2026 · Team B</div>
-  <div style="font-size:12px;color:var(--text3)">Updated May 30, 2026</div>
-</div>
-
-<!-- ═══ WEEK OVERVIEW (SVG — kept for visual cards) ═══ -->
-<svg viewBox="0 0 640 110" style="margin-bottom:8px">
-  <g class="c-coral"><rect x="0" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="72" y="18" text-anchor="middle">Week 1 · Jul 6–10</text>
-  <text class="th" x="72" y="40" text-anchor="middle">Street EV</text>
-  <text class="ts" x="72" y="58" text-anchor="middle">Outreach</text>
-
-  <g class="c-amber"><rect x="165" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="237" y="18" text-anchor="middle">Week 2 · Jul 13–17</text>
-  <text class="th" x="237" y="40" text-anchor="middle">VBS</text>
-  <text class="ts" x="237" y="58" text-anchor="middle">Kids' Bible school</text>
-
-  <g class="c-purple"><rect x="330" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="402" y="18" text-anchor="middle">Week 3 · Jul 20–24</text>
-  <text class="th" x="402" y="40" text-anchor="middle">Youth Retreat</text>
-  <text class="ts" x="402" y="58" text-anchor="middle">Faithful God</text>
-
-  <g class="c-teal"><rect x="495" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="567" y="18" text-anchor="middle">Week 4 · Jul 27–31</text>
-  <text class="th" x="567" y="40" text-anchor="middle">Prayer Week</text>
-  <text class="ts" x="567" y="58" text-anchor="middle">Church-wide</text>
-</svg>
 
 <!-- ═══ EVENT EXPLANATIONS ═══ -->
 <h2>Event Explanations</h2>
@@ -613,7 +573,7 @@
     <h4>Youth Retreat</h4>
     <ul><li>Build real relationships</li><li>Mentor not just program</li><li>Execute content well</li></ul>
   </div>
-</div>
+
 
 <!-- ═══ DAILY SCHEDULES ═══ -->
 <h2>Daily Schedules</h2>
@@ -866,39 +826,30 @@
 <p class="note" style="margin-top:4px">Mainly occupied by skits and dance learning · daily time block and per-day breakdown TBD</p>
 
 <h2>Intensive Week Schedule · Jun 22–26</h2>
-<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p>
-
-<div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
+<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p></div>
+<div id="team-c" class="tab-pane"><!-- ═══ WEEK OVERVIEW ═══ -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 20px;">
+  <div style="background:var(--coral-fill);border:1px solid var(--coral-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 1 · Jul 6–10</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Street EV</div>
+    <div style="font-size:11px;color:var(--text2);">Outreach</div>
+  </div>
+  <div style="background:var(--amber-fill);border:1px solid var(--amber-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 2 · Jul 13–17</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">VBS</div>
+    <div style="font-size:11px;color:var(--text2);">Kids' Bible school</div>
+  </div>
+  <div style="background:var(--purple-fill);border:1px solid var(--purple-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 3 · Jul 20–24</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Youth Retreat</div>
+    <div style="font-size:11px;color:var(--text2);">Faithful God</div>
+  </div>
+  <div style="background:var(--teal-fill);border:1px solid var(--teal-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 4 · Jul 27–31</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Prayer Week</div>
+    <div style="font-size:11px;color:var(--text2);">Church-wide</div>
+  </div>
 </div>
-<div id="team-c" class="tab-pane">
-
-<div style="margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-  <div style="font-size:18px;font-weight:700;margin-bottom:4px">Taiwan 2026 · Team C</div>
-  <div style="font-size:12px;color:var(--text3)">Updated May 30, 2026</div>
-</div>
-
-<!-- ═══ WEEK OVERVIEW (SVG — kept for visual cards) ═══ -->
-<svg viewBox="0 0 640 110" style="margin-bottom:8px">
-  <g class="c-coral"><rect x="0" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="72" y="18" text-anchor="middle">Week 1 · Jul 6–10</text>
-  <text class="th" x="72" y="40" text-anchor="middle">Street EV</text>
-  <text class="ts" x="72" y="58" text-anchor="middle">Outreach</text>
-
-  <g class="c-amber"><rect x="165" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="237" y="18" text-anchor="middle">Week 2 · Jul 13–17</text>
-  <text class="th" x="237" y="40" text-anchor="middle">VBS</text>
-  <text class="ts" x="237" y="58" text-anchor="middle">Kids' Bible school</text>
-
-  <g class="c-purple"><rect x="330" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="402" y="18" text-anchor="middle">Week 3 · Jul 20–24</text>
-  <text class="th" x="402" y="40" text-anchor="middle">Youth Retreat</text>
-  <text class="ts" x="402" y="58" text-anchor="middle">Faithful God</text>
-
-  <g class="c-teal"><rect x="495" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="567" y="18" text-anchor="middle">Week 4 · Jul 27–31</text>
-  <text class="th" x="567" y="40" text-anchor="middle">Prayer Week</text>
-  <text class="ts" x="567" y="58" text-anchor="middle">Church-wide</text>
-</svg>
 
 <!-- ═══ EVENT EXPLANATIONS ═══ -->
 <h2>Event Explanations</h2>
@@ -945,7 +896,7 @@
     <h4>Youth Retreat</h4>
     <ul><li>Build real relationships</li><li>Mentor not just program</li><li>Execute content well</li></ul>
   </div>
-</div>
+
 
 <!-- ═══ DAILY SCHEDULES ═══ -->
 <h2>Daily Schedules</h2>
@@ -1194,39 +1145,30 @@
 <p class="note" style="margin-top:4px">Mainly occupied by skits and dance learning · daily time block and per-day breakdown TBD</p>
 
 <h2>Intensive Week Schedule · Jun 22–26</h2>
-<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p>
-
-<div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
+<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p></div>
+<div id="global" class="tab-pane"><!-- ═══ WEEK OVERVIEW ═══ -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 20px;">
+  <div style="background:var(--coral-fill);border:1px solid var(--coral-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 1 · Jul 6–10</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Street EV</div>
+    <div style="font-size:11px;color:var(--text2);">Outreach</div>
+  </div>
+  <div style="background:var(--amber-fill);border:1px solid var(--amber-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 2 · Jul 13–17</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">VBS</div>
+    <div style="font-size:11px;color:var(--text2);">Kids' Bible school</div>
+  </div>
+  <div style="background:var(--purple-fill);border:1px solid var(--purple-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 3 · Jul 20–24</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Youth Retreat</div>
+    <div style="font-size:11px;color:var(--text2);">Faithful God</div>
+  </div>
+  <div style="background:var(--teal-fill);border:1px solid var(--teal-stroke);border-radius:8px;padding:14px 10px;text-align:center;">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Week 4 · Jul 27–31</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Prayer Week</div>
+    <div style="font-size:11px;color:var(--text2);">Church-wide</div>
+  </div>
 </div>
-<div id="global" class="tab-pane">
-
-<div style="margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-  <div style="font-size:18px;font-weight:700;margin-bottom:4px">Taiwan 2026 · Master Plan</div>
-  <div style="font-size:12px;color:var(--text3)">Updated May 30, 2026</div>
-</div>
-
-<!-- ═══ WEEK OVERVIEW (SVG — kept for visual cards) ═══ -->
-<svg viewBox="0 0 640 110" style="margin-bottom:8px">
-  <g class="c-coral"><rect x="0" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="72" y="18" text-anchor="middle">Week 1 · Jul 6–10</text>
-  <text class="th" x="72" y="40" text-anchor="middle">Street EV</text>
-  <text class="ts" x="72" y="58" text-anchor="middle">Outreach</text>
-
-  <g class="c-amber"><rect x="165" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="237" y="18" text-anchor="middle">Week 2 · Jul 13–17</text>
-  <text class="th" x="237" y="40" text-anchor="middle">VBS</text>
-  <text class="ts" x="237" y="58" text-anchor="middle">Kids' Bible school</text>
-
-  <g class="c-purple"><rect x="330" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="402" y="18" text-anchor="middle">Week 3 · Jul 20–24</text>
-  <text class="th" x="402" y="40" text-anchor="middle">Youth Retreat</text>
-  <text class="ts" x="402" y="58" text-anchor="middle">Faithful God</text>
-
-  <g class="c-teal"><rect x="495" y="0" width="145" height="80" rx="6" stroke-width="0.5"/></g>
-  <text class="ts" x="567" y="18" text-anchor="middle">Week 4 · Jul 27–31</text>
-  <text class="th" x="567" y="40" text-anchor="middle">Prayer Week</text>
-  <text class="ts" x="567" y="58" text-anchor="middle">Church-wide</text>
-</svg>
 
 <!-- ═══ EVENT EXPLANATIONS ═══ -->
 <h2>Event Explanations</h2>
@@ -1273,7 +1215,7 @@
     <h4>Youth Retreat</h4>
     <ul><li>Build real relationships</li><li>Mentor not just program</li><li>Execute content well</li></ul>
   </div>
-</div>
+
 
 <!-- ═══ DAILY SCHEDULES ═══ -->
 <h2>Daily Schedules</h2>
@@ -1649,18 +1591,16 @@
 <p class="note" style="margin-top:4px">Mainly occupied by skits and dance learning · daily time block and per-day breakdown TBD</p>
 
 <h2>Intensive Week Schedule · Jun 22–26</h2>
-<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p>
-
+<p class="note" style="margin-top:4px">Week immediately following Prep Week · days × hrs and per-day breakdown TBD</p></div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
-</div>
 <script>
-function showTab(id, btn) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+function go(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
 </script>
 </body>

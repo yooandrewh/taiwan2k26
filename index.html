@@ -175,29 +175,55 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .pf-msg.ok{color:#16a34a;font-weight:600;}
 .pf-msg.err{color:#b91c1c;}
 .pf-note{font-size:11px;color:var(--text3);text-align:center;margin-top:20px;}
+/* ---- Trip / itinerary ---- */
+.trip-draft{font-size:12px;color:var(--text2);background:var(--surface2);border-radius:10px;padding:10px 12px;margin-bottom:8px;line-height:1.5;}
+.trip-h{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin:18px 4px 8px;}
+.trip-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;}
+.fl-group{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#0d9488;margin-bottom:8px;}
+.fl-group.ret{color:#b91c1c;}
+.fl-leg{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-top:1px solid var(--border);}
+.fl-leg.first{border-top:none;}
+.fl-route{font-size:15px;font-weight:600;min-width:96px;}
+.fl-meta{flex:1;font-size:12px;color:var(--text2);line-height:1.4;}
+.fl-no{font-size:11px;color:var(--text3);white-space:nowrap;}
+.trip-pax{font-size:12px;color:var(--text2);margin-top:10px;line-height:1.6;}
+.trip-pax b{color:var(--text);}
+.tweek{display:flex;gap:11px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:6px;}
+.tw-when{font-size:11px;font-weight:700;color:var(--text3);}
+.tw-title{font-size:15px;font-weight:700;margin:1px 0 2px;}
+.tw-detail{font-size:12px;color:var(--text2);line-height:1.4;}
+.trip-day{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:11px;padding:9px 12px;margin-bottom:5px;}
+.td-date{width:34px;text-align:center;flex-shrink:0;}
+.td-num{display:block;font-size:17px;font-weight:800;line-height:1;}
+.td-mo{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;}
+.td-dow{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;}
+.td-body{flex:1;min-width:0;}
+.td-phase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);}
+.td-note{font-size:13px;color:var(--text);line-height:1.35;}
+.td-bday{font-size:13px;white-space:nowrap;color:#ec4899;font-weight:600;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v44 · Jun 19, 2026 · 3:24 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v45 · Jun 19, 2026 · 3:55 PM PST</div>
 </div>
 <div id="pane-a" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sa)">Team A</div><div class="updbox collapsed" style="border-left:3px solid #b91c1c"><div class="uhdr" style="color:#b91c1c">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
-  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
+  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
-  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 27–31</div><div class="wn">Prayer Week</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Details TBD by Leader Peter</div></div>
+  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 26–30</div><div class="wn">Departure</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Debrief and reflect<br>→ Pack and travel<br>→ Fly home Jul 30</div></div>
 </div><h2>Event Explanations</h2>
-<div class="bar coral">Street EV · Week 1 · Jul 6–10 · Outreach</div>
+<div class="bar coral">Street EV · Week 1 · Jul 5–11 · Outreach</div>
 <ul class="bul"><li>Format TBD — campus outreach with students, or 3-day basketball/sports camp</li></ul>
 <div class="bar amber">VBS · BEST Camp · Week 2 · Jul 13–17 · Kids' Bible school</div>
 <ul class="bul"><li>Friendship Presbyterian Church, Taipei — Mon–Fri, 9am–5:30pm</li><li>Up to 60 kids (ages 5–12) + 10 youth volunteers (ages 13–18)</li><li>Rainforest theme: 5 Bible Buddies (Tango, Seymour, Dottie, Tia, Howie)</li><li>Half FPC, half guests/unbelievers — real evangelism opportunity</li></ul>
 
 <div class="bar purple">Youth Retreat · Week 3 · Jul 20–24 · Faithful God* <span style="font-size:9px;opacity:0.7;font-weight:400;">(TBD)</span></div>
 <ul class="bul"><li>Goal: that the youth grow in unity within their small groups and encounter more of Christ</li><li>Missionary Conference youth program — ~30 youth across the week</li><li>Role: older-brother / older-sister mentors, not just content deliverers</li><li>Execute tasks well</li></ul>
-<div class="bar teal">Prayer Week · Week 4 · Jul 27–31 · Church-wide</div>
-<ul class="bul"><li>Details TBD by Leader Peter</li></ul><h2>Daily Schedules</h2>
+<div class="bar teal">Departure · Week 4 · Jul 26–30 · Fly home</div>
+<ul class="bul"><li>Depart Taoyuan (TPE) Thu Jul 30, 4:55 PM</li><li>Debrief, pack, and travel home</li></ul><h2>Daily Schedules</h2>
 <div class="schedules">
   <div class="scol"><h3>VBS · Mon–Fri</h3>
     <div class="srow gray"><span class="t">9:00–9:30</span><span class="l">Check-in</span></div>
@@ -281,20 +307,20 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <h2>Intensive Week Schedule · Jun 22–26</h2>
 <p class="note">Week immediately following Prep Week · days × hrs TBD</p></div>
 <div id="pane-b" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sb)">Team B</div><div class="updbox collapsed" style="border-left:3px solid #2563eb"><div class="uhdr" style="color:#2563eb">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 5 · 9:00a</span><span class="utext">Added "VBS Deco Setup" task (4h) to Week 2 responsibilities; team total 29h → 33h</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
-  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
+  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
-  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 27–31</div><div class="wn">Prayer Week</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Details TBD by Leader Peter</div></div>
+  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 26–30</div><div class="wn">Departure</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Debrief and reflect<br>→ Pack and travel<br>→ Fly home Jul 30</div></div>
 </div><h2>Event Explanations</h2>
-<div class="bar coral">Street EV · Week 1 · Jul 6–10 · Outreach</div>
+<div class="bar coral">Street EV · Week 1 · Jul 5–11 · Outreach</div>
 <ul class="bul"><li>Format TBD — campus outreach with students, or 3-day basketball/sports camp</li></ul>
 <div class="bar amber">VBS · BEST Camp · Week 2 · Jul 13–17 · Kids' Bible school</div>
 <ul class="bul"><li>Friendship Presbyterian Church, Taipei — Mon–Fri, 9am–5:30pm</li><li>Up to 60 kids (ages 5–12) + 10 youth volunteers (ages 13–18)</li><li>Rainforest theme: 5 Bible Buddies (Tango, Seymour, Dottie, Tia, Howie)</li><li>Half FPC, half guests/unbelievers — real evangelism opportunity</li></ul>
 
 <div class="bar purple">Youth Retreat · Week 3 · Jul 20–24 · Faithful God</div>
 <ul class="bul"><li>Goal: that the youth grow in unity within their small groups and encounter more of Christ</li><li>Missionary Conference youth program — ~30 youth across the week</li><li>Role: older-brother / older-sister mentors, not just content deliverers</li><li>Execute tasks well</li></ul>
-<div class="bar teal">Prayer Week · Week 4 · Jul 27–31 · Church-wide</div>
-<ul class="bul"><li>Details TBD by Leader Peter</li></ul><h2>Daily Schedules</h2>
+<div class="bar teal">Departure · Week 4 · Jul 26–30 · Fly home</div>
+<ul class="bul"><li>Depart Taoyuan (TPE) Thu Jul 30, 4:55 PM</li><li>Debrief, pack, and travel home</li></ul><h2>Daily Schedules</h2>
 <div class="schedules">
   <div class="scol"><h3>VBS · Mon–Fri</h3>
     <div class="srow gray"><span class="t">9:00–9:30</span><span class="l">Check-in</span></div>
@@ -379,20 +405,20 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <h2>Intensive Week Schedule · Jun 22–26</h2>
 <p class="note">Week immediately following Prep Week · days × hrs TBD</p></div>
 <div id="pane-c" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sc)">Team C</div><div class="updbox collapsed" style="border-left:3px solid #16a34a"><div class="uhdr" style="color:#16a34a">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
-  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
+  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
-  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 27–31</div><div class="wn">Prayer Week</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Details TBD by Leader Peter</div></div>
+  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 26–30</div><div class="wn">Departure</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Debrief and reflect<br>→ Pack and travel<br>→ Fly home Jul 30</div></div>
 </div><h2>Event Explanations</h2>
-<div class="bar coral">Street EV · Week 1 · Jul 6–10 · Outreach</div>
+<div class="bar coral">Street EV · Week 1 · Jul 5–11 · Outreach</div>
 <ul class="bul"><li>Format TBD — campus outreach with students, or 3-day basketball/sports camp</li></ul>
 <div class="bar amber">VBS · BEST Camp · Week 2 · Jul 13–17 · Kids' Bible school</div>
 <ul class="bul"><li>Friendship Presbyterian Church, Taipei — Mon–Fri, 9am–5:30pm</li><li>Up to 60 kids (ages 5–12) + 10 youth volunteers (ages 13–18)</li><li>Rainforest theme: 5 Bible Buddies (Tango, Seymour, Dottie, Tia, Howie)</li><li>Half FPC, half guests/unbelievers — real evangelism opportunity</li></ul>
 
 <div class="bar purple">Youth Retreat · Week 3 · Jul 20–24 · Faithful God</div>
 <ul class="bul"><li>Goal: that the youth grow in unity within their small groups and encounter more of Christ</li><li>Missionary Conference youth program — ~30 youth across the week</li><li>Role: older-brother / older-sister mentors, not just content deliverers</li><li>Execute tasks well</li></ul>
-<div class="bar teal">Prayer Week · Week 4 · Jul 27–31 · Church-wide</div>
-<ul class="bul"><li>Details TBD by Leader Peter</li></ul><h2>Daily Schedules</h2>
+<div class="bar teal">Departure · Week 4 · Jul 26–30 · Fly home</div>
+<ul class="bul"><li>Depart Taoyuan (TPE) Thu Jul 30, 4:55 PM</li><li>Debrief, pack, and travel home</li></ul><h2>Daily Schedules</h2>
 <div class="schedules">
   <div class="scol"><h3>VBS · Mon–Fri</h3>
     <div class="srow gray"><span class="t">9:00–9:30</span><span class="l">Check-in</span></div>
@@ -484,21 +510,21 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
-  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
+<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:55p</span><span class="utext">Added password-protected Trip tab (flights + Jun 29–Jul 30 day-by-day); fixed Main weeks to real dates — Street EV Jul 5–11, Prayer Week replaced by Departure (Jul 26–30, fly home Jul 30)</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
+  <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
-  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 27–31</div><div class="wn">Prayer Week</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Details TBD by Leader Peter</div></div>
+  <div class="wcard" style="background:var(--rg);border:1px solid var(--sg)"><div class="wk">Week 4 · Jul 26–30</div><div class="wn">Departure</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Debrief and reflect<br>→ Pack and travel<br>→ Fly home Jul 30</div></div>
 </div><h2>Event Explanations</h2>
-<div class="bar coral">Street EV · Week 1 · Jul 6–10 · Outreach</div>
+<div class="bar coral">Street EV · Week 1 · Jul 5–11 · Outreach</div>
 <ul class="bul"><li>Format TBD — campus outreach with students, or 3-day basketball/sports camp</li></ul>
 <div class="bar amber">VBS · BEST Camp · Week 2 · Jul 13–17 · Kids' Bible school</div>
 <ul class="bul"><li>Friendship Presbyterian Church, Taipei — Mon–Fri, 9am–5:30pm</li><li>Up to 60 kids (ages 5–12) + 10 youth volunteers (ages 13–18)</li><li>Rainforest theme: 5 Bible Buddies (Tango, Seymour, Dottie, Tia, Howie)</li><li>Half FPC, half guests/unbelievers — real evangelism opportunity</li></ul>
 
 <div class="bar purple">Youth Retreat · Week 3 · Jul 20–24 · Faithful God</div>
 <ul class="bul"><li>Goal: that the youth grow in unity within their small groups and encounter more of Christ</li><li>Missionary Conference youth program — ~30 youth across the week</li><li>Role: older-brother / older-sister mentors, not just content deliverers</li><li>Execute tasks well</li></ul>
-<div class="bar teal">Prayer Week · Week 4 · Jul 27–31 · Church-wide</div>
-<ul class="bul"><li>Details TBD by Leader Peter</li></ul><h2>Daily Schedules</h2>
+<div class="bar teal">Departure · Week 4 · Jul 26–30 · Fly home</div>
+<ul class="bul"><li>Depart Taoyuan (TPE) Thu Jul 30, 4:55 PM</li><li>Debrief, pack, and travel home</li></ul><h2>Daily Schedules</h2>
 <div class="schedules">
   <div class="scol"><h3>VBS · Mon–Fri</h3>
     <div class="srow gray"><span class="t">9:00–9:30</span><span class="l">Check-in</span></div>
@@ -680,7 +706,26 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   </form>
   <div class="pf-note">🔒 Requests are private — only team leaders see them.</div>
 </div>
+<div id="pane-t" class="pane">
+  <div class="stu-title" style="color:#0ea5e9">Trip Itinerary</div>
+  <div class="stu-sub">Mon Jun 29 – Thu Jul 30 · LAX ⇄ Taoyuan, Taiwan</div>
+  <div class="trip-draft">📝 Draft — full day-by-day schedule will be built out here. Dates below follow the flights; the Main tab's weeks may need to be reconciled to match.</div>
+  <div id="trip-flights"></div>
+  <div id="trip-weeks"></div>
+  <div id="trip-days"></div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
+</div>
+<div id="trip-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:var(--bg);border-radius:14px;padding:28px 22px;max-width:320px;width:88%;text-align:center;">
+    <div style="font-size:30px;margin-bottom:4px;">✈️</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text)">Trip Itinerary</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Enter password to view</div>
+    <input id="trip-pw" type="password" placeholder="Password" autocomplete="off" style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:16px;background:var(--bg);color:var(--text);margin-bottom:8px;-webkit-appearance:none;">
+    <div id="trip-err" style="font-size:11px;color:#b91c1c;margin-bottom:8px;display:none;">Incorrect password</div>
+    <button onclick="checkTripPw()" style="width:100%;padding:11px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">Unlock</button>
+    <div style="margin-top:12px;"><button onclick="closeTripGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
+  </div>
 </div>
 <nav class="tabbar">
   <button class="tabitem active" style="--accent:#7c3aed" onclick="go('g',this)" aria-label="Main">
@@ -694,6 +739,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#7c3aed" onclick="go('r',this)" aria-label="Prayer Requests">
     <svg viewBox="0 0 24 24"><path d="M20 4.5H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h4v3.5l4-3.5h8a1 1 0 0 0 1-1v-10a1 1 0 0 0-1-1z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
     <span>Requests</span>
+  </button>
+  <button class="tabitem" style="--accent:#0ea5e9" onclick="tryTrip(this)" aria-label="Trip">
+    <svg viewBox="0 0 24 24"><path d="M21 15.5 14 12V5a2 2 0 0 0-4 0v7l-7 3.5V18l7-2v3.5l-2 1.5V22l4-1 4 1v-1l-2-1.5V16l7 2z"/></svg>
+    <span>Trip</span>
   </button>
 </nav>
 <script>
@@ -725,6 +774,26 @@ function closeGate(){
   document.getElementById('leaders-gate').style.display='none';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('leaders-gate').style.display!=='none')checkLeadersPw();});
+var _tripBtn=null,_tripUnlocked=false;
+function tryTrip(btn){
+  if(_tripUnlocked){go('t',btn);return;}
+  _tripBtn=btn;
+  document.getElementById('trip-gate').style.display='flex';
+  document.getElementById('trip-pw').value='';
+  document.getElementById('trip-err').style.display='none';
+  setTimeout(function(){document.getElementById('trip-pw').focus();},100);
+}
+function checkTripPw(){
+  if(document.getElementById('trip-pw').value.trim().toLowerCase()==='hailey'){
+    _tripUnlocked=true;
+    document.getElementById('trip-gate').style.display='none';
+    go('t',_tripBtn);
+  }else{
+    document.getElementById('trip-err').style.display='block';
+  }
+}
+function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('trip-gate').style.display==='flex')checkTripPw();});
 </script>
 <script>
 // Retreat youth (pray for) — Boys & Girls groups
@@ -792,7 +861,7 @@ const PRAYER_TOPICS=[
     "Street EV — courage to follow God's leading and build genuine friendships",
     "VBS / BEST Camp — that every story, song, craft, and game would reveal who God is",
     "Youth Retreat — unity in the small groups and a deeper encounter with our faithful God",
-    "Prayer Week — that the whole church would be stirred to seek God"
+    "Closing and departure — that the fruit would remain, we would finish well, and travel home safely (Jul 30)"
   ]},
   {cat:"Practical & Provision",items:[
     "Safety and health — travel, food, weather, and real rest for everyone",
@@ -897,6 +966,58 @@ function submitPrayer(e){
     .catch(function(){msg.textContent='Something went wrong — please try again.';msg.className='pf-msg err';})
     .finally(function(){btn.disabled=false;btn.textContent='Submit request';});
 }
+</script>
+<script>
+(function(){
+  var OUT=[
+    {r:"LAX → ICN",m:"Mon Jun 29, 11:00 PM → Wed Jul 1, 4:10 AM",f:"OZ 203"},
+    {r:"ICN → TPE",m:"Wed Jul 1, 8:35 AM → Wed Jul 1, 10:25 AM",f:"OZ 711"}
+  ];
+  var RET=[
+    {r:"TPE → ICN",m:"Thu Jul 30, 4:55 PM → Thu Jul 30, 8:25 PM",f:"OZ 714"},
+    {r:"ICN → LAX",m:"Thu Jul 30, 9:40 PM → Thu Jul 30, 5:40 PM",f:"OZ 204"}
+  ];
+  function legs(a){return a.map(function(l,i){return '<div class="fl-leg'+(i===0?' first':'')+'"><div class="fl-route">'+l.r+'</div><div class="fl-meta">'+l.m+'</div><div class="fl-no">'+l.f+'</div></div>';}).join('');}
+  document.getElementById('trip-flights').innerHTML=
+    '<div class="trip-h">✈️ Flights · Asiana</div>'+
+    '<div class="trip-card"><div class="fl-group">Outbound</div>'+legs(OUT)+'</div>'+
+    '<div class="trip-card"><div class="fl-group ret">Return</div>'+legs(RET)+
+      '<div class="trip-pax"><b>Group:</b> Rubin Jang · Andrew Back · Owen Lee · Jean Kim · Caleb Su<br><b>Conf:</b> MUEAVW</div></div>';
+  var WEEKS=[
+    {w:"Jun 29 – Jul 1",t:"Travel",d:"LAX → Seoul → Taipei · arrive 10:25 AM Jul 1",c:"#0ea5e9"},
+    {w:"Jul 1 – 4",t:"Arrival & Prep",d:"Ministry prep · prayer walks · sightseeing (depends on arrival)",c:"#64748b"},
+    {w:"Jul 5 – 11",t:"Outreach",d:"Campus outreach OR sports outreach (TBD)",c:"#b91c1c"},
+    {w:"Jul 12 – 18",t:"Best Kids Camp",d:"Jul 13–17 · BEST Kids Camp (VBS)",c:"#2563eb"},
+    {w:"Jul 19 – 25",t:"TMF",d:"Jul 20–24 · retreat · 🎂 Irene (20th), Jean (24th)",c:"#16a34a"},
+    {w:"Jul 26 – 30",t:"Wrap-up & Departure",d:"Depart TPE Thu Jul 30, 4:55 PM",c:"#7c3aed"}
+  ];
+  document.getElementById('trip-weeks').innerHTML='<div class="trip-h">Weeks at a glance</div>'+
+    WEEKS.map(function(x){return '<div class="tweek" style="border-left-color:'+x.c+'"><div style="flex:1"><div class="tw-when">'+x.w+'</div><div class="tw-title">'+x.t+'</div><div class="tw-detail">'+x.d+'</div></div></div>';}).join('');
+  var names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  // build Jun 29, 30, then Jul 1..30
+  var days=[{mo:'Jun',d:29},{mo:'Jun',d:30}];
+  for(var j=1;j<=30;j++)days.push({mo:'Jul',d:j});
+  function meta(mo,d){
+    if(mo==='Jun'&&d===29)return{p:'Departure',c:'#0ea5e9',n:'Arrive LAX by 8:00 PM (3h early) · OZ 203 dep 11:00 PM',b:'✈️'};
+    if(mo==='Jun')return{p:'In Transit',c:'#0ea5e9',n:'Overnight flight LAX → Seoul (ICN)',b:'✈️'};
+    if(d===1)return{p:'Arrival',c:'#64748b',n:'ICN 4:10 AM → TPE 10:25 AM · settle in',b:'✈️'};
+    if(d<=4)return{p:'Arrival & Prep',c:'#64748b',n:'Ministry prep · prayer walks · sightseeing'};
+    if(d<=11)return{p:'Outreach',c:'#b91c1c',n:'Campus or sports outreach (TBD)'};
+    if(d<=18)return{p:'Best Kids Camp',c:'#2563eb',n:(d>=13&&d<=17)?'BEST Kids Camp · 9:00–5:30':'Camp prep / rest'};
+    if(d<=25)return{p:'TMF',c:'#16a34a',n:(d>=20&&d<=24)?'TMF retreat':'Travel / rest',b:d===20?'🎂 Irene':(d===24?'🎂 Jean':'')};
+    if(d===30)return{p:'Departure',c:'#0ea5e9',n:'Depart TPE 4:55 PM → LAX 5:40 PM',b:'✈️'};
+    return{p:'Wrap-up',c:'#7c3aed',n:'Wrap-up / debrief / free'};
+  }
+  var html='<div class="trip-h">Day by Day · Jun 29 – Jul 30</div>';
+  days.forEach(function(day,i){
+    var m=meta(day.mo,day.d),dow=names[(1+i)%7];
+    html+='<div class="trip-day" style="border-left-color:'+m.c+'">'+
+      '<div class="td-date"><span class="td-mo">'+day.mo+'</span><span class="td-num">'+day.d+'</span><span class="td-dow">'+dow+'</span></div>'+
+      '<div class="td-body"><div class="td-phase">'+m.p+'</div><div class="td-note">'+m.n+'</div></div>'+
+      (m.b?'<div class="td-bday">'+m.b+'</div>':'')+'</div>';
+  });
+  document.getElementById('trip-days').innerHTML=html;
+})();
 </script>
 </body>
 </html>

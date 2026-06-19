@@ -160,13 +160,26 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .updbox.collapsed .ucaret{transform:rotate(-90deg);}
 .updbox.collapsed .urow{display:none;}
 .updbox.collapsed .uhdr{margin-bottom:0;}
+/* ---- Prayer request form ---- */
+.pf-label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin:14px 4px 6px;}
+.pf-opt{color:var(--text3);font-weight:400;}
+.pf-input{width:100%;padding:12px 14px;font-size:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);-webkit-appearance:none;font-family:inherit;}
+.pf-input:focus{outline:none;border-color:#7c3aed;}
+.pf-area{resize:vertical;min-height:120px;line-height:1.5;}
+.pf-btn{width:100%;margin-top:18px;padding:13px;font-size:16px;font-weight:700;color:#fff;background:#7c3aed;border:none;border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.pf-btn:disabled{opacity:.55;}
+.pf-btn:active{opacity:.8;}
+.pf-msg{font-size:13px;margin-top:12px;text-align:center;min-height:18px;line-height:1.5;}
+.pf-msg.ok{color:#16a34a;font-weight:600;}
+.pf-msg.err{color:#b91c1c;}
+.pf-note{font-size:11px;color:var(--text3);text-align:center;margin-top:20px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v42 · Jun 19, 2026 · 11:11 AM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v43 · Jun 19, 2026 · 3:14 PM PST</div>
 </div>
 <div id="pane-a" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sa)">Team A</div><div class="updbox collapsed" style="border-left:3px solid #b91c1c"><div class="uhdr" style="color:#b91c1c">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
@@ -469,7 +482,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
+<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
@@ -651,6 +664,19 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <input class="stu-search" id="pray-search" type="search" inputmode="search" autocomplete="off" placeholder="Search names…">
   <div id="pray-list"></div>
 </div>
+<div id="pane-r" class="pane">
+  <div class="stu-title" style="color:#7c3aed">Prayer Requests</div>
+  <div class="stu-sub">Share a request privately with the team</div>
+  <form id="prayer-form" onsubmit="submitPrayer(event)">
+    <label class="pf-label" for="pr-name">Your name <span class="pf-opt">(optional)</span></label>
+    <input id="pr-name" class="pf-input" type="text" autocomplete="name" placeholder="Name">
+    <label class="pf-label" for="pr-req">Prayer request</label>
+    <textarea id="pr-req" class="pf-input pf-area" rows="5" placeholder="What can we pray for?"></textarea>
+    <button id="pr-submit" class="pf-btn" type="submit">Submit request</button>
+    <div id="pr-msg" class="pf-msg"></div>
+  </form>
+  <div class="pf-note">🔒 Requests are private — only team leaders see them.</div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
 <nav class="tabbar">
@@ -661,6 +687,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#0d9488" onclick="go('s',this)" aria-label="People to Pray For">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
     <span>Pray For</span>
+  </button>
+  <button class="tabitem" style="--accent:#7c3aed" onclick="go('r',this)" aria-label="Prayer Requests">
+    <svg viewBox="0 0 24 24"><path d="M20 4.5H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h4v3.5l4-3.5h8a1 1 0 0 0 1-1v-10a1 1 0 0 0-1-1z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+    <span>Requests</span>
   </button>
 </nav>
 <script>
@@ -789,6 +819,35 @@ prSummary();prayRender();
   var s=null;try{s=localStorage.getItem('updCollapsed');}catch(e){}
   apply(s!=='0'); // default closed; open only if the user explicitly opened it
 })();
+</script>
+<script>
+// Prayer requests -> Google Form (responses land in the linked Google Sheet).
+// Fill these from your form's "Get pre-filled link":
+//   action: https://docs.google.com/forms/d/e/<FORM_ID>/formResponse
+//   entryName / entryRequest: the entry.XXXX ids for each field
+const PRAYER_FORM = {
+  action: "",        // e.g. "https://docs.google.com/forms/d/e/FORM_ID/formResponse"
+  entryName: "",     // e.g. "entry.1111111111"
+  entryRequest: ""   // e.g. "entry.2222222222"
+};
+function submitPrayer(e){
+  e.preventDefault();
+  var req=document.getElementById('pr-req').value.trim();
+  var name=document.getElementById('pr-name').value.trim();
+  var msg=document.getElementById('pr-msg');
+  if(!req){msg.textContent='Please enter a prayer request.';msg.className='pf-msg err';return;}
+  if(!PRAYER_FORM.action||!PRAYER_FORM.entryRequest){
+    msg.textContent='The form isn’t connected yet — leaders are finishing setup.';msg.className='pf-msg err';return;
+  }
+  var data=new URLSearchParams();
+  if(PRAYER_FORM.entryName)data.append(PRAYER_FORM.entryName,name);
+  data.append(PRAYER_FORM.entryRequest,req);
+  var btn=document.getElementById('pr-submit');btn.disabled=true;btn.textContent='Sending…';
+  fetch(PRAYER_FORM.action,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+    .then(function(){document.getElementById('prayer-form').reset();msg.textContent='🙏 Thank you — your request was submitted.';msg.className='pf-msg ok';})
+    .catch(function(){msg.textContent='Something went wrong — please try again.';msg.className='pf-msg err';})
+    .finally(function(){btn.disabled=false;btn.textContent='Submit request';});
+}
 </script>
 </body>
 </html>

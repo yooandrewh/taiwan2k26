@@ -201,13 +201,28 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .td-phase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);}
 .td-note{font-size:13px;color:var(--text);line-height:1.35;}
 .td-bday{font-size:13px;white-space:nowrap;color:#ec4899;font-weight:600;}
+.tstrip{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 10px;scrollbar-width:none;}
+.tstrip::-webkit-scrollbar{display:none;}
+.tpill{flex:0 0 auto;width:46px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:7px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.tpill .pp-mo{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;}
+.tpill .pp-num{font-size:16px;font-weight:800;line-height:1.15;}
+.tpill .pp-dow{font-size:9px;color:var(--text3);text-transform:uppercase;}
+.tpill.on{background:#0ea5e9;border-color:#0ea5e9;}
+.tpill.on .pp-mo,.tpill.on .pp-num,.tpill.on .pp-dow{color:#fff;}
+.tday-head{margin:8px 0 10px;}
+.tday-title{font-size:19px;font-weight:800;}
+.tday-sub{font-size:12px;font-weight:600;margin-top:2px;}
+.tsrow{display:flex;gap:12px;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:5px;}
+.ts-t{font-size:12px;font-weight:700;color:#0d9488;min-width:66px;flex-shrink:0;}
+.ts-l{font-size:13px;color:var(--text);line-height:1.4;}
+.tday-win{font-size:11px;color:var(--text3);text-align:center;margin:2px 0 8px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v45 · Jun 19, 2026 · 3:55 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v46 · Jun 19, 2026 · 4:05 PM PST</div>
 </div>
 <div id="pane-a" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sa)">Team A</div><div class="updbox collapsed" style="border-left:3px solid #b91c1c"><div class="uhdr" style="color:#b91c1c">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
@@ -510,7 +525,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:55p</span><span class="utext">Added password-protected Trip tab (flights + Jun 29–Jul 30 day-by-day); fixed Main weeks to real dates — Street EV Jul 5–11, Prayer Week replaced by Departure (Jul 26–30, fly home Jul 30)</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
+<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 4:05p</span><span class="utext">Trip tab: tap a date to see that day's full schedule (6 AM–midnight) — pulls in VBS camp / TMF retreat / flight times per day</span></div><div class="urow"><span class="udate">Jun 19 · 3:55p</span><span class="utext">Added password-protected Trip tab (flights + Jun 29–Jul 30 day-by-day); fixed Main weeks to real dates — Street EV Jul 5–11, Prayer Week replaced by Departure (Jul 26–30, fly home Jul 30)</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
@@ -993,30 +1008,54 @@ function submitPrayer(e){
   ];
   document.getElementById('trip-weeks').innerHTML='<div class="trip-h">Weeks at a glance</div>'+
     WEEKS.map(function(x){return '<div class="tweek" style="border-left-color:'+x.c+'"><div style="flex:1"><div class="tw-when">'+x.w+'</div><div class="tw-title">'+x.t+'</div><div class="tw-detail">'+x.d+'</div></div></div>';}).join('');
-  var names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  // build Jun 29, 30, then Jul 1..30
-  var days=[{mo:'Jun',d:29},{mo:'Jun',d:30}];
-  for(var j=1;j<=30;j++)days.push({mo:'Jul',d:j});
-  function meta(mo,d){
-    if(mo==='Jun'&&d===29)return{p:'Departure',c:'#0ea5e9',n:'Arrive LAX by 8:00 PM (3h early) · OZ 203 dep 11:00 PM',b:'✈️'};
-    if(mo==='Jun')return{p:'In Transit',c:'#0ea5e9',n:'Overnight flight LAX → Seoul (ICN)',b:'✈️'};
-    if(d===1)return{p:'Arrival',c:'#64748b',n:'ICN 4:10 AM → TPE 10:25 AM · settle in',b:'✈️'};
-    if(d<=4)return{p:'Arrival & Prep',c:'#64748b',n:'Ministry prep · prayer walks · sightseeing'};
-    if(d<=11)return{p:'Outreach',c:'#b91c1c',n:'Campus or sports outreach (TBD)'};
-    if(d<=18)return{p:'Best Kids Camp',c:'#2563eb',n:(d>=13&&d<=17)?'BEST Kids Camp · 9:00–5:30':'Camp prep / rest'};
-    if(d<=25)return{p:'TMF',c:'#16a34a',n:(d>=20&&d<=24)?'TMF retreat':'Travel / rest',b:d===20?'🎂 Irene':(d===24?'🎂 Jean':'')};
-    if(d===30)return{p:'Departure',c:'#0ea5e9',n:'Depart TPE 4:55 PM → LAX 5:40 PM',b:'✈️'};
-    return{p:'Wrap-up',c:'#7c3aed',n:'Wrap-up / debrief / free'};
-  }
-  var html='<div class="trip-h">Day by Day · Jun 29 – Jul 30</div>';
-  days.forEach(function(day,i){
-    var m=meta(day.mo,day.d),dow=names[(1+i)%7];
-    html+='<div class="trip-day" style="border-left-color:'+m.c+'">'+
-      '<div class="td-date"><span class="td-mo">'+day.mo+'</span><span class="td-num">'+day.d+'</span><span class="td-dow">'+dow+'</span></div>'+
-      '<div class="td-body"><div class="td-phase">'+m.p+'</div><div class="td-note">'+m.n+'</div></div>'+
-      (m.b?'<div class="td-bday">'+m.b+'</div>':'')+'</div>';
-  });
-  document.getElementById('trip-days').innerHTML=html;
+})();
+var TRIP_DAYS=[{mo:'Jun',d:29},{mo:'Jun',d:30}];
+for(var _j=1;_j<=30;_j++)TRIP_DAYS.push({mo:'Jul',d:_j});
+var TRIP_DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function tripMeta(mo,d){
+  if(mo==='Jun'&&d===29)return{p:'Departure day',c:'#0ea5e9',b:'✈️'};
+  if(mo==='Jun')return{p:'In transit',c:'#0ea5e9',b:'✈️'};
+  if(d===1)return{p:'Arrival',c:'#64748b',b:'✈️'};
+  if(d<=4)return{p:'Arrival & Prep',c:'#64748b'};
+  if(d<=11)return{p:'Outreach',c:'#b91c1c'};
+  if(d<=18)return{p:'Best Kids Camp',c:'#2563eb'};
+  if(d<=25)return{p:'TMF Retreat',c:'#16a34a',b:d===20?'🎂 Irene':(d===24?'🎂 Jean':'')};
+  if(d===30)return{p:'Departure day',c:'#0ea5e9',b:'✈️'};
+  return{p:'Wrap-up',c:'#7c3aed'};
+}
+var TM=[['6:00 AM','Wake up'],['6:30 AM','Personal devotion / QT'],['7:30 AM','Breakfast']];
+var TN=[['10:30 PM','Team debrief / wind down'],['12:00 AM','Lights out']];
+function wrap(b){return TM.concat(b).concat(TN);}
+var VBSDAY=[['9:00 AM','Arrive & check-in'],['9:30 AM','Testimony'],['9:35 AM','Praise'],['9:50 AM','Skit / Dance'],['10:05 AM','Bible teaching'],['10:30 AM','Small group'],['11:00 AM','Craft'],['11:30 AM','Games'],['12:00 PM','Lunch'],['1:00 PM','Off-site activity'],['4:30 PM','Skit / Dance'],['4:40 PM','Closing worship'],['5:30 PM','Pickup'],['6:30 PM','Dinner']];
+var RETREATDAY=[['8:30 AM','Testimony'],['8:40 AM','Worship'],['8:50 AM','Devotional'],['9:05 AM','Personal QT'],['9:35 AM','Morning small group'],['10:30 AM','AM activity'],['12:00 PM','Lunch'],['1:00 PM','Skit'],['1:10 PM','Testimony'],['1:30 PM','PM activity'],['3:00 PM','Free time'],['5:30 PM','Dinner'],['6:30 PM','Worship · Skit · Sermon · Response'],['7:30 PM','Evening small group'],['8:00 PM','Fellowship']];
+function dayBlocks(day){
+  var mo=day.mo,d=day.d;
+  if(mo==='Jun'&&d===29)return[['8:00 PM','Arrive at LAX (3h before departure)'],['11:00 PM','OZ 203 — depart LAX → Seoul']];
+  if(mo==='Jun')return[['All day','In flight — LAX → Seoul (overnight)']];
+  if(d===1)return[['4:10 AM','Arrive Seoul (ICN)'],['8:35 AM','OZ 711 — depart Seoul'],['10:25 AM','Arrive Taipei (TPE)'],['Afternoon','Transfer · settle in'],['Evening','Dinner & rest']];
+  if(d<=4)return wrap([['9:00 AM','Devotion & ministry prep'],['Afternoon','Prayer walks'],['Evening','Sightseeing / team time']]);
+  if(d<=11)return wrap([['9:00 AM','Prep & prayer'],['Afternoon','Campus or sports outreach (TBD)'],['Evening','Debrief & fellowship']]);
+  if(d>=13&&d<=17)return wrap(VBSDAY);
+  if(d<=18)return wrap([['9:00 AM','Camp prep / rest'],['Afternoon','Team time'],['Evening','Debrief']]);
+  if(d===20)return wrap([['Afternoon','Travel & check-in'],['Evening','Intro · trip vision'],['6:30 PM','Evening session'],['8:00 PM','Fellowship']]);
+  if(d>=21&&d<=24)return wrap(RETREATDAY);
+  if(d<=25)return wrap([['9:00 AM','Travel / rest'],['Afternoon','Settle in'],['Evening','Free']]);
+  if(d===30)return[['Morning','Pack & check out'],['1:00 PM','Head to airport (TPE)'],['4:55 PM','OZ 714 — depart Taipei → Seoul'],['9:40 PM','OZ 204 — depart Seoul → LAX']];
+  return wrap([['9:00 AM','Wrap-up & debrief'],['Afternoon','Free / pack'],['Evening','Team dinner']]);
+}
+function selectDay(i){
+  var day=TRIP_DAYS[i],m=tripMeta(day.mo,day.d),dw=TRIP_DOW[(1+i)%7];
+  var pills=document.querySelectorAll('.tpill');
+  pills.forEach(function(p,k){p.classList.toggle('on',k===i);});
+  var rows=dayBlocks(day).map(function(b){return '<div class="tsrow"><div class="ts-t">'+b[0]+'</div><div class="ts-l">'+b[1]+'</div></div>';}).join('');
+  document.getElementById('trip-dayview').innerHTML='<div class="tday-head"><div class="tday-title">'+dw+', '+day.mo+' '+day.d+'</div><div class="tday-sub" style="color:'+m.c+'">'+m.p+(m.b?' · '+m.b:'')+'</div></div>'+rows;
+  var strip=document.querySelector('.tstrip');
+  if(strip&&pills[i])strip.scrollLeft=pills[i].offsetLeft-strip.clientWidth/2+pills[i].clientWidth/2;
+}
+(function(){
+  var strip=TRIP_DAYS.map(function(day,i){var dw=TRIP_DOW[(1+i)%7];return '<div class="tpill" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';}).join('');
+  document.getElementById('trip-days').innerHTML='<div class="trip-h">Day by Day · tap a date</div><div class="tstrip">'+strip+'</div><div class="tday-win">Each day runs 6:00 AM – 12:00 AM (midnight)</div><div id="trip-dayview"></div>';
+  selectDay(0);
 })();
 </script>
 </body>

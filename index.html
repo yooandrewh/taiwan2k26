@@ -145,6 +145,8 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .stu-badge{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;color:#fff;white-space:nowrap;}
 .b7{background:#ef4444;}.b6{background:#f97316;}.b5{background:#eab308;color:#1c1c1e;}.b4{background:#22c55e;}.b3{background:#06b6d4;}.b2{background:#3b82f6;}.b1{background:#6366f1;}.bk{background:#a855f7;}
 .stu-empty{text-align:center;color:var(--text3);font-size:14px;padding:32px 12px;}
+.pray-pt{background:var(--surface);border:1px solid var(--border);border-left:3px solid #0d9488;border-radius:11px;padding:12px 14px;margin-bottom:7px;font-size:14px;line-height:1.5;color:var(--text2);}
+.pray-intro{font-size:13px;color:var(--text2);line-height:1.55;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:6px;}
 /* ---- iOS bottom tab bar ---- */
 :root{--bar:rgba(250,250,247,0.82);}
 @media(prefers-color-scheme:dark){:root{--bar:rgba(18,18,15,0.82);}}
@@ -179,7 +181,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v43 · Jun 19, 2026 · 3:14 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v44 · Jun 19, 2026 · 3:24 PM PST</div>
 </div>
 <div id="pane-a" class="pane"><div style="padding:12px 0 4px;font-size:22px;font-weight:700;color:var(--sa)">Team A</div><div class="updbox collapsed" style="border-left:3px solid #b91c1c"><div class="uhdr" style="color:#b91c1c">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
@@ -482,7 +484,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
+<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 6–10</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
@@ -650,13 +652,14 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <h2>Intensive Week Schedule · Jun 22–26</h2>
 <p class="note">Week immediately following Prep Week · days × hrs TBD</p></div>
 <div id="pane-s" class="pane">
-  <div class="stu-title">People to Pray For</div>
-  <div class="stu-sub">Lift up our students by name</div>
+  <div class="stu-title">Prayer</div>
+  <div class="stu-sub">What we're praying for — as a team, and for those we serve</div>
   <div class="stu-seg" id="pray-mode">
-    <button class="on" data-m="retreat" onclick="prayMode('retreat',this)">Retreat</button>
+    <button class="on" data-m="team" onclick="prayMode('team',this)">Our Team</button>
+    <button data-m="retreat" onclick="prayMode('retreat',this)">Retreat</button>
     <button data-m="vbs" onclick="prayMode('vbs',this)">VBS</button>
   </div>
-  <div class="stu-summary">
+  <div class="stu-summary" id="pray-summary">
     <div class="stu-c"><div class="n teal" id="pr-total">0</div><div class="l">Total</div></div>
     <div class="stu-c"><div class="n blue" id="pr-boys">0</div><div class="l">Boys</div></div>
     <div class="stu-c"><div class="n pink" id="pr-girls">0</div><div class="l">Girls</div></div>
@@ -769,7 +772,37 @@ const VBS=[
   {name:"Eric",gender:"m",grade:1},{name:"Deborah",gender:"f",grade:1},
   {name:"Papillon",gender:"f",grade:1}
 ];
-let prMode='retreat';
+const PRAYER_TOPICS=[
+  {cat:"Our Hearts (the team)",items:[
+    "Unity and love — that we would serve as one, quick to encourage and prefer one another",
+    "Humility — that we would decrease so that Christ increases",
+    "Dependence on God — that we would pray more than we plan and lean on the Spirit, not our gifts",
+    "Joy and stamina — energy for long days and a joy that points others to Jesus",
+    "Protection — that God would guard our hearts and our unity from discouragement and division",
+    "Bold, clear testimonies — that our words and stories would carry the gospel"
+  ]},
+  {cat:"Those We Serve",items:[
+    "Soft, open hearts in the VBS kids and the retreat youth",
+    "Salvation for the unbelievers and guests — that the seeds we plant would take root",
+    "The youth volunteers — that we would invest in them and they would grow as leaders",
+    "Real relationships — that we would be older brothers and sisters, not just program-runners",
+    "Lasting fruit — that what God begins this month would continue long after we leave"
+  ]},
+  {cat:"The Four Weeks",items:[
+    "Street EV — courage to follow God's leading and build genuine friendships",
+    "VBS / BEST Camp — that every story, song, craft, and game would reveal who God is",
+    "Youth Retreat — unity in the small groups and a deeper encounter with our faithful God",
+    "Prayer Week — that the whole church would be stirred to seek God"
+  ]},
+  {cat:"Practical & Provision",items:[
+    "Safety and health — travel, food, weather, and real rest for everyone",
+    "Partnership with Friendship Presbyterian Church and the host families",
+    "Language and culture — clear communication and sensitivity to the people",
+    "Preparation — that dances, skits, crafts, lessons, and testimonies would come together",
+    "Provision — finances, supplies sourced in Taiwan, and every logistical detail"
+  ]}
+];
+let prMode='team';
 function gradeOrd(g){return g===0?'Kindergarten':(["","1st","2nd","3rd","4th","5th","6th","7th"][g]+' Grade');}
 function prSummary(){
   let total,boys,girls;
@@ -779,11 +812,27 @@ function prSummary(){
   document.getElementById('pr-boys').textContent=boys;
   document.getElementById('pr-girls').textContent=girls;
 }
-function prayMode(m,btn){prMode=m;document.querySelectorAll('#pray-mode button').forEach(b=>b.classList.toggle('on',b===btn));prSummary();prayRender();}
+function prayMode(m,btn){
+  prMode=m;
+  document.querySelectorAll('#pray-mode button').forEach(b=>b.classList.toggle('on',b===btn));
+  var people=(m!=='team');
+  document.getElementById('pray-summary').style.display=people?'':'none';
+  document.getElementById('pray-search').style.display=people?'':'none';
+  if(people)prSummary();
+  prayRender();
+}
 function prayRender(){
-  const q=document.getElementById('pray-search').value.trim().toLowerCase();
   const wrap=document.getElementById('pray-list');
   let html='';
+  if(prMode==='team'){
+    html+='<div class="pray-intro">As one team, let’s keep these before God all month. Tap a tab above to pray for the retreat and VBS kids by name.</div>';
+    PRAYER_TOPICS.forEach(function(t){
+      html+='<div class="stu-gh">'+t.cat+'</div>';
+      t.items.forEach(function(it){html+='<div class="pray-pt">'+it+'</div>';});
+    });
+    wrap.innerHTML=html;return;
+  }
+  const q=document.getElementById('pray-search').value.trim().toLowerCase();
   if(prMode==='vbs'){
     let list=VBS.filter(s=>!q||s.name.toLowerCase().includes(q));
     if(!list.length){wrap.innerHTML='<div class="stu-empty">No names match your search.</div>';return;}
@@ -806,7 +855,7 @@ function prayRender(){
   wrap.innerHTML=html;
 }
 document.getElementById('pray-search').addEventListener('input',prayRender);
-prSummary();prayRender();
+prayMode('team',document.querySelector('#pray-mode button[data-m="team"]'));
 </script>
 <script>
 (function(){

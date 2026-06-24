@@ -73,6 +73,7 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .dbyd td.dk{font-weight:600;color:var(--text);white-space:nowrap;}
 @media(max-width:680px){.dbyd td.dk,.dbyd th:first-child,.dbyd th:nth-child(2),.dbyd td:first-child,.dbyd td:nth-child(2){position:sticky;background:var(--bg);z-index:1;}.dbyd td:first-child,.dbyd th:first-child{left:0;min-width:70px;}.dbyd td:nth-child(2),.dbyd th:nth-child(2){left:70px;min-width:60px;box-shadow:2px 0 4px rgba(0,0,0,0.1);}}
 .dbyd td.tbd{color:var(--text3);font-style:italic;}
+.dbyd td.redact{background:#1a1a1a;color:transparent;border-radius:3px;user-select:none;}
 .dbyd td.ca{background:var(--ra);font-weight:500;}
 .dbyd td.cb{background:var(--rb);font-weight:500;}
 .dbyd td.cc{background:var(--rc);font-weight:500;}
@@ -286,7 +287,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v65 · Jun 20, 2026 · 1:50 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v66 · Jun 20, 2026 · 1:52 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -668,7 +669,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </div><h2>VBS · Day-by-Day</h2>
 <div class="dbyd-scroll"><table class="dbyd">
 <tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>
-<tr style="height:22px"><td class="dk">9:30–9:35</td><td>Testimony</td><td>Grace</td><td>Owen</td><td>Janet</td><td>Rubin</td><td>Andrew Back</td></tr>
+<tr style="height:22px"><td class="dk">9:30–9:35</td><td>Testimony</td><td class="redact">Grace</td><td class="redact">Owen</td><td class="redact">Janet</td><td class="redact">Rubin</td><td class="redact">Andrew Back</td></tr>
 <tr style="height:27px"><td class="dk">9:35–9:50</td><td>Praise</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td></tr>
 <tr style="height:24px"><td class="dk">9:50–10:00</td><td>Skit/Dance</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
 <tr style="height:29px"><td class="dk">10:05–10:25</td><td>Bible Teach</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td></tr>
@@ -680,14 +681,14 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </table></div><h2>Retreat · Day-by-Day</h2>
 <div class="dbyd-scroll"><table class="dbyd">
 <tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>
-<tr style="height:24px"><td class="dk">8:30–8:40</td><td>Testimony #1</td><td class="tbd">—</td><td>Sammy</td><td>Jean</td><td>Becca</td><td>Esther</td></tr>
+<tr style="height:24px"><td class="dk">8:30–8:40</td><td>Testimony #1</td><td class="tbd">—</td><td class="redact">Sammy</td><td class="redact">Jean</td><td class="redact">Becca</td><td class="redact">Esther</td></tr>
 <tr style="height:24px"><td class="dk">8:40–8:50</td><td>Worship</td><td class="tbd">—</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
 <tr style="height:27px"><td class="dk">8:50–9:05</td><td>Devotional</td><td class="tbd">—</td><td class="cp">Andrew</td><td class="tbd">TBD</td><td class="tbd">TBD</td><td class="tbd">TBD</td></tr>
 <tr style="height:45px"><td class="dk">9:35–10:30</td><td>Morning SG</td><td class="tbd">—</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td></tr>
 <tr style="height:60px"><td class="dk">10:30–12:00</td><td>AM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cc">Team C</td><td class="ca">Team A</td><td class="cb">Team B</td></tr>
 <tr style="height:47px"><td class="dk">12:00–1:00</td><td>Lunch</td><td colspan="5" class="tbd" style="text-align:center">Lunch · all groups</td></tr>
 <tr style="height:24px"><td class="dk">1:00–1:10</td><td>Skit</td><td class="tbd">—</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-<tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td>Irene</td><td>Jane</td><td>Caleb</td><td>Keren</td></tr>
+<tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td class="redact">Irene</td><td class="redact">Jane</td><td class="redact">Caleb</td><td class="redact">Keren</td></tr>
 <tr style="height:60px"><td class="dk">1:30–3:00</td><td>PM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cb">Team B</td><td class="cc">Team C</td><td class="cg">Global</td></tr>
 <tr style="height:88px"><td class="dk">3:00–5:30</td><td>Free time</td><td colspan="5" class="tbd" style="text-align:center">Free time · all groups</td></tr>
 <tr style="height:27px"><td class="dk">6:30–6:45</td><td>Worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>

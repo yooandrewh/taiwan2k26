@@ -286,7 +286,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v63 · Jun 20, 2026 · 1:46 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v64 · Jun 20, 2026 · 1:47 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -687,11 +687,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <tr style="height:60px"><td class="dk">10:30–12:00</td><td>AM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cc">Team C</td><td class="ca">Team A</td><td class="cb">Team B</td></tr>
 <tr style="height:47px"><td class="dk">12:00–1:00</td><td>Lunch</td><td colspan="5" class="tbd" style="text-align:center">Lunch · all groups</td></tr>
 <tr style="height:24px"><td class="dk">1:00–1:10</td><td>Skit</td><td class="tbd">—</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-<tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td>Irene</td><td>Jane</td><td>Caleb</td><td class="tbd">TBD</td></tr>
+<tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td>Irene</td><td>Jane</td><td>Caleb</td><td>Keren</td></tr>
 <tr style="height:60px"><td class="dk">1:30–3:00</td><td>PM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cb">Team B</td><td class="cc">Team C</td><td class="cg">Global</td></tr>
 <tr style="height:88px"><td class="dk">3:00–5:30</td><td>Free time</td><td colspan="5" class="tbd" style="text-align:center">Free time · all groups</td></tr>
-<tr style="height:24px"><td class="dk">6:30–6:40</td><td>Testimony</td><td class="tbd">—</td><td class="tbd">—</td><td class="tbd">—</td><td class="tbd">—</td><td>Keren</td></tr>
-<tr style="height:27px"><td class="dk">6:40–6:55</td><td>Worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
+<tr style="height:27px"><td class="dk">6:30–6:45</td><td>Worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
 <tr style="height:22px"><td class="dk">6:45–6:50</td><td>Skit</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
 <tr style="height:34px"><td class="dk">6:50–7:20</td><td>Sermon</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td></tr>
 <tr style="height:24px"><td class="dk">7:20–7:30</td><td>Response worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
@@ -1109,7 +1108,7 @@ var RET_AM={21:'Team A',22:'Team C',23:'Team A',24:'Team B'};
 var RET_PM={21:'Team A',22:'Team B',23:'Team C',24:'Global'};
 var RET_DEVO={21:'Andrew'};
 var RET_T1={21:'Sammy',22:'Jean',23:'Becca',24:'Esther'};
-var RET_T2={21:'Irene',22:'Jane',23:'Caleb'};
+var RET_T2={21:'Irene',22:'Jane',23:'Caleb',24:'Keren'};
 function retreatDay(d){return [
   ['8:30 AM','Testimony #1',RET_T1[d]||'TBD'],
   ['8:40 AM','Worship','Worship Team'],
@@ -1123,8 +1122,7 @@ function retreatDay(d){return [
   ['1:30 PM','PM activity',RET_PM[d]||'TBD'],
   ['3:00 PM','Free time'],
   ['5:30 PM','Dinner'],
-  ['6:30 PM',d===24?'Testimony — Keren':'Skit',d===24?'':'Global'],
-  [d===24?'6:40 PM':'6:35 PM','Worship · Sermon · Response','Sermon: Andrew'],
+  ['6:30 PM','Skit · Worship · Sermon · Response','Sermon: Andrew'],
   ['7:30 PM','Evening small group','Global · Qs: Team A'],
   ['8:00 PM','Fellowship']
 ];}

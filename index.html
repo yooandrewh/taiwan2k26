@@ -163,6 +163,7 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .ht-fpc{background:#eff6ff;color:#2563eb;}
 .ht-pnb{background:#fef2f2;color:#b91c1c;}
 .ht-bday{background:#fff7ed;color:#c2410c;}
+.ht-born{background:var(--border);color:var(--text3);}
 .ht-age{background:var(--border);color:var(--text2);}
 @media(prefers-color-scheme:dark){
 .ht-ret{background:#422006;color:#fde68a;}
@@ -310,7 +311,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v70 · Jun 25, 2026 · 1:00 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v72 · Jun 25, 2026 · 2:00 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -891,7 +892,7 @@ const RETREAT=[
   {name:"Josiah Smith",group:"boys",age:12},
   {name:"Jude Spencer",group:"boys",age:12,ret:true},
   {name:"Claire Kim",group:"girls",age:12,ret:true},
-  {name:"Abby Kong",group:"girls"},
+  {name:"Abby Kong",group:"girls",age:12,bday:"b. ~Oct 2013"},
   {name:"Maria Sawatzky",group:"girls",age:12},
   {name:"Owen Nam",group:"boys",age:13},
   {name:"Ezra Biers",group:"boys",age:13,ret:true},
@@ -905,9 +906,9 @@ const RETREAT=[
   {name:"Timothy Kim",group:"boys",age:15,ret:true},
   {name:"Justus Shultz",group:"boys",age:16,ret:true},
   {name:"Lydia Huang",group:"girls",age:16,ret:true},
-  {name:"Luke Denham",group:"boys"},
+  {name:"Luke Denham",group:"boys",age:16,bday:"b. ~2009"},
   {name:"Timothy Keller",group:"boys",age:17},
-  {name:"Jaydon Shultz",group:"boys",ret:true},
+  {name:"Jaydon Shultz",group:"boys",age:17,ret:true,bday:"b. ~2008-09"},
   {name:"Anna Huang",group:"girls",age:18,ret:true}
 ];
 // VBS 2026 — student volunteers (age 12-18, youth helper fee)
@@ -1016,7 +1017,7 @@ const PRAYER_TOPICS=[
   ]}
 ];
 let prMode='team';
-function gradeOrd(g){return g===0?'Kindergarten':(["","1st","2nd","3rd","4th","5th","6th","7th"][g]+' Grade');}
+function gradeOrd(g){if(g===0)return 'Kindergarten';var l=["","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th","11th","12th"];return (l[g]||g+'th')+' Grade';}
 function prSummary(){
   let total,boys,girls;
   if(prMode==='vbs'){total=VBS.length;boys=VBS.filter(s=>s.gender==='m').length;girls=VBS.filter(s=>s.gender==='f').length;}
@@ -1035,15 +1036,26 @@ function prayMode(m,btn){
   prayRender();
 }
 var ETHNIC=[
-  {label:'White / European',n:21,c:'#2563eb'},
-  {label:'Chinese',n:7,c:'#b91c1c'},
+  {label:'White / European',n:15,c:'#2563eb'},
+  {label:'Chinese',n:5,c:'#b91c1c'},
   {label:'Korean',n:4,c:'#16a34a'}
 ];
 function ethnicCard(){
-  var total=ETHNIC.reduce(function(s,e){return s+e.n;},0),acc=0,stops='';
-  ETHNIC.forEach(function(e){var f=acc/total*100,t=(acc+e.n)/total*100;stops+=(stops?',':'')+e.c+' '+f.toFixed(1)+'% '+t.toFixed(1)+'%';acc+=e.n;});
+  var total=ETHNIC.reduce(function(s,e){return s+e.n;},0);
   var legend=ETHNIC.map(function(e){return '<div class="eth-row"><span class="eth-dot" style="background:'+e.c+'"></span><span class="eth-lbl">'+e.label+'</span><span class="eth-n">'+e.n+' · '+Math.round(e.n/total*100)+'%</span></div>';}).join('');
-  return '<div class="eth-card"><div class="eth-h">Ethnicity · retreat youth ('+total+')</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+stops+')"><div class="eth-hole"></div></div><div class="eth-legend">'+legend+'</div></div></div>';
+  return '<div class="eth-card"><div class="eth-h">Ethnicity · retreat youth ('+total+')</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+makeDonut(ETHNIC,total)+')"><div class="eth-hole"></div></div><div class="eth-legend">'+legend+'</div></div></div>';
+}
+function retreatStatsCard(){
+  var total=RETREAT.length,boys=RETREAT.filter(s=>s.group==='boys').length,girls=RETREAT.filter(s=>s.group==='girls').length,rets=RETREAT.filter(s=>s.ret).length;
+  var strip='<div class="eth-card"><div class="eth-h">Retreat at a glance</div><div class="vbs-stats"><div class="vs-cell"><div class="vs-num">'+total+'</div><div class="vs-lbl">students</div></div><div class="vs-cell"><div class="vs-num">'+boys+'·'+girls+'</div><div class="vs-lbl">M · F</div></div><div class="vs-cell"><div class="vs-num">'+rets+'</div><div class="vs-lbl">returning</div></div></div></div>';
+  var gc={},GC=['#f97316','#eab308','#22c55e','#14b8a6','#3b82f6','#8b5cf6','#ec4899','#94a3b8'];
+  RETREAT.forEach(function(s){if(s.age){var g=s.age-5;gc[g]=(gc[g]||0)+1;}});
+  var gkeys=Object.keys(gc).map(Number).sort((a,b)=>a-b);
+  var gdata=gkeys.map(function(g,i){return {label:gradeOrd(g),n:gc[g],c:GC[i%GC.length]};});
+  var withAge=gdata.reduce(function(s,e){return s+e.n;},0);
+  var gleg=gdata.map(function(e){return '<div class="eth-row"><span class="eth-dot" style="background:'+e.c+'"></span><span class="eth-lbl">'+e.label+'</span><span class="eth-n">'+e.n+'</span></div>';}).join('');
+  var grade='<div class="eth-card"><div class="eth-h">Grade breakdown · Retreat ('+withAge+' with known age)</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+makeDonut(gdata,withAge)+')"><div class="eth-hole"></div></div><div class="eth-legend">'+gleg+'</div></div></div>';
+  return strip+grade+ethnicCard();
 }
 var VBS_ETH=[
   {label:'Chinese / Taiwanese',n:58,c:'#b91c1c'},
@@ -1057,19 +1069,31 @@ var VBS_HOW=[
   {label:'Returning / past attendee',n:3,c:'#d97706'},
   {label:'Other',n:1,c:'#94a3b8'}
 ];
+function makeDonut(data,total){
+  var acc=0,stops='';
+  data.forEach(function(e){var f=acc/total*100,t=(acc+e.n)/total*100;stops+=(stops?',':'')+e.c+' '+f.toFixed(1)+'% '+t.toFixed(1)+'%';acc+=e.n;});
+  return stops;
+}
 function vbsStatsCard(){
-  // ethnicity donut (63 students)
-  var et=VBS_ETH.reduce(function(s,e){return s+e.n;},0),acc=0,stops='';
-  VBS_ETH.forEach(function(e){var f=acc/et*100,t=(acc+e.n)/et*100;stops+=(stops?',':'')+e.c+' '+f.toFixed(1)+'% '+t.toFixed(1)+'%';acc+=e.n;});
+  // stat strip
+  var boys=VBS.filter(s=>s.gender==='m').length,girls=VBS.filter(s=>s.gender==='f').length,rets=VBS.filter(s=>s.ret).length;
+  var strip='<div class="eth-card"><div class="eth-h">VBS at a glance</div><div class="vbs-stats"><div class="vs-cell"><div class="vs-num">63</div><div class="vs-lbl">students</div></div><div class="vs-cell"><div class="vs-num">'+boys+'·'+girls+'</div><div class="vs-lbl">M · F</div></div><div class="vs-cell"><div class="vs-num">6</div><div class="vs-lbl">volunteers</div></div><div class="vs-cell"><div class="vs-num">'+rets+'</div><div class="vs-lbl">returning</div></div></div></div>';
+  // grade donut
+  var gc={},GC=['#f97316','#eab308','#22c55e','#14b8a6','#3b82f6','#8b5cf6','#ec4899','#94a3b8'];
+  VBS.forEach(function(s){gc[s.grade]=(gc[s.grade]||0)+1;});
+  var gkeys=Object.keys(gc).map(Number).sort((a,b)=>b-a);
+  var gdata=gkeys.map(function(g,i){return {label:gradeOrd(g),n:gc[g],c:GC[i%GC.length]};});
+  var gleg=gdata.map(function(e){return '<div class="eth-row"><span class="eth-dot" style="background:'+e.c+'"></span><span class="eth-lbl">'+e.label+'</span><span class="eth-n">'+e.n+'</span></div>';}).join('');
+  var grade='<div class="eth-card"><div class="eth-h">Grade breakdown · VBS (63 students)</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+makeDonut(gdata,63)+')"><div class="eth-hole"></div></div><div class="eth-legend">'+gleg+'</div></div></div>';
+  // ethnicity donut
+  var et=VBS_ETH.reduce(function(s,e){return s+e.n;},0);
   var elg=VBS_ETH.map(function(e){return '<div class="eth-row"><span class="eth-dot" style="background:'+e.c+'"></span><span class="eth-lbl">'+e.label+'</span><span class="eth-n">'+e.n+' · '+Math.round(e.n/et*100)+'%</span></div>';}).join('');
-  var pie='<div class="eth-card"><div class="eth-h">Ethnicity · VBS students ('+et+')</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+stops+')"><div class="eth-hole"></div></div><div class="eth-legend">'+elg+'</div></div><div class="eth-note">Confirmed by Chinese legal name + surname. 6 student volunteers: 3 Korean · 2 Chinese · 1 White.</div></div>';
-  // how-found bars (54 registrations)
+  var pie='<div class="eth-card"><div class="eth-h">Ethnicity · VBS students ('+et+')</div><div class="eth-flex"><div class="eth-pie" style="background:conic-gradient('+makeDonut(VBS_ETH,et)+')"><div class="eth-hole"></div></div><div class="eth-legend">'+elg+'</div></div></div>';
+  // how-found bars
   var ht=VBS_HOW.reduce(function(s,e){return s+e.n;},0);
   var bars=VBS_HOW.map(function(e){var p=Math.round(e.n/ht*100);return '<div class="hb-row"><div class="hb-top"><span class="hb-lbl">'+e.label+'</span><span class="hb-n">'+e.n+' · '+p+'%</span></div><div class="hb-track"><div class="hb-fill" style="width:'+p+'%;background:'+e.c+'"></div></div></div>';}).join('');
-  var how='<div class="eth-card"><div class="eth-h">How families found out ('+ht+' registrations)</div>'+bars+'<div class="eth-note">98% came through relationships — friends, church, and referrals. None from advertising.</div></div>';
-  // stat strip
-  var strip='<div class="eth-card"><div class="eth-h">VBS at a glance</div><div class="vbs-stats"><div class="vs-cell"><div class="vs-num">63</div><div class="vs-lbl">students</div></div><div class="vs-cell"><div class="vs-num">30·33</div><div class="vs-lbl">M · F</div></div><div class="vs-cell"><div class="vs-num">6</div><div class="vs-lbl">volunteers</div></div><div class="vs-cell"><div class="vs-num">4</div><div class="vs-lbl">returning</div></div></div></div>';
-  return strip+pie+how;
+  var how='<div class="eth-card"><div class="eth-h">How families found out ('+ht+' registrations)</div>'+bars+'</div>';
+  return strip+grade+pie+how;
 }
 function prayRender(){
   const wrap=document.getElementById('pray-list');
@@ -1115,19 +1139,29 @@ function prayRender(){
   }else{
     let list=RETREAT.filter(s=>!q||s.name.toLowerCase().includes(q));
     if(!list.length){wrap.innerHTML='<div class="stu-empty">No names match your search.</div>';return;}
-    if(!q)html+=ethnicCard();
-    [['boys','Boys'],['girls','Girls']].forEach(function(pair){
-      const grp=list.filter(s=>s.group===pair[0]);
+    if(!q)html+=retreatStatsCard();
+    var rGrades=[...new Set(list.filter(s=>s.age).map(s=>s.age-5))].sort((a,b)=>b-a);
+    rGrades.forEach(function(g){
+      const grp=list.filter(s=>s.age&&s.age-5===g);
       if(!grp.length)return;
-      html+='<div class="stu-gh">'+pair[1]+' · '+grp.length+'</div>';
+      html+='<div class="stu-gh">'+gradeOrd(g)+' · '+grp.length+'</div>';
       grp.forEach(s=>{
         var tags='';
         if(s.ret) tags+='<span class="htag ht-ret">★ returning</span>';
-        if(s.age) tags+='<span class="htag ht-age">age '+s.age+'</span>';
-        if(s.bday) tags+='<span class="htag ht-bday">'+s.bday+'</span>';
-        html+='<div class="stu-row"><span class="stu-dot '+(pair[0]==='boys'?'m':'f')+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
+        if(s.bday) tags+='<span class="htag '+(s.bday.startsWith('b.')?'ht-born':'ht-bday')+'">'+s.bday+'</span>';
+        html+='<div class="stu-row"><span class="stu-dot '+(s.group==='boys'?'m':'f')+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
       });
     });
+    var noAge=list.filter(s=>!s.age);
+    if(noAge.length){
+      html+='<div class="stu-gh">Age Unknown · '+noAge.length+'</div>';
+      noAge.forEach(s=>{
+        var tags='';
+        if(s.ret) tags+='<span class="htag ht-ret">★ returning</span>';
+        if(s.bday) tags+='<span class="htag ht-born">'+s.bday+'</span>';
+        html+='<div class="stu-row"><span class="stu-dot '+(s.group==='boys'?'m':'f')+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
+      });
+    }
   }
   wrap.innerHTML=html;
 }

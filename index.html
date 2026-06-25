@@ -305,13 +305,31 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .rq-notif{margin-top:24px;background:var(--surface);border:1px solid var(--border);border-left:4px solid #16a34a;border-radius:12px;padding:13px;}
 .rq-notif-h{font-size:14px;font-weight:700;}
 .rq-notif-sub{font-size:12px;color:var(--text3);margin:2px 0 10px;}
+/* ---- Small Groups tab ---- */
+.sg-section{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin:14px 0 8px 2px;}
+.sg-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;}
+.sg-head{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border);}
+.sg-id{font-size:13px;font-weight:800;color:#fff;border-radius:7px;padding:3px 9px;flex-shrink:0;}
+.sg-id.boy{background:#2563eb;}.sg-id.girl{background:#db2777;}
+.sg-headname{font-size:14px;font-weight:700;flex:1;}
+.sg-count{font-size:11px;color:var(--text3);white-space:nowrap;}
+.sg-staff{padding:8px 14px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.sg-role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);min-width:58px;flex-shrink:0;}
+.sg-person{font-size:12px;font-weight:600;color:var(--text);background:var(--surface2);border-radius:6px;padding:2px 8px;}
+.sg-person.vol{background:var(--rn);}
+.sg-kids{padding:8px 14px 12px;}
+.sg-kid{display:flex;align-items:center;gap:8px;padding:3px 0;}
+.sg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sg-dot.m{background:#2563eb;}.sg-dot.f{background:#db2777;}
+.sg-kname{font-size:14px;color:var(--text);flex:1;}
+.sg-gr{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;white-space:nowrap;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v72 · Jun 25, 2026 · 2:00 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v73 · Jun 25, 2026 · 3:30 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -806,6 +824,15 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="trip-flights"></div>
   <div id="trip-weeks"></div>
 </div>
+<div id="pane-groups" class="pane">
+  <div class="stu-title" style="color:#2563eb">VBS Small Groups</div>
+  <div class="stu-sub">Mock groups · Jul 13–17 · 5 boy groups · 7 girl groups</div>
+  <div class="stu-seg" id="sg-seg">
+    <button class="on" onclick="sgMode('boys',this)">Boys (5)</button>
+    <button onclick="sgMode('girls',this)">Girls (7)</button>
+  </div>
+  <div id="sg-list"></div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
 <div id="trip-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
@@ -827,6 +854,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#0d9488" onclick="go('s',this)" aria-label="People to Pray For">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
     <span>Pray For</span>
+  </button>
+  <button class="tabitem" style="--accent:#2563eb" onclick="go('groups',this)" aria-label="Small Groups">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
+    <span>Groups</span>
   </button>
   <button class="tabitem" style="--accent:#0ea5e9" onclick="tryTrip(this)" aria-label="Trip">
     <svg viewBox="0 0 24 24"><path d="M21 15.5 14 12V5a2 2 0 0 0-4 0v7l-7 3.5V18l7-2v3.5l-2 1.5V22l4-1 4 1v-1l-2-1.5V16l7 2z"/></svg>
@@ -1167,6 +1198,85 @@ function prayRender(){
 }
 document.getElementById('pray-search').addEventListener('input',prayRender);
 prayMode('team',document.querySelector('#pray-mode button[data-m="team"]'));
+</script>
+<script>
+const VBS_SG={
+  boys:[
+    {id:"B1",leader:{name:"Caleb Su",age:21},volunteers:[{name:"Roba",age:18}],
+     kids:[{name:"Hao-Chen Li",g:6},{name:"Ezra",g:6},{name:"Zephyr Kao",g:5},{name:"Harry",g:5},{name:"Jeremy",g:5},{name:"Ryan Lin",g:5}]},
+    {id:"B2",leader:{name:"Jean Kim",age:20},volunteers:[{name:"Timothy Kim",age:15}],
+     kids:[{name:"Mike",g:5},{name:"Patrick",g:5},{name:"Wayne",g:4},{name:"Atlas Kao",g:4},{name:"Len",g:4},{name:"Levi",g:4}]},
+    {id:"B3",leader:{name:"Andrew Back",age:19},volunteers:[{name:"Ethan Nam",age:14}],
+     kids:[{name:"Paul",g:4},{name:"Meek Lo",g:4},{name:"Jacob Yang",g:4},{name:"Ansel",g:3},{name:"Richard Hsia",g:3},{name:"Freddie",g:3},{name:"Liam Chang",g:3}]},
+    {id:"B4",leader:{name:"Rubin Jang",age:19},volunteers:[{name:"Lane Hartshorne",age:14}],
+     kids:[{name:"Alvin Fu",g:2},{name:"Mumu Hu",g:2},{name:"Jeremiah",g:2},{name:"Caleb Guo",g:2},{name:"Dylan Lin",g:2},{name:"Yann Chiu",g:2}]},
+    {id:"B5",leader:{name:"Owen Lee",age:19},volunteers:[{name:"Owen Nam",age:13},{name:"Owen Wu",age:12}],
+     kids:[{name:"Oli",g:1},{name:"Daniel Hu",g:1},{name:"Elijah Kwok",g:1},{name:"Sunny",g:1},{name:"Asher",g:0}]}
+  ],
+  girls:[
+    {id:"G1",leader:{name:"Esther Yang",age:21},
+     kids:[{name:"Est-elle",g:7},{name:"Hsin Hsin",g:7},{name:"Claire",g:7},{name:"Grace Hartshorne",g:7},{name:"Eliana Wan",g:6}]},
+    {id:"G2",leader:{name:"Becca Park",age:21},
+     kids:[{name:"Ruhamah",g:6},{name:"Queenie",g:6},{name:"Yuqi Chiu",g:5},{name:"Amber Yang",g:5},{name:"Adeline",g:5}]},
+    {id:"G3",leader:{name:"Jane Kim",age:20},
+     kids:[{name:"Ellery",g:5},{name:"Kara",g:5},{name:"Grace",g:5},{name:"Stephanie",g:5}]},
+    {id:"G4",leader:{name:"Sammy Taing",age:20},
+     kids:[{name:"Poppy Lo",g:4},{name:"Doughnuts",g:4},{name:"Hannah Jiang",g:4},{name:"Jessie Hu",g:4},{name:"Doris",g:4}]},
+    {id:"G5",leader:{name:"Irene Song",age:19},
+     kids:[{name:"Freja",g:3},{name:"Jyshelle Pak",g:3},{name:"Emmeline",g:3},{name:"Celia",g:3}]},
+    {id:"G6",leader:{name:"Janet Phee",age:18},
+     kids:[{name:"Dorcas Chen",g:2},{name:"Olivia",g:2},{name:"Yu-Chen Li",g:2},{name:"Avery Nam",g:2},{name:"Gemma Benson",g:2}]},
+    {id:"G7",leader:{name:"Grace Yoon",age:18},
+     kids:[{name:"Riley",g:1},{name:"Elonnie Pak",g:1},{name:"Deborah Lo",g:1},{name:"Papillon Lo",g:1},{name:"Abigail Guo",g:0}]}
+  ]
+};
+var sgCurrent='boys';
+var GR_COLORS={7:'#ef4444',6:'#f97316',5:'#eab308',4:'#22c55e',3:'#06b6d4',2:'#3b82f6',1:'#6366f1',0:'#a855f7'};
+function grShort(g){return g===0?'K':g+'th';}
+function sgMode(m,btn){
+  sgCurrent=m;
+  document.querySelectorAll('#sg-seg button').forEach(b=>b.classList.toggle('on',b===btn));
+  sgRender();
+}
+function sgRender(){
+  var groups=VBS_SG[sgCurrent];
+  var isGirl=(sgCurrent==='girls');
+  var dotCls=isGirl?'f':'m';
+  var idCls=isGirl?'girl':'boy';
+  var html='';
+  groups.forEach(function(grp){
+    var kidCount=grp.kids.length;
+    html+='<div class="sg-card">';
+    html+='<div class="sg-head">';
+    html+='<span class="sg-id '+idCls+'">'+grp.id+'</span>';
+    html+='<span class="sg-headname">'+grp.leader.name+'</span>';
+    html+='<span class="sg-count">'+kidCount+' kids</span>';
+    html+='</div>';
+    // staff row
+    html+='<div class="sg-staff">';
+    html+='<span class="sg-role">Leader</span><span class="sg-person">'+grp.leader.name+' <span style="color:var(--text3);font-weight:400">'+grp.leader.age+'</span></span>';
+    if(grp.volunteers&&grp.volunteers.length){
+      html+='</div><div class="sg-staff"><span class="sg-role">Vol.</span>';
+      grp.volunteers.forEach(function(v){
+        html+='<span class="sg-person vol">'+v.name+' <span style="color:var(--text3);font-weight:400">'+v.age+'</span></span>';
+      });
+    }
+    html+='</div>';
+    // kids
+    html+='<div class="sg-kids">';
+    grp.kids.forEach(function(k){
+      var grColor=GR_COLORS[k.g]||'#888';
+      html+='<div class="sg-kid">';
+      html+='<span class="sg-dot '+dotCls+'"></span>';
+      html+='<span class="sg-kname">'+k.name+'</span>';
+      html+='<span class="sg-gr" style="background:'+grColor+'">'+grShort(k.g)+'</span>';
+      html+='</div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('sg-list').innerHTML=html;
+}
+sgRender();
 </script>
 <script>
 (function(){

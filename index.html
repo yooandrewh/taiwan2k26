@@ -323,13 +323,15 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-dot.m{background:#2563eb;}.sg-dot.f{background:#db2777;}
 .sg-kname{font-size:14px;color:var(--text);flex:1;}
 .sg-gr{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;white-space:nowrap;}
+.sg-blacked{display:inline-block;width:88px;height:13px;background:#1a1a1a;border-radius:2px;vertical-align:middle;}
+@media(prefers-color-scheme:dark){.sg-blacked{background:#c4c3bc;}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v73 · Jun 25, 2026 · 3:30 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v74 · Jun 25, 2026 · 3:45 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -825,12 +827,17 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="trip-weeks"></div>
 </div>
 <div id="pane-groups" class="pane">
-  <div class="stu-title" style="color:#2563eb">VBS Small Groups</div>
-  <div class="stu-sub">Mock groups · Jul 13–17 · 5 boy groups · 7 girl groups</div>
-  <div class="stu-seg" id="sg-seg">
-    <button class="on" onclick="sgMode('boys',this)">Boys (5)</button>
-    <button onclick="sgMode('girls',this)">Girls (7)</button>
+  <div class="stu-title" style="color:#2563eb">Small Groups</div>
+  <div class="stu-sub">Mock assignments by age</div>
+  <div class="stu-seg" id="sg-event">
+    <button class="on" onclick="sgEvent('vbs',this)">VBS · Jul 13–17</button>
+    <button onclick="sgEvent('retreat',this)">Retreat · Jul 20–24</button>
   </div>
+  <div class="stu-seg" id="sg-seg" style="margin-top:6px">
+    <button class="on" onclick="sgMode('boys',this)">Boys</button>
+    <button onclick="sgMode('girls',this)">Girls</button>
+  </div>
+  <div id="sg-sub" style="font-size:12px;color:var(--text3);margin:6px 2px 10px"></div>
   <div id="sg-list"></div>
 </div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
@@ -1202,67 +1209,104 @@ prayMode('team',document.querySelector('#pray-mode button[data-m="team"]'));
 <script>
 const VBS_SG={
   boys:[
-    {id:"B1",leader:{name:"Caleb Su",age:21},volunteers:[{name:"Roba",age:18}],
+    {id:"B1",leads:[{name:"Caleb Su",age:21,role:"L"},{name:"Roba",age:18,role:"V"}],
      kids:[{name:"Hao-Chen Li",g:6},{name:"Ezra",g:6},{name:"Zephyr Kao",g:5},{name:"Harry",g:5},{name:"Jeremy",g:5},{name:"Ryan Lin",g:5}]},
-    {id:"B2",leader:{name:"Jean Kim",age:20},volunteers:[{name:"Timothy Kim",age:15}],
+    {id:"B2",leads:[{name:"Jean Kim",age:20,role:"L"},{name:"Timothy Kim",age:15,role:"V"}],
      kids:[{name:"Mike",g:5},{name:"Patrick",g:5},{name:"Wayne",g:4},{name:"Atlas Kao",g:4},{name:"Len",g:4},{name:"Levi",g:4}]},
-    {id:"B3",leader:{name:"Andrew Back",age:19},volunteers:[{name:"Ethan Nam",age:14}],
+    {id:"B3",leads:[{name:"Andrew Back",age:19,role:"L"},{name:"Ethan Nam",age:14,role:"V"}],
      kids:[{name:"Paul",g:4},{name:"Meek Lo",g:4},{name:"Jacob Yang",g:4},{name:"Ansel",g:3},{name:"Richard Hsia",g:3},{name:"Freddie",g:3},{name:"Liam Chang",g:3}]},
-    {id:"B4",leader:{name:"Rubin Jang",age:19},volunteers:[{name:"Lane Hartshorne",age:14}],
+    {id:"B4",leads:[{name:"Rubin Jang",age:19,role:"L"},{name:"Lane Hartshorne",age:14,role:"V"}],
      kids:[{name:"Alvin Fu",g:2},{name:"Mumu Hu",g:2},{name:"Jeremiah",g:2},{name:"Caleb Guo",g:2},{name:"Dylan Lin",g:2},{name:"Yann Chiu",g:2}]},
-    {id:"B5",leader:{name:"Owen Lee",age:19},volunteers:[{name:"Owen Nam",age:13},{name:"Owen Wu",age:12}],
+    {id:"B5",leads:[{name:"Owen Lee",age:19,role:"L"},{name:"Owen Nam",age:13,role:"V"},{name:"Owen Wu",age:12,role:"V"}],
      kids:[{name:"Oli",g:1},{name:"Daniel Hu",g:1},{name:"Elijah Kwok",g:1},{name:"Sunny",g:1},{name:"Asher",g:0}]}
   ],
   girls:[
-    {id:"G1",leader:{name:"Esther Yang",age:21},
+    {id:"G1",leads:[{name:"Esther Yang",age:21,role:"L"}],
      kids:[{name:"Est-elle",g:7},{name:"Hsin Hsin",g:7},{name:"Claire",g:7},{name:"Grace Hartshorne",g:7},{name:"Eliana Wan",g:6}]},
-    {id:"G2",leader:{name:"Becca Park",age:21},
+    {id:"G2",leads:[{name:"Becca Park",age:21,role:"L"}],
      kids:[{name:"Ruhamah",g:6},{name:"Queenie",g:6},{name:"Yuqi Chiu",g:5},{name:"Amber Yang",g:5},{name:"Adeline",g:5}]},
-    {id:"G3",leader:{name:"Jane Kim",age:20},
+    {id:"G3",leads:[{name:"Jane Kim",age:20,role:"L"}],
      kids:[{name:"Ellery",g:5},{name:"Kara",g:5},{name:"Grace",g:5},{name:"Stephanie",g:5}]},
-    {id:"G4",leader:{name:"Sammy Taing",age:20},
+    {id:"G4",leads:[{name:"Sammy Taing",age:20,role:"L"}],
      kids:[{name:"Poppy Lo",g:4},{name:"Doughnuts",g:4},{name:"Hannah Jiang",g:4},{name:"Jessie Hu",g:4},{name:"Doris",g:4}]},
-    {id:"G5",leader:{name:"Irene Song",age:19},
+    {id:"G5",leads:[{name:"Irene Song",age:19,role:"L"}],
      kids:[{name:"Freja",g:3},{name:"Jyshelle Pak",g:3},{name:"Emmeline",g:3},{name:"Celia",g:3}]},
-    {id:"G6",leader:{name:"Janet Phee",age:18},
+    {id:"G6",leads:[{name:"Janet Phee",age:18,role:"L"}],
      kids:[{name:"Dorcas Chen",g:2},{name:"Olivia",g:2},{name:"Yu-Chen Li",g:2},{name:"Avery Nam",g:2},{name:"Gemma Benson",g:2}]},
-    {id:"G7",leader:{name:"Grace Yoon",age:18},
+    {id:"G7",leads:[{name:"Grace Yoon",age:18,role:"L"}],
      kids:[{name:"Riley",g:1},{name:"Elonnie Pak",g:1},{name:"Deborah Lo",g:1},{name:"Papillon Lo",g:1},{name:"Abigail Guo",g:0}]}
   ]
 };
+const RETREAT_SG={
+  boys:[
+    {id:"RB1",leads:[{name:"Owen Lee",age:19,role:"L"},{name:"Rubin Jang",age:19,role:"L"}],
+     kids:[{name:"Peter",g:6},{name:"Josiah",g:7},{name:"Jude",g:7},{name:"Owen Nam",g:8}]},
+    {id:"RB2",leads:[{name:"Andrew Back",age:19,role:"L"}],
+     kids:[{name:"Ezra",g:8},{name:"Jonathan",g:8},{name:"Ethan Nam",g:9}]},
+    {id:"RB3",leads:[{name:"Jean Kim",age:20,role:"L"}],
+     kids:[{name:"Hamish",g:9},{name:"Gabriel",g:10},{name:"Samuel",g:10},{name:"Timothy Kim",g:10}]},
+    {id:"RB4",leads:[{name:"Caleb Su",age:21,role:"L"}],
+     kids:[{name:"Justus",g:11},{name:"Luke",g:11},{name:"Timothy Keller",g:12},{name:"Jaydon",g:12}]}
+  ],
+  girls:[
+    {id:"RG1",leads:[{name:"Grace Yoon",age:18,role:"L"},{name:"Janet Phee",age:18,role:"L"}],
+     kids:[{name:"Christie",g:6},{name:"Evelyn",g:6}]},
+    {id:"RG2",leads:[{name:"Irene Song",age:19,role:"L"},{name:"Sammy Taing",age:20,role:"L"}],
+     kids:[{name:"Claire",g:7},{name:"Abby",g:7},{name:"Maria",g:7}]},
+    {id:"RG3",leads:[{name:"Jane Kim",age:20,role:"L"},{name:"Becca Park",age:21,role:"L"}],
+     kids:[{name:"Keira",g:8},{name:"Naomi",g:8}]},
+    {id:"RG4",leads:[{name:"Esther Yang",age:21,role:"L"}],
+     kids:[{name:"Lydia",g:11},{name:"Anna",g:13}]}
+  ]
+};
 var sgCurrent='boys';
-var GR_COLORS={7:'#ef4444',6:'#f97316',5:'#eab308',4:'#22c55e',3:'#06b6d4',2:'#3b82f6',1:'#6366f1',0:'#a855f7'};
-function grShort(g){return g===0?'K':g+'th';}
+var sgCurrentEvent='vbs';
+var GR_COLORS={
+  0:'#a855f7',1:'#6366f1',2:'#3b82f6',3:'#06b6d4',4:'#22c55e',
+  5:'#eab308',6:'#f97316',7:'#ef4444',
+  8:'#0ea5e9',9:'#8b5cf6',10:'#ec4899',11:'#14b8a6',12:'#f59e0b',13:'#6b7280'
+};
+function grShort(g){
+  if(g===0)return 'K';
+  if(g===1)return '1st';
+  if(g===2)return '2nd';
+  if(g===3)return '3rd';
+  return g+'th';
+}
+function sgEvent(e,btn){
+  sgCurrentEvent=e;
+  document.querySelectorAll('#sg-event button').forEach(b=>b.classList.toggle('on',b===btn));
+  sgRender();
+}
 function sgMode(m,btn){
   sgCurrent=m;
   document.querySelectorAll('#sg-seg button').forEach(b=>b.classList.toggle('on',b===btn));
   sgRender();
 }
 function sgRender(){
-  var groups=VBS_SG[sgCurrent];
+  var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
+  var groups=data[sgCurrent];
   var isGirl=(sgCurrent==='girls');
   var dotCls=isGirl?'f':'m';
   var idCls=isGirl?'girl':'boy';
+  var totalKids=groups.reduce(function(s,g){return s+g.kids.length;},0);
+  document.getElementById('sg-sub').textContent=groups.length+' groups · '+totalKids+' kids';
   var html='';
   groups.forEach(function(grp){
     var kidCount=grp.kids.length;
+    var leadCount=grp.leads.length;
     html+='<div class="sg-card">';
     html+='<div class="sg-head">';
     html+='<span class="sg-id '+idCls+'">'+grp.id+'</span>';
-    html+='<span class="sg-headname">'+grp.leader.name+'</span>';
+    html+='<span class="sg-headname">'+leadCount+' leader'+(leadCount>1?'s':'')+'</span>';
     html+='<span class="sg-count">'+kidCount+' kids</span>';
     html+='</div>';
-    // staff row
-    html+='<div class="sg-staff">';
-    html+='<span class="sg-role">Leader</span><span class="sg-person">'+grp.leader.name+' <span style="color:var(--text3);font-weight:400">'+grp.leader.age+'</span></span>';
-    if(grp.volunteers&&grp.volunteers.length){
-      html+='</div><div class="sg-staff"><span class="sg-role">Vol.</span>';
-      grp.volunteers.forEach(function(v){
-        html+='<span class="sg-person vol">'+v.name+' <span style="color:var(--text3);font-weight:400">'+v.age+'</span></span>';
-      });
-    }
-    html+='</div>';
-    // kids
+    grp.leads.forEach(function(l){
+      html+='<div class="sg-staff">';
+      html+='<span class="sg-role">'+(l.role==='V'?'Vol.':'Leader')+'</span>';
+      html+='<span class="sg-blacked"></span>';
+      html+='</div>';
+    });
     html+='<div class="sg-kids">';
     grp.kids.forEach(function(k){
       var grColor=GR_COLORS[k.g]||'#888';

@@ -158,6 +158,18 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .eth-lbl{flex:1;font-size:13px;color:var(--text);}
 .eth-n{font-size:12px;font-weight:700;color:var(--text2);white-space:nowrap;}
 .eth-note{font-size:11px;color:var(--text3);line-height:1.5;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
+.htag{font-size:10px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px;white-space:nowrap;}
+.ht-ret{background:#fef9c3;color:#92400e;}
+.ht-fpc{background:#eff6ff;color:#2563eb;}
+.ht-pnb{background:#fef2f2;color:#b91c1c;}
+.ht-bday{background:#fff7ed;color:#c2410c;}
+.ht-age{background:var(--border);color:var(--text2);}
+@media(prefers-color-scheme:dark){
+.ht-ret{background:#422006;color:#fde68a;}
+.ht-fpc{background:#1e3a5f;color:#93c5fd;}
+.ht-pnb{background:#450a0a;color:#fca5a5;}
+.ht-bday{background:#431407;color:#fdba74;}
+}
 .hb-row{margin-bottom:10px;}
 .hb-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
 .hb-lbl{font-size:12.5px;color:var(--text);}
@@ -298,7 +310,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v67 · Jun 25, 2026 · 11:00 AM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v69 · Jun 25, 2026 · 12:45 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -604,7 +616,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 25 · 11:00a</span><span class="utext">Pray For → VBS: added analysis card — at-a-glance stats (63 students, 30M/33F, 6 volunteers, 3 returning), ethnicity donut (Chinese/Taiwanese 58 · Korean 3 · White/European 2, confirmed via Chinese legal names), and "how families found out" breakdown (98% relational — friend/church/referral, none from advertising)</span></div><div class="urow"><span class="udate">Jun 20 · 1:46p</span><span class="utext">Testimonies filled in — VBS: Grace/Owen/Janet/Rubin/Andrew Back; Retreat #1: Sammy/Jean/Becca/Esther; Retreat #2: Irene/Jane/Caleb; Fri evening: Keren; Eph 2:19-20 added under Family of God heading</span></div><div class="urow"><span class="udate">Jun 20 · 1:35p</span><span class="utext">Pray For → Retreat: ethnicity donut chart (White/European 21 · Chinese 7 · Korean 4)</span></div><div class="urow"><span class="udate">Jun 19 · 9:41p</span><span class="utext">Retreat verses: Abraham → Loving God · Genesis 22; Joseph → Loving others · Genesis 50</span></div><div class="urow"><span class="udate">Jun 19 · 9:18p</span><span class="utext">Youth Retreat → Family of God (Mon Intro/Eph 2:19, Tue Moses, Wed Abraham, Thu Joseph, Fri Loving the nations/Mt 28); Tue AM activity + Tue devotional → Team A / Andrew; VBS combined Small Group + Craft; retreat evening Skit now before Worship</span></div><div class="urow"><span class="udate">Jun 19 · 5:36p</span><span class="utext">Trip tab now shows a "Right now / Up next" card based on Taiwan time (UTC+8) — what we should be doing at the current moment; also opens to today by Taiwan date</span></div><div class="urow"><span class="udate">Jun 19 · 5:26p</span><span class="utext">Main Week 4 reverted to Prayer Week (departure details kept private in Trip tab). Trip schedule: Sunday worship 11:30 AM & 4:00 PM (2 hrs) added; concrete times throughout for a clearer sense of time</span></div><div class="urow"><span class="udate">Jun 19 · 5:21p</span><span class="utext">Clearer notification banner copy: "Please enter your name and tap Enable to turn on notifications."</span></div><div class="urow"><span class="udate">Jun 19 · 5:19p</span><span class="utext">Removed the Requests tab for now (team prayer points live in Pray For → Our Team; notifications prompt app-wide). Will revisit later.</span></div><div class="urow"><span class="udate">Jun 19 · 5:16p</span><span class="utext">Notifications now prompt on every app open until enabled (dismiss is session-only, re-asks next open); auto-hides once enabled</span></div><div class="urow"><span class="udate">Jun 19 · 5:07p</span><span class="utext">Trip password changed to case-sensitive "hyebin"; added a notifications Enable card on the Requests tab for anyone who dismissed the banner</span></div><div class="urow"><span class="udate">Jun 19 · 4:46p</span><span class="utext">Push notifications: integrated OneSignal Web SDK + opt-in banner (enter name → Enable) so alerts reach home-screen devices and leaders can see who enabled. Needs the Web platform configured in the OneSignal dashboard.</span></div><div class="urow"><span class="udate">Jun 19 · 4:40p</span><span class="utext">Color-coded Trip schedule by who's in charge: Team A red, Team B blue, Team C green, Global/Worship purple, Andrew amber, TBD gray (tag + left border)</span></div><div class="urow"><span class="udate">Jun 19 · 4:37p</span><span class="utext">Trip readability: bigger schedule text + day pills; date strip shows all days but centers/highlights the selected week (others dimmed)</span></div><div class="urow"><span class="udate">Jun 19 · 4:31p</span><span class="utext">Trip date picker grouped by Week 1–5 (top selector) → that week's days → schedule; opens to today's date during the trip; easier to scan</span></div><div class="urow"><span class="udate">Jun 19 · 4:26p</span><span class="utext">Trip tab: schedule moved to top, back to horizontal date picker (pick a day → schedule below) with the built-out who's-in-charge detail</span></div><div class="urow"><span class="udate">Jun 19 · 4:23p</span><span class="utext">Built out each Trip day: who's in charge per item (VBS Praise/Craft=Team A, Bible teach=Team C, Games=Team B; retreat AM/PM activities per day; sermon=Andrew), VBS daily themes + off-site spots</span></div><div class="urow"><span class="udate">Jun 19 · 4:09p</span><span class="utext">Trip day-by-day is now a tap-to-open list (date on top, expand to see that day's 6 AM–midnight schedule) — easier to read than the date strip</span></div><div class="urow"><span class="udate">Jun 19 · 4:05p</span><span class="utext">Trip tab: tap a date to see that day's full schedule (6 AM–midnight) — pulls in VBS camp / TMF retreat / flight times per day</span></div><div class="urow"><span class="udate">Jun 19 · 3:55p</span><span class="utext">Added password-protected Trip tab (flights + Jun 29–Jul 30 day-by-day); fixed Main weeks to real dates — Street EV Jul 5–11, Prayer Week replaced by Departure (Jul 26–30, fly home Jul 30)</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
+<div id="pane-g" class="pane active"><div class="updbox collapsed" style="border-left:3px solid #7c3aed"><div class="uhdr" style="color:#7c3aed">📋 Recent Updates<span class="ucaret">▾</span></div><div class="urow"><span class="udate">Jun 25 · 12:30p</span><span class="utext">Pray For → VBS: updated to 2026 roster (63 students + 6 volunteers); per-name tags (friend / FPC / referral / returning ★); 4 confirmed returners from 2025; birthday callouts near VBS week. Retreat: updated to 2026 TMF Code 6+9 (24 kids); ★ tags for 10 returners from 2025; ages from conference data.</span></div><div class="urow"><span class="udate">Jun 25 · 11:00a</span><span class="utext">Pray For → VBS: added analysis card — at-a-glance stats (63 students, 30M/33F, 6 volunteers, 3 returning), ethnicity donut (Chinese/Taiwanese 58 · Korean 3 · White/European 2, confirmed via Chinese legal names), and "how families found out" breakdown (98% relational — friend/church/referral, none from advertising)</span></div><div class="urow"><span class="udate">Jun 20 · 1:46p</span><span class="utext">Testimonies filled in — VBS: Grace/Owen/Janet/Rubin/Andrew Back; Retreat #1: Sammy/Jean/Becca/Esther; Retreat #2: Irene/Jane/Caleb; Fri evening: Keren; Eph 2:19-20 added under Family of God heading</span></div><div class="urow"><span class="udate">Jun 20 · 1:35p</span><span class="utext">Pray For → Retreat: ethnicity donut chart (White/European 21 · Chinese 7 · Korean 4)</span></div><div class="urow"><span class="udate">Jun 19 · 9:41p</span><span class="utext">Retreat verses: Abraham → Loving God · Genesis 22; Joseph → Loving others · Genesis 50</span></div><div class="urow"><span class="udate">Jun 19 · 9:18p</span><span class="utext">Youth Retreat → Family of God (Mon Intro/Eph 2:19, Tue Moses, Wed Abraham, Thu Joseph, Fri Loving the nations/Mt 28); Tue AM activity + Tue devotional → Team A / Andrew; VBS combined Small Group + Craft; retreat evening Skit now before Worship</span></div><div class="urow"><span class="udate">Jun 19 · 5:36p</span><span class="utext">Trip tab now shows a "Right now / Up next" card based on Taiwan time (UTC+8) — what we should be doing at the current moment; also opens to today by Taiwan date</span></div><div class="urow"><span class="udate">Jun 19 · 5:26p</span><span class="utext">Main Week 4 reverted to Prayer Week (departure details kept private in Trip tab). Trip schedule: Sunday worship 11:30 AM & 4:00 PM (2 hrs) added; concrete times throughout for a clearer sense of time</span></div><div class="urow"><span class="udate">Jun 19 · 5:21p</span><span class="utext">Clearer notification banner copy: "Please enter your name and tap Enable to turn on notifications."</span></div><div class="urow"><span class="udate">Jun 19 · 5:19p</span><span class="utext">Removed the Requests tab for now (team prayer points live in Pray For → Our Team; notifications prompt app-wide). Will revisit later.</span></div><div class="urow"><span class="udate">Jun 19 · 5:16p</span><span class="utext">Notifications now prompt on every app open until enabled (dismiss is session-only, re-asks next open); auto-hides once enabled</span></div><div class="urow"><span class="udate">Jun 19 · 5:07p</span><span class="utext">Trip password changed to case-sensitive "hyebin"; added a notifications Enable card on the Requests tab for anyone who dismissed the banner</span></div><div class="urow"><span class="udate">Jun 19 · 4:46p</span><span class="utext">Push notifications: integrated OneSignal Web SDK + opt-in banner (enter name → Enable) so alerts reach home-screen devices and leaders can see who enabled. Needs the Web platform configured in the OneSignal dashboard.</span></div><div class="urow"><span class="udate">Jun 19 · 4:40p</span><span class="utext">Color-coded Trip schedule by who's in charge: Team A red, Team B blue, Team C green, Global/Worship purple, Andrew amber, TBD gray (tag + left border)</span></div><div class="urow"><span class="udate">Jun 19 · 4:37p</span><span class="utext">Trip readability: bigger schedule text + day pills; date strip shows all days but centers/highlights the selected week (others dimmed)</span></div><div class="urow"><span class="udate">Jun 19 · 4:31p</span><span class="utext">Trip date picker grouped by Week 1–5 (top selector) → that week's days → schedule; opens to today's date during the trip; easier to scan</span></div><div class="urow"><span class="udate">Jun 19 · 4:26p</span><span class="utext">Trip tab: schedule moved to top, back to horizontal date picker (pick a day → schedule below) with the built-out who's-in-charge detail</span></div><div class="urow"><span class="udate">Jun 19 · 4:23p</span><span class="utext">Built out each Trip day: who's in charge per item (VBS Praise/Craft=Team A, Bible teach=Team C, Games=Team B; retreat AM/PM activities per day; sermon=Andrew), VBS daily themes + off-site spots</span></div><div class="urow"><span class="udate">Jun 19 · 4:09p</span><span class="utext">Trip day-by-day is now a tap-to-open list (date on top, expand to see that day's 6 AM–midnight schedule) — easier to read than the date strip</span></div><div class="urow"><span class="udate">Jun 19 · 4:05p</span><span class="utext">Trip tab: tap a date to see that day's full schedule (6 AM–midnight) — pulls in VBS camp / TMF retreat / flight times per day</span></div><div class="urow"><span class="udate">Jun 19 · 3:55p</span><span class="utext">Added password-protected Trip tab (flights + Jun 29–Jul 30 day-by-day); fixed Main weeks to real dates — Street EV Jul 5–11, Prayer Week replaced by Departure (Jul 26–30, fly home Jul 30)</span></div><div class="urow"><span class="udate">Jun 19 · 3:24p</span><span class="utext">Pray For tab now opens to "Our Team" — written team prayer points (hearts, those we serve, the four weeks, provision); Retreat/VBS people are the other two tabs</span></div><div class="urow"><span class="udate">Jun 19 · 3:14p</span><span class="utext">Added Requests tab: submit a private prayer request (saved to a separate Google Sheet via Google Form) — pending form connection</span></div><div class="urow"><span class="udate">Jun 19 · 11:20a</span><span class="utext">Students tab → "People to Pray For": Retreat members (Boys/Girls, leaders excluded) + VBS kids by grade in one switchable tab with search; Recent Updates now defaults to closed</span></div><div class="urow"><span class="udate">Jun 19 · 11:13a</span><span class="utext">Recent Updates box is now collapsible — tap the header to open/close (arrow toggle); state is remembered</span></div><div class="urow"><span class="udate">Jun 19 · 11:11a</span><span class="utext">Redesigned navigation as an iOS-style bottom tab bar (icons + labels, translucent, safe-area inset) — replaces the top tab line</span></div><div class="urow"><span class="udate">Jun 19 · 11:07a</span><span class="utext">Added Students tab: full youth roster (41) grouped by grade, with live search + All/Boys/Girls filter; tab bar now sticky for easy switching</span></div><div class="urow"><span class="udate">Jun 19 · 10:42a</span><span class="utext">Added iPhone home-screen support: full-screen standalone app, custom team-photo icon, web manifest</span></div><div class="urow"><span class="udate">Jun 19 · 10:37a</span><span class="utext">Retreat Session 4 split: Worship 6:30–6:45 · Skit 6:45–6:50 · Sermon 6:50–7:20 · Response worship 7:20–7:30 · VBS Off-site now gray to contrast Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:25a</span><span class="utext">Fixed today counter: now uses hits.sh today-total view (resets daily) instead of a separate ever-growing path; single badge shows today / all-time</span></div><div class="urow"><span class="udate">Jun 19 · 10:23a</span><span class="utext">VBS: added 4:30–4:40 Skit/Dance (Closing worship → 4:40–5:00) · relabeled morning 9:50–10:00 to Skit/Dance</span></div><div class="urow"><span class="udate">Jun 19 · 10:17a</span><span class="utext">iPhone: Day-by-Day tables now fit screen width (no horizontal scroll) · Session 4 reordered to Worship→Sermon (each 30 min, 1:1)</span></div><div class="urow"><span class="udate">Jun 19 · 7:17a</span><span class="utext">Sized Day-by-Day table rows by duration; reverted daily-schedule column to uniform blocks</span></div><div class="urow"><span class="udate">Jun 19 · 7:09a</span><span class="utext">Renamed tab to Main · added Lunch + Free time to retreat day-by-day</span></div><div class="urow"><span class="udate">Jun 19 · 7:00a</span><span class="utext">Opened Main view to all (password removed) · hid Team A/B/C tabs · reset all testimony slots to TBD for sign-up</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div><div class="urow"><span class="udate">—</span><span class="utext">—</span></div></div><div class="weeks" style="margin-top:16px;">
   <div class="wcard" style="background:var(--ra);border:1px solid var(--sa)"><div class="wk">Week 1 · Jul 5–11</div><div class="wn">Street EV</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Follow God's leading<br>→ Build friendship first<br>→ Testify to who He brings</div></div>
   <div class="wcard" style="background:var(--rb);border:1px solid var(--sb)"><div class="wk">Week 2 · Jul 13–17</div><div class="wn">VBS</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Invest in youth volunteers<br>→ Lead small groups well<br>→ Execute tasks well</div></div>
   <div class="wcard" style="background:var(--rc);border:1px solid var(--sc)"><div class="wk">Week 3 · Jul 20–24</div><div class="wn">Youth Retreat</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.15);color:#fff;border-radius:3px;padding:2px 6px;display:inline-block;margin:8px 0 4px;">Focus</div><div class="ws" style="text-align:left">→ Build real relationships<br>→ Mentor not just program<br>→ Show up well for your role</div></div>
@@ -871,50 +883,107 @@ function closeTripGate(){document.getElementById('trip-gate').style.display='non
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('trip-gate').style.display==='flex')checkTripPw();});
 </script>
 <script>
-// Retreat youth (pray for) — Boys & Girls groups
+// Retreat youth (pray for) — 2026 TMF Code 6 + Code 9 (★=returning from 2025)
 const RETREAT=[
-  {name:"Moses Son",group:"boys"},{name:"Jonas Stweart",group:"boys"},
-  {name:"Jaydon Schultz",group:"boys"},{name:"Groff Conner",group:"boys"},
-  {name:"Timothy Kim",group:"boys"},{name:"Justus Schultz",group:"boys"},
-  {name:"Samuel Chen",group:"boys"},{name:"Silas Stewart",group:"boys"},
-  {name:"Samuel Biers",group:"boys"},{name:"Elliot Lapp",group:"boys"},
-  {name:"Jeff Spence",group:"boys"},{name:"Christopher Son",group:"boys"},
-  {name:"Garret Jones",group:"boys"},{name:"Jude Spencer",group:"boys"},
-  {name:"Ezra Biers",group:"boys"},{name:"Ezra Lapp",group:"boys"},
-  {name:"Emery Hosch",group:"boys"},
-  {name:"Evie Biers",group:"girls"},{name:"Anna Huang",group:"girls"},
-  {name:"Ava Wang",group:"girls"},{name:"Addie Hosch",group:"girls"},
-  {name:"Ava Spence",group:"girls"},{name:"Nadia Chen",group:"girls"},
-  {name:"Rosalind Lin",group:"girls"},{name:"Lydia Huang",group:"girls"},
-  {name:"Mikeyla Spence",group:"girls"},{name:"Savannah Jones",group:"girls"},
-  {name:"Elianna Doty (late)",group:"girls"},{name:"Betty Wangson Wang",group:"girls"},
-  {name:"Keira Spencer",group:"girls"},{name:"Claire Kim",group:"girls"},
-  {name:"Nora Stewart",group:"girls"}
+  {name:"Christie Kong",group:"girls",age:11},
+  {name:"Peter Tsai",group:"boys",age:11},
+  {name:"Evelyn Pilson",group:"girls",age:11},
+  {name:"Josiah Smith",group:"boys",age:12},
+  {name:"Jude Spencer",group:"boys",age:12,ret:true},
+  {name:"Claire Kim",group:"girls",age:12,ret:true},
+  {name:"Abby Kong",group:"girls"},
+  {name:"Maria Sawatzky",group:"girls",age:12},
+  {name:"Owen Nam",group:"boys",age:13},
+  {name:"Ezra Biers",group:"boys",age:13,ret:true},
+  {name:"Jonathan Keller",group:"boys",age:13},
+  {name:"Keira Spencer",group:"girls",age:13,ret:true},
+  {name:"Naomi Smith",group:"girls",age:13},
+  {name:"Ethan Nam",group:"boys",age:14},
+  {name:"Hamish Denham",group:"boys",age:14,bday:"🎂 Jul 26"},
+  {name:"Gabriel Keller",group:"boys",age:15},
+  {name:"Samuel Biers",group:"boys",age:15,ret:true},
+  {name:"Timothy Kim",group:"boys",age:15,ret:true},
+  {name:"Justus Shultz",group:"boys",age:16,ret:true},
+  {name:"Lydia Huang",group:"girls",age:16,ret:true},
+  {name:"Luke Denham",group:"boys"},
+  {name:"Timothy Keller",group:"boys",age:17},
+  {name:"Jaydon Shultz",group:"boys",ret:true},
+  {name:"Anna Huang",group:"girls",age:18,ret:true}
 ];
-// VBS kids — grade next year (age − 6 + 1)
+// VBS 2026 — student volunteers (age 12-18, youth helper fee)
+const VBS_VOLUNTEERS=[
+  {name:"Roba",gender:"m",age:18},
+  {name:"Timothy Kim",gender:"m",age:15},
+  {name:"Ethan Nam",gender:"m",age:14},
+  {name:"Lane Hartshorne",gender:"m",age:14},
+  {name:"Owen Nam",gender:"m",age:13},
+  {name:"Owen Wu",gender:"m",age:13,bday:"🎂 Jul 20"}
+];
+// VBS 2026 — students (#21-83 from roster; how=how family found out; ret=returning from 2025)
 const VBS=[
-  {name:"Petros",gender:"m",grade:7},{name:"Benjamin Hsieh",gender:"m",grade:7},
-  {name:"Kumuy",gender:"f",grade:7},{name:"Claire Kim",gender:"f",grade:7},
-  {name:"Julius",gender:"m",grade:6},{name:"Luke Rau",gender:"m",grade:6},
-  {name:"Zuri Lee",gender:"m",grade:6},{name:"Daniel Li",gender:"m",grade:6},
-  {name:"Calvin",gender:"m",grade:6},{name:"Eliana Wan",gender:"f",grade:6},
-  {name:"Jeremy",gender:"m",grade:5},{name:"Andrew",gender:"m",grade:5},
-  {name:"Ryan",gender:"m",grade:5},{name:"Rulun",gender:"m",grade:5},
-  {name:"Amber",gender:"f",grade:5},{name:"Ruhamah",gender:"f",grade:5},
-  {name:"Stephanie Chao",gender:"f",grade:5},{name:"Kara Kim",gender:"f",grade:5},
-  {name:"Jacob",gender:"m",grade:4},{name:"Owen Lin",gender:"m",grade:4},
-  {name:"Len",gender:"m",grade:4},{name:"Skye Liao",gender:"m",grade:4},
-  {name:"Huang Manhua",gender:"f",grade:4},{name:"Chloe Chang",gender:"f",grade:4},
-  {name:"Olivia Huang",gender:"f",grade:4},{name:"Hannah Jiang",gender:"f",grade:4},
-  {name:"Jessie",gender:"f",grade:4},
-  {name:"Meek",gender:"m",grade:3},{name:"Matthias Chia",gender:"m",grade:3},
-  {name:"Liam Chang",gender:"m",grade:3},{name:"Huang Yujie",gender:"f",grade:3},
-  {name:"Katie Lin",gender:"f",grade:3},
-  {name:"Dylan",gender:"m",grade:2},{name:"Caleb Guo",gender:"m",grade:2},
-  {name:"Lottie",gender:"f",grade:2},{name:"Stella Liao",gender:"f",grade:2},
-  {name:"Yu-Chen Li",gender:"f",grade:2},{name:"Avery",gender:"f",grade:2},
-  {name:"Eric",gender:"m",grade:1},{name:"Deborah",gender:"f",grade:1},
-  {name:"Papillon",gender:"f",grade:1}
+  {name:"Est-elle",gender:"f",grade:7,how:"referral"},
+  {name:"Hsin Hsin",gender:"f",grade:7,how:"fpc"},
+  {name:"Claire",gender:"f",grade:7},
+  {name:"Grace Hartshorne",gender:"f",grade:7,how:"fpc"},
+  {name:"Hao-Chen Li",gender:"m",grade:6,bday:"🎂 Jul 24"},
+  {name:"Ezra",gender:"m",grade:6,how:"fpc"},
+  {name:"Eliana Wan",gender:"f",grade:6,how:"friend"},
+  {name:"Ruhamah",gender:"f",grade:6,how:"fpc",ret:true},
+  {name:"Queenie",gender:"f",grade:6,how:"friend"},
+  {name:"Yuqi Chiu",gender:"f",grade:5,how:"fpc",bday:"🎂 Jul 19"},
+  {name:"Zephyr Kao",gender:"m",grade:5,how:"friend"},
+  {name:"Amber Yang",gender:"f",grade:5,how:"returning",ret:true},
+  {name:"Adeline",gender:"f",grade:5,how:"fpc"},
+  {name:"Harry",gender:"m",grade:5,how:"fpc"},
+  {name:"Ellery",gender:"f",grade:5,how:"friend"},
+  {name:"Jeremy",gender:"m",grade:5,how:"fpc"},
+  {name:"Ryan Lin",gender:"m",grade:5,how:"friend"},
+  {name:"Mike",gender:"m",grade:5,how:"referral"},
+  {name:"Kara",gender:"f",grade:5},
+  {name:"Grace",gender:"f",grade:5,how:"friend"},
+  {name:"Stephanie",gender:"f",grade:5,how:"friend"},
+  {name:"Patrick",gender:"m",grade:5,how:"referral"},
+  {name:"Poppy Lo",gender:"f",grade:4},
+  {name:"Wayne",gender:"m",grade:4,how:"referral"},
+  {name:"Len",gender:"m",grade:4},
+  {name:"Atlas Kao",gender:"m",grade:4,how:"friend"},
+  {name:"Doughnuts",gender:"f",grade:4,how:"friend"},
+  {name:"Levi",gender:"m",grade:4,how:"friend"},
+  {name:"Paul",gender:"m",grade:4,how:"friend"},
+  {name:"Meek Lo",gender:"m",grade:4,how:"friend"},
+  {name:"Hannah Jiang",gender:"f",grade:4},
+  {name:"Jessie Hu",gender:"f",grade:4,how:"friend"},
+  {name:"Doris",gender:"f",grade:4,how:"returning",ret:true},
+  {name:"Jacob Yang",gender:"m",grade:4,how:"returning",ret:true},
+  {name:"Ansel",gender:"m",grade:3,how:"fpc"},
+  {name:"Freja",gender:"f",grade:3,how:"friend"},
+  {name:"Richard Hsia",gender:"m",grade:3,how:"friend"},
+  {name:"Jyshelle Pak",gender:"f",grade:3,how:"fpc"},
+  {name:"Freddie",gender:"m",grade:3,how:"friend"},
+  {name:"Liam Chang",gender:"m",grade:3},
+  {name:"Emmeline",gender:"f",grade:3,how:"fpc"},
+  {name:"Celia",gender:"f",grade:3,how:"friend",bday:"🎂 Jul 6"},
+  {name:"Fu Alvin",gender:"m",grade:2,how:"friend"},
+  {name:"Mumu Hu",gender:"m",grade:2,how:"friend"},
+  {name:"Dorcas Chen",gender:"f",grade:2,how:"friend"},
+  {name:"Olivia",gender:"f",grade:2,how:"friend"},
+  {name:"Yu-Chen Li",gender:"f",grade:2},
+  {name:"Jeremiah",gender:"m",grade:2,how:"friend"},
+  {name:"Caleb Guo",gender:"m",grade:2,how:"friend"},
+  {name:"Avery Nam",gender:"f",grade:2,how:"referral"},
+  {name:"Dylan Lin",gender:"m",grade:2,how:"friend"},
+  {name:"Gemma Benson",gender:"f",grade:2,how:"referral"},
+  {name:"Yann Chiu",gender:"m",grade:2},
+  {name:"Oli",gender:"m",grade:1,how:"friend"},
+  {name:"Riley",gender:"f",grade:1,how:"friend"},
+  {name:"Elonnie Pak",gender:"f",grade:1,how:"fpc"},
+  {name:"Daniel Hu",gender:"m",grade:1,how:"friend"},
+  {name:"Elijah Kwok",gender:"m",grade:1,how:"fpc"},
+  {name:"Deborah Lo",gender:"f",grade:1,how:"friend"},
+  {name:"Papillon Lo",gender:"f",grade:1,how:"fpc"},
+  {name:"Sunny",gender:"m",grade:1,how:"friend"},
+  {name:"Asher",gender:"m",grade:0,how:"fpc"},
+  {name:"Abigail Guo",gender:"f",grade:0,how:"friend"}
 ];
 const PRAYER_TOPICS=[
   {cat:"Our Hearts (the team)",items:[
@@ -999,7 +1068,7 @@ function vbsStatsCard(){
   var bars=VBS_HOW.map(function(e){var p=Math.round(e.n/ht*100);return '<div class="hb-row"><div class="hb-top"><span class="hb-lbl">'+e.label+'</span><span class="hb-n">'+e.n+' · '+p+'%</span></div><div class="hb-track"><div class="hb-fill" style="width:'+p+'%;background:'+e.c+'"></div></div></div>';}).join('');
   var how='<div class="eth-card"><div class="eth-h">How families found out ('+ht+' registrations)</div>'+bars+'<div class="eth-note">98% came through relationships — friends, church, and referrals. None from advertising.</div></div>';
   // stat strip
-  var strip='<div class="eth-card"><div class="eth-h">VBS at a glance</div><div class="vbs-stats"><div class="vs-cell"><div class="vs-num">63</div><div class="vs-lbl">students</div></div><div class="vs-cell"><div class="vs-num">30·33</div><div class="vs-lbl">M · F</div></div><div class="vs-cell"><div class="vs-num">6</div><div class="vs-lbl">volunteers</div></div><div class="vs-cell"><div class="vs-num">3</div><div class="vs-lbl">returning</div></div></div></div>';
+  var strip='<div class="eth-card"><div class="eth-h">VBS at a glance</div><div class="vbs-stats"><div class="vs-cell"><div class="vs-num">63</div><div class="vs-lbl">students</div></div><div class="vs-cell"><div class="vs-num">30·33</div><div class="vs-lbl">M · F</div></div><div class="vs-cell"><div class="vs-num">6</div><div class="vs-lbl">volunteers</div></div><div class="vs-cell"><div class="vs-num">4</div><div class="vs-lbl">returning</div></div></div></div>';
   return strip+pie+how;
 }
 function prayRender(){
@@ -1017,12 +1086,31 @@ function prayRender(){
   if(prMode==='vbs'){
     let list=VBS.filter(s=>!q||s.name.toLowerCase().includes(q));
     if(!list.length){wrap.innerHTML='<div class="stu-empty">No names match your search.</div>';return;}
-    if(!q)html+=vbsStatsCard();
+    if(!q){
+      html+=vbsStatsCard();
+      // Volunteers section
+      var volList=VBS_VOLUNTEERS.filter(s=>!q||s.name.toLowerCase().includes(q));
+      if(volList.length){
+        html+='<div class="stu-gh">Student Volunteers · '+volList.length+'</div>';
+        volList.forEach(function(s){
+          var tags='<span class="htag ht-age">age '+s.age+'</span>';
+          if(s.bday) tags+='<span class="htag ht-bday">'+s.bday+'</span>';
+          html+='<div class="stu-row"><span class="stu-dot '+s.gender+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
+        });
+      }
+    }
     const grades=[...new Set(list.map(s=>s.grade))].sort((a,b)=>b-a);
     grades.forEach(g=>{
       const grp=list.filter(s=>s.grade===g);
       html+='<div class="stu-gh">'+gradeOrd(g)+' · '+grp.length+(grp.length===1?' student':' students')+'</div>';
-      grp.forEach(s=>{html+='<div class="stu-row"><span class="stu-dot '+s.gender+'"></span><span class="stu-name">'+s.name+'</span><span class="stu-badge b'+g+'">'+gradeOrd(g)+'</span></div>';});
+      grp.forEach(s=>{
+        var tags='';
+        if(s.ret) tags+='<span class="htag ht-ret">★ returning</span>';
+        if(s.how==='fpc') tags+='<span class="htag ht-fpc">FPC</span>';
+        else if(s.how==='friend'||s.how==='referral') tags+='<span class="htag ht-pnb">PNB</span>';
+        if(s.bday) tags+='<span class="htag ht-bday">'+s.bday+'</span>';
+        html+='<div class="stu-row"><span class="stu-dot '+s.gender+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
+      });
     });
   }else{
     let list=RETREAT.filter(s=>!q||s.name.toLowerCase().includes(q));
@@ -1032,7 +1120,13 @@ function prayRender(){
       const grp=list.filter(s=>s.group===pair[0]);
       if(!grp.length)return;
       html+='<div class="stu-gh">'+pair[1]+' · '+grp.length+'</div>';
-      grp.forEach(s=>{html+='<div class="stu-row"><span class="stu-dot '+(pair[0]==='boys'?'m':'f')+'"></span><span class="stu-name">'+s.name+'</span></div>';});
+      grp.forEach(s=>{
+        var tags='';
+        if(s.ret) tags+='<span class="htag ht-ret">★ returning</span>';
+        if(s.age) tags+='<span class="htag ht-age">age '+s.age+'</span>';
+        if(s.bday) tags+='<span class="htag ht-bday">'+s.bday+'</span>';
+        html+='<div class="stu-row"><span class="stu-dot '+(pair[0]==='boys'?'m':'f')+'"></span><span class="stu-name">'+s.name+'</span>'+tags+'</div>';
+      });
     });
   }
   wrap.innerHTML=html;

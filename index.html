@@ -331,7 +331,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v77 · Jun 25, 2026 · 4:30 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v78 · Jun 25, 2026 · 4:45 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1300,13 +1300,13 @@ function sgRender(){
     html+='<div class="sg-card">';
     html+='<div class="sg-head">';
     html+='<span class="sg-id '+idCls+'">'+grp.id+'</span>';
-    html+='<span class="sg-headname">'+leadCount+' leader'+(leadCount>1?'s':'')+'</span>';
+    html+='<span class="sg-headname">'+grp.leads[0].name+'</span>';
     html+='<span class="sg-count">'+kidCount+' kids</span>';
     html+='</div>';
     grp.leads.forEach(function(l){
       html+='<div class="sg-staff">';
       html+='<span class="sg-role">'+(l.role==='V'?'Vol.':'Leader')+'</span>';
-      html+='<span class="sg-blacked"></span>';
+      html+='<span class="sg-person'+(l.role==='V'?' vol':'')+'">'+l.name+'</span>';
       html+='</div>';
     });
     html+='<div class="sg-kids">';

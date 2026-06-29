@@ -331,7 +331,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v81 · Jun 29, 2026 · 5:30 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v82 · Jun 29, 2026 · 5:45 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1579,19 +1579,19 @@ function initTripDays(){
   var header,strip;
   if(_tripFull){
     var weeks=WEEKS_DEF.map(function(x,w){return '<div class="twk" onclick="selectWeek('+w+')"><div class="wk-n">'+x.n+'</div><div class="wk-p">'+x.p+'</div></div>';}).join('');
-    strip=TRIP_DAYS.map(function(day,i){var dw=TRIP_DOW[(1+i)%7];return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';}).join('');
+    strip=TRIP_DAYS.map(function(day,i){if(i===0)return '';var dw=TRIP_DOW[(1+i)%7];return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';}).join('');
     header='<div class="trip-h">Day by Day</div><div class="twk-row">'+weeks+'</div>';
   }else{
     var maxI=Math.min(ti+1,31);
     strip=TRIP_DAYS.map(function(day,i){
-      if(i<ti||i>maxI)return '';
+      if(i===0||i<ti||i>maxI)return '';
       var dw=TRIP_DOW[(1+i)%7];
       return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';
     }).join('');
     header='<div class="trip-h">Schedule</div>';
   }
   document.getElementById('trip-days').innerHTML=header+'<div class="tstrip">'+strip+'</div><div class="tday-win">Each day runs 6:00 AM – 12:00 AM (midnight)</div><div id="trip-dayview"></div>';
-  selectDay(ti,true);
+  selectDay(ti===0?1:ti,true);
 }
 initTripDays();
 renderNow(); setInterval(renderNow,60000);

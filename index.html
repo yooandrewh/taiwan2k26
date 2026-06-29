@@ -331,7 +331,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v79 · Jun 25, 2026 · 5:00 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v80 · Jun 29, 2026 · 5:15 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -827,18 +827,25 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="trip-weeks"></div>
 </div>
 <div id="pane-groups" class="pane">
-  <div class="stu-title" style="color:#2563eb">Small Groups</div>
-  <div class="stu-sub">Mock assignments by age</div>
-  <div class="stu-seg" id="sg-event">
-    <button class="on" onclick="sgEvent('vbs',this)">VBS · Jul 13–17</button>
-    <button onclick="sgEvent('retreat',this)">Retreat · Jul 20–24</button>
+  <div id="groups-lock" style="text-align:center;padding:64px 20px 48px">
+    <div style="font-size:52px;margin-bottom:14px">🔒</div>
+    <div style="font-size:24px;font-weight:800;margin-bottom:8px;color:var(--text)">Coming Soon</div>
+    <div style="font-size:14px;color:var(--text3);line-height:1.6">Small groups are being finalized.<br>Check back soon!</div>
   </div>
-  <div class="stu-seg" id="sg-seg" style="margin-top:6px">
-    <button class="on" onclick="sgMode('boys',this)">Boys</button>
-    <button onclick="sgMode('girls',this)">Girls</button>
+  <div id="groups-content" style="display:none">
+    <div class="stu-title" style="color:#2563eb">Small Groups</div>
+    <div class="stu-sub">Assignments by grade</div>
+    <div class="stu-seg" id="sg-event">
+      <button class="on" onclick="sgEvent('vbs',this)">VBS · Jul 13–17</button>
+      <button onclick="sgEvent('retreat',this)">Retreat · Jul 20–24</button>
+    </div>
+    <div class="stu-seg" id="sg-seg" style="margin-top:6px">
+      <button class="on" onclick="sgMode('boys',this)">Boys</button>
+      <button onclick="sgMode('girls',this)">Girls</button>
+    </div>
+    <div id="sg-sub" style="font-size:12px;color:var(--text3);margin:6px 2px 10px"></div>
+    <div id="sg-list"></div>
   </div>
-  <div id="sg-sub" style="font-size:12px;color:var(--text3);margin:6px 2px 10px"></div>
-  <div id="sg-list"></div>
 </div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
@@ -853,22 +860,37 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div style="margin-top:12px;"><button onclick="closeTripGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
+<div id="groups-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:var(--bg);border-radius:14px;padding:28px 22px;max-width:320px;width:88%;text-align:center;">
+    <div style="font-size:30px;margin-bottom:4px;">👥</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text)">Small Groups</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Enter password to view</div>
+    <input id="groups-pw" type="password" placeholder="Password" autocomplete="off" style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:16px;background:var(--bg);color:var(--text);margin-bottom:8px;-webkit-appearance:none;">
+    <div id="groups-err" style="font-size:11px;color:#b91c1c;margin-bottom:8px;display:none;">Incorrect password</div>
+    <button onclick="checkGroupsPw()" style="width:100%;padding:11px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">Unlock</button>
+    <div style="margin-top:12px;"><button onclick="closeGroupsGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
+  </div>
+</div>
 <nav class="tabbar">
   <button class="tabitem active" style="--accent:#7c3aed" onclick="go('g',this)" aria-label="Main">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
     <span>Main</span>
   </button>
-  <button class="tabitem" style="--accent:#0d9488" onclick="go('s',this)" aria-label="People to Pray For">
+  <button class="tabitem" style="--accent:#0d9488;display:none" onclick="go('s',this)" aria-label="People to Pray For">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
     <span>Pray For</span>
   </button>
-  <button class="tabitem" style="--accent:#2563eb" onclick="go('groups',this)" aria-label="Small Groups">
+  <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
   </button>
-  <button class="tabitem" style="--accent:#0ea5e9" onclick="tryTrip(this)" aria-label="Trip">
+  <button class="tabitem" style="--accent:#0ea5e9" onclick="goTripPublic(this)" aria-label="Trip">
     <svg viewBox="0 0 24 24"><path d="M21 15.5 14 12V5a2 2 0 0 0-4 0v7l-7 3.5V18l7-2v3.5l-2 1.5V22l4-1 4 1v-1l-2-1.5V16l7 2z"/></svg>
     <span>Trip</span>
+  </button>
+  <button class="tabitem" style="--accent:#7c3aed" onclick="tryTrip(this)" aria-label="Edit">
+    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+    <span>Edit</span>
   </button>
 </nav>
 <script>
@@ -909,17 +931,46 @@ function tryTrip(btn){
   document.getElementById('trip-err').style.display='none';
   setTimeout(function(){document.getElementById('trip-pw').focus();},100);
 }
+var _tripFull=false;
 function checkTripPw(){
   if(document.getElementById('trip-pw').value.trim()==='hyebin'){
-    _tripUnlocked=true;
+    _tripUnlocked=true;_tripFull=true;
     document.getElementById('trip-gate').style.display='none';
+    initTripDays();
     go('t',_tripBtn);
   }else{
     document.getElementById('trip-err').style.display='block';
   }
 }
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
-document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('trip-gate').style.display==='flex')checkTripPw();});
+function goTripPublic(btn){_tripFull=false;initTripDays();go('t',btn);}
+var _groupsUnlocked=false,_groupsBtn=null;
+function tryGroups(btn){
+  if(_groupsUnlocked){go('groups',btn);return;}
+  _groupsBtn=btn;
+  document.getElementById('groups-gate').style.display='flex';
+  document.getElementById('groups-pw').value='';
+  document.getElementById('groups-err').style.display='none';
+  setTimeout(function(){document.getElementById('groups-pw').focus();},100);
+}
+function checkGroupsPw(){
+  if(document.getElementById('groups-pw').value.trim()==='estherjean'){
+    _groupsUnlocked=true;
+    document.getElementById('groups-gate').style.display='none';
+    document.getElementById('groups-lock').style.display='none';
+    document.getElementById('groups-content').style.display='block';
+    go('groups',_groupsBtn);
+  }else{
+    document.getElementById('groups-err').style.display='block';
+  }
+}
+function closeGroupsGate(){document.getElementById('groups-gate').style.display='none';}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(document.getElementById('trip-gate').style.display==='flex')checkTripPw();
+    if(document.getElementById('groups-gate').style.display==='flex')checkGroupsPw();
+  }
+});
 </script>
 <script>
 // Retreat youth (pray for) — 2026 TMF Code 6 + Code 9 (★=returning from 2025)
@@ -1523,14 +1574,27 @@ function renderNow(){
   if(next)h+='<div class="tn-next">Up next · '+fmtClock(next.min)+' · '+next.l+'</div>';
   el.innerHTML=h;
 }
-(function(){
-  var weeks=WEEKS_DEF.map(function(x,w){return '<div class="twk" onclick="selectWeek('+w+')"><div class="wk-n">'+x.n+'</div><div class="wk-p">'+x.p+'</div></div>';}).join('');
-  var strip=TRIP_DAYS.map(function(day,i){var dw=TRIP_DOW[(1+i)%7];return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';}).join('');
-  document.getElementById('trip-days').innerHTML='<div class="trip-h">Day by Day</div><div class="twk-row">'+weeks+'</div><div class="tstrip">'+strip+'</div><div class="tday-win">Each day runs 6:00 AM – 12:00 AM (midnight)</div><div id="trip-dayview"></div>';
+function initTripDays(){
   var t=twNow(),ti=tripIndexOf(t.y,t.mo,t.d); ti=ti<0?0:(ti>31?31:ti);
+  var header,strip;
+  if(_tripFull){
+    var weeks=WEEKS_DEF.map(function(x,w){return '<div class="twk" onclick="selectWeek('+w+')"><div class="wk-n">'+x.n+'</div><div class="wk-p">'+x.p+'</div></div>';}).join('');
+    strip=TRIP_DAYS.map(function(day,i){var dw=TRIP_DOW[(1+i)%7];return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';}).join('');
+    header='<div class="trip-h">Day by Day</div><div class="twk-row">'+weeks+'</div>';
+  }else{
+    var maxI=Math.min(ti+1,31);
+    strip=TRIP_DAYS.map(function(day,i){
+      if(i<ti||i>maxI)return '';
+      var dw=TRIP_DOW[(1+i)%7];
+      return '<div class="tpill" data-gi="'+i+'" onclick="selectDay('+i+')"><div class="pp-mo">'+day.mo+'</div><div class="pp-num">'+day.d+'</div><div class="pp-dow">'+dw+'</div></div>';
+    }).join('');
+    header='<div class="trip-h">Schedule</div>';
+  }
+  document.getElementById('trip-days').innerHTML=header+'<div class="tstrip">'+strip+'</div><div class="tday-win">Each day runs 6:00 AM – 12:00 AM (midnight)</div><div id="trip-dayview"></div>';
   selectDay(ti,true);
-  renderNow(); setInterval(renderNow,60000);
-})();
+}
+initTripDays();
+renderNow(); setInterval(renderNow,60000);
 </script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];

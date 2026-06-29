@@ -331,7 +331,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v80 · Jun 29, 2026 · 5:15 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v81 · Jun 29, 2026 · 5:30 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -943,7 +943,7 @@ function checkTripPw(){
   }
 }
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
-function goTripPublic(btn){_tripFull=false;initTripDays();go('t',btn);}
+function goTripPublic(btn){_tripFull=true;initTripDays();go('t',btn);}
 var _groupsUnlocked=false,_groupsBtn=null;
 function tryGroups(btn){
   if(_groupsUnlocked){go('groups',btn);return;}
@@ -1503,7 +1503,7 @@ function retreatDay(d){return [
 var SUNDAY=[['9:00 AM','Free time / prep'],['11:30 AM','Worship service (until 1:30 PM)'],['1:30 PM','Lunch & fellowship'],['4:00 PM','Worship service (until 6:00 PM)'],['6:00 PM','Dinner'],['7:30 PM','Free time / fellowship']];
 function dayBlocks(day){
   var mo=day.mo,d=day.d;
-  if(mo==='Jun'&&d===29)return[['8:00 PM','Arrive at LAX (3h before departure)'],['11:00 PM','OZ 203 — depart LAX → Seoul']];
+  if(mo==='Jun'&&d===29)return[['7:00 PM','Meet at LAX'],['8:00 PM','Prayer send-off'],['11:00 PM','OZ 203 — depart LAX → Seoul']];
   if(mo==='Jun')return[['All day','In flight — LAX → Seoul (overnight)']];
   if(d===1)return[['4:10 AM','Arrive Seoul (ICN)'],['8:35 AM','OZ 711 — depart Seoul'],['10:25 AM','Arrive Taipei (TPE)'],['1:00 PM','Transfer · settle in'],['6:00 PM','Dinner'],['8:00 PM','Rest']];
   if(mo==='Jul'&&(d===5||d===12||d===19||d===26))return wrap(SUNDAY);

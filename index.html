@@ -325,13 +325,46 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-gr{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;white-space:nowrap;}
 .sg-blacked{display:inline-block;width:88px;height:13px;background:#1a1a1a;border-radius:2px;vertical-align:middle;}
 @media(prefers-color-scheme:dark){.sg-blacked{background:#c4c3bc;}}
+/* Memorize */
+.mv-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 15px;margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:12px;}
+.mv-card:active{background:var(--surface2);}
+.mv-ref{font-size:15px;font-weight:800;color:var(--text);}
+.mv-prev{font-size:12px;color:var(--text3);margin-top:2px;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;}
+.mv-dots{display:flex;gap:3px;margin-top:7px;}
+.mv-dot{width:20px;height:4px;border-radius:2px;background:var(--surface2);}
+.mv-dot.on{background:#d97706;}
+.mv-dot.done{background:#16a34a;}
+.mv-star{font-size:20px;flex-shrink:0;width:22px;text-align:center;}
+.mv-back{display:inline-flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:#d97706;background:none;border:none;cursor:pointer;padding:4px 0;margin-bottom:6px;}
+.mv-lvlbar{display:flex;gap:6px;margin:6px 0 14px;}
+.mv-lvl{flex:1;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);padding-bottom:6px;border-bottom:3px solid var(--surface2);}
+.mv-lvl.on{color:#d97706;border-bottom-color:#d97706;}
+.mv-lvl.done{color:#16a34a;border-bottom-color:#16a34a;}
+.mv-verse{font-size:19px;line-height:2.1;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 16px;margin-bottom:14px;font-family:Georgia,'Times New Roman',serif;}
+.mv-w{white-space:nowrap;}
+.mv-blank{display:inline-block;border:none;border-bottom:2px solid #d97706;background:transparent;color:var(--text);font-family:Georgia,serif;font-size:19px;text-align:center;padding:0 2px;min-width:34px;-webkit-appearance:none;outline:none;}
+.mv-blank:focus{border-bottom-color:#2563eb;background:rgba(37,99,235,0.07);}
+.mv-blank.ok{border-bottom-color:#16a34a;color:#16a34a;font-weight:700;}
+.mv-blank.bad{border-bottom-color:#dc2626;color:#dc2626;}
+.mv-ref2{font-size:13px;font-weight:800;color:#d97706;margin-bottom:8px;letter-spacing:.02em;}
+.mv-btnrow{display:flex;gap:8px;margin-bottom:10px;}
+.mv-btn{flex:1;padding:13px;border:none;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.mv-btn.primary{background:#d97706;color:#fff;}
+.mv-btn.ghost{background:var(--surface2);color:var(--text2);flex:0 0 auto;padding:13px 16px;}
+.mv-msg{text-align:center;font-size:14px;font-weight:600;margin-bottom:12px;min-height:20px;}
+.mv-msg.good{color:#16a34a;}
+.mv-msg.bad{color:#dc2626;}
+.mv-done{text-align:center;padding:30px 16px;}
+.mv-done .big{font-size:56px;margin-bottom:10px;}
+.mv-done .t{font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.mv-done .s{font-size:14px;color:var(--text3);line-height:1.5;margin-bottom:18px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v83 · Jun 29, 2026 · 6:00 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v84 · Jun 29, 2026 · 6:20 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -842,6 +875,12 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <div id="sg-list"></div>
   </div>
 </div>
+<div id="pane-mem" class="pane">
+  <div class="stu-title" style="color:#d97706">Memorize Verses</div>
+  <div class="stu-sub">The Roman Road & Great Commission · NIV</div>
+  <div id="mem-home"></div>
+  <div id="mem-practice" style="display:none"></div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
 <div id="trip-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
@@ -868,6 +907,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#d97706" onclick="goMem(this)" aria-label="Memorize">
+    <svg viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M4 17.5A1.5 1.5 0 0 1 5.5 16H19"/><path d="M9 7.5h6M9 11h4"/></svg>
+    <span>Memorize</span>
   </button>
   <button class="tabitem" style="--accent:#0ea5e9" onclick="goTripPublic(this)" aria-label="Trip">
     <svg viewBox="0 0 24 24"><path d="M21 15.5 14 12V5a2 2 0 0 0-4 0v7l-7 3.5V18l7-2v3.5l-2 1.5V22l4-1 4 1v-1l-2-1.5V16l7 2z"/></svg>
@@ -1559,6 +1602,124 @@ function initTripDays(){
 }
 initTripDays();
 renderNow(); setInterval(renderNow,60000);
+</script>
+<script>
+/* ===== Memorize Verses (NIV) ===== */
+var MEM_VERSES=[
+  {ref:"Romans 3:23",text:"for all have sinned and fall short of the glory of God."},
+  {ref:"Romans 6:23",text:"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord."},
+  {ref:"Romans 5:8",text:"But God demonstrates his own love for us in this: While we were still sinners, Christ died for us."},
+  {ref:"Romans 10:9-10",text:"If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved. For it is with your heart that you believe and are justified, and it is with your mouth that you profess your faith and are saved."},
+  {ref:"Matthew 28:18-20",text:"Then Jesus came to them and said, 'All authority in heaven and on earth has been given to me. Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.'"},
+  {ref:"Acts 1:8",text:"But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth."},
+  {ref:"John 1:1",text:"In the beginning was the Word, and the Word was with God, and the Word was God."},
+  {ref:"Matthew 24:12-14",text:"Because of the increase of wickedness, the love of most will grow cold, but the one who stands firm to the end will be saved. And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come."}
+];
+var memVi=0,memStage=0,memHintOn=false;
+function memNorm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+function memFrac(i){return ((i*61+7)%100)/100;}
+function memGetProgress(){try{return JSON.parse(localStorage.getItem('mem_prog')||'{}');}catch(e){return {};}}
+function memSaveProgress(vi,stage){var p=memGetProgress();if((p[vi]||0)<stage){p[vi]=stage;try{localStorage.setItem('mem_prog',JSON.stringify(p));}catch(e){}}}
+function goMem(btn){go('mem',btn);memBackHome();}
+function memShowPractice(){document.getElementById('mem-home').style.display='none';document.getElementById('mem-practice').style.display='block';}
+function memBackHome(){document.getElementById('mem-practice').style.display='none';document.getElementById('mem-home').style.display='block';memRenderHome();window.scrollTo(0,0);}
+function memOpenVerse(i){memVi=i;memStage=0;memShowPractice();memRenderStage();window.scrollTo(0,0);}
+function memRenderHome(){
+  var p=memGetProgress(),mastered=0,h='';
+  MEM_VERSES.forEach(function(v,i){
+    var best=p[i]||0,m=best>=3;if(m)mastered++;
+    var dots='';for(var s=1;s<=3;s++){dots+='<span class="mv-dot '+(best>=s?'done':(best+1===s?'on':''))+'"></span>';}
+    h+='<div class="mv-card" onclick="memOpenVerse('+i+')"><div style="flex:1;min-width:0">'
+      +'<div class="mv-ref">'+v.ref+'</div><div class="mv-prev">'+v.text+'</div>'
+      +'<div class="mv-dots">'+dots+'</div></div>'
+      +'<div class="mv-star">'+(m?'⭐':'📖')+'</div></div>';
+  });
+  var sum='<div style="font-size:13px;color:var(--text3);margin-bottom:12px;font-weight:600">'+mastered+' of '+MEM_VERSES.length+' mastered · tap a verse to practice</div>';
+  document.getElementById('mem-home').innerHTML=sum+h;
+}
+function memBuildBlanks(text,frac){
+  var toks=text.match(/(\w+|\W+)/g)||[],wi=0,out='';
+  toks.forEach(function(t){
+    if(/\w/.test(t)){
+      if(memFrac(wi)<frac){
+        out+='<input class="mv-blank" data-a="'+t+'" style="width:'+Math.round(t.length*10.5+16)+'px" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key===\'Enter\'){event.preventDefault();memCheck();}">';
+      }else{
+        out+='<span class="mv-w">'+t+'</span>';
+      }
+      wi++;
+    }else{out+=t;}
+  });
+  return out;
+}
+function memRenderStage(){
+  var v=MEM_VERSES[memVi],labels=['Read','Easy','Medium','Recall'],bar='';
+  labels.forEach(function(l,s){bar+='<div class="mv-lvl '+(s<memStage?'done':(s===memStage?'on':''))+'">'+l+'</div>';});
+  var body,buttons;
+  if(memStage===0){
+    body='<div class="mv-verse">'+v.text+'</div>';
+    buttons='<div class="mv-btnrow"><button id="mem-primary" class="mv-btn primary" onclick="memStage=1;memRenderStage();">Start practice →</button></div>';
+  }else{
+    var frac=[0,0.34,0.62,1.0][memStage];
+    body='<div class="mv-verse">'+memBuildBlanks(v.text,frac)+'</div>';
+    buttons='<div class="mv-btnrow"><button id="mem-primary" class="mv-btn primary" onclick="memCheck()">Check</button>'
+      +'<button id="mem-extra" class="mv-btn ghost" onclick="memHint()">Hint</button>'
+      +'<button class="mv-btn ghost" onclick="memReveal()">Reveal</button></div>';
+  }
+  document.getElementById('mem-practice').innerHTML=
+    '<button class="mv-back" onclick="memBackHome()">‹ All verses</button>'
+    +'<div class="mv-ref2">'+v.ref+' · NIV</div>'
+    +'<div class="mv-lvlbar">'+bar+'</div>'+body
+    +'<div id="mem-msg" class="mv-msg"></div>'+buttons;
+  memHintOn=false;
+}
+function memCheck(){
+  var inputs=document.querySelectorAll('#mem-practice .mv-blank');
+  if(!inputs.length)return;
+  var all=true,correct=0;
+  inputs.forEach(function(inp){
+    if(inp.readOnly&&inp.classList.contains('ok')){correct++;return;}
+    if(memNorm(inp.value)===memNorm(inp.dataset.a)){
+      inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;inp.value=inp.dataset.a;correct++;
+    }else{inp.classList.add('bad');inp.classList.remove('ok');all=false;}
+  });
+  var msg=document.getElementById('mem-msg');
+  if(all){
+    msg.className='mv-msg good';msg.textContent='Perfect! ✓';
+    memSaveProgress(memVi,memStage);
+    var btn=document.getElementById('mem-primary'),ex=document.getElementById('mem-extra');
+    if(ex)ex.style.display='none';
+    if(memStage>=3){btn.textContent='🎉 Finish';btn.onclick=memShowDone;}
+    else{btn.textContent='Continue →';btn.onclick=function(){memStage++;memRenderStage();};}
+  }else{
+    msg.className='mv-msg bad';msg.textContent=correct+' / '+inputs.length+' correct — fix the red blanks';
+  }
+}
+function memHint(){
+  memHintOn=!memHintOn;
+  document.querySelectorAll('#mem-practice .mv-blank').forEach(function(inp){
+    if(inp.readOnly)return;
+    inp.placeholder=memHintOn?inp.dataset.a.charAt(0)+'…':'';
+  });
+}
+function memReveal(){
+  document.querySelectorAll('#mem-practice .mv-blank').forEach(function(inp){
+    inp.value=inp.dataset.a;inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;
+  });
+  var msg=document.getElementById('mem-msg');msg.className='mv-msg';msg.textContent='Answers shown — tap Try again to practice';
+  var btn=document.getElementById('mem-primary'),ex=document.getElementById('mem-extra');
+  if(ex)ex.style.display='none';
+  btn.textContent='Try again';btn.onclick=function(){memRenderStage();};
+}
+function memShowDone(){
+  memSaveProgress(memVi,3);
+  var v=MEM_VERSES[memVi];
+  document.getElementById('mem-practice').innerHTML=
+    '<div class="mv-done"><div class="big">🎉</div>'
+    +'<div class="t">'+v.ref+' — Mastered!</div>'
+    +'<div class="s">"'+v.text+'"</div>'
+    +'<div class="mv-btnrow"><button class="mv-btn primary" onclick="memBackHome()">← All verses</button>'
+    +'<button class="mv-btn ghost" onclick="memOpenVerse('+memVi+')">Again</button></div></div>';
+}
 </script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];

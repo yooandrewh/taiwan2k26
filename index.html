@@ -364,7 +364,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v85 · Jun 29, 2026 · 6:35 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v86 · Jun 29, 2026 · 6:50 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1643,7 +1643,7 @@ function memBuildBlanks(text,frac){
   toks.forEach(function(t){
     if(/\w/.test(t)){
       if(memFrac(wi)<frac){
-        out+='<input class="mv-blank" data-a="'+t+'" style="width:'+Math.round(t.length*10.5+16)+'px" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key===\'Enter\'){event.preventDefault();memCheck();}">';
+        out+='<input class="mv-blank" data-a="'+t+'" style="width:'+Math.round(t.length*10.5+16)+'px" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" oninput="memInput(this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();memInput(this,true);}">';
       }else{
         out+='<span class="mv-w">'+t+'</span>';
       }
@@ -1651,6 +1651,33 @@ function memBuildBlanks(text,frac){
     }else{out+=t;}
   });
   return out;
+}
+function memLev(a,b){
+  var m=a.length,n=b.length,d=[],i,j;if(!m)return n;if(!n)return m;
+  for(i=0;i<=m;i++)d[i]=[i];for(j=0;j<=n;j++)d[0][j]=j;
+  for(i=1;i<=m;i++)for(j=1;j<=n;j++){
+    var c=a.charAt(i-1)===b.charAt(j-1)?0:1;
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+c);
+  }
+  return d[m][n];
+}
+function memFocusNext(inp){
+  var all=Array.prototype.slice.call(document.querySelectorAll('#mem-practice .mv-blank'));
+  var idx=all.indexOf(inp);
+  for(var j=idx+1;j<all.length;j++){if(!all[j].readOnly){all[j].focus();return;}}
+  if(!all.some(function(b){return !b.readOnly;}))memCheck();
+}
+function memInput(inp,force){
+  if(inp.readOnly)return;
+  var val=memNorm(inp.value),ans=memNorm(inp.dataset.a);
+  var good=val&&(val===ans||(val.length>=ans.length&&memLev(val,ans)<=1));
+  if(good){
+    inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;inp.value=inp.dataset.a;
+    memFocusNext(inp);
+  }else{
+    inp.classList.remove('ok');
+    if(force)memFocusNext(inp);
+  }
 }
 function memRenderStage(){
   var v=MEM_VERSES[memVi],labels=['Read','Easy','Medium','Recall'],bar='';

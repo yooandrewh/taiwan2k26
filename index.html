@@ -342,10 +342,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .mv-lvl.done{color:#16a34a;border-bottom-color:#16a34a;}
 .mv-verse{font-size:19px;line-height:2.1;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 16px;margin-bottom:14px;font-family:Georgia,'Times New Roman',serif;}
 .mv-w{white-space:nowrap;}
-.mv-blank{display:inline-block;border:none;border-bottom:2px solid #d97706;background:transparent;color:var(--text);font-family:Georgia,serif;font-size:19px;text-align:center;padding:0 2px;min-width:34px;-webkit-appearance:none;outline:none;}
-.mv-blank:focus{border-bottom-color:#2563eb;background:rgba(37,99,235,0.07);}
-.mv-blank.ok{border-bottom-color:#16a34a;color:#16a34a;font-weight:700;}
-.mv-blank.bad{border-bottom-color:#dc2626;color:#dc2626;}
+.mv-slot{display:inline-block;border-bottom:2px solid var(--border);text-align:center;padding:0 3px;color:var(--text3);white-space:nowrap;vertical-align:baseline;transition:background .12s;}
+.mv-slot.act{border-bottom-color:#d97706;background:rgba(217,119,6,0.12);border-radius:3px 3px 0 0;color:#d97706;}
+.mv-slot.filled{border-bottom-color:#16a34a;color:#16a34a;font-weight:700;min-width:0!important;}
+.mv-slot.filled.bad{border-bottom-color:#dc2626;color:#dc2626;}
+.mv-slot.wrong{border-bottom-color:#dc2626;background:rgba(220,38,38,0.14);border-radius:3px 3px 0 0;}
+.mem-entry{width:100%;margin-bottom:14px;padding:14px 15px;font-size:17px;border:2px solid #d97706;border-radius:12px;background:var(--surface);color:var(--text);-webkit-appearance:none;outline:none;font-family:-apple-system,system-ui,sans-serif;}
+.mem-entry:focus{border-color:#2563eb;}
 .mv-ref2{font-size:13px;font-weight:800;color:#d97706;margin-bottom:8px;letter-spacing:.02em;}
 .mv-btnrow{display:flex;gap:8px;margin-bottom:10px;}
 .mv-btn{flex:1;padding:13px;border:none;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -364,7 +367,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v86 · Jun 29, 2026 · 6:50 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v87 · Jun 29, 2026 · 7:10 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1638,20 +1641,7 @@ function memRenderHome(){
   var sum='<div style="font-size:13px;color:var(--text3);margin-bottom:12px;font-weight:600">'+mastered+' of '+MEM_VERSES.length+' mastered · tap a verse to practice</div>';
   document.getElementById('mem-home').innerHTML=sum+h;
 }
-function memBuildBlanks(text,frac){
-  var toks=text.match(/(\w+|\W+)/g)||[],wi=0,out='';
-  toks.forEach(function(t){
-    if(/\w/.test(t)){
-      if(memFrac(wi)<frac){
-        out+='<input class="mv-blank" data-a="'+t+'" style="width:'+Math.round(t.length*10.5+16)+'px" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" oninput="memInput(this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();memInput(this,true);}">';
-      }else{
-        out+='<span class="mv-w">'+t+'</span>';
-      }
-      wi++;
-    }else{out+=t;}
-  });
-  return out;
-}
+var memBlanks=[],memPos=-1;
 function memLev(a,b){
   var m=a.length,n=b.length,d=[],i,j;if(!m)return n;if(!n)return m;
   for(i=0;i<=m;i++)d[i]=[i];for(j=0;j<=n;j++)d[0][j]=j;
@@ -1661,81 +1651,114 @@ function memLev(a,b){
   }
   return d[m][n];
 }
-function memFocusNext(inp){
-  var all=Array.prototype.slice.call(document.querySelectorAll('#mem-practice .mv-blank'));
-  var idx=all.indexOf(inp);
-  for(var j=idx+1;j<all.length;j++){if(!all[j].readOnly){all[j].focus();return;}}
-  if(!all.some(function(b){return !b.readOnly;}))memCheck();
+function memGood(word,ans){
+  var v=memNorm(word),a=memNorm(ans);
+  return !!v&&(v===a||(v.length>=a.length&&memLev(v,a)<=1));
 }
-function memInput(inp,force){
-  if(inp.readOnly)return;
-  var val=memNorm(inp.value),ans=memNorm(inp.dataset.a);
-  var good=val&&(val===ans||(val.length>=ans.length&&memLev(val,ans)<=1));
-  if(good){
-    inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;inp.value=inp.dataset.a;
-    memFocusNext(inp);
-  }else{
-    inp.classList.remove('ok');
-    if(force)memFocusNext(inp);
+/* build verse with fill slots (spans) — single typing box drives them so the iOS keyboard never dismisses */
+function memRenderVerseSlots(text,frac){
+  var toks=text.match(/(\w+|\W+)/g)||[],wi=0,bi=0,out='';memBlanks=[];
+  toks.forEach(function(t){
+    if(/\w/.test(t)){
+      if(memFrac(wi)<frac){
+        memBlanks.push({ans:t,filled:false,ok:false});
+        out+='<span class="mv-slot" id="mem-slot-'+bi+'" data-i="'+bi+'" style="min-width:'+Math.max(t.length*10,30)+'px"> </span>';
+        bi++;
+      }else{
+        out+='<span class="mv-w">'+t+'</span>';
+      }
+      wi++;
+    }else{out+=t;}
+  });
+  return out;
+}
+function memNextUnfilled(){for(var i=0;i<memBlanks.length;i++){if(!memBlanks[i].filled)return i;}return -1;}
+function memFillSlot(i,ok){
+  var s=document.getElementById('mem-slot-'+i);
+  if(s){s.textContent=memBlanks[i].ans;s.className='mv-slot filled'+(ok?'':' bad');}
+  memBlanks[i].filled=true;memBlanks[i].ok=ok;
+}
+function memUpdateActive(){
+  document.querySelectorAll('#mem-practice .mv-slot').forEach(function(s){s.classList.remove('act');});
+  var e=document.getElementById('mem-entry');
+  if(memPos>=0&&memPos<memBlanks.length){
+    var s=document.getElementById('mem-slot-'+memPos);
+    if(s){s.classList.add('act');s.scrollIntoView({block:'nearest'});}
+    if(e)e.placeholder=memHintOn?'starts with "'+memBlanks[memPos].ans.charAt(0)+'"':'Type word '+(memPos+1)+' of '+memBlanks.length+'…';
+  }else if(e){e.placeholder='';}
+}
+function memFlashWrong(i){
+  var s=document.getElementById('mem-slot-'+i);
+  if(s){s.classList.add('wrong');setTimeout(function(){if(s)s.classList.remove('wrong');},450);}
+  var m=document.getElementById('mem-msg');if(m){m.className='mv-msg bad';m.textContent='Not quite — try that word again';}
+}
+function memEntry(el,force){
+  if(memPos<0||memPos>=memBlanks.length)return;
+  var endedSpace=/\s$/.test(el.value),word=el.value.replace(/\s+/g,' ').trim();
+  if(memGood(word,memBlanks[memPos].ans)){
+    memFillSlot(memPos,true);el.value='';
+    var m=document.getElementById('mem-msg');if(m)m.textContent='';
+    memPos=memNextUnfilled();memUpdateActive();
+    if(memPos<0)memCompleteStage();
+  }else if(force||endedSpace){
+    if(word)memFlashWrong(memPos);
+    el.value='';
   }
+}
+function memCompleteStage(){
+  memSaveProgress(memVi,memStage);
+  var msg=document.getElementById('mem-msg');if(msg){msg.className='mv-msg good';msg.textContent='Perfect! ✓';}
+  var entry=document.getElementById('mem-entry');if(entry)entry.style.display='none';
+  var ex=document.getElementById('mem-extra');if(ex)ex.style.display='none';
+  var rv=document.getElementById('mem-reveal');if(rv)rv.style.display='none';
+  var btn=document.getElementById('mem-primary');
+  btn.disabled=false;btn.style.opacity='1';
+  if(memStage>=3){btn.textContent='🎉 Finish';btn.onclick=memShowDone;}
+  else{btn.textContent='Continue →';btn.onclick=function(){memStage++;memRenderStage();};}
 }
 function memRenderStage(){
   var v=MEM_VERSES[memVi],labels=['Read','Easy','Medium','Recall'],bar='';
   labels.forEach(function(l,s){bar+='<div class="mv-lvl '+(s<memStage?'done':(s===memStage?'on':''))+'">'+l+'</div>';});
-  var body,buttons;
+  var body,buttons,entry='';
   if(memStage===0){
     body='<div class="mv-verse">'+v.text+'</div>';
     buttons='<div class="mv-btnrow"><button id="mem-primary" class="mv-btn primary" onclick="memStage=1;memRenderStage();">Start practice →</button></div>';
   }else{
     var frac=[0,0.34,0.62,1.0][memStage];
-    body='<div class="mv-verse">'+memBuildBlanks(v.text,frac)+'</div>';
-    buttons='<div class="mv-btnrow"><button id="mem-primary" class="mv-btn primary" onclick="memCheck()">Check</button>'
+    body='<div class="mv-verse">'+memRenderVerseSlots(v.text,frac)+'</div>';
+    entry='<input id="mem-entry" class="mem-entry" type="text" enterkeyhint="next" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" oninput="memEntry(this)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();memEntry(this,true);}">';
+    buttons='<div class="mv-btnrow"><button id="mem-primary" class="mv-btn primary" disabled style="opacity:.4">Continue →</button>'
       +'<button id="mem-extra" class="mv-btn ghost" onclick="memHint()">Hint</button>'
-      +'<button class="mv-btn ghost" onclick="memReveal()">Reveal</button></div>';
+      +'<button id="mem-reveal" class="mv-btn ghost" onclick="memReveal()">Reveal</button></div>';
   }
   document.getElementById('mem-practice').innerHTML=
     '<button class="mv-back" onclick="memBackHome()">‹ All verses</button>'
     +'<div class="mv-ref2">'+v.ref+' · NIV</div>'
     +'<div class="mv-lvlbar">'+bar+'</div>'+body
-    +'<div id="mem-msg" class="mv-msg"></div>'+buttons;
+    +'<div id="mem-msg" class="mv-msg"></div>'+entry+buttons;
   memHintOn=false;
-}
-function memCheck(){
-  var inputs=document.querySelectorAll('#mem-practice .mv-blank');
-  if(!inputs.length)return;
-  var all=true,correct=0;
-  inputs.forEach(function(inp){
-    if(inp.readOnly&&inp.classList.contains('ok')){correct++;return;}
-    if(memNorm(inp.value)===memNorm(inp.dataset.a)){
-      inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;inp.value=inp.dataset.a;correct++;
-    }else{inp.classList.add('bad');inp.classList.remove('ok');all=false;}
-  });
-  var msg=document.getElementById('mem-msg');
-  if(all){
-    msg.className='mv-msg good';msg.textContent='Perfect! ✓';
-    memSaveProgress(memVi,memStage);
-    var btn=document.getElementById('mem-primary'),ex=document.getElementById('mem-extra');
-    if(ex)ex.style.display='none';
-    if(memStage>=3){btn.textContent='🎉 Finish';btn.onclick=memShowDone;}
-    else{btn.textContent='Continue →';btn.onclick=function(){memStage++;memRenderStage();};}
-  }else{
-    msg.className='mv-msg bad';msg.textContent=correct+' / '+inputs.length+' correct — fix the red blanks';
+  if(memStage>0){
+    memPos=memNextUnfilled();memUpdateActive();
+    var e=document.getElementById('mem-entry');if(e)e.focus(); /* runs inside the tap gesture → iOS opens keyboard */
   }
 }
 function memHint(){
   memHintOn=!memHintOn;
-  document.querySelectorAll('#mem-practice .mv-blank').forEach(function(inp){
-    if(inp.readOnly)return;
-    inp.placeholder=memHintOn?inp.dataset.a.charAt(0)+'…':'';
+  memUpdateActive();
+  document.querySelectorAll('#mem-practice .mv-slot').forEach(function(s){
+    var i=+s.dataset.i;
+    if(!memBlanks[i].filled)s.textContent=memHintOn?memBlanks[i].ans.charAt(0)+'…':' ';
   });
+  var e=document.getElementById('mem-entry');if(e)e.focus();
 }
 function memReveal(){
-  document.querySelectorAll('#mem-practice .mv-blank').forEach(function(inp){
-    inp.value=inp.dataset.a;inp.classList.add('ok');inp.classList.remove('bad');inp.readOnly=true;
-  });
+  memBlanks.forEach(function(b,i){memFillSlot(i,true);});
+  memPos=-1;memUpdateActive();
   var msg=document.getElementById('mem-msg');msg.className='mv-msg';msg.textContent='Answers shown — tap Try again to practice';
-  var btn=document.getElementById('mem-primary'),ex=document.getElementById('mem-extra');
-  if(ex)ex.style.display='none';
+  var entry=document.getElementById('mem-entry');if(entry)entry.style.display='none';
+  var ex=document.getElementById('mem-extra');if(ex)ex.style.display='none';
+  var rv=document.getElementById('mem-reveal');if(rv)rv.style.display='none';
+  var btn=document.getElementById('mem-primary');btn.disabled=false;btn.style.opacity='1';
   btn.textContent='Try again';btn.onclick=function(){memRenderStage();};
 }
 function memShowDone(){

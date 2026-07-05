@@ -364,7 +364,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v84 · Jun 29, 2026 · 6:20 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v85 · Jun 29, 2026 · 6:35 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1615,15 +1615,16 @@ var MEM_VERSES=[
   {ref:"John 1:1",text:"In the beginning was the Word, and the Word was with God, and the Word was God."},
   {ref:"Matthew 24:12-14",text:"Because of the increase of wickedness, the love of most will grow cold, but the one who stands firm to the end will be saved. And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come."}
 ];
-var memVi=0,memStage=0,memHintOn=false;
+var memVi=0,memStage=0,memHintOn=false,memDoneTimer=null;
 function memNorm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function memFrac(i){return ((i*61+7)%100)/100;}
 function memGetProgress(){try{return JSON.parse(localStorage.getItem('mem_prog')||'{}');}catch(e){return {};}}
 function memSaveProgress(vi,stage){var p=memGetProgress();if((p[vi]||0)<stage){p[vi]=stage;try{localStorage.setItem('mem_prog',JSON.stringify(p));}catch(e){}}}
 function goMem(btn){go('mem',btn);memBackHome();}
 function memShowPractice(){document.getElementById('mem-home').style.display='none';document.getElementById('mem-practice').style.display='block';}
-function memBackHome(){document.getElementById('mem-practice').style.display='none';document.getElementById('mem-home').style.display='block';memRenderHome();window.scrollTo(0,0);}
-function memOpenVerse(i){memVi=i;memStage=0;memShowPractice();memRenderStage();window.scrollTo(0,0);}
+function memBackHome(){if(memDoneTimer){clearTimeout(memDoneTimer);memDoneTimer=null;}document.getElementById('mem-practice').style.display='none';document.getElementById('mem-home').style.display='block';memRenderHome();window.scrollTo(0,0);}
+function memOpenVerse(i){if(memDoneTimer){clearTimeout(memDoneTimer);memDoneTimer=null;}memVi=i;memStage=0;memShowPractice();memRenderStage();window.scrollTo(0,0);}
+function memNextVerse(){if(memVi<MEM_VERSES.length-1)memOpenVerse(memVi+1);else memBackHome();}
 function memRenderHome(){
   var p=memGetProgress(),mastered=0,h='';
   MEM_VERSES.forEach(function(v,i){
@@ -1712,13 +1713,20 @@ function memReveal(){
 }
 function memShowDone(){
   memSaveProgress(memVi,3);
-  var v=MEM_VERSES[memVi];
+  var v=MEM_VERSES[memVi],last=memVi>=MEM_VERSES.length-1;
+  var buttons=last
+    ? '<div class="mv-btnrow"><button class="mv-btn primary" onclick="memBackHome()">🏁 All 8 done — back to list</button></div>'
+    : '<div style="font-size:13px;color:var(--text3);margin-bottom:10px">Next verse in a moment…</div>'
+      +'<div class="mv-btnrow"><button class="mv-btn primary" onclick="memNextVerse()">Next verse →</button>'
+      +'<button class="mv-btn ghost" onclick="memBackHome()">List</button></div>';
   document.getElementById('mem-practice').innerHTML=
     '<div class="mv-done"><div class="big">🎉</div>'
     +'<div class="t">'+v.ref+' — Mastered!</div>'
-    +'<div class="s">"'+v.text+'"</div>'
-    +'<div class="mv-btnrow"><button class="mv-btn primary" onclick="memBackHome()">← All verses</button>'
-    +'<button class="mv-btn ghost" onclick="memOpenVerse('+memVi+')">Again</button></div></div>';
+    +'<div class="s">"'+v.text+'"</div>'+buttons+'</div>';
+  if(memDoneTimer){clearTimeout(memDoneTimer);memDoneTimer=null;}
+  if(!last)memDoneTimer=setTimeout(function(){
+    if(document.getElementById('pane-mem').classList.contains('active')&&document.querySelector('#mem-practice .mv-done'))memNextVerse();
+  },1800);
 }
 </script>
 <script>

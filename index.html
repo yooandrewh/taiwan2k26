@@ -367,7 +367,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v87 · Jun 29, 2026 · 7:10 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v88 · Jun 29, 2026 · 7:30 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1815,6 +1815,15 @@ window.OneSignalDeferred = window.OneSignalDeferred || [];
     }catch(e){}
   });
 })();
+</script>
+<script>
+/* Offline support: register the combined service worker (also used by OneSignal for push).
+   Registered here so offline works even if the user never enables notifications. */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('OneSignalSDKWorker.js',{scope:'./'}).catch(function(){});
+  });
+}
 </script>
 </body>
 </html>

@@ -13,6 +13,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#16a34a">
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <style>
 :root{--bg:#fafaf7;--text:#1a1a1a;--text2:#555;--text3:#888;--border:#d4d4d0;
   --ra:rgba(185,28,28,0.15);--rb:rgba(37,99,235,0.15);--rc:rgba(22,163,74,0.15);
@@ -361,13 +363,21 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .mv-done .big{font-size:56px;margin-bottom:10px;}
 .mv-done .t{font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;}
 .mv-done .s{font-size:14px;color:var(--text3);line-height:1.5;margin-bottom:18px;}
+/* Map / Places */
+#map-canvas{height:320px;border-radius:14px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;background:var(--surface2);}
+.pl-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 15px;margin-bottom:9px;display:flex;align-items:center;gap:12px;}
+.pl-pin{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;}
+.pl-body{flex:1;min-width:0;cursor:pointer;}
+.pl-name{font-size:15px;font-weight:800;color:var(--text);}
+.pl-sub{font-size:12px;color:var(--text3);margin-top:2px;line-height:1.35;}
+.pl-dir{flex-shrink:0;background:#2563eb;color:#fff;border:none;border-radius:10px;padding:9px 13px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v88 · Jun 29, 2026 · 7:30 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v89 · Jun 29, 2026 · 7:45 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -884,6 +894,12 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="mem-home"></div>
   <div id="mem-practice" style="display:none"></div>
 </div>
+<div id="pane-map" class="pane">
+  <div class="stu-title" style="color:#0d9488">Places</div>
+  <div class="stu-sub">Key spots in Taipei · tap Directions to open Google Maps</div>
+  <div id="map-canvas"></div>
+  <div id="map-list"></div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
 <div id="trip-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
@@ -910,6 +926,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#0d9488" onclick="goMap(this)" aria-label="Places">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    <span>Map</span>
   </button>
   <button class="tabitem" style="--accent:#d97706" onclick="goMem(this)" aria-label="Memorize">
     <svg viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M4 17.5A1.5 1.5 0 0 1 5.5 16H19"/><path d="M9 7.5h6M9 11h4"/></svg>
@@ -1815,6 +1835,54 @@ window.OneSignalDeferred = window.OneSignalDeferred || [];
     }catch(e){}
   });
 })();
+</script>
+<script>
+/* ===== Places / Map ===== */
+var PLACES=[
+  {name:"National Taiwan University",abbr:"NTU",color:"#1e40af",lat:25.0170,lng:121.5397,
+   addr:"No. 1, Sec. 4, Roosevelt Rd, Da'an, Taipei",query:"National Taiwan University"},
+  {name:"National Taiwan Normal University",abbr:"NTNU",color:"#0d9488",lat:25.0261,lng:121.5276,
+   addr:"No. 162, Sec. 1, Heping E Rd, Da'an, Taipei",query:"National Taiwan Normal University"},
+  {name:"NTU of Science and Technology",abbr:"NTUST",color:"#b45309",lat:25.0133,lng:121.5407,
+   addr:"No. 43, Sec. 4, Keelung Rd, Da'an, Taipei (Taiwan Tech)",query:"National Taiwan University of Science and Technology"}
+];
+function mapUrl(p){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.query);}
+var _map=null,_markers={};
+function goMap(btn){go('map',btn);setTimeout(initMap,80);}
+function initMap(){
+  renderMapList();
+  var canvas=document.getElementById('map-canvas');
+  if(_map){_map.invalidateSize();return;}
+  if(typeof L==='undefined'){
+    canvas.innerHTML='<div style="padding:26px 18px;text-align:center;color:var(--text3);font-size:13px;line-height:1.5">🗺️ The map needs internet to load.<br>Tap <b>Directions</b> on any place below to open it in Google Maps.</div>';
+    return;
+  }
+  _map=L.map('map-canvas',{zoomControl:true,scrollWheelZoom:false}).setView([25.019,121.535],14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(_map);
+  PLACES.forEach(function(p,i){
+    var m=L.marker([p.lat,p.lng]).addTo(_map);
+    m.bindPopup('<b>'+p.name+'</b> ('+p.abbr+')<br>'+p.addr+'<br><a href="'+mapUrl(p)+'" target="_blank" rel="noopener">Directions ›</a>');
+    _markers[i]=m;
+  });
+  _map.invalidateSize();
+}
+function focusPlace(i){
+  var p=PLACES[i];
+  if(_map){_map.setView([p.lat,p.lng],16);if(_markers[i])_markers[i].openPopup();window.scrollTo(0,0);}
+  else window.open(mapUrl(p),'_blank');
+}
+function renderMapList(){
+  var h='';
+  PLACES.forEach(function(p,i){
+    h+='<div class="pl-card">'
+      +'<div class="pl-pin" style="background:'+p.color+'">'+p.abbr.charAt(0)+'</div>'
+      +'<div class="pl-body" onclick="focusPlace('+i+')"><div class="pl-name">'+p.abbr+'</div>'
+      +'<div class="pl-sub">'+p.name+' · '+p.addr+'</div></div>'
+      +'<a class="pl-dir" href="'+mapUrl(p)+'" target="_blank" rel="noopener">Directions</a>'
+      +'</div>';
+  });
+  document.getElementById('map-list').innerHTML=h;
+}
 </script>
 <script>
 /* Offline support: register the combined service worker (also used by OneSignal for push).

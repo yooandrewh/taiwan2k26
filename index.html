@@ -377,7 +377,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v89 · Jun 29, 2026 · 7:45 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v90 · Jun 29, 2026 · 8:00 PM PST</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1857,8 +1857,8 @@ function initMap(){
     canvas.innerHTML='<div style="padding:26px 18px;text-align:center;color:var(--text3);font-size:13px;line-height:1.5">🗺️ The map needs internet to load.<br>Tap <b>Directions</b> on any place below to open it in Google Maps.</div>';
     return;
   }
-  _map=L.map('map-canvas',{zoomControl:true,scrollWheelZoom:false}).setView([25.019,121.535],14);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(_map);
+  _map=L.map('map-canvas',{zoomControl:true,scrollWheelZoom:false,maxZoom:22}).setView([25.019,121.535],14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:22,attribution:'© OpenStreetMap'}).addTo(_map);
   PLACES.forEach(function(p,i){
     var m=L.marker([p.lat,p.lng]).addTo(_map);
     m.bindPopup('<b>'+p.name+'</b> ('+p.abbr+')<br>'+p.addr+'<br><a href="'+mapUrl(p)+'" target="_blank" rel="noopener">Directions ›</a>');
@@ -1868,7 +1868,7 @@ function initMap(){
 }
 function focusPlace(i){
   var p=PLACES[i];
-  if(_map){_map.setView([p.lat,p.lng],16);if(_markers[i])_markers[i].openPopup();window.scrollTo(0,0);}
+  if(_map){_map.setView([p.lat,p.lng],18);if(_markers[i])_markers[i].openPopup();window.scrollTo(0,0);}
   else window.open(mapUrl(p),'_blank');
 }
 function renderMapList(){

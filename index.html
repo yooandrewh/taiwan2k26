@@ -371,13 +371,28 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .pl-name{font-size:15px;font-weight:800;color:var(--text);}
 .pl-sub{font-size:12px;color:var(--text3);margin-top:2px;line-height:1.35;}
 .pl-dir{flex-shrink:0;background:#2563eb;color:#fff;border:none;border-radius:10px;padding:9px 13px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+/* Prayer */
+.pr-note{background:var(--surface);border:1px solid var(--border);border-left:3px solid #0d9488;border-radius:12px;padding:12px 14px;margin-bottom:6px;font-size:13px;line-height:1.55;color:var(--text2);}
+.pr-note b{color:var(--text);}
+.pr-sec{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin:22px 2px 12px;border-bottom:1.5px solid var(--border);padding-bottom:6px;}
+.pr-day{font-size:14px;font-weight:800;color:#0d9488;margin:14px 2px 8px;}
+.pr-pairrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:9px;}
+.pr-campus{font-size:11px;font-weight:800;background:#0d9488;color:#fff;border-radius:6px;padding:4px 9px;flex-shrink:0;}
+.pr-pair{font-size:13px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 12px;color:var(--text);}
+.pr-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 15px;margin-bottom:9px;}
+.pr-card.pr-praise{border-left:3px solid #eab308;}
+.pr-name{font-size:16px;font-weight:800;color:var(--text);}
+.pr-tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#0d9488;background:rgba(13,148,136,0.13);border-radius:5px;padding:2px 7px;margin:2px 0 0 2px;vertical-align:middle;}
+.pr-ctx{font-size:13px;color:var(--text2);line-height:1.55;margin:8px 0 9px;}
+.pr-ask{font-size:13px;color:var(--text);line-height:1.55;background:var(--surface2);border-radius:10px;padding:9px 12px;}
+.pr-ask .pr-lead{color:#0d9488;font-weight:800;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v90 · Jun 29, 2026 · 8:00 PM PST</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v91 · Jul 7, 2026 · 10:30 AM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -900,6 +915,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="map-canvas"></div>
   <div id="map-list"></div>
 </div>
+<div id="pane-pray" class="pane">
+  <div class="stu-title" style="color:#0d9488">Prayer</div>
+  <div class="stu-sub">Week 2 · Street Evangelism · let's pray together</div>
+  <div class="pr-note">🍽️ <b>Follow-up steps:</b> invite to a meal · invite to <b>Friendship Night</b> (Fri, 7–9 PM — free food, intro to Christianity + sharing our stories) · get contact (Line, IG…)</div>
+  <div id="pray-pairs"></div>
+  <div id="pray-people"></div>
+</div>
 <div class="footer">Open in any browser · ⌘P / Ctrl+P to print or save as PDF</div>
 </div>
 <div id="trip-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
@@ -923,6 +945,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
     <span>Pray For</span>
   </button>
+  <button class="tabitem" style="--accent:#0d9488" onclick="goPray(this)" aria-label="Prayer">
+    <svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-9-8C1.5 9.5 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.5 0 4.5 4 3 6.5-2.5 3.8-9 8-9 8z"/></svg>
+    <span>Pray</span>
+  </button>
   <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
@@ -933,7 +959,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   </button>
   <button class="tabitem" style="--accent:#d97706" onclick="goMem(this)" aria-label="Memorize">
     <svg viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M4 17.5A1.5 1.5 0 0 1 5.5 16H19"/><path d="M9 7.5h6M9 11h4"/></svg>
-    <span>Memorize</span>
+    <span>Verses</span>
   </button>
   <button class="tabitem" style="--accent:#0ea5e9" onclick="goTripPublic(this)" aria-label="Trip">
     <svg viewBox="0 0 24 24"><path d="M21 15.5 14 12V5a2 2 0 0 0-4 0v7l-7 3.5V18l7-2v3.5l-2 1.5V22l4-1 4 1v-1l-2-1.5V16l7 2z"/></svg>
@@ -1871,6 +1897,65 @@ function focusPlace(i){
   if(_map){_map.setView([p.lat,p.lng],18);if(_markers[i])_markers[i].openPopup();window.scrollTo(0,0);}
   else window.open(mapUrl(p),'_blank');
 }
+/* ===== Prayer ===== */
+var PRAYER_PAIRS=[
+  {day:"Tuesday",groups:[
+    {campus:"NTUST",pairs:["Janet–Becca","Andrew–Esther"]},
+    {campus:"NTU",pairs:["Caleb–Jane","Owen–Grace","Rubin–Sammy"]},
+    {campus:"NTNU",pairs:["Jean–Irene"]}
+  ]},
+  {day:"Yesterday · Jul 6",groups:[
+    {campus:"NTNU",pairs:["Caleb–Grace"]},
+    {campus:"NTUST",pairs:["Jean–Janet","Owen–Becca"]},
+    {campus:"NTU",pairs:["Andrew–Sammy","Rubin–Jane","Esther–Irene"]}
+  ]}
+];
+var PRAYER_PEOPLE=[
+  {who:"Lisa, Bibi, Haru, Shaling",tag:"Rising freshmen · Chinese",ctx:"Rising freshmen, Chinese students — met playing volleyball.",ask:"Open hearts as they start university, and for these friendships to deepen."},
+  {who:"Sam",tag:"Agnostic · former Christian",ctx:"Grew up Christian, no longer in church, finds faith hard — now agnostic.",ask:"That the Spirit would soften his doubts and draw him back."},
+  {who:"Lorenzo, Luca, Simon",tag:"Intl · Europe",ctx:"International students from Europe studying abroad.",ask:"For gospel seeds to take root during their time here."},
+  {who:"Erin",tag:"Rising senior · UCR",ctx:"Rising senior at UCR, feeling hopeless in her job search.",ask:"For peace, direction, and hope for her future."},
+  {who:"Anna",tag:"Met hiking",ctx:"Met while hiking.",ask:"For the friendship to grow and for spiritual openness."},
+  {who:"Mara",tag:"Paraguay",ctx:"Student from Paraguay.",ask:"For her adjustment, and for opportunities to share the gospel with her."},
+  {who:"Calli & Elise",tag:"1st & 2nd years",ctx:"Young — first and second years.",ask:"For open hearts and meaningful connection despite just meeting them."},
+  {who:"Terry",tag:"Rising junior",ctx:"Rising junior.",ask:"For growing curiosity about faith."},
+  {who:"Lucia",tag:"4th year · Belgium",ctx:"Fourth year from Belgium with Spanish roots; in Taiwan since September.",ask:"That her time abroad would be marked by encountering God, and that the friendship would deepen given her longer stay."},
+  {who:"Taiwanese girl (sitting alone)",tag:"Little English",ctx:"Sitting alone, knew little to no English.",ask:"For someone to bridge the language gap, and for her to feel seen and welcomed."},
+  {who:"Shakour",tag:"Somali",ctx:"From Somalia.",ask:"For trust to build across cultural lines, and for him to feel genuinely cared for."},
+  {who:"Nick",tag:"Traveler · USA",ctx:"Traveler from America.",ask:"For good conversations, and for the gospel to be planted along his travels."},
+  {who:"Sofi",tag:"PhD at NTU · Chile",ctx:"From Chile, studying for a PhD at NTU.",ask:"For the friendship to grow, and for her heart to be open during her studies."},
+  {who:"Evelyn & Leo",tag:"Indonesian Christians",ctx:"Indonesian Christians — meal planned tomorrow.",ask:"That the time together would encourage everyone's faith and deepen the friendship."},
+  {who:"Oliver & Wes",tag:"Mormons",ctx:"Mormons.",ask:"For genuine gospel conversations, discernment, and openness to the true nature of Christ."},
+  {who:"Jason",tag:"Taiwanese",ctx:"Taiwanese man; was open to dinner but backed out at his girlfriend's request.",ask:"For his girlfriend's openness to soften, and for another chance to connect."},
+  {who:"Meylan (Angelina)",tag:"NTUST master's · Catholic",ctx:"Indonesian master's student at NTUST, Catholic — very shy and introverted.",ask:"That she'd come out of her shell, and have a deeper encounter with the gospel."},
+  {who:"Wahyu",tag:"NTUST master's · FPC",ctx:"Indonesian master's student at NTUST, outgoing — a Christian at FPC.",ask:"That he'd grow in faith and use his conversational gift to encourage others."},
+  {who:"Desri",tag:"NTUST master's · FPC",ctx:"Indonesian master's student at NTUST (computer engineering), shy — a Christian at FPC.",ask:"For confidence, and continued growth in her faith."},
+  {who:"Ilmi",tag:"NTUST master's · Muslim",ctx:"Indonesian master's student at NTUST (electrical engineering), Muslim. Her faith seems shaped more by family and government requirements than personal conviction.",ask:"For her heart — that she'd encounter truth for herself."},
+  {who:"Oolia & Carson",tag:"Indonesian + friend",ctx:"An Indonesian student and her English-speaking friend; seemed apprehensive once they learned the team was there on mission.",ask:"That fear or hesitation would give way to curiosity and openness."},
+  {who:"Lucy & David",tag:"Czech · master's",praise:true,ctx:"From the Czech Republic, dating 6 years, both doing master's in electrical engineering in Taiwan since February. David is a young Christian under heavy pressure from his home church over attendance demands he can't meet — struggling to find community here. Lucy is not yet a Christian but open to learning. Praise God — they're coming to FPC this Sunday and agreed to lunch together!",ask:"For that lunch; for David to find healthy community and freedom from guilt; and for Lucy's openness to grow into faith."}
+];
+function goPray(btn){go('pray',btn);}
+function renderPrayer(){
+  var h='<div class="pr-sec">Team Pairings · Street Evangelism</div>';
+  PRAYER_PAIRS.forEach(function(d){
+    h+='<div class="pr-day">'+d.day+'</div>';
+    d.groups.forEach(function(g){
+      h+='<div class="pr-pairrow"><span class="pr-campus">'+g.campus+'</span>';
+      g.pairs.forEach(function(p){h+='<span class="pr-pair">'+p+'</span>';});
+      h+='</div>';
+    });
+  });
+  document.getElementById('pray-pairs').innerHTML=h;
+  var ph='<div class="pr-sec">Individuals to Pray For · '+PRAYER_PEOPLE.length+'</div>';
+  PRAYER_PEOPLE.forEach(function(p){
+    ph+='<div class="pr-card'+(p.praise?' pr-praise':'')+'">'
+      +'<div class="pr-name">'+p.who+(p.tag?'<span class="pr-tag">'+p.tag+'</span>':'')+'</div>'
+      +'<div class="pr-ctx">'+p.ctx+'</div>'
+      +'<div class="pr-ask"><span class="pr-lead">Pray</span> · '+p.ask+'</div></div>';
+  });
+  document.getElementById('pray-people').innerHTML=ph;
+}
+renderPrayer();
 function renderMapList(){
   var h='';
   PLACES.forEach(function(p,i){

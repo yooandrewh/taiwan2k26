@@ -141,14 +141,11 @@ function tagHTML(person,grpId){
   var gradeLine=person.role
     ? '<div class="grade role">'+(person.role==="V"?"Volunteer":"Leader")+'</div>'
     : '<div class="grade">'+grLabel(person.g)+'</div>';
-  var full=FULL_NAME[person.name]||"";
-  if(full===person.name) full="";
-  // collapse a repeated English name ONLY when what's left is the Chinese name (no Latin letters);
-  // otherwise keep the full English+Chinese so surnames aren't orphaned (e.g. "Est-elle Hsu 徐唯").
-  if(full&&full.indexOf(person.name+" ")===0){
-    var rest=full.slice(person.name.length).trim();
-    if(rest&&!/[A-Za-z]/.test(rest)) full=rest;
-  }
+  // Second line: the Chinese name if they have one (e.g. Est-elle → 徐唯), otherwise the
+  // full English/legal name for families without a Chinese name (e.g. Grace Lynn Hartshorne).
+  var raw=FULL_NAME[person.name]||"";
+  var cjk=(raw.match(/[㐀-鿿]+/g)||[]).join("");
+  var full=cjk||(raw&&raw!==person.name?raw:"");
   var fullLine=full?'<div class="fullname">'+esc(full)+'</div>':'';
   return '<div class="tag">'
     +'<div class="top" style="background:'+color+'"></div>'

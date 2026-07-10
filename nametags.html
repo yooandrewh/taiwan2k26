@@ -29,6 +29,13 @@
   .grade{margin-top:5px;font-size:12.5pt;font-weight:700;color:#444;}
   .grade.role{color:#0d9488;text-transform:uppercase;letter-spacing:.04em;font-size:11pt;}
   .foot{margin-top:auto;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
+  /* Black & white mode — no color fills, prints on any mono printer */
+  .bw .top{display:none;}
+  .bw .grp{background:#fff !important;color:#000;border:1.6px solid #000;}
+  .bw .amark{color:#000;}
+  .bw .name,.bw .grade,.bw .grade.role{color:#000;}
+  .bw .fullname{color:#333;}
+  .bw .foot{color:#888;}
 
   @media print{
     @page{size:A4 portrait;margin:0.35in;}
@@ -45,10 +52,11 @@
   <span class="info" id="count"></span>
   <span class="spacer"></span>
   <label><input type="checkbox" id="cutlines" checked> Cut guides</label>
+  <label><input type="checkbox" id="bw"> Black &amp; white</label>
   <button onclick="window.print()">🖨️ Print</button>
 </div>
 <div class="hint">
-  <b>Printing:</b> 3.5″×2.5″ tags, 8 per A4 page. In the print dialog set <b>Scale 100%</b> (not "Fit"), <b>Margins: Default</b>, and enable <b>Background graphics</b> so the colors print. Tags are grouped by group for easy sorting. &nbsp;·&nbsp; A small <b style="color:#c2410c">✳</b> in the corner means <b>allergy on file</b> — check the master allergy list for details.
+  <b>Printing:</b> 3.5″×2.5″ tags, 8 per A4 page. In the print dialog set <b>Scale 100%</b> (not "Fit"), <b>Margins: Default</b>, and enable <b>Background graphics</b> so the colors print. Tags are grouped by group for easy sorting. &nbsp;·&nbsp; A small <b style="color:#c2410c">✳</b> in the corner means <b>allergy on file</b> — check the master allergy list for details. &nbsp;·&nbsp; Printing on a mono printer? Tick <b>Black &amp; white</b> — it drops all color fills so it prints crisp without needing background graphics.
 </div>
 <div class="sheet" id="sheet"></div>
 
@@ -179,6 +187,9 @@ function fitNames(){
 
 document.getElementById('cutlines').addEventListener('change',function(e){
   document.querySelectorAll('.tag').forEach(function(t){t.style.border=e.target.checked?'1px dashed #c4c4c4':'1px solid transparent';});
+});
+document.getElementById('bw').addEventListener('change',function(e){
+  document.getElementById('sheet').classList.toggle('bw',e.target.checked);
 });
 
 render();

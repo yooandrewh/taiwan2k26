@@ -25,6 +25,7 @@
   .amark{font-size:13pt;color:#c2410c;line-height:1;opacity:.85;}
   .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2px 2px 0;}
   .name{font-weight:800;line-height:1.05;color:#111;}
+  .fullname{margin-top:3px;font-size:10pt;font-weight:600;color:#777;line-height:1.15;}
   .grade{margin-top:5px;font-size:12.5pt;font-weight:700;color:#444;}
   .grade.role{color:#0d9488;text-transform:uppercase;letter-spacing:.04em;font-size:11pt;}
   .foot{margin-top:auto;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
@@ -83,12 +84,39 @@ const VBS_SG={
   ]
 };
 
-// Known allergies / dietary notes (keyed by name). Add more as they come in.
+// Allergies / medical notes on file (from the 2026 registration). Value = detail (not printed; ✳ is the only mark).
 const ALLERGIES={
-  "Queenie":"No shellfish / shrimp",
-  "Patrick":"No beef",
-  "Jyshelle Pak":"Less sugar please",
-  "Zephyr Kao":"Heat rash (feet)"
+  "Jean Kim":"Amoxicillin","Irene Song":"Peanut (not severe)","Rubin Jang":"Penicillin",
+  "Owen Lee":"Penicillin","Grace Yoon":"Pineapple","Roba":"Cold air & dust mite",
+  "Ethan Nam":"Amoxicillin","Owen Nam":"Grass; migraines","Queenie":"Shellfish / shrimp",
+  "Zephyr Kao":"Heat rash (feet)","Patrick":"No beef","Jyshelle Pak":"Less sugar",
+  "Celia":"Shellfish / shrimp","Mumu Hu":"Nuts","Dylan Lin":"Peanut & almond",
+  "Elonnie Pak":"Less sugar","Sunny":"Shellfish / shrimp"
+};
+
+// Full / legal name on file (keyed by the preferred name shown). Printed small under the big name.
+const FULL_NAME={
+  "Caleb Su":"Caleb Jaesung Su","Roba":"繆光","Jean Kim":"Jean Eon Kim","Timothy Kim":"Timothy Kim",
+  "Andrew Back":"Andrew Sung-Jin Back","Ethan Nam":"Nam, Ethan Insheek","Rubin Jang":"Rubin Jang",
+  "Lane Hartshorne":"Lane Charles Hartshorne","Owen Lee":"Owen Nico Lee","Owen Nam":"Nam, Owen Junsheek",
+  "Owen Wu":"Owen Wu 巫明頲","Esther Yang":"Esther Yoonseo Yang","Becca Park":"Rebecca Faith Park",
+  "Jane Kim":"Jane J Kim","Sammy Taing":"Samantha Taing","Irene Song":"Irene Jihae Song",
+  "Janet Phee":"Janet Eunsuh Phee","Grace Yoon":"Grace Yehjin Yoon",
+  "Hao-Chen Li":"李昊禛","Ezra":"Ezra Hu 胡家祈","Zephyr Kao":"高得洋","Harry":"劉和昱","Jeremy":"鄭皓平",
+  "Mike":"楊品謙","Ryan Lin":"Ryan Lin 林瑞恩","Patrick":"劉宥辰","Wayne":"黃泓文","Len":"邱于倫",
+  "Atlas Kao":"高得恩","Levi":"黃永真","Paul":"傅予","Meek Lo":"駱謙和","Jacob Yang":"楊煦",
+  "Ansel":"張安石","Richard Hsia":"夏日海","Freddie":"謝範","Liam Chang":"張力恩","Alvin Fu":"傅恩平",
+  "Mumu Hu":"胡沐家","Jeremiah":"鄭加麥","Caleb Guo":"Caleb Jiale Guo","Dylan Lin":"Dylan Lin 林秝安",
+  "Yann Chiu":"邱于晏","Oli":"張安禮","Daniel Hu":"胡盛心","Elijah Kwok":"Elijah Kwok 郭曉峰",
+  "Sunny":"丘森亮","Asher":"管立璿","Est-elle":"Est-elle Hsu 徐唯","Hsin Hsin":"張立心","Claire":"金珍希",
+  "Grace Hartshorne":"Grace Lynn Hartshorne","Eliana Wan":"萬恩馨","Ruhamah":"Ruhamah Rains 劉子露",
+  "Queenie":"丘葵","Yuqi Chiu":"邱宛姍","Amber Yang":"楊宇安","Adeline":"管立晴","Ellery":"管詩樂",
+  "Kara":"金珍寧","Grace":"葉恩景","Stephanie":"趙唯真","Poppy Lo":"羅以童","Doughnuts":"黃思語",
+  "Freja":"管歆嬡","Hannah Jiang":"江幸恩","Jessie Hu":"胡詠絜","Doris":"簡菡妤",
+  "Jyshelle Pak":"Pak Jyshelle Xin Xun","Emmeline":"管立棠","Celia":"丘芊","Dorcas Chen":"陳亭蓁",
+  "Olivia":"管語恩","Yu-Chen Li":"李予禛","Avery Nam":"Nam, Avery Aerin","Gemma Benson":"Gemma Rose Benson",
+  "Riley":"傅竹","Elonnie Pak":"Pak Elonnie Xin Yu","Deborah Lo":"駱謙柔","Papillon Lo":"羅朵",
+  "Abigail Guo":"Abigail Enhui Guo"
 };
 
 // Distinct color per group for easy sorting into piles.
@@ -113,11 +141,14 @@ function tagHTML(person,grpId){
   var gradeLine=person.role
     ? '<div class="grade role">'+(person.role==="V"?"Volunteer":"Leader")+'</div>'
     : '<div class="grade">'+grLabel(person.g)+'</div>';
+  var full=FULL_NAME[person.name]||"";
+  if(full&&full!==person.name&&full.indexOf(person.name+" ")===0) full=full.slice(person.name.length).trim();
+  var fullLine=(full&&full!==person.name)?'<div class="fullname">'+esc(full)+'</div>':'';
   return '<div class="tag">'
     +'<div class="top" style="background:'+color+'"></div>'
     +'<div class="row"><span class="grp" style="background:'+color+'">Group '+grpId+'</span>'
       +(allergy?'<span class="amark" title="Allergy on file">✳</span>':'<span></span>')+'</div>'
-    +'<div class="center"><div class="name" data-fit>'+esc(person.name)+'</div>'+gradeLine+'</div>'
+    +'<div class="center"><div class="name" data-fit>'+esc(person.name)+'</div>'+fullLine+gradeLine+'</div>'
     +'<div class="foot">FPC BEST Children’s Camp</div>'
     +'</div>';
 }

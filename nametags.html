@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VBS Name Tags · Taiwan 2026</title>
+<title>FPC BEST Children’s Camp · Name Tags</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,system-ui,"Segoe UI",Arial,sans-serif;background:#e9e9e6;color:#111;}
@@ -22,14 +22,13 @@
   .tag .top{position:absolute;left:0;top:0;height:0.32in;width:100%;}
   .tag .row{display:flex;align-items:center;justify-content:space-between;margin-top:0.16in;}
   .grp{font-size:12pt;font-weight:800;color:#fff;border-radius:6px;padding:2px 10px;letter-spacing:.02em;}
-  .star{font-size:15pt;color:#f5b301;line-height:1;}
+  .amark{display:inline-flex;align-items:center;justify-content:center;width:0.26in;height:0.26in;border:2px solid #dc2626;color:#dc2626;border-radius:50%;font-weight:900;font-size:12pt;line-height:1;font-family:Georgia,serif;}
   .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2px 2px 0;}
   .name{font-weight:800;line-height:1.05;color:#111;}
   .grade{margin-top:5px;font-size:12.5pt;font-weight:700;color:#444;}
   .grade.role{color:#0d9488;text-transform:uppercase;letter-spacing:.04em;font-size:11pt;}
-  .allergy{margin-top:auto;background:#fde2e2;border:1.5px solid #dc2626;color:#b91c1c;border-radius:7px;padding:5px 8px;font-size:9.5pt;font-weight:700;text-align:center;line-height:1.2;}
-  .allergy b{text-transform:uppercase;letter-spacing:.03em;}
-  .foot{margin-top:6px;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
+  .aller-txt{margin-top:auto;text-align:center;font-size:8.5pt;font-weight:700;color:#b91c1c;line-height:1.2;}
+  .foot{margin-top:5px;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
 
   @media print{
     @page{size:A4 portrait;margin:0.35in;}
@@ -42,7 +41,7 @@
 </head>
 <body>
 <div class="toolbar">
-  <h1>VBS Name Tags</h1>
+  <h1>FPC BEST Children’s Camp · Name Tags</h1>
   <span class="info" id="count"></span>
   <span class="spacer"></span>
   <label><input type="checkbox" id="cutlines" checked> Cut guides</label>
@@ -117,9 +116,11 @@ function tagHTML(person,grpId){
     : '<div class="grade">'+grLabel(person.g)+'</div>';
   return '<div class="tag">'
     +'<div class="top" style="background:'+color+'"></div>'
-    +'<div class="row"><span class="grp" style="background:'+color+'">Group '+grpId+'</span><span class="star">★</span></div>'
+    +'<div class="row"><span class="grp" style="background:'+color+'">Group '+grpId+'</span>'
+      +(allergy?'<span class="amark" title="Allergy">!</span>':'<span></span>')+'</div>'
     +'<div class="center"><div class="name" data-fit>'+esc(person.name)+'</div>'+gradeLine+'</div>'
-    +(allergy?'<div class="allergy"><b>⚠ Allergy</b> · '+esc(allergy)+'</div>':'<div class="foot">Taiwan 2026 · VBS</div>')
+    +(allergy?'<div class="aller-txt">! '+esc(allergy)+'</div>':'')
+    +'<div class="foot">FPC BEST Children’s Camp</div>'
     +'</div>';
 }
 

@@ -22,13 +22,12 @@
   .tag .top{position:absolute;left:0;top:0;height:0.32in;width:100%;}
   .tag .row{display:flex;align-items:center;justify-content:space-between;margin-top:0.16in;}
   .grp{font-size:12pt;font-weight:800;color:#fff;border-radius:6px;padding:2px 10px;letter-spacing:.02em;}
-  .amark{display:inline-flex;align-items:center;justify-content:center;width:0.26in;height:0.26in;border:2px solid #dc2626;color:#dc2626;border-radius:50%;font-weight:900;font-size:12pt;line-height:1;font-family:Georgia,serif;}
+  .amark{font-size:13pt;color:#c2410c;line-height:1;opacity:.85;}
   .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2px 2px 0;}
   .name{font-weight:800;line-height:1.05;color:#111;}
   .grade{margin-top:5px;font-size:12.5pt;font-weight:700;color:#444;}
   .grade.role{color:#0d9488;text-transform:uppercase;letter-spacing:.04em;font-size:11pt;}
-  .aller-txt{margin-top:auto;text-align:center;font-size:8.5pt;font-weight:700;color:#b91c1c;line-height:1.2;}
-  .foot{margin-top:5px;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
+  .foot{margin-top:auto;text-align:center;font-size:7.5pt;color:#aaa;letter-spacing:.03em;text-transform:uppercase;}
 
   @media print{
     @page{size:A4 portrait;margin:0.35in;}
@@ -48,7 +47,7 @@
   <button onclick="window.print()">🖨️ Print</button>
 </div>
 <div class="hint">
-  <b>Printing:</b> 3.5″×2.5″ tags, 8 per A4 page. In the print dialog set <b>Scale 100%</b> (not "Fit"), <b>Margins: Default</b>, and enable <b>Background graphics</b> so the colors print. Tags are grouped by group for easy sorting.
+  <b>Printing:</b> 3.5″×2.5″ tags, 8 per A4 page. In the print dialog set <b>Scale 100%</b> (not "Fit"), <b>Margins: Default</b>, and enable <b>Background graphics</b> so the colors print. Tags are grouped by group for easy sorting. &nbsp;·&nbsp; A small <b style="color:#c2410c">✳</b> in the corner means <b>allergy on file</b> — check the master allergy list for details.
 </div>
 <div class="sheet" id="sheet"></div>
 
@@ -117,9 +116,8 @@ function tagHTML(person,grpId){
   return '<div class="tag">'
     +'<div class="top" style="background:'+color+'"></div>'
     +'<div class="row"><span class="grp" style="background:'+color+'">Group '+grpId+'</span>'
-      +(allergy?'<span class="amark" title="Allergy">!</span>':'<span></span>')+'</div>'
+      +(allergy?'<span class="amark" title="Allergy on file">✳</span>':'<span></span>')+'</div>'
     +'<div class="center"><div class="name" data-fit>'+esc(person.name)+'</div>'+gradeLine+'</div>'
-    +(allergy?'<div class="aller-txt">! '+esc(allergy)+'</div>':'')
     +'<div class="foot">FPC BEST Children’s Camp</div>'
     +'</div>';
 }

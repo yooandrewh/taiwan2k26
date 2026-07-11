@@ -410,7 +410,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v96 · Jul 7, 2026 · 1:40 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v97 · Jul 7, 2026 · 2:00 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1578,7 +1578,11 @@ function sgRender(){
   document.getElementById('sg-sub').textContent=groups.length+' groups · '+totalKids+' kids · tap a name for details';
   // birthday banner for anyone in this view whose birthday falls during the trip
   var bdays=[];
-  groups.forEach(function(grp){grp.kids.forEach(function(p){var i=KID_INFO[p.name];if(i&&bdayInTrip(i.b))bdays.push(p.name+' ('+i.b+')');});});
+  groups.forEach(function(grp){
+    grp.kids.concat(grp.leads.filter(function(l){return l.role==='V';})).forEach(function(p){
+      var i=KID_INFO[p.name];if(i&&bdayInTrip(i.b))bdays.push(p.name+' ('+i.b+')');
+    });
+  });
   var html=bdays.length?'<div class="sg-bday">🎂 Birthdays during the trip: '+bdays.join(' · ')+'</div>':'';
   groups.forEach(function(grp){
     var kidCount=grp.kids.length;
@@ -1593,7 +1597,7 @@ function sgRender(){
       html+='<div class="sg-staff tapp" onclick="kidDetail(\''+l.name.replace(/'/g,"\\'")+'\',\''+grp.id+'\',\'\')">';
       html+='<span class="sg-role">'+(l.role==='V'?'Vol.':'Leader')+'</span>';
       html+='<span class="sg-person'+(l.role==='V'?' vol':'')+'">'+l.name+'</span>';
-      html+=(li.al?'<span class="sg-alg">✳</span>':'');
+      html+=(li.al?'<span class="sg-alg">✳</span>':'')+((l.role==='V'&&bdayInTrip(li.b))?'<span class="sg-cake">🎂</span>':'');
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });

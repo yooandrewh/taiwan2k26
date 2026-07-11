@@ -404,13 +404,26 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .pr-ctx{font-size:13px;color:var(--text2);line-height:1.55;margin:8px 0 9px;}
 .pr-ask{font-size:13px;color:var(--text);line-height:1.55;background:var(--surface2);border-radius:10px;padding:9px 12px;}
 .pr-ask .pr-lead{color:#0d9488;font-weight:800;}
+/* VBS per-day praise & skits */
+.vday{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 15px;margin-bottom:10px;}
+.vday-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px;}
+.vday-d{font-size:16px;font-weight:800;color:#2563eb;}
+.vday-buddy{font-size:12px;color:var(--text3);font-weight:600;}
+.vday-meta{font-size:12px;color:var(--text2);margin-bottom:9px;line-height:1.5;}
+.vday-sesh{margin-top:8px;}
+.vday-lbl{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#2563eb;border-radius:5px;padding:2px 8px;margin-bottom:4px;}
+.vday-sesh.pm .vday-lbl{background:#7c3aed;}
+.vday-line{font-size:13px;color:var(--text);line-height:1.5;margin:2px 0;}
+.vday-line b{color:var(--text3);font-weight:700;}
+.vday-note{font-size:11px;color:var(--text3);font-style:italic;}
+.vday-perf{color:#b45309;font-weight:600;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v100 · Jul 7, 2026 · 3:00 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v101 · Jul 7, 2026 · 3:30 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -939,6 +952,69 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     <li>Our focus: invest in youth volunteers · lead small groups well · execute tasks well</li>
   </ul>
   <button onclick="goVbsGroups()" style="width:100%;margin:4px 0 6px;padding:13px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;">👥 View VBS Small Groups →</button>
+  <h2>Day-by-Day · Praise &amp; Skits</h2>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">MON</span><span class="vday-buddy">Tango · God our Creator</span></div>
+    <div class="vday-meta">Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> God Is · Get a Little Crazy · My God Is Powerful</div>
+      <div class="vday-line"><b>Skit:</b> Gardener</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> Superhero · Faith · God Is</div>
+      <div class="vday-line"><b>Skit:</b> Lost Son</div>
+    </div>
+  </div>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">TUE</span><span class="vday-buddy">Seymour · God knows everything</span></div>
+    <div class="vday-meta">Team A + Jean &amp; Caleb · Dance lead: Grace · Testimony: Owen</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> One Way · Get a Little Crazy · God Is</div>
+      <div class="vday-line"><b>Skit:</b> Contagious</div>
+      <div class="vday-line vday-perf">★ Performance: Thank God I'm Free</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> Every Move I Make · God Loves Us So · God Is</div>
+      <div class="vday-line"><b>Skit:</b> Joyrobber <span class="vday-note">(Get a Little Crazy if needed)</span></div>
+    </div>
+  </div>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">WED</span><span class="vday-buddy">Dottie · God our safe place</span></div>
+    <div class="vday-meta">Team A + Owen &amp; Rubin · Dance lead: Esther · Testimony: Janet</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> Get a Little Crazy · Every Move I Make · Superhero <span class="vday-note">(One Way if needed)</span></div>
+      <div class="vday-line"><b>Skit:</b> Race</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> God Is · Faith · My God Is Powerful</div>
+      <div class="vday-line"><b>Skit:</b> Fruit Stand</div>
+    </div>
+  </div>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">THU</span><span class="vday-buddy">Tia · God is love</span></div>
+    <div class="vday-meta">Team A + Andrew &amp; Caleb · Dance lead: Irene · Testimony: Rubin</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> Superhero · God Is · One Way <span class="vday-note">(My God Is Powerful if needed)</span></div>
+      <div class="vday-line"><b>Skit:</b> Chair</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> Get a Little Crazy · God Loves Us So · God Is</div>
+      <div class="vday-line vday-perf">★ Performance: Joyful Joyful</div>
+    </div>
+  </div>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">FRI</span><span class="vday-buddy">Howie · God is forever</span></div>
+    <div class="vday-meta">Team A + Owen &amp; Jean · Dance lead: TBD · Testimony: Andrew Back</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> Get a Little Crazy · My God Is Powerful · Every Move I Make</div>
+      <div class="vday-line"><b>Skit:</b> Wall</div>
+      <div class="vday-line vday-perf">★ Performance: The Joy</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> Faith · Superhero · God Is</div>
+      <div class="vday-line"><b>Skit:</b> Good Good Father</div>
+    </div>
+  </div>
   <h2>Daily Themes · Bible Buddies</h2>
   <div class="days5">
     <div class="dcard" style="background:#f5a623"><div class="dl">MON · Day 1</div><div class="db">Tango the Quetzal</div><div>God is our Creator. <em>Wow, God!</em><br>"Praise the Lord, everything he has created." (Ps 103:22)<br>God creates the world. (Gen 1)<br>→ Zoo</div></div>
@@ -966,19 +1042,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
       <div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>
     </div>
   </div>
-  <h2>Day-by-Day · Who's Leading</h2>
-  <div class="dbyd-scroll"><table class="dbyd">
-  <tr><th>Time</th><th>Session</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th></tr>
-  <tr style="height:22px"><td class="dk">9:30–9:35</td><td>Testimony</td><td class="redact">Grace</td><td class="redact">Owen</td><td class="redact">Janet</td><td class="redact">Rubin</td><td class="redact">Andrew Back</td></tr>
-  <tr style="height:27px"><td class="dk">9:35–9:50</td><td>Opening Praise</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td></tr>
-  <tr style="height:24px"><td class="dk">9:50–10:00</td><td>Skit/Dance</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-  <tr style="height:29px"><td class="dk">10:05–10:25</td><td>Bible Teach</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td><td class="cc">Team C</td></tr>
-  <tr style="height:45px"><td class="dk">10:30–11:25</td><td>Small Group + Craft</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td></tr>
-  <tr style="height:34px"><td class="dk">11:30–12:00</td><td>Games</td><td class="cb">Team B</td><td class="cb">Team B</td><td class="cb">Team B</td><td class="cb">Team B</td><td class="cb">Team B</td></tr>
-  <tr style="height:70px"><td class="dk">1:00–4:30</td><td>Off-site</td><td>Zoo</td><td>Swimming</td><td>Amusement</td><td class="tbd">TBD</td><td class="tbd">TBD</td></tr>
-  <tr style="height:24px"><td class="dk">4:30–4:40</td><td>Skit/Dance</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-  <tr style="height:29px"><td class="dk">4:40–5:00</td><td>Closing Praise</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td><td class="ca">Team A</td></tr>
-  </table></div>
 </div>
 <div id="pane-map" class="pane">
   <div class="stu-title" style="color:#0d9488">Places</div>

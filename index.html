@@ -417,13 +417,20 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .vday-line b{color:var(--text3);font-weight:700;}
 .vday-note{font-size:11px;color:var(--text3);font-style:italic;}
 .vday-perf{color:#b45309;font-weight:600;}
+/* Sunday serving assignments */
+.sun-phase{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#7c3aed;margin:16px 2px 8px;}
+.asn{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:11px 14px;margin-bottom:7px;}
+.asn-role{font-size:13px;color:var(--text2);font-weight:600;}
+.asn-who{font-size:14px;color:var(--text);font-weight:700;text-align:right;}
+.asn.all .asn-who{color:#7c3aed;}
+.sun-time{display:inline-block;font-size:12px;font-weight:700;color:#7c3aed;background:rgba(124,58,237,0.12);border-radius:6px;padding:3px 10px;margin:2px 0 4px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v101 · Jul 7, 2026 · 3:30 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v102 · Jul 7, 2026 · 3:50 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1043,6 +1050,30 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
     </div>
   </div>
 </div>
+<div id="pane-sun" class="pane">
+  <div class="stu-title" style="color:#7c3aed">Sunday</div>
+  <div class="stu-sub">Serving FPC · assignments</div>
+  <div class="pr-note" style="border-left-color:#7c3aed">🙌 <b>Goal:</b> Bless FPC members by serving them through Sunday setup.</div>
+  <h2>Sunday Setup · 11 AM</h2>
+  <div class="sun-phase">Setup</div>
+  <div class="asn"><span class="asn-role">Kids area</span><span class="asn-who">Becca</span></div>
+  <div class="asn"><span class="asn-role">Coffee</span><span class="asn-who">Janet</span></div>
+  <div class="asn"><span class="asn-role">Snack</span><span class="asn-who">Sammy</span></div>
+  <div class="asn"><span class="asn-role">Welcome</span><span class="asn-who">Owen</span></div>
+  <div class="asn"><span class="asn-role">Presentation / Chairs</span><span class="asn-who">Rubin</span></div>
+  <div class="sun-phase">During Service</div>
+  <div class="asn"><span class="asn-role">Usher</span><span class="asn-who">Owen · Rubin · Caleb · Sammy</span></div>
+  <div class="sun-phase">After Service</div>
+  <div class="asn all"><span class="asn-role">Chair transition</span><span class="asn-who">Everyone</span></div>
+  <div class="asn"><span class="asn-role">ASF</span><span class="asn-who">Owen · Caleb · Rubin</span></div>
+  <h2>VBS Training</h2>
+  <div class="sun-time">2:30 – 3:30 PM</div>
+  <h2>4 PM Service</h2>
+  <div class="asn"><span class="asn-role">Usher</span><span class="asn-who">Owen · Rubin · Caleb · Sammy</span></div>
+  <h2>5 PM Service</h2>
+  <div class="asn all"><span class="asn-role">Teardown / Sweep</span><span class="asn-who">Everyone</span></div>
+  <div class="asn"><span class="asn-role">Worship team</span><span class="asn-who">Pull everything back</span></div>
+</div>
 <div id="pane-map" class="pane">
   <div class="stu-title" style="color:#0d9488">Places</div>
   <div class="stu-sub">Key spots in Taipei · tap Directions to open Google Maps</div>
@@ -1092,6 +1123,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#7c3aed" onclick="go('sun',this)" aria-label="Sunday">
+    <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
+    <span>Sunday</span>
   </button>
   <button class="tabitem" style="--accent:#0d9488;display:none" onclick="goMap(this)" aria-label="Places">
     <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>

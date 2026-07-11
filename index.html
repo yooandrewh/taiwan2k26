@@ -392,7 +392,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v94 · Jul 7, 2026 · 12:30 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v95 · Jul 7, 2026 · 1:00 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -909,6 +909,37 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="mem-home"></div>
   <div id="mem-practice" style="display:none"></div>
 </div>
+<div id="pane-vbs" class="pane">
+  <div class="stu-title" style="color:#2563eb">VBS Week</div>
+  <div class="stu-sub">BEST Kids Camp · Mon–Fri, Jul 13–17 · FPC Taipei</div>
+  <div class="bar amber">BEST Camp · 9:00 AM – 5:30 PM · Kids' Bible school</div>
+  <ul class="bul">
+    <li>Friendship Presbyterian Church, Taipei — Mon–Fri, 9 AM–5:30 PM</li>
+    <li>Up to 60 kids (ages 5–12) + youth volunteers (ages 13–18)</li>
+    <li>Rainforest theme: 5 Bible Buddies (Tango, Seymour, Dottie, Tia, Howie)</li>
+    <li>Half FPC, half guests — a real evangelism opportunity</li>
+  </ul>
+  <button onclick="goVbsGroups()" style="width:100%;margin:4px 0 6px;padding:13px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;">👥 View VBS Small Groups →</button>
+  <h2>Daily Schedule · Mon–Fri</h2>
+  <div class="schedules" style="grid-template-columns:1fr">
+    <div class="scol"><h3>VBS · Every day</h3>
+      <div class="srow gray"><span class="t">9:00–9:30</span><span class="l">Check-in</span></div>
+      <div class="srow hdr"><span class="t">9:30–12:00</span><span class="l">Morning Program</span></div>
+      <div class="srow gray"><span class="t">9:30–9:35</span><span class="l">Testimony</span></div>
+      <div class="srow ta"><span class="t">9:35–9:50</span><span class="l">Praise</span></div>
+      <div class="srow tg"><span class="t">9:50–10:00</span><span class="l">Skit/Dance</span></div>
+      <div class="srow tc"><span class="t">10:05–10:25</span><span class="l">Bible teaching</span></div>
+      <div class="srow ta"><span class="t">10:30–11:25</span><span class="l">Small group + Craft</span></div>
+      <div class="srow tb"><span class="t">11:30–12:00</span><span class="l">Games</span></div>
+      <div class="srow gray"><span class="t">12:00–1:00</span><span class="l">Lunch</span></div>
+      <div class="srow hdr"><span class="t">1:00–5:00</span><span class="l">Afternoon Program</span></div>
+      <div class="srow gray"><span class="t">1:00–4:30</span><span class="l">Off-site</span></div>
+      <div class="srow tg"><span class="t">4:30–4:40</span><span class="l">Skit/Dance</span></div>
+      <div class="srow ta"><span class="t">4:40–5:00</span><span class="l">Closing worship</span></div>
+      <div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>
+    </div>
+  </div>
+</div>
 <div id="pane-map" class="pane">
   <div class="stu-title" style="color:#0d9488">Places</div>
   <div class="stu-sub">Key spots in Taipei · tap Directions to open Google Maps</div>
@@ -940,6 +971,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem active" style="--accent:#7c3aed" onclick="go('g',this)" aria-label="Main">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
     <span>Main</span>
+  </button>
+  <button class="tabitem" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
+    <span>VBS Week</span>
   </button>
   <button class="tabitem" style="--accent:#0d9488;display:none" onclick="go('s',this)" aria-label="People to Pray For">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
@@ -1022,6 +1057,13 @@ function checkTripPw(){
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
 function goTripPublic(btn){_tripFull=true;initTripDays();go('t',btn);}
 function tryGroups(btn){go('groups',btn);}
+function goVbsGroups(){
+  var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
+  go('groups',gb);
+  var vbsBtn=document.querySelector('#sg-event button');
+  if(vbsBtn) sgEvent('vbs',vbsBtn);
+  window.scrollTo(0,0);
+}
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter'){
     if(document.getElementById('trip-gate').style.display==='flex')checkTripPw();

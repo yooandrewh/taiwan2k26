@@ -504,6 +504,22 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .fpc-val{color:var(--text);}
 .fpc-note{color:var(--text3);font-size:12px;}
 .fpc-none{color:var(--text3);font-style:italic;}
+.mygrp-wrap{margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.mygrp-hdr{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px;}
+.mygrp-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.mygrp-tab{padding:7px 12px;border:1px solid var(--border);border-radius:20px;background:var(--surface2);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.mygrp-tab.on{background:#16a34a;border-color:#16a34a;color:#fff;}
+.mygrp-count{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:6px;}
+.mygrp-empty{font-size:13px;color:var(--text3);font-style:italic;padding:6px 0;}
+.mygrp-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.mygrp-row:last-child{border-bottom:none;}
+.mygrp-name{color:var(--text);font-weight:600;}
+.mygrp-time{color:#16a34a;font-size:12px;font-weight:700;}
+.mygrp-tab.mygrp-master{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
+.mygrp-tab.mygrp-master.on{background:#1e3a8a;border-color:#1e3a8a;}
+.mstr-block{margin-bottom:12px;}
+.mstr-side{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.mstr-grand{margin-top:8px;padding-top:10px;border-top:2px solid var(--border);font-size:16px;font-weight:800;color:var(--text);}
 .mon-quick{display:flex;gap:8px;margin-bottom:16px;}
 .mon-qbtn{flex:1;padding:13px 8px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;color:#fff;text-align:center;}
 </style>
@@ -533,8 +549,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T20:20:52+08:00";
-var APP_VERSION=132; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:28:12+08:00";
+var APP_VERSION=133; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -558,7 +574,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v132 · Jul 13, 2026 · 8:20 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v133 · Jul 13, 2026 · 8:28 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1928,6 +1944,19 @@ var CI_FLAT=(function(){
   out.sort(function(a,b){return a.name.localeCompare(b.name);});
   return out;
 })();
+// Adult teacher (role "L") -> their small group's kid roster, so a teacher can pull up
+// just their own group instead of scrolling the full Groups tab.
+var TEACHER_GROUPS=(function(){
+  var out={};
+  ['boys','girls'].forEach(function(side){
+    VBS_SG[side].forEach(function(grp){
+      grp.leads.filter(function(l){return l.role==='L';}).forEach(function(l){
+        out[l.name]={group:grp.id,kids:grp.kids.map(function(k){return k.name;})};
+      });
+    });
+  });
+  return out;
+})();
 // The VBS camp runs Jul 13-17, 2026 (Mon-Fri). Attendance is always keyed to one of
 // these five days — even if a device's clock is off or someone opens the app before/
 // after the week, so testing and real use both land in a valid, consistent bucket.
@@ -2000,6 +2029,7 @@ function ciSyncFromSheet(){
       });
       if(changed)ciSaveLog(log);
       ciRender();
+      renderMyGroupBody();
       if(note)note.textContent='Synced from Google Sheet just now';
     })
     .catch(function(){
@@ -2096,12 +2126,14 @@ function ciConfirm(name){
   closeCiModal();
   ciToast('✅ '+name+' checked in · '+time);
   ciRender();
+  renderMyGroupBody();
 }
 function ciUndo(name){
   // Local-only: hides the checkmark on this device. The Sheet keeps a one-way,
   // permanent record of the original check-in (simple audit trail, no sync-back needed).
   var log=ciGetLog();delete log[name];ciSaveLog(log);
   closeCiModal();ciRender();
+  renderMyGroupBody();
 }
 ciRender();
 ciSyncFromSheet();
@@ -2115,9 +2147,10 @@ ciSyncFromSheet();
 // ever gets hit (syncs quietly fail, note flips to "Offline"), bump this back up.
 var CI_SYNC_INTERVAL_MS=5000;
 function ciMaybeSync(){
-  if(document.visibilityState==='visible' && document.getElementById('pane-checkin').classList.contains('active')){
-    ciSyncFromSheet();
-  }
+  if(document.visibilityState!=='visible')return;
+  var checkinActive=document.getElementById('pane-checkin').classList.contains('active');
+  var todayActive=document.getElementById('pane-mon').classList.contains('active');
+  if(checkinActive||todayActive)ciSyncFromSheet();
 }
 setInterval(ciMaybeSync,CI_SYNC_INTERVAL_MS);
 document.addEventListener('visibilitychange',ciMaybeSync);
@@ -2283,6 +2316,79 @@ function fpcHelperList(h){
   if(!h||!h.names||!h.names.length)return '<span class="fpc-none">None scheduled</span>';
   return h.names.join(', ')+(h.note?' <span class="fpc-note">('+h.note+')</span>':'');
 }
+// "My Group Today" — a teacher taps their own name and sees only their small group's
+// kids who have actually checked in today (live, via the same Sheet-synced ciGetLog()
+// the Check-In tab uses), instead of scrolling the full Groups tab or Check-In list.
+var MY_GROUP_SELECTED=null;
+try{MY_GROUP_SELECTED=localStorage.getItem('myGroupTeacher')||null;}catch(e){}
+function mygrpTabsHtml(){
+  var master='<button class="mygrp-tab mygrp-master'+(MY_GROUP_SELECTED==='__MASTER__'?' on':'')+'" data-name="__MASTER__" onclick="selectMyGroup(\'__MASTER__\')">📊 Andrew</button>';
+  var teacherTabs=Object.keys(TEACHER_GROUPS).sort().map(function(name){
+    return '<button class="mygrp-tab'+(name===MY_GROUP_SELECTED?' on':'')+'" data-name="'+name+'" onclick="selectMyGroup(\''+name.replace(/'/g,"\\'")+'\')">'+name+'</button>';
+  }).join('');
+  return master+teacherTabs;
+}
+function selectMyGroup(name){
+  MY_GROUP_SELECTED=name;
+  try{localStorage.setItem('myGroupTeacher',name);}catch(e){}
+  document.querySelectorAll('.mygrp-tab').forEach(function(b){b.classList.toggle('on',b.dataset.name===name);});
+  renderMyGroupBody();
+  ciSyncFromSheet();
+}
+// Macro headcount — boys/girls totals (students checked in + volunteers checked in +
+// teachers, who don't check in but are always present) for a quick bus-boarding count.
+// No per-kid detail on purpose — Andrew just needs the numbers, not the names.
+function renderMasterCounts(){
+  var log=ciGetLog();
+  function sideCounts(side){
+    var s={studentsChecked:0,studentsTotal:0,volsChecked:0,volsTotal:0,teachers:0};
+    VBS_SG[side].forEach(function(grp){
+      grp.kids.forEach(function(k){s.studentsTotal++;if(log[k.name])s.studentsChecked++;});
+      grp.leads.forEach(function(l){
+        if(l.role==='V'){s.volsTotal++;if(log[l.name])s.volsChecked++;}
+        else s.teachers++;
+      });
+    });
+    return s;
+  }
+  var boys=sideCounts('boys'),girls=sideCounts('girls');
+  var boysTotal=boys.studentsChecked+boys.volsChecked+boys.teachers;
+  var girlsTotal=girls.studentsChecked+girls.volsChecked+girls.teachers;
+  function row(label,checked,total){return '<div class="mygrp-row"><span class="mygrp-name">'+label+'</span><span class="mygrp-time">'+checked+' / '+total+'</span></div>';}
+  var html='<div class="mstr-block"><div class="mstr-side">👦 Boys — '+boysTotal+'</div>'
+    +row('Students',boys.studentsChecked,boys.studentsTotal)
+    +row('Boy volunteers',boys.volsChecked,boys.volsTotal)
+    +row('Boy teachers',boys.teachers,boys.teachers)
+  +'</div>';
+  html+='<div class="mstr-block"><div class="mstr-side">👧 Girls — '+girlsTotal+'</div>'
+    +row('Students',girls.studentsChecked,girls.studentsTotal)
+    +row('Girl volunteers',girls.volsChecked,girls.volsTotal)
+    +row('Girl teachers',girls.teachers,girls.teachers)
+  +'</div>';
+  html+='<div class="mstr-grand">🚌 Total on the bus: '+(boysTotal+girlsTotal)+'</div>';
+  return html;
+}
+function renderMyGroupBody(){
+  var body=document.getElementById('mygrp-body');
+  if(!body)return;
+  if(!MY_GROUP_SELECTED){body.innerHTML='<div class="mygrp-empty">Tap your name above to see who\'s checked in today.</div>';return;}
+  if(MY_GROUP_SELECTED==='__MASTER__'){body.innerHTML=renderMasterCounts();return;}
+  var info=TEACHER_GROUPS[MY_GROUP_SELECTED];
+  if(!info){body.innerHTML='';return;}
+  var log=ciGetLog();
+  var checkedIn=info.kids.filter(function(n){return !!log[n];});
+  var html='<div class="mygrp-count">'+checkedIn.length+' / '+info.kids.length+' checked in · Group '+info.group+'</div>';
+  if(!checkedIn.length){
+    html+='<div class="mygrp-empty">No one from your group has checked in yet.</div>';
+  }else{
+    checkedIn.forEach(function(n){
+      var entry=log[n]||{};
+      var t=entry.time&&entry.time!=='synced'?entry.time:'';
+      html+='<div class="mygrp-row"><span class="mygrp-name">'+n+'</span><span class="mygrp-time">✓ '+t+'</span></div>';
+    });
+  }
+  body.innerHTML=html;
+}
 function renderToday(){
   var info=vbsDayInfo(),d=TODAY_DATA[info.idx];
   var helpersHtml=d.helpers?('<div class="fpc-wrap"><div class="fpc-hdr">🙋 FPC Helpers Today</div>'
@@ -2300,6 +2406,10 @@ function renderToday(){
     +'<div class="mon-quick">'
       +'<button class="mon-qbtn" style="background:#16a34a" onclick="goCheckin(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'Check-In\\\']\'))">✅ Check-In</button>'
       +'<button class="mon-qbtn" style="background:#2563eb" onclick="goVbsGroups()">👥 Small Groups</button>'
+    +'</div>'
+    +'<div class="mygrp-wrap"><div class="mygrp-hdr">👩‍🏫 My Group Today</div>'
+      +'<div class="mygrp-tabs" id="mygrp-tabs">'+mygrpTabsHtml()+'</div>'
+      +'<div id="mygrp-body"></div>'
     +'</div>'
     +'<div class="vday">'
       +'<div class="vday-h"><span class="vday-d">'+d.dow+'</span><span class="vday-buddy">'+d.buddyShort+' · '+d.theme+'</span></div>'
@@ -2332,6 +2442,7 @@ function renderToday(){
       +'<div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>'
     +'</div></div>';
   document.getElementById('today-body').innerHTML=html;
+  renderMyGroupBody();
 }
 renderToday();
 </script>

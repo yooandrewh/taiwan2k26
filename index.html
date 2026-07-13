@@ -477,10 +477,20 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </style>
 </head>
 <body>
+<script>
+// Taiwan time (UTC+8) helper — defined first, at the very top, since several
+// later scripts (Check-In sync, Today tab, Trip day picker) all depend on it
+// during their initial page-load render, not just on later user interaction.
+function twNow(){
+  var p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
+  var o={};p.forEach(function(x){o[x.type]=x.value;});
+  return {y:+o.year,mo:+o.month,d:+o.day,min:(+o.hour%24)*60+(+o.minute)};
+}
+</script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v111 · Jul 7, 2026 · 7:45 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v112 · Jul 7, 2026 · 8:15 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1985,6 +1995,17 @@ function ciUndo(name){
 }
 ciRender();
 ciSyncFromSheet();
+// Auto-sync every 10s while the Check-In tab is actually visible on screen — skips
+// the network call otherwise so it doesn't burn Apps Script's daily execution quota
+// polling in the background. If that quota is ever hit, syncs just fail quietly
+// (note flips to "Offline") and local check-ins keep working — bump the interval
+// below if that starts happening with many devices over a full camp day.
+var CI_SYNC_INTERVAL_MS=10000;
+setInterval(function(){
+  if(document.visibilityState==='visible' && document.getElementById('pane-checkin').classList.contains('active')){
+    ciSyncFromSheet();
+  }
+},CI_SYNC_INTERVAL_MS);
 </script>
 <script>
 /* ===== Today tab (auto-advances Mon -> Fri through the VBS week) ===== */
@@ -2235,12 +2256,7 @@ function selectDay(i,doScroll){
   if(doScroll){var strip=document.querySelector('.tstrip'),pills=document.querySelectorAll('.tpill'),t=pills[Math.round((def.from+def.to)/2)];if(strip&&t)strip.scrollLeft=t.offsetLeft-strip.clientWidth/2+t.clientWidth/2;}
 }
 function selectWeek(w){selectDay(WEEKS_DEF[w].from,true);}
-// --- Taiwan time (UTC+8) helpers ---
-function twNow(){
-  var p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
-  var o={};p.forEach(function(x){o[x.type]=x.value;});
-  return {y:+o.year,mo:+o.month,d:+o.day,min:(+o.hour%24)*60+(+o.minute)};
-}
+// twNow() now lives at the very top of <body> — see comment there.
 function tripIndexOf(y,mo,d){ // mo 1-12; -1 before, 0-31 during, 99 after
   if(y<2026||(y===2026&&(mo<6||(mo===6&&d<29))))return -1;
   if(y>2026||mo>7)return 99;

@@ -467,7 +467,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v107 · Jul 7, 2026 · 6:00 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v108 · Jul 7, 2026 · 6:15 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1794,20 +1794,11 @@ sgRender();
 </script>
 <script>
 /* ===== Check-In ===== */
-// One-time setup: create a Google Sheet, open Extensions > Apps Script, paste the
-// script below, deploy as a Web App (Execute as: Me, Who has access: Anyone), then
-// paste the deployed /exec URL into CHECKIN_ENDPOINT.
-//
-// function doPost(e){
-//   var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Attendance')
-//         || SpreadsheetApp.getActiveSpreadsheet().insertSheet('Attendance');
-//   if (sh.getLastRow() === 0) {
-//     sh.appendRow(['Date','Time','Name','Legal / Chinese Name','Group','Leader','Grade','Shirt Size']);
-//   }
-//   var d = JSON.parse(e.postData.contents);
-//   sh.appendRow([d.date, d.time, d.name, d.legal, d.group, d.leader, d.grade, d.sz]);
-//   return ContentService.createTextOutput('ok');
-// }
+// Google Sheet: Code.gs writes every check-in to an "Attendance" log sheet AND
+// upserts a row per student into a "Summary" sheet (Name | Grade | Small Group |
+// Mon | Tue | Wed | Thu | Fri, checkmarked per day). See Code.gs in the repo docs
+// / chat history for the full script — deploy as a Web App (Execute as: Me, Who
+// has access: Anyone) and paste the /exec URL below.
 const CHECKIN_ENDPOINT = "https://script.google.com/macros/s/AKfycbxGSExRiXar2J7kWGYLrRZDoDTG2LmrICHbeLSOQ-otnmPTpluedz_4fR41jhoGIKc96Q/exec";
 
 var KID_AGE={

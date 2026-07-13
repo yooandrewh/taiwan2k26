@@ -511,8 +511,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T10:47:40+08:00";
-var APP_VERSION=123; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T11:14:38+08:00";
+var APP_VERSION=124; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -536,7 +536,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v123 · Jul 13, 2026 · 10:47 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v124 · Jul 13, 2026 · 11:14 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1940,9 +1940,24 @@ function ciToast(msg){
   clearTimeout(window._ciToastTimer);window._ciToastTimer=setTimeout(function(){t.classList.remove('show');},2200);
 }
 function goCheckin(btn){go('checkin',btn);ciSyncFromSheet();}
+function ciPostCheckin(name,k,info,time){
+  if(!CHECKIN_ENDPOINT)return;
+  fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+    date:ciDateKey(),time:time,name:name,legal:info.cn||'',group:k.group,leader:k.leader,grade:grShort(k.grade),sz:info.sz||''
+  })}).catch(function(){});
+}
 // Pulls the day's checked-in list from the Google Sheet (shared across every device)
 // and merges it into this device's local log, so a fresh phone — or one that had its
 // browser storage cleared — shows everyone's real check-ins, not just its own.
+//
+// Also retries any local check-in the Sheet hasn't confirmed yet. The POST in
+// ciConfirm() is fire-and-forget (mode:'no-cors' can't report success/failure), so on
+// flaky wifi a device can show "checked in" locally while the Sheet never received it
+// — with 15+ devices hammering this at once during live check-in, that's a real and
+// frequent failure mode, not a hypothetical. Comparing this device's log against the
+// Sheet's confirmed list every sync catches and re-sends anything that silently
+// dropped, until the Sheet actually has it (capped so a permanently-offline device
+// doesn't retry forever).
 function ciSyncFromSheet(){
   if(!CHECKIN_ENDPOINT)return;
   var btn=document.getElementById('ci-sync-btn'),note=document.getElementById('ci-sync-note');
@@ -1952,10 +1967,27 @@ function ciSyncFromSheet(){
     .then(function(r){return r.json();})
     .then(function(data){
       var log=ciGetLog();
+      var changed=false;
+      var confirmed={};
       (data.names||[]).forEach(function(name){
-        if(!log[name])log[name]={time:'synced'};
+        confirmed[name]=true;
+        if(!log[name]){log[name]={time:'synced',synced:true};changed=true;}
+        else if(!log[name].synced){log[name].synced=true;changed=true;}
       });
-      ciSaveLog(log);
+      var now=Date.now();
+      Object.keys(log).forEach(function(name){
+        var entry=log[name];
+        if(entry.synced||confirmed[name])return;
+        if((entry.tries||0)>=8)return; // stop after ~a minute of retries; still shown as unsynced
+        if(entry.lastTry&&now-entry.lastTry<7000)return;
+        var k=CI_FLAT.find(function(x){return x.name===name;});
+        if(!k)return;
+        entry.tries=(entry.tries||0)+1;
+        entry.lastTry=now;
+        changed=true;
+        ciPostCheckin(name,k,KID_INFO[name]||{},entry.time&&entry.time!=='synced'?entry.time:ciTimeStr());
+      });
+      if(changed)ciSaveLog(log);
       ciRender();
       if(note)note.textContent='Synced from Google Sheet just now';
     })
@@ -1989,13 +2021,14 @@ function ciRender(){
   list.forEach(function(k){
     var info=KID_INFO[k.name]||{};
     var done=log[k.name];
+    var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
       +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')
-        +(done?'<div class="ci-time">✓ Checked in '+done.time+'</div>':'')+'</div>'
+        +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
-      +(done?'<span class="ci-check" title="Tap to undo" onclick="event.stopPropagation();ciUndo(\''+k.name.replace(/'/g,"\\'")+'\')">✓</span>':'')
+      +(done?'<span class="ci-check" title="Tap to undo" onclick="event.stopPropagation();ciUndo(\''+k.name.replace(/'/g,"\\'")+'\')" style="'+(unsynced?'background:#b45309':'')+'">✓</span>':'')
       +'</div>';
   });
   document.getElementById('ci-list').innerHTML=html;
@@ -2032,13 +2065,9 @@ function ciConfirm(name){
   var info=KID_INFO[name]||{};
   var time=ciTimeStr();
   var log=ciGetLog();
-  log[name]={time:time};
+  log[name]={time:time,synced:false,tries:0,lastTry:Date.now()};
   ciSaveLog(log);
-  if(CHECKIN_ENDPOINT){
-    fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
-      date:ciDateKey(),time:time,name:name,legal:info.cn||'',group:k.group,leader:k.leader,grade:grShort(k.grade),sz:info.sz||''
-    })}).catch(function(){});
-  }
+  ciPostCheckin(name,k,info,time);
   closeCiModal();
   ciToast('✅ '+name+' checked in · '+time);
   ciRender();

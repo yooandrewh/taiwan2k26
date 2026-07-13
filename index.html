@@ -508,7 +508,7 @@ function appRefresh(btn){
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v119 · Jul 13, 2026 · 10:30 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v120 · Jul 13, 2026 · 10:45 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -2659,8 +2659,33 @@ function renderMapList(){
    Registered here so offline works even if the user never enables notifications. */
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
-    navigator.serviceWorker.register('OneSignalSDKWorker.js',{scope:'./'}).catch(function(){});
+    navigator.serviceWorker.register('OneSignalSDKWorker.js',{scope:'./'}).then(function(reg){
+      if(!reg)return;
+      // Check for a new deployed version periodically while the app is open — catches
+      // updates automatically instead of only when the user manually taps refresh.
+      setInterval(function(){
+        if(document.visibilityState==='visible')reg.update().catch(function(){});
+      },60000);
+      reg.addEventListener('updatefound',function(){
+        var nw=reg.installing;
+        if(!nw)return;
+        nw.addEventListener('statechange',function(){
+          // Only prompt for an actual UPDATE (a controller already exists from a prior
+          // load) — not the very first install, which has nothing to "update" from.
+          if(nw.state==='installed'&&navigator.serviceWorker.controller)showUpdateBanner();
+        });
+      });
+    }).catch(function(){});
   });
+}
+function showUpdateBanner(){
+  if(document.getElementById('update-banner'))return;
+  var b=document.createElement('div');
+  b.id='update-banner';
+  b.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom));z-index:290;background:#2563eb;color:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:13px;';
+  b.innerHTML='<span style="flex:1;font-weight:600;">🔄 A new version is ready.</span>'
+    +'<button onclick="window.location.reload()" style="background:#fff;color:#2563eb;border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;">Update</button>';
+  document.body.appendChild(b);
 }
 </script>
 </body>

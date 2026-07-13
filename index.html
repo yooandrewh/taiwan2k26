@@ -526,8 +526,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T20:00:26+08:00";
-var APP_VERSION=127; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:06:45+08:00";
+var APP_VERSION=128; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -551,7 +551,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v127 · Jul 13, 2026 · 8:00 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v128 · Jul 13, 2026 · 8:06 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -2237,7 +2237,7 @@ document.addEventListener('visibilitychange',pnMaybeSync);
 var TODAY_DATA=[
   {dow:'MON',label:'Monday',color:'#f5a623',buddy:'Tango the Quetzal',buddyShort:'Tango',theme:'God is our Creator',
    verse:'"Praise the Lord, everything he has created." (Ps 103:22)',story:'God creates the world. (Gen 1)',offsite:'Zoo',
-   meta:'Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace',
+   meta:'Dance lead: Jane · Testimony: Grace',
    am:{praise:'God Is · Get a Little Crazy · My God Is Powerful',skit:'Gardener'},
    pm:{praise:'Superhero · Faith · God Is',skit:'Lost Son'},
    ann:[
@@ -2249,7 +2249,7 @@ var TODAY_DATA=[
    ]},
   {dow:'TUE',label:'Tuesday',color:'#4ab8d8',buddy:'Seymour the Glass Frog',buddyShort:'Seymour',theme:'God knows everything',
    verse:'"O Lord, you have examined my heart." (Ps 139:1)',story:'David celebrates all God knows. (Ps 139)',offsite:'Swimming',
-   meta:'Team A + Jean &amp; Caleb · Dance lead: Grace · Testimony: Owen',
+   meta:'Dance lead: Grace · Testimony: Owen',
    am:{praise:'One Way · Get a Little Crazy · God Is',skit:'Contagious',perf:"Thank God I'm Free"},
    pm:{praise:'Every Move I Make · God Loves Us So · God Is',skit:'Joyrobber',note:'Get a Little Crazy if needed'},
    ann:[
@@ -2257,7 +2257,7 @@ var TODAY_DATA=[
    ]},
   {dow:'WED',label:'Wednesday',color:'#009e8e',buddy:'Dottie the Ocelot',buddyShort:'Dottie',theme:'God is our safe place',
    verse:'"You are my place of refuge." (Ps 142:5)',story:'David hides from Saul. (1 Sam 23–24)',offsite:'Amusement Park',
-   meta:'Team A + Owen &amp; Rubin · Dance lead: Esther · Testimony: Janet',
+   meta:'Dance lead: Esther · Testimony: Janet',
    am:{praise:'Get a Little Crazy · Every Move I Make · Superhero',skit:'Race',note:'One Way if needed'},
    pm:{praise:'God Is · Faith · My God Is Powerful',skit:'Fruit Stand'},
    ann:[
@@ -2265,13 +2265,13 @@ var TODAY_DATA=[
    ]},
   {dow:'THU',label:'Thursday',color:'#c8102e',buddy:'Tia the Giant Anteater',buddyShort:'Tia',theme:'God is love',
    verse:'"His faithful love endures forever." (Ps 136:1)',story:'Jesus dies and comes to life. (Luke 22:39–24:12)',offsite:'TBD',
-   meta:'Team A + Andrew &amp; Caleb · Dance lead: Irene · Testimony: Rubin',
+   meta:'Dance lead: Irene · Testimony: Rubin',
    am:{praise:'Superhero · God Is · One Way',skit:'Chair',note:'My God Is Powerful if needed'},
    pm:{praise:'Get a Little Crazy · God Loves Us So · God Is',perf:'Joyful Joyful'},
    ann:[]},
   {dow:'FRI',label:'Friday',color:'#6b7c1e',buddy:'Howie the Howler Monkey',buddyShort:'Howie',theme:'God is forever',
    verse:'"Praise the Lord both now and forever!" (Ps 115:18)',story:'God gives John a vision of heaven. (Rev 7:17; 21–22)',offsite:'TBD',
-   meta:'Team A + Owen &amp; Jean · Dance lead: TBD · Testimony: Andrew Back',
+   meta:'Dance lead: Esther · Testimony: Andrew Back',
    am:{praise:'Get a Little Crazy · My God Is Powerful · Every Move I Make',skit:'Wall',perf:'The Joy'},
    pm:{praise:'Faith · Superhero · God Is',skit:'Good Good Father'},
    ann:[]}
@@ -2314,11 +2314,14 @@ function renderToday(){
       +'<div class="srow ta"><span class="t">9:00–9:15</span><span class="l">Opening Praise</span></div>'
       +'<div class="srow gray"><span class="t">9:15–9:20</span><span class="l">Testimony</span></div>'
       +'<div class="srow tg"><span class="t">9:20–9:30</span><span class="l">Skit/Dance</span></div>'
-      +'<div class="srow tc"><span class="t">9:35–9:55</span><span class="l">Bible teaching</span></div>'
+      +'<div class="srow tc"><span class="t">9:30–9:55</span><span class="l">Bible teaching</span></div>'
       +'<div class="srow ta"><span class="t">10:00–10:55</span><span class="l">Small group + Craft</span></div>'
       +'<div class="srow tb"><span class="t">11:00–11:30</span><span class="l">Games</span></div>'
-      +'<div class="srow gray"><span class="t">11:30–1:00</span><span class="l">Lunch</span></div>'
+      +'<div class="srow gray"><span class="t">11:30–12:30</span><span class="l">Lunch</span></div>'
+      +'<div class="srow gray"><span class="t">12:30</span><span class="l">Wash up</span></div>'
+      +'<div class="srow gray"><span class="t">12:40</span><span class="l">Head down to BTU</span></div>'
       +'<div class="srow hdr"><span class="t">1:00–5:00</span><span class="l">Afternoon Program</span></div>'
+      +'<div class="srow gray"><span class="t">1:00</span><span class="l">Depart</span></div>'
       +'<div class="srow gray"><span class="t">1:00–4:30</span><span class="l">Off-site · '+d.offsite+'</span></div>'
       +'<div class="srow tg"><span class="t">4:30–4:40</span><span class="l">Skit/Dance</span></div>'
       +'<div class="srow ta"><span class="t">4:40–5:00</span><span class="l">Closing Praise</span></div>'

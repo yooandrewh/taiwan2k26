@@ -533,8 +533,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T20:16:10+08:00";
-var APP_VERSION=130; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:17:58+08:00";
+var APP_VERSION=131; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -558,7 +558,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v130 · Jul 13, 2026 · 8:16 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v131 · Jul 13, 2026 · 8:17 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1111,7 +1111,7 @@ setInterval(renderBuildAge,60000);
   <h2>Day-by-Day · Praise &amp; Skits</h2>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">TUE</span><span class="vday-buddy">Seymour · God knows everything</span></div>
-    <div class="vday-meta">Dance lead: Grace · Testimony: Owen</div>
+    <div class="vday-meta">Dance lead: Grace · Testimony: Janet</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> One Way · Get a Little Crazy · God Is</div>
       <div class="vday-line"><b>Skit:</b> Contagious</div>
@@ -1124,7 +1124,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">WED</span><span class="vday-buddy">Dottie · God our safe place</span></div>
-    <div class="vday-meta">Dance lead: Esther · Testimony: Janet</div>
+    <div class="vday-meta">Dance lead: Esther · Testimony: Owen</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Get a Little Crazy · Every Move I Make · Superhero <span class="vday-note">(One Way if needed)</span></div>
       <div class="vday-line"><b>Skit:</b> Race</div>
@@ -1136,7 +1136,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">THU</span><span class="vday-buddy">Tia · God is love</span></div>
-    <div class="vday-meta">Dance lead: Irene · Testimony: Rubin</div>
+    <div class="vday-meta">Dance lead: Irene · Testimony: Grace</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Superhero · God Is · One Way <span class="vday-note">(My God Is Powerful if needed)</span></div>
       <div class="vday-line"><b>Skit:</b> Chair</div>
@@ -1148,7 +1148,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">FRI</span><span class="vday-buddy">Howie · God is forever</span></div>
-    <div class="vday-meta">Dance lead: Esther · Testimony: Andrew Back</div>
+    <div class="vday-meta">Dance lead: Esther · Testimony: Rubin</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Get a Little Crazy · My God Is Powerful · Every Move I Make</div>
       <div class="vday-line"><b>Skit:</b> Wall</div>
@@ -2245,7 +2245,7 @@ var TODAY_DATA=[
   {dow:'TUE',label:'Tuesday',color:'#4ab8d8',buddy:'Seymour the Glass Frog',buddyShort:'Seymour',theme:'God knows everything',
    verse:'"O Lord, you have examined my heart." (Ps 139:1)',story:'David celebrates all God knows. (Ps 139)',offsite:'Swimming',
    helpers:{am:{names:['Monica','Xanno','Roxanne'],note:'until 11:30am'},pm:{names:[]}},
-   meta:'Dance lead: Grace · Testimony: Owen',
+   meta:'Dance lead: Grace · Testimony: Janet',
    am:{praise:'One Way · Get a Little Crazy · God Is',skit:'Contagious',perf:"Thank God I'm Free"},
    pm:{praise:'Every Move I Make · God Loves Us So · God Is',skit:'Joyrobber',note:'Get a Little Crazy if needed'},
    ann:[
@@ -2255,7 +2255,7 @@ var TODAY_DATA=[
   {dow:'WED',label:'Wednesday',color:'#009e8e',buddy:'Dottie the Ocelot',buddyShort:'Dottie',theme:'God is our safe place',
    verse:'"You are my place of refuge." (Ps 142:5)',story:'David hides from Saul. (1 Sam 23–24)',offsite:'Amusement Park',
    helpers:{am:{names:['Defni','Ira']},pm:{names:['Defni','Ira'],note:'@ Taipei Children\'s Amusement Park'}},
-   meta:'Dance lead: Esther · Testimony: Janet',
+   meta:'Dance lead: Esther · Testimony: Owen',
    am:{praise:'Get a Little Crazy · Every Move I Make · Superhero',skit:'Race',note:'One Way if needed'},
    pm:{praise:'God Is · Faith · My God Is Powerful',skit:'Fruit Stand'},
    ann:[
@@ -2264,14 +2264,14 @@ var TODAY_DATA=[
   {dow:'THU',label:'Thursday',color:'#c8102e',buddy:'Tia the Giant Anteater',buddyShort:'Tia',theme:'God is love',
    verse:'"His faithful love endures forever." (Ps 136:1)',story:'Jesus dies and comes to life. (Luke 22:39–24:12)',offsite:'TBD',
    helpers:{am:{names:['Xanno','Roxanne']},pm:{names:['Ira','Lucy']}},
-   meta:'Dance lead: Irene · Testimony: Rubin',
+   meta:'Dance lead: Irene · Testimony: Grace',
    am:{praise:'Superhero · God Is · One Way',skit:'Chair',note:'My God Is Powerful if needed'},
    pm:{praise:'Get a Little Crazy · God Loves Us So · God Is',perf:'Joyful Joyful'},
    ann:[]},
   {dow:'FRI',label:'Friday',color:'#6b7c1e',buddy:'Howie the Howler Monkey',buddyShort:'Howie',theme:'God is forever',
    verse:'"Praise the Lord both now and forever!" (Ps 115:18)',story:'God gives John a vision of heaven. (Rev 7:17; 21–22)',offsite:'TBD',
    helpers:{am:{names:['Monica','Sawa']},pm:{names:['Lucy','Monica','Sawa']}},
-   meta:'Dance lead: Esther · Testimony: Andrew Back',
+   meta:'Dance lead: Esther · Testimony: Rubin',
    am:{praise:'Get a Little Crazy · My God Is Powerful · Every Move I Make',skit:'Wall',perf:'The Joy'},
    pm:{praise:'Faith · Superhero · God Is',skit:'Good Good Father'},
    ann:[]}

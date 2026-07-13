@@ -424,13 +424,38 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .asn-who{font-size:14px;color:var(--text);font-weight:700;text-align:right;}
 .asn.all .asn-who{color:#7c3aed;}
 .sun-time{display:inline-block;font-size:12px;font-weight:700;color:#7c3aed;background:rgba(124,58,237,0.12);border-radius:6px;padding:3px 10px;margin:2px 0 4px;}
+/* Check-In */
+.ci-counter{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px;}
+.ci-counter .n{font-size:22px;font-weight:800;color:#16a34a;}
+.ci-counter .lbl{font-size:12px;color:var(--text3);font-weight:600;}
+.ci-row{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ci-row:active{background:var(--surface2);}
+.ci-row.done{border-color:rgba(22,163,74,0.4);background:rgba(22,163,74,0.06);}
+.ci-dot{width:9px;height:9px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.ci-row.done .ci-dot{background:#16a34a;}
+.ci-name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.ci-grp{font-size:11px;font-weight:800;color:#fff;background:#2563eb;border-radius:5px;padding:2px 7px;flex-shrink:0;}
+.ci-check{font-size:18px;color:#16a34a;flex-shrink:0;width:20px;text-align:center;}
+.ci-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px;}
+.ci-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
+.ci-head-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
+.ci-head-row .nm{font-size:22px;font-weight:800;color:var(--text);}
+.ci-head-row .bday{font-size:13px;font-weight:700;color:#d97706;background:rgba(217,119,6,0.12);border-radius:6px;padding:2px 8px;}
+.ci-legal{font-size:14px;color:var(--text3);font-weight:600;margin:2px 0 14px;}
+.ci-already{margin-bottom:12px;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.35);color:#15803d;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;text-align:center;}
+.ci-btnrow{display:flex;gap:8px;margin-top:16px;}
+.ci-btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ci-btn.confirm{background:#16a34a;color:#fff;}
+.ci-btn.cancel{background:var(--surface2);color:var(--text);}
+.ci-toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#16a34a;color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:30px;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;}
+.ci-toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v104 · Jul 7, 2026 · 4:40 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v105 · Jul 7, 2026 · 5:15 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -919,6 +944,19 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="trip-flights"></div>
   <div id="trip-weeks"></div>
 </div>
+<div id="pane-checkin" class="pane">
+  <div class="stu-title" style="color:#16a34a">Check-In</div>
+  <div class="stu-sub">VBS · search a student to check them in</div>
+  <div class="ci-counter"><div><div class="n" id="ci-count">0 / 0</div><div class="lbl">checked in today</div></div><div style="font-size:26px">✅</div></div>
+  <input class="stu-search" id="ci-search" type="search" inputmode="search" autocomplete="off" placeholder="Search student name…" oninput="ciRender()">
+  <div id="ci-list"></div>
+</div>
+<div id="ci-modal" onclick="if(event.target===this)closeCiModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:260;align-items:flex-end;justify-content:center;">
+  <div class="ci-sheet">
+    <div id="ci-body"></div>
+  </div>
+</div>
+<div id="ci-toast" class="ci-toast"></div>
 <div id="pane-groups" class="pane">
   <div id="groups-content">
     <div class="stu-title" style="color:#2563eb">Small Groups</div>
@@ -1105,6 +1143,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <button class="tabitem active" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
+  </button>
+  <button class="tabitem" style="--accent:#16a34a" onclick="go('checkin',this)" aria-label="Check-In">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+    <span>Check-In</span>
   </button>
   <button class="tabitem" style="--accent:#0d9488;display:none" onclick="go('s',this)" aria-label="People to Pray For">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M3.4 20c0-3.3 2.5-5.6 5.6-5.6s5.6 2.3 5.6 5.6"/><circle cx="17.2" cy="9" r="2.4"/><path d="M16.4 14.7c2.5.3 4.2 2.2 4.2 5.3"/></svg>
@@ -1732,6 +1774,121 @@ function sgRender(){
   document.getElementById('sg-list').innerHTML=html;
 }
 sgRender();
+</script>
+<script>
+/* ===== Check-In ===== */
+// One-time setup: create a Google Sheet, open Extensions > Apps Script, paste the
+// script below, deploy as a Web App (Execute as: Me, Who has access: Anyone), then
+// paste the deployed /exec URL into CHECKIN_ENDPOINT.
+//
+// function doPost(e){
+//   var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Attendance')
+//         || SpreadsheetApp.getActiveSpreadsheet().insertSheet('Attendance');
+//   if (sh.getLastRow() === 0) {
+//     sh.appendRow(['Date','Time','Name','Legal / Chinese Name','Group','Leader','Grade','Shirt Size']);
+//   }
+//   var d = JSON.parse(e.postData.contents);
+//   sh.appendRow([d.date, d.time, d.name, d.legal, d.group, d.leader, d.grade, d.sz]);
+//   return ContentService.createTextOutput('ok');
+// }
+const CHECKIN_ENDPOINT = ""; // paste the Apps Script Web App URL here once deployed
+
+var CI_FLAT=(function(){
+  var out=[];
+  ['boys','girls'].forEach(function(side){
+    VBS_SG[side].forEach(function(grp){
+      var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;});
+      if(!leaderNames.length) leaderNames=grp.leads.map(function(l){return l.name;});
+      grp.kids.forEach(function(k){
+        out.push({name:k.name,grade:k.g,group:grp.id,leader:leaderNames.join(' & ')});
+      });
+    });
+  });
+  out.sort(function(a,b){return a.name.localeCompare(b.name);});
+  return out;
+})();
+function ciDateKey(){var t=twNow();return t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');}
+function ciTimeStr(){
+  return new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',hour:'numeric',minute:'2-digit',hour12:true}).format(new Date());
+}
+function ciGetLog(){try{return JSON.parse(localStorage.getItem('ci_'+ciDateKey())||'{}');}catch(e){return {};}}
+function ciSaveLog(log){try{localStorage.setItem('ci_'+ciDateKey(),JSON.stringify(log));}catch(e){}}
+function ciToast(msg){
+  var t=document.getElementById('ci-toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(window._ciToastTimer);window._ciToastTimer=setTimeout(function(){t.classList.remove('show');},2200);
+}
+function ciRender(){
+  var q=(document.getElementById('ci-search').value||'').trim().toLowerCase();
+  var log=ciGetLog();
+  var checkedCount=Object.keys(log).length;
+  document.getElementById('ci-count').textContent=checkedCount+' / '+CI_FLAT.length;
+  var list=CI_FLAT;
+  if(q){
+    list=list.filter(function(k){
+      var info=KID_INFO[k.name]||{};
+      return k.name.toLowerCase().indexOf(q)>=0 || (info.cn&&info.cn.indexOf(q)>=0);
+    });
+  }
+  if(!list.length){document.getElementById('ci-list').innerHTML='<div class="ci-empty">No students match "'+q+'"</div>';return;}
+  var html='';
+  list.forEach(function(k){
+    var done=!!log[k.name];
+    html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
+      +'<span class="ci-dot"></span>'
+      +'<span class="ci-name">'+k.name+'</span>'
+      +'<span class="ci-grp">'+k.group+'</span>'
+      +(done?'<span class="ci-check">✓</span>':'')
+      +'</div>';
+  });
+  document.getElementById('ci-list').innerHTML=html;
+}
+function ciOpen(name){
+  var k=CI_FLAT.find(function(x){return x.name===name;});
+  if(!k)return;
+  var info=KID_INFO[name]||{};
+  var log=ciGetLog();
+  var already=log[name];
+  var legal=info.cn||'';
+  var head='<div class="ci-head-row"><span class="nm">'+name+'</span>'+(info.b?'<span class="bday">🎂 '+info.b+'</span>':'')+'</div>'
+    +(legal?'<div class="ci-legal">'+legal+'</div>':'<div class="ci-legal">&nbsp;</div>');
+  function row(ic,label,val){return val?'<div class="kd-row"><span class="kd-ic">'+ic+'</span><span class="kd-lbl">'+label+'</span><span class="kd-val">'+val+'</span></div>':'';}
+  var rows='';
+  rows+=row('👥','Small group',k.group);
+  rows+=row('🧑‍🏫','Group teacher',k.leader);
+  rows+=row('🏫','Grade',grShort(k.grade));
+  rows+=row('👕','Shirt size',info.sz);
+  rows+=row('👤','Parent',info.pa);
+  rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
+  var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
+  var buttons=already
+    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button></div>'
+    : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
+  document.getElementById('ci-body').innerHTML=head+banner+'<div class="kd-rows">'+rows+'</div>'+buttons;
+  document.getElementById('ci-modal').style.display='flex';
+}
+function closeCiModal(){document.getElementById('ci-modal').style.display='none';}
+function ciConfirm(name){
+  var k=CI_FLAT.find(function(x){return x.name===name;});
+  if(!k)return;
+  var info=KID_INFO[name]||{};
+  var time=ciTimeStr();
+  var log=ciGetLog();
+  log[name]={time:time};
+  ciSaveLog(log);
+  if(CHECKIN_ENDPOINT){
+    fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+      date:ciDateKey(),time:time,name:name,legal:info.cn||'',group:k.group,leader:k.leader,grade:grShort(k.grade),sz:info.sz||''
+    })}).catch(function(){});
+  }
+  closeCiModal();
+  ciToast('✅ '+name+' checked in · '+time);
+  ciRender();
+}
+function ciUndo(name){
+  var log=ciGetLog();delete log[name];ciSaveLog(log);
+  closeCiModal();ciRender();
+}
+ciRender();
 </script>
 <script>
 (function(){

@@ -357,6 +357,17 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .kd-val a{color:#2563eb;font-weight:700;text-decoration:none;}
 .kd-none{font-size:14px;color:var(--text3);padding:10px 0;}
 .kd-close{width:100%;margin-top:16px;padding:13px;background:var(--surface2);color:var(--text);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;}
+.pn-section{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+.pn-title{font-size:12px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px;}
+.pn-toggle-row{display:flex;gap:8px;margin-bottom:10px;}
+.pn-toggle{flex:1;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.pn-toggle.on.yes{background:#16a34a;border-color:#16a34a;color:#fff;}
+.pn-toggle.on.no{background:#6b7280;border-color:#6b7280;color:#fff;}
+.pn-church{width:100%;padding:11px 12px;font-size:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);margin-bottom:10px;-webkit-appearance:none;}
+.pn-notes{width:100%;min-height:70px;padding:11px 12px;font-size:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);margin-bottom:10px;font-family:inherit;resize:vertical;}
+.pn-save-btn{width:100%;padding:13px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.pn-status{font-size:11px;color:var(--text3);text-align:center;margin-top:8px;}
+.pn-status.pending{color:#b45309;font-weight:700;}
 .sg-blacked{display:inline-block;width:88px;height:13px;background:#1a1a1a;border-radius:2px;vertical-align:middle;}
 @media(prefers-color-scheme:dark){.sg-blacked{background:#c4c3bc;}}
 /* Memorize */
@@ -515,8 +526,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T12:07:48+08:00";
-var APP_VERSION=126; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:00:26+08:00";
+var APP_VERSION=127; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -540,7 +551,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v126 · Jul 13, 2026 · 12:07 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v127 · Jul 13, 2026 · 8:00 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1339,7 +1350,7 @@ function checkTripPw(){
 }
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
 function goTripPublic(btn){_tripFull=true;initTripDays();go('t',btn);}
-function tryGroups(btn){go('groups',btn);}
+function tryGroups(btn){go('groups',btn);pnSyncFromSheet();}
 function goVbsGroups(){
   var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
   go('groups',gb);
@@ -1823,10 +1834,11 @@ function kidDetail(name,grpId,grade){
   rows+=row('👤','Parent', info.pa);
   rows+=row('📞','Phone', info.ph?'<a href="tel:'+info.ph.replace(/[^0-9+]/g,'')+'">'+info.ph+'</a>':'');
   if(!rows) rows='<div class="kd-none">No extra info on file.</div>';
-  document.getElementById('kid-body').innerHTML=head+'<div class="kd-rows">'+rows+'</div>';
+  document.getElementById('kid-body').innerHTML=head+'<div class="kd-rows">'+rows+'</div>'+pnSectionHtml(name,grpId);
   document.getElementById('kid-modal').style.display='flex';
+  window._pnOpenName=name;
 }
-function closeKidModal(){document.getElementById('kid-modal').style.display='none';}
+function closeKidModal(){document.getElementById('kid-modal').style.display='none';window._pnOpenName=null;}
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
   var groups=data[sgCurrent];
@@ -2114,6 +2126,111 @@ function ciMaybeSync(){
 }
 setInterval(ciMaybeSync,CI_SYNC_INTERVAL_MS);
 document.addEventListener('visibilitychange',ciMaybeSync);
+
+// ===== Per-person Faith &amp; Notes (Groups tab) =====
+// Same shared-Sheet pattern as Check-In: local-first with a background sync that
+// pulls in every leader's edits and retries this device's own edits until the
+// Sheet confirms them, so a note taken on one phone shows up — with status — on
+// everyone else's.
+function pnGetLog(){try{return JSON.parse(localStorage.getItem('person_notes')||'{}');}catch(e){return {};}}
+function pnSaveLog(log){try{localStorage.setItem('person_notes',JSON.stringify(log));}catch(e){}}
+function pnSectionHtml(name,grpId){
+  var log=pnGetLog();
+  var e=log[name]||{};
+  var christian=e.christian||'';
+  var church=e.church||'';
+  var notes=e.notes||'';
+  var pending=e.synced===false;
+  var esc=function(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var html='<div class="pn-section">';
+  html+='<div class="pn-title">📝 Faith &amp; Notes</div>';
+  html+='<div class="pn-toggle-row">';
+  html+='<button type="button" class="pn-toggle yes'+(christian==='yes'?' on':'')+'" id="pn-yes" onclick="pnSetChristian(\'yes\')">Christian: Yes</button>';
+  html+='<button type="button" class="pn-toggle no'+(christian==='no'?' on':'')+'" id="pn-no" onclick="pnSetChristian(\'no\')">No</button>';
+  html+='</div>';
+  html+='<input type="text" class="pn-church" id="pn-church" placeholder="Which church?" value="'+esc(church)+'" style="'+(christian==='yes'?'':'display:none')+'">';
+  html+='<textarea class="pn-notes" id="pn-notes" placeholder="Other notes for group leaders…">'+esc(notes)+'</textarea>';
+  html+='<button type="button" class="pn-save-btn" onclick="pnSave(\''+name.replace(/'/g,"\\'")+'\',\''+grpId+'\')">💾 Save Notes</button>';
+  html+='<div class="pn-status'+(pending?' pending':'')+'" id="pn-status">'+(pending?'⏳ Saving to shared sheet…':(e.updatedAt?'✅ Synced across all devices':'Not saved yet'))+'</div>';
+  html+='</div>';
+  return html;
+}
+function pnSetChristian(val){
+  var yesBtn=document.getElementById('pn-yes'),noBtn=document.getElementById('pn-no'),church=document.getElementById('pn-church');
+  if(!yesBtn||!noBtn)return;
+  yesBtn.classList.toggle('on',val==='yes');
+  noBtn.classList.toggle('on',val==='no');
+  if(church)church.style.display=val==='yes'?'block':'none';
+}
+function pnPostNote(name,entry){
+  if(!CHECKIN_ENDPOINT)return;
+  fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+    type:'note',name:name,group:entry.group||'',christian:entry.christian||'',church:entry.church||'',notes:entry.notes||'',updatedAt:entry.updatedAt
+  })}).catch(function(){});
+}
+function pnSave(name,grpId){
+  var christian=document.getElementById('pn-yes').classList.contains('on')?'yes':(document.getElementById('pn-no').classList.contains('on')?'no':'');
+  var church=(document.getElementById('pn-church').value||'').trim();
+  var notes=(document.getElementById('pn-notes').value||'').trim();
+  var log=pnGetLog();
+  var updatedAt=Date.now();
+  log[name]={group:grpId,christian:christian,church:christian==='yes'?church:'',notes:notes,updatedAt:updatedAt,synced:false,tries:0,lastTry:updatedAt};
+  pnSaveLog(log);
+  pnPostNote(name,log[name]);
+  var status=document.getElementById('pn-status');
+  if(status){status.textContent='⏳ Saving to shared sheet…';status.classList.add('pending');}
+  ciToast('💾 Notes saved for '+name);
+}
+function pnRefreshStatus(name){
+  if(window._pnOpenName!==name)return;
+  var log=pnGetLog();
+  var e=log[name];
+  var status=document.getElementById('pn-status');
+  if(!status||!e)return;
+  var pending=e.synced===false;
+  status.textContent=pending?'⏳ Saving to shared sheet…':'✅ Synced across all devices';
+  status.classList.toggle('pending',pending);
+}
+function pnSyncFromSheet(){
+  if(!CHECKIN_ENDPOINT)return;
+  fetch(CHECKIN_ENDPOINT+'?action=notes')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var log=pnGetLog();
+      var changed=false;
+      var serverNotes=data.notes||{};
+      Object.keys(serverNotes).forEach(function(name){
+        var s=serverNotes[name];
+        var local=log[name];
+        if(!local||Number(s.updatedAt||0)>=Number(local.updatedAt||0)){
+          log[name]={group:s.group||(local&&local.group)||'',christian:s.christian||'',church:s.church||'',notes:s.notes||'',updatedAt:Number(s.updatedAt||0),synced:true};
+          changed=true;
+        }
+      });
+      var now=Date.now();
+      Object.keys(log).forEach(function(name){
+        var entry=log[name];
+        if(entry.synced)return;
+        if((entry.tries||0)>=8)return;
+        if(entry.lastTry&&now-entry.lastTry<7000)return;
+        entry.tries=(entry.tries||0)+1;
+        entry.lastTry=now;
+        changed=true;
+        pnPostNote(name,entry);
+      });
+      if(changed)pnSaveLog(log);
+      if(window._pnOpenName)pnRefreshStatus(window._pnOpenName);
+    })
+    .catch(function(){});
+}
+pnSyncFromSheet();
+function pnMaybeSync(){
+  if(document.visibilityState==='visible' && document.getElementById('pane-groups').classList.contains('active')){
+    pnSyncFromSheet();
+  }
+}
+setInterval(pnMaybeSync,CI_SYNC_INTERVAL_MS);
+document.addEventListener('visibilitychange',pnMaybeSync);
 </script>
 <script>
 /* ===== Today tab (auto-advances Mon -> Fri through the VBS week) ===== */

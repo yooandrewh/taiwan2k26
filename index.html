@@ -515,8 +515,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T11:33:16+08:00";
-var APP_VERSION=125; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T12:07:48+08:00";
+var APP_VERSION=126; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -540,7 +540,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v125 · Jul 13, 2026 · 11:33 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v126 · Jul 13, 2026 · 12:07 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -2126,20 +2126,26 @@ var TODAY_DATA=[
    ann:[
      {ic:'🚐',html:'<b>Jane Kim (G3)</b> — Stephanie 趙唯真 is not going on the shuttle bus, she\'s coming with her parent.'},
      {ic:'🚇',html:'<b>Jean Kim (B2)</b> — Len 邱于倫 &amp; <b>Owen Lee (B5)</b> — Yann Chiu 邱于晏 are taking the MRT from the zoo back home, dismissed from there — not returning to the church.'},
-     {ic:'🕐',html:'<b>Owen Lee (B5)</b> — Dylan Lin 林秝安 &amp; <b>Jean Kim (B2)</b> — Ryan Lin 林瑞恩 will join later today.'}
+     {ic:'🕐',html:'<b>Owen Lee (B5)</b> — Dylan Lin 林秝安 &amp; <b>Jean Kim (B2)</b> — Ryan Lin 林瑞恩 will join later today.'},
+     {ic:'🚐',html:'<b>Caleb Su (B1)</b> — Jeremy will join in the afternoon, coming with the group on the shuttle bus.'},
+     {ic:'🍪',html:'Cookies will be handed out on the shuttle bus — teachers, please give them to the kids as they get off the bus.'}
    ]},
   {dow:'TUE',label:'Tuesday',color:'#4ab8d8',buddy:'Seymour the Glass Frog',buddyShort:'Seymour',theme:'God knows everything',
    verse:'"O Lord, you have examined my heart." (Ps 139:1)',story:'David celebrates all God knows. (Ps 139)',offsite:'Swimming',
    meta:'Team A + Jean &amp; Caleb · Dance lead: Grace · Testimony: Owen',
    am:{praise:'One Way · Get a Little Crazy · God Is',skit:'Contagious',perf:"Thank God I'm Free"},
    pm:{praise:'Every Move I Make · God Loves Us So · God Is',skit:'Joyrobber',note:'Get a Little Crazy if needed'},
-   ann:[]},
+   ann:[
+     {ic:'🆕',html:'<b>Caleb Su (B1)</b> — Harry Liu joins us starting today. Heads up — he has a dentist appointment Wednesday morning, so he\'ll arrive late (around lunchtime) that day.'}
+   ]},
   {dow:'WED',label:'Wednesday',color:'#009e8e',buddy:'Dottie the Ocelot',buddyShort:'Dottie',theme:'God is our safe place',
    verse:'"You are my place of refuge." (Ps 142:5)',story:'David hides from Saul. (1 Sam 23–24)',offsite:'Amusement Park',
    meta:'Team A + Owen &amp; Rubin · Dance lead: Esther · Testimony: Janet',
    am:{praise:'Get a Little Crazy · Every Move I Make · Superhero',skit:'Race',note:'One Way if needed'},
    pm:{praise:'God Is · Faith · My God Is Powerful',skit:'Fruit Stand'},
-   ann:[]},
+   ann:[
+     {ic:'🦷',html:'<b>Caleb Su (B1)</b> — Harry Liu has a dentist appointment this morning, arriving late around lunchtime.'}
+   ]},
   {dow:'THU',label:'Thursday',color:'#c8102e',buddy:'Tia the Giant Anteater',buddyShort:'Tia',theme:'God is love',
    verse:'"His faithful love endures forever." (Ps 136:1)',story:'Jesus dies and comes to life. (Luke 22:39–24:12)',offsite:'TBD',
    meta:'Team A + Andrew &amp; Caleb · Dance lead: Irene · Testimony: Rubin',

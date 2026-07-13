@@ -490,7 +490,7 @@ function twNow(){
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v114 · Jul 7, 2026 · 8:50 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v115 · Jul 7, 2026 · 9:05 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1996,17 +1996,22 @@ function ciUndo(name){
 }
 ciRender();
 ciSyncFromSheet();
-// Auto-sync every 10s while the Check-In tab is actually visible on screen — skips
-// the network call otherwise so it doesn't burn Apps Script's daily execution quota
-// polling in the background. If that quota is ever hit, syncs just fail quietly
-// (note flips to "Offline") and local check-ins keep working — bump the interval
-// below if that starts happening with many devices over a full camp day.
-var CI_SYNC_INTERVAL_MS=10000;
-setInterval(function(){
+// Auto-sync every 5s while the Check-In tab is visible on screen, plus immediately
+// whenever the tab/phone comes back into view (so glancing at the phone refreshes
+// right away instead of waiting for the next tick). Skips the network call while
+// backgrounded so it doesn't burn Apps Script's daily execution quota for nothing.
+// True instant (push-based) sync isn't possible on Apps Script — it's request/
+// response only, not a persistent connection — so this polling is as fast as this
+// backend can go without swapping in a different real-time service. If the quota
+// ever gets hit (syncs quietly fail, note flips to "Offline"), bump this back up.
+var CI_SYNC_INTERVAL_MS=5000;
+function ciMaybeSync(){
   if(document.visibilityState==='visible' && document.getElementById('pane-checkin').classList.contains('active')){
     ciSyncFromSheet();
   }
-},CI_SYNC_INTERVAL_MS);
+}
+setInterval(ciMaybeSync,CI_SYNC_INTERVAL_MS);
+document.addEventListener('visibilitychange',ciMaybeSync);
 </script>
 <script>
 /* ===== Today tab (auto-advances Mon -> Fri through the VBS week) ===== */

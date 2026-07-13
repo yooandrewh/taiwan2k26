@@ -2,7 +2,7 @@
    The importScripts is wrapped so the worker still installs with no network. */
 try { importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"); } catch (e) {}
 
-var CACHE = 'tw2k26-v121';
+var CACHE = 'tw2k26-v122';
 var SHELL = ['./', './index.html', './manifest.json', './icon-180.png', './icon-512.png'];
 
 self.addEventListener('install', function (e) {
@@ -36,6 +36,11 @@ self.addEventListener('fetch', function (e) {
         return caches.match('./index.html').then(function (m) { return m || caches.match('./'); });
       })
     );
+    return;
+  }
+
+  if (url.pathname.endsWith('/version.json')) {
+    e.respondWith(fetch(req, { cache: 'no-store' }).catch(function () { return new Response('{}'); }));
     return;
   }
 

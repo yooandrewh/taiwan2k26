@@ -511,7 +511,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T10:13:37+08:00";
+var BUILD_TIME="2026-07-13T10:22:49+08:00";
+var APP_VERSION=122; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -535,7 +536,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v121 · Jul 13, 2026 · 10:13 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v122 · Jul 13, 2026 · 10:22 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1419,7 +1420,6 @@ const VBS=[
   {name:"Meek Lo",gender:"m",grade:4,how:"friend"},
   {name:"Hannah Jiang",gender:"f",grade:4},
   {name:"Jessie Hu",gender:"f",grade:4,how:"friend"},
-  {name:"Doris",gender:"f",grade:4,how:"returning",ret:true},
   {name:"Jacob Yang",gender:"m",grade:4,how:"returning",ret:true},
   {name:"Ansel",gender:"m",grade:3,how:"fpc"},
   {name:"Freja",gender:"f",grade:3,how:"friend"},
@@ -1657,7 +1657,7 @@ const VBS_SG={
     {id:"G4",leads:[{name:"Sammy Taing",age:20,role:"L"}],
      kids:[{name:"Poppy Lo",g:4},{name:"Doughnuts",g:4},{name:"Freja",g:3},{name:"Hannah Jiang",g:3},{name:"Jessie Hu",g:3}]},
     {id:"G5",leads:[{name:"Irene Song",age:19,role:"L"}],
-     kids:[{name:"Doris",g:3},{name:"Jyshelle Pak",g:3},{name:"Emmeline",g:2},{name:"Celia",g:2},{name:"Dorcas Chen",g:2}]},
+     kids:[{name:"Jyshelle Pak",g:3},{name:"Emmeline",g:2},{name:"Celia",g:2},{name:"Dorcas Chen",g:2}]},
     {id:"G6",leads:[{name:"Janet Phee",age:18,role:"L"}],
      kids:[{name:"Olivia",g:1},{name:"Yu-Chen Li",g:1},{name:"Avery Nam",g:1},{name:"Gemma Benson",g:1}]},
     {id:"G7",leads:[{name:"Grace Yoon",age:18,role:"L"}],
@@ -1765,7 +1765,6 @@ var KID_INFO={
   "Meek Lo":{b:"Dec 20",cn:"駱謙和",sz:"YM",pa:"Sunny Chuang",ph:"0968730127"},
   "Hannah Jiang":{b:"Jan 25",cn:"江幸恩",sz:"YL",pa:"Aric Jiang",ph:"0909651611"},
   "Jessie Hu":{b:"Jan 27",cn:"胡詠絜",sz:"XS",pa:"葉貴櫻",ph:"0913213422"},
-  "Doris":{b:"May 6",cn:"簡菡妤",sz:"YM",pa:"Vicky 李心文",ph:"0911726460"},
   "Jacob Yang":{b:"Jun 13",cn:"楊煦",sz:"XS",pa:"莊媁婷",ph:"0937004239"},
   "Ansel":{b:"Aug 17",cn:"張安石",sz:"YL",pa:"Han & Mimi Chang",ph:"0972886733"},
   "Freja":{b:"Sep 6",cn:"管歆嬡",sz:"YL",pa:"Alli Liu 劉亭妏",ph:"0905289058"},
@@ -1890,7 +1889,7 @@ var KID_AGE={
   "Hsin Hsin":12,"Claire":12,"Grace Hartshorne":12,"Hao-Chen Li":11,"Ezra":11,"Eliana Wan":11,"Ruhamah":11,
   "Queenie":11,"Yuqi Chiu":10,"Zephyr Kao":10,"Amber Yang":10,"Adeline":10,"Harry":10,"Ellery":10,"Jeremy":10,
   "Ryan Lin":10,"Mike":10,"Kara":10,"Grace":10,"Stephanie":10,"Patrick":10,"Poppy Lo":9,"Wayne":9,"Len":9,
-  "Atlas Kao":9,"Doughnuts":9,"Levi":9,"Paul":9,"Meek Lo":9,"Hannah Jiang":9,"Jessie Hu":9,"Doris":9,"Jacob Yang":9,
+  "Atlas Kao":9,"Doughnuts":9,"Levi":9,"Paul":9,"Meek Lo":9,"Hannah Jiang":9,"Jessie Hu":9,"Jacob Yang":9,
   "Ansel":8,"Freja":8,"Richard Hsia":8,"Jyshelle Pak":8,"Freddie":8,"Liam Chang":8,"Emmeline":8,"Celia":8,
   "Alvin Fu":7,"Mumu Hu":7,"Dorcas Chen":7,"Olivia":7,"Yu-Chen Li":7,"Jeremiah":7,"Caleb Guo":7,"Avery Nam":7,
   "Dylan Lin":7,"Gemma Benson":7,"Yann Chiu":7,"Oli":6,"Riley":6,"Elonnie Pak":6,"Daniel Hu":6,"Elijah Kwok":6,
@@ -2691,25 +2690,30 @@ function renderMapList(){
    Registered here so offline works even if the user never enables notifications. */
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
-    navigator.serviceWorker.register('OneSignalSDKWorker.js',{scope:'./'}).then(function(reg){
-      if(!reg)return;
-      // Check for a new deployed version periodically while the app is open — catches
-      // updates automatically instead of only when the user manually taps refresh.
-      setInterval(function(){
-        if(document.visibilityState==='visible')reg.update().catch(function(){});
-      },60000);
-      reg.addEventListener('updatefound',function(){
-        var nw=reg.installing;
-        if(!nw)return;
-        nw.addEventListener('statechange',function(){
-          // Only prompt for an actual UPDATE (a controller already exists from a prior
-          // load) — not the very first install, which has nothing to "update" from.
-          if(nw.state==='installed'&&navigator.serviceWorker.controller)showUpdateBanner();
-        });
-      });
-    }).catch(function(){});
+    navigator.serviceWorker.register('OneSignalSDKWorker.js',{scope:'./'}).catch(function(){});
   });
 }
+// Update detection: fetch version.json (always network-fresh, see the service worker's
+// special-case for it) and compare the number to APP_VERSION baked into THIS loaded
+// page. This is a plain value comparison — no ambiguous service-worker lifecycle
+// timing involved — so it can't false-positive after you've actually updated, the
+// way the old "updatefound" event approach could.
+function checkForNewVersion(){
+  fetch('version.json?t='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data&&data.v&&data.v>APP_VERSION)showUpdateBanner();
+    }).catch(function(){});
+}
+window.addEventListener('load',function(){
+  checkForNewVersion();
+  setInterval(function(){
+    if(document.visibilityState==='visible')checkForNewVersion();
+  },60000);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible')checkForNewVersion();
+  });
+});
 function showUpdateBanner(){
   if(document.getElementById('update-banner'))return;
   var b=document.createElement('div');

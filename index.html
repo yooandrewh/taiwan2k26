@@ -76,6 +76,10 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .srow.s-past{opacity:.4;}
 .srow.s-now{box-shadow:0 0 0 2px #16a34a inset;}
 .srow-now{background:#16a34a;color:#fff;font-size:9px;font-weight:800;letter-spacing:.04em;padding:1px 6px;border-radius:5px;margin-left:4px;vertical-align:middle;}
+.today-sched{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+.today-sched-hdr{font-size:13px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+.today-sched .srow{font-size:14px;padding:9px 10px;margin-bottom:4px;}
+.today-sched .srow .t{font-size:12px;width:82px;}
 .days5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
 .retdays{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
 .dcard{border-radius:6px;padding:10px 8px;font-size:10px;text-align:center;color:#fff;} .dcard[style*="var(--r"]{color:var(--text) !important;}
@@ -559,8 +563,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T20:44:55+08:00";
-var APP_VERSION=136; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:50:19+08:00";
+var APP_VERSION=137; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -584,7 +588,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v136 · Jul 13, 2026 · 8:44 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v137 · Jul 13, 2026 · 8:50 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -2427,6 +2431,7 @@ function renderToday(){
   var html=''
     +'<div class="stu-title" style="color:#d97706">'+d.label+'</div>'
     +'<div class="stu-sub">'+VBS_DAY_DATES[info.idx].slice(5).replace('-','/')+' · VBS Day '+(info.idx+1)+' · '+d.buddyShort+'</div>'
+    +nowNextHtml(d)
     +dayBannerHtml
     +helpersHtml
     +annHtml
@@ -2445,18 +2450,14 @@ function renderToday(){
       +vsesh('Evening','pm',d.pm)
     +'</div>'
     +'<h2>'+d.label+' Schedule</h2>'
-    +'<div class="schedules" style="grid-template-columns:1fr"><div class="scol"><h3>VBS · '+d.label+'</h3>'
-      +scheduleRowsHtml(d)
-    +'</div></div>';
+    +scheduleRowsHtml(d);
   document.getElementById('today-body').innerHTML=html;
   renderMyGroupBody();
 }
-// Marks each schedule row past/now/upcoming against the actual Taiwan clock, so
-// whoever opens Today can tell at a glance what's happening right now without
-// cross-referencing a wall clock. Re-rendered every minute while this tab is open.
-function scheduleRowsHtml(d){
-  var now=twNow().min;
-  var rows=[
+// Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /
+// Up next" card and the full schedule table below it, so the two never drift apart.
+function getScheduleRows(d){
+  return [
     {s:510,e:540,l:'Check-in',cls:'gray',t:'8:30–9:00'},
     {s:540,e:690,l:'Morning Program',cls:'hdr',t:'9:00–11:30'},
     {s:540,e:555,l:'Opening Praise',cls:'ta',t:'9:00–9:15'},
@@ -2476,16 +2477,55 @@ function scheduleRowsHtml(d){
     {s:1000,e:1020,l:'Closing Praise',cls:'ta',t:'4:40–5:00'},
     {s:1050,e:1050,l:'Pickup',cls:'gray',t:'5:30'}
   ];
-  return rows.map(function(r){
-    var status;
-    if(r.s===r.e){ // point-in-time entries get a small window so "now" is reachable
-      status=now>r.s+3?'past':(now>=r.s-3?'now':'upcoming');
-    }else{
-      status=now>=r.e?'past':(now>=r.s?'now':'upcoming');
-    }
-    var badge=status==='now'?' <span class="srow-now">● NOW</span>':'';
-    return '<div class="srow '+r.cls+' s-'+status+'"><span class="t">'+r.t+'</span><span class="l">'+r.l+badge+'</span></div>';
-  }).join('');
+}
+function scheduleRowStatus(r,now){
+  if(r.s===r.e)return now>r.s+3?'past':(now>=r.s-3?'now':'upcoming'); // point-in-time: small window so "now" is reachable
+  return now>=r.e?'past':(now>=r.s?'now':'upcoming');
+}
+// Local formatter — renderToday() runs immediately at parse time (top of this script
+// block), before the Trip tab's fmtClock() further down the file even exists yet, so
+// this can't reuse that one without hitting the same "used before defined" crash.
+function todayFmtClock(min){
+  var h=Math.floor(min/60),m=min%60,ap=h<12?'AM':'PM',hh=h%12;if(hh===0)hh=12;
+  return hh+':'+(m<10?'0':'')+m+' '+ap;
+}
+// A "Right now / Up next" summary at the top of the page — the single most useful
+// line for anyone glancing at their phone mid-camp, so it doesn't require scrolling
+// down to the full schedule table to answer "what should be happening right now?"
+function nowNextHtml(d){
+  var now=twNow().min;
+  var rows=getScheduleRows(d).filter(function(r){return r.cls!=='hdr';});
+  var cur=null,next=null;
+  rows.forEach(function(r){
+    if(scheduleRowStatus(r,now)==='now')cur=r;
+    if(!next&&r.s>now)next=r;
+  });
+  if(!cur&&!next){
+    return '<div class="trip-now off"><div class="tn-l">📍 '+d.label+'</div><div class="tn-act">Day\'s wrapped for today — see you next time!</div></div>';
+  }
+  var html='<div class="trip-now"><div class="tn-l">📍 Right now · Taiwan '+todayFmtClock(now)+'</div>';
+  html+='<div class="tn-act">'+(cur?cur.l:'Between activities')+'</div>';
+  if(next)html+='<div class="tn-next">Up next · '+next.t.split('–')[0]+' · '+next.l+'</div>';
+  html+='</div>';
+  return html;
+}
+// Split Morning/Afternoon into their own cards with bigger, easier-to-read rows —
+// one long dense list was hard to scan; this also makes each half easy to collapse
+// or trim further later if the list grows.
+function scheduleRowsHtml(d){
+  var now=twNow().min;
+  var rows=getScheduleRows(d);
+  var morning=rows.filter(function(r){return r.s<780;});
+  var afternoon=rows.filter(function(r){return r.s>=780;});
+  function section(title,list){
+    var body=list.map(function(r){
+      var status=scheduleRowStatus(r,now);
+      var badge=status==='now'?' <span class="srow-now">● NOW</span>':'';
+      return '<div class="srow '+r.cls+' s-'+status+'"><span class="t">'+r.t+'</span><span class="l">'+r.l+badge+'</span></div>';
+    }).join('');
+    return '<div class="today-sched"><div class="today-sched-hdr">'+title+'</div>'+body+'</div>';
+  }
+  return section('🌅 Morning',morning)+section('🌇 Afternoon',afternoon);
 }
 renderToday();
 function todayMaybeRerender(){

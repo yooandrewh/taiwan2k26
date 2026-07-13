@@ -461,13 +461,22 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   .kd-sheet,.ci-sheet{border-radius:18px;max-height:82vh;}
   .wrap{padding:0 8px;}
 }
+/* Monday / Today tab */
+.ann-wrap{margin-bottom:16px;}
+.ann-hdr{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#b45309;margin-bottom:8px;}
+.ann-card{display:flex;gap:10px;background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.35);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.ann-ic{font-size:18px;flex-shrink:0;}
+.ann-txt{font-size:14px;color:var(--text);line-height:1.5;}
+.ann-txt b{color:#b45309;}
+.mon-quick{display:flex;gap:8px;margin-bottom:16px;}
+.mon-qbtn{flex:1;padding:13px 8px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;color:#fff;text-align:center;}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v108 · Jul 7, 2026 · 6:15 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v109 · Jul 7, 2026 · 6:45 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -996,7 +1005,53 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="mem-home"></div>
   <div id="mem-practice" style="display:none"></div>
 </div>
-<div id="pane-vbs" class="pane active">
+<div id="pane-mon" class="pane active">
+  <div class="stu-title" style="color:#d97706">Monday</div>
+  <div class="stu-sub">Jul 13 · VBS Day 1 · Tango the Quetzal</div>
+  <div class="ann-wrap">
+    <div class="ann-hdr">📣 Announcements</div>
+    <div class="ann-card"><span class="ann-ic">🚐</span><span class="ann-txt"><b>Stephanie</b> is not going on the shuttle bus — she's coming with her parent.</span></div>
+  </div>
+  <div class="mon-quick">
+    <button class="mon-qbtn" style="background:#16a34a" onclick="go('checkin',document.querySelector('.tabbar .tabitem[aria-label=\'Check-In\']'))">✅ Check-In</button>
+    <button class="mon-qbtn" style="background:#2563eb" onclick="goVbsGroups()">👥 Small Groups</button>
+  </div>
+  <div class="vday">
+    <div class="vday-h"><span class="vday-d">MON</span><span class="vday-buddy">Tango · God our Creator</span></div>
+    <div class="vday-meta">Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace</div>
+    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
+      <div class="vday-line"><b>Praise:</b> God Is · Get a Little Crazy · My God Is Powerful</div>
+      <div class="vday-line"><b>Skit:</b> Gardener</div>
+    </div>
+    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
+      <div class="vday-line"><b>Praise:</b> Superhero · Faith · God Is</div>
+      <div class="vday-line"><b>Skit:</b> Lost Son</div>
+    </div>
+  </div>
+  <div class="days5">
+    <div class="dcard" style="background:#f5a623"><div class="dl">MON · Day 1</div><div class="db">Tango the Quetzal</div><div>God is our Creator. <em>Wow, God!</em><br>"Praise the Lord, everything he has created." (Ps 103:22)<br>God creates the world. (Gen 1)<br>→ Zoo</div></div>
+  </div>
+  <h2>Monday Schedule</h2>
+  <div class="schedules" style="grid-template-columns:1fr">
+    <div class="scol"><h3>VBS · Monday</h3>
+      <div class="srow gray"><span class="t">8:30–9:00</span><span class="l">Check-in</span></div>
+      <div class="srow hdr"><span class="t">9:00–11:30</span><span class="l">Morning Program</span></div>
+      <div class="srow ta"><span class="t">9:00–9:15</span><span class="l">Opening Praise</span></div>
+      <div class="srow gray"><span class="t">9:15–9:20</span><span class="l">Testimony</span></div>
+      <div class="srow tg"><span class="t">9:20–9:30</span><span class="l">Skit/Dance</span></div>
+      <div class="srow tc"><span class="t">9:35–9:55</span><span class="l">Bible teaching</span></div>
+      <div class="srow ta"><span class="t">10:00–10:55</span><span class="l">Small group + Craft</span></div>
+      <div class="srow tb"><span class="t">11:00–11:30</span><span class="l">Games</span></div>
+      <div class="srow gray"><span class="t">11:30–1:00</span><span class="l">Lunch</span></div>
+      <div class="srow hdr"><span class="t">1:00–5:00</span><span class="l">Afternoon Program</span></div>
+      <div class="srow gray"><span class="t">1:00–4:30</span><span class="l">Off-site · Zoo</span></div>
+      <div class="srow tg"><span class="t">4:30–4:40</span><span class="l">Skit/Dance</span></div>
+      <div class="srow ta"><span class="t">4:40–5:00</span><span class="l">Closing Praise</span></div>
+      <div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>
+    </div>
+  </div>
+</div>
+<div id="pane-vbs" class="pane">
   <div class="stu-title" style="color:#2563eb">VBS · BEST Camp</div>
   <div class="stu-sub">Kids' Bible school · Mon–Fri, Jul 13–17 · FPC Taipei</div>
   <div class="bar amber">Rainforest · "Wow, God!" · 9:00 AM – 5:30 PM</div>
@@ -1157,7 +1212,11 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </div>
 
 <nav class="tabbar">
-  <button class="tabitem active" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
+  <button class="tabitem active" style="--accent:#d97706" onclick="go('mon',this)" aria-label="Monday">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
+    <span>Monday</span>
+  </button>
+  <button class="tabitem" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
   </button>

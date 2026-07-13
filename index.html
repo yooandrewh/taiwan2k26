@@ -480,7 +480,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v110 · Jul 7, 2026 · 7:30 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v111 · Jul 7, 2026 · 7:45 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -1978,12 +1978,9 @@ function ciConfirm(name){
   ciRender();
 }
 function ciUndo(name){
+  // Local-only: hides the checkmark on this device. The Sheet keeps a one-way,
+  // permanent record of the original check-in (simple audit trail, no sync-back needed).
   var log=ciGetLog();delete log[name];ciSaveLog(log);
-  if(CHECKIN_ENDPOINT){
-    fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
-      date:ciDateKey(),name:name,undo:true
-    })}).catch(function(){});
-  }
   closeCiModal();ciRender();
 }
 ciRender();

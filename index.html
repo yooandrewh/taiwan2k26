@@ -433,13 +433,18 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .ci-row.done{border-color:rgba(22,163,74,0.4);background:rgba(22,163,74,0.06);}
 .ci-dot{width:9px;height:9px;border-radius:50%;background:var(--border);flex-shrink:0;}
 .ci-row.done .ci-dot{background:#16a34a;}
-.ci-name{font-size:15px;font-weight:700;color:var(--text);flex:1;}
+.ci-info{flex:1;min-width:0;}
+.ci-name{font-size:15px;font-weight:700;color:var(--text);}
+.ci-cn{font-size:12px;color:var(--text3);font-weight:600;margin-left:6px;}
+.ci-time{font-size:11px;color:#16a34a;font-weight:700;margin-top:1px;}
+.ci-age{font-size:11px;font-weight:700;color:var(--text2);background:var(--surface2);border-radius:5px;padding:2px 7px;flex-shrink:0;white-space:nowrap;}
 .ci-grp{font-size:11px;font-weight:800;color:#fff;background:#2563eb;border-radius:5px;padding:2px 7px;flex-shrink:0;}
-.ci-check{font-size:18px;color:#16a34a;flex-shrink:0;width:20px;text-align:center;}
+.ci-check{font-size:15px;color:#fff;background:#16a34a;flex-shrink:0;width:22px;height:22px;line-height:22px;border-radius:50%;text-align:center;cursor:pointer;}
 .ci-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px;}
-.ci-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
+.ci-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);max-height:88vh;overflow-y:auto;}
 .ci-head-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
 .ci-head-row .nm{font-size:22px;font-weight:800;color:var(--text);}
+.ci-head-row .cn{font-size:16px;font-weight:600;color:var(--text3);}
 .ci-head-row .bday{font-size:13px;font-weight:700;color:#d97706;background:rgba(217,119,6,0.12);border-radius:6px;padding:2px 8px;}
 .ci-legal{font-size:14px;color:var(--text3);font-weight:600;margin:2px 0 14px;}
 .ci-already{margin-bottom:12px;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.35);color:#15803d;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;text-align:center;}
@@ -447,15 +452,22 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .ci-btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .ci-btn.confirm{background:#16a34a;color:#fff;}
 .ci-btn.cancel{background:var(--surface2);color:var(--text);}
+.ci-btn.undo{background:#fee2e2;color:#b91c1c;}
 .ci-toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#16a34a;color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:30px;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;}
 .ci-toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+/* Desktop: center dialogs instead of anchoring to the bottom edge */
+@media(min-width:700px){
+  #kid-modal,#ci-modal{align-items:center !important;}
+  .kd-sheet,.ci-sheet{border-radius:18px;max-height:82vh;}
+  .wrap{padding:0 8px;}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v105 · Jul 7, 2026 · 5:15 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v106 · Jul 7, 2026 · 5:45 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -949,6 +961,11 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div class="stu-sub">VBS · search a student to check them in</div>
   <div class="ci-counter"><div><div class="n" id="ci-count">0 / 0</div><div class="lbl">checked in today</div></div><div style="font-size:26px">✅</div></div>
   <input class="stu-search" id="ci-search" type="search" inputmode="search" autocomplete="off" placeholder="Search student name…" oninput="ciRender()">
+  <div class="stu-seg" id="ci-filter" style="margin-bottom:12px">
+    <button class="on" onclick="ciSetFilter('all',this)">All</button>
+    <button onclick="ciSetFilter('done',this)">Checked In</button>
+    <button onclick="ciSetFilter('pending',this)">Not Yet</button>
+  </div>
   <div id="ci-list"></div>
 </div>
 <div id="ci-modal" onclick="if(event.target===this)closeCiModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:260;align-items:flex-end;justify-content:center;">
@@ -1793,6 +1810,21 @@ sgRender();
 // }
 const CHECKIN_ENDPOINT = ""; // paste the Apps Script Web App URL here once deployed
 
+var KID_AGE={
+  "Andrew Yoo":29,"Keren Choi":24,"Caleb Su":21,"Esther Yang":21,"Becca Park":21,"Jean Kim":20,"Jane Kim":20,
+  "Sammy Taing":20,"Irene Song":19,"Andrew Back":19,"Rubin Jang":19,"Owen Lee":19,"Janet Phee":18,"Grace Yoon":18,
+  "Roba":18,"Timothy Kim":15,"Ethan Nam":14,"Lane Hartshorne":14,"Owen Nam":13,"Owen Wu":12,"Est-elle":12,
+  "Hsin Hsin":12,"Claire":12,"Grace Hartshorne":12,"Hao-Chen Li":11,"Ezra":11,"Eliana Wan":11,"Ruhamah":11,
+  "Queenie":11,"Yuqi Chiu":10,"Zephyr Kao":10,"Amber Yang":10,"Adeline":10,"Harry":10,"Ellery":10,"Jeremy":10,
+  "Ryan Lin":10,"Mike":10,"Kara":10,"Grace":10,"Stephanie":10,"Patrick":10,"Poppy Lo":9,"Wayne":9,"Len":9,
+  "Atlas Kao":9,"Doughnuts":9,"Levi":9,"Paul":9,"Meek Lo":9,"Hannah Jiang":9,"Jessie Hu":9,"Doris":9,"Jacob Yang":9,
+  "Ansel":8,"Freja":8,"Richard Hsia":8,"Jyshelle Pak":8,"Freddie":8,"Liam Chang":8,"Emmeline":8,"Celia":8,
+  "Alvin Fu":7,"Mumu Hu":7,"Dorcas Chen":7,"Olivia":7,"Yu-Chen Li":7,"Jeremiah":7,"Caleb Guo":7,"Avery Nam":7,
+  "Dylan Lin":7,"Gemma Benson":7,"Yann Chiu":7,"Oli":6,"Riley":6,"Elonnie Pak":6,"Daniel Hu":6,"Elijah Kwok":6,
+  "Deborah Lo":6,"Papillon Lo":6,"Sunny":6,"Asher":5,"Abigail Guo":5
+}; // age as of VBS week (Jul 13, 2026)
+for(var _an in KID_AGE){(KID_INFO[_an]=KID_INFO[_an]||{}).ag=KID_AGE[_an];}
+
 var CI_FLAT=(function(){
   var out=[];
   ['boys','girls'].forEach(function(side){
@@ -1817,6 +1849,12 @@ function ciToast(msg){
   var t=document.getElementById('ci-toast');t.textContent=msg;t.classList.add('show');
   clearTimeout(window._ciToastTimer);window._ciToastTimer=setTimeout(function(){t.classList.remove('show');},2200);
 }
+var ciFilter='all';
+function ciSetFilter(f,btn){
+  ciFilter=f;
+  document.querySelectorAll('#ci-filter button').forEach(function(b){b.classList.toggle('on',b===btn);});
+  ciRender();
+}
 function ciRender(){
   var q=(document.getElementById('ci-search').value||'').trim().toLowerCase();
   var log=ciGetLog();
@@ -1829,15 +1867,20 @@ function ciRender(){
       return k.name.toLowerCase().indexOf(q)>=0 || (info.cn&&info.cn.indexOf(q)>=0);
     });
   }
-  if(!list.length){document.getElementById('ci-list').innerHTML='<div class="ci-empty">No students match "'+q+'"</div>';return;}
+  if(ciFilter==='done')list=list.filter(function(k){return !!log[k.name];});
+  if(ciFilter==='pending')list=list.filter(function(k){return !log[k.name];});
+  if(!list.length){document.getElementById('ci-list').innerHTML='<div class="ci-empty">No students match'+(q?' "'+q+'"':' this filter')+'</div>';return;}
   var html='';
   list.forEach(function(k){
-    var done=!!log[k.name];
+    var info=KID_INFO[k.name]||{};
+    var done=log[k.name];
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<span class="ci-name">'+k.name+'</span>'
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')
+        +(done?'<div class="ci-time">✓ Checked in '+done.time+'</div>':'')+'</div>'
+      +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
-      +(done?'<span class="ci-check">✓</span>':'')
+      +(done?'<span class="ci-check" title="Tap to undo" onclick="event.stopPropagation();ciUndo(\''+k.name.replace(/'/g,"\\'")+'\')">✓</span>':'')
       +'</div>';
   });
   document.getElementById('ci-list').innerHTML=html;
@@ -1849,15 +1892,16 @@ function ciOpen(name){
   var log=ciGetLog();
   var already=log[name];
   var legal=info.cn||'';
-  var head='<div class="ci-head-row"><span class="nm">'+name+'</span>'+(info.b?'<span class="bday">🎂 '+info.b+'</span>':'')+'</div>'
-    +(legal?'<div class="ci-legal">'+legal+'</div>':'<div class="ci-legal">&nbsp;</div>');
+  var head='<div class="ci-head-row"><span class="nm">'+name+'</span>'+(legal?'<span class="cn">'+legal+'</span>':'')+(info.b?'<span class="bday">🎂 '+info.b+'</span>':'')+'</div>';
   function row(ic,label,val){return val?'<div class="kd-row"><span class="kd-ic">'+ic+'</span><span class="kd-lbl">'+label+'</span><span class="kd-val">'+val+'</span></div>':'';}
   var rows='';
   rows+=row('👥','Small group',k.group);
   rows+=row('🧑‍🏫','Group teacher',k.leader);
   rows+=row('🏫','Grade',grShort(k.grade));
+  rows+=row('🎈','Age',info.ag!=null?(info.ag+' years old'):'');
   rows+=row('👕','Shirt size',info.sz);
   rows+=row('👤','Parent',info.pa);
+  rows+=row('📞','Phone',info.ph?'<a href="tel:'+info.ph.replace(/[^0-9+]/g,'')+'">'+info.ph+'</a>':'');
   rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
   var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
   var buttons=already

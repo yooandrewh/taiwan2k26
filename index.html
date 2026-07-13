@@ -533,8 +533,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-13T20:12:46+08:00";
-var APP_VERSION=129; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-13T20:16:10+08:00";
+var APP_VERSION=130; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -558,7 +558,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v129 · Jul 13, 2026 · 8:12 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v130 · Jul 13, 2026 · 8:16 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1110,20 +1110,8 @@ setInterval(renderBuildAge,60000);
   <button onclick="goVbsGroups()" style="width:100%;margin:4px 0 6px;padding:13px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;">👥 View VBS Small Groups →</button>
   <h2>Day-by-Day · Praise &amp; Skits</h2>
   <div class="vday">
-    <div class="vday-h"><span class="vday-d">MON</span><span class="vday-buddy">Tango · God our Creator</span></div>
-    <div class="vday-meta">Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace</div>
-    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
-      <div class="vday-line"><b>Praise:</b> God Is · Get a Little Crazy · My God Is Powerful</div>
-      <div class="vday-line"><b>Skit:</b> Gardener</div>
-    </div>
-    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
-      <div class="vday-line"><b>Praise:</b> Superhero · Faith · God Is</div>
-      <div class="vday-line"><b>Skit:</b> Lost Son</div>
-    </div>
-  </div>
-  <div class="vday">
     <div class="vday-h"><span class="vday-d">TUE</span><span class="vday-buddy">Seymour · God knows everything</span></div>
-    <div class="vday-meta">Team A + Jean &amp; Caleb · Dance lead: Grace · Testimony: Owen</div>
+    <div class="vday-meta">Dance lead: Grace · Testimony: Owen</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> One Way · Get a Little Crazy · God Is</div>
       <div class="vday-line"><b>Skit:</b> Contagious</div>
@@ -1136,7 +1124,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">WED</span><span class="vday-buddy">Dottie · God our safe place</span></div>
-    <div class="vday-meta">Team A + Owen &amp; Rubin · Dance lead: Esther · Testimony: Janet</div>
+    <div class="vday-meta">Dance lead: Esther · Testimony: Janet</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Get a Little Crazy · Every Move I Make · Superhero <span class="vday-note">(One Way if needed)</span></div>
       <div class="vday-line"><b>Skit:</b> Race</div>
@@ -1148,7 +1136,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">THU</span><span class="vday-buddy">Tia · God is love</span></div>
-    <div class="vday-meta">Team A + Andrew &amp; Caleb · Dance lead: Irene · Testimony: Rubin</div>
+    <div class="vday-meta">Dance lead: Irene · Testimony: Rubin</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Superhero · God Is · One Way <span class="vday-note">(My God Is Powerful if needed)</span></div>
       <div class="vday-line"><b>Skit:</b> Chair</div>
@@ -1160,7 +1148,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="vday">
     <div class="vday-h"><span class="vday-d">FRI</span><span class="vday-buddy">Howie · God is forever</span></div>
-    <div class="vday-meta">Team A + Owen &amp; Jean · Dance lead: TBD · Testimony: Andrew Back</div>
+    <div class="vday-meta">Dance lead: Esther · Testimony: Andrew Back</div>
     <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
       <div class="vday-line"><b>Praise:</b> Get a Little Crazy · My God Is Powerful · Every Move I Make</div>
       <div class="vday-line"><b>Skit:</b> Wall</div>
@@ -1301,7 +1289,7 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
     <span>Edit</span>
   </button>
-  <button class="tabitem" style="--accent:#7c3aed" onclick="go('g',this)" aria-label="Main">
+  <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('g',this)" aria-label="Main">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
     <span>Main</span>
   </button>

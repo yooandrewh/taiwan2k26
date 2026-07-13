@@ -425,9 +425,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .asn.all .asn-who{color:#7c3aed;}
 .sun-time{display:inline-block;font-size:12px;font-weight:700;color:#7c3aed;background:rgba(124,58,237,0.12);border-radius:6px;padding:3px 10px;margin:2px 0 4px;}
 /* Check-In */
-.ci-counter{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px;}
+.ci-counter{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:6px;}
 .ci-counter .n{font-size:22px;font-weight:800;color:#16a34a;}
 .ci-counter .lbl{font-size:12px;color:var(--text3);font-weight:600;}
+.ci-sync{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
+.ci-sync-note{font-size:11px;color:var(--text3);flex:1;}
+.ci-sync-btn{font-size:12px;font-weight:700;color:#2563eb;background:rgba(37,99,235,0.1);border:none;border-radius:8px;padding:6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.ci-sync-btn.busy{opacity:.5;pointer-events:none;}
 .ci-row{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .ci-row:active{background:var(--surface2);}
 .ci-row.done{border-color:rgba(22,163,74,0.4);background:rgba(22,163,74,0.06);}
@@ -476,7 +480,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v109 · Jul 7, 2026 · 6:45 PM (Taiwan)</div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v110 · Jul 7, 2026 · 7:30 PM (Taiwan)</div>
 </div>
 <div id="notif-banner" style="display:none">
   <div class="nb-row"><span class="nb-ico">🔔</span><span class="nb-txt">Get trip updates &amp; prayer alerts</span><button class="nb-x" onclick="dismissNotif()" aria-label="Dismiss">×</button></div>
@@ -969,6 +973,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div class="stu-title" style="color:#16a34a">Check-In</div>
   <div class="stu-sub">VBS · search a student to check them in</div>
   <div class="ci-counter"><div><div class="n" id="ci-count">0 / 0</div><div class="lbl">checked in today</div></div><div style="font-size:26px">✅</div></div>
+  <div class="ci-sync"><span class="ci-sync-note" id="ci-sync-note">Shared with all devices via Google Sheet</span><button class="ci-sync-btn" id="ci-sync-btn" onclick="ciSyncFromSheet()">🔄 Sync</button></div>
   <input class="stu-search" id="ci-search" type="search" inputmode="search" autocomplete="off" placeholder="Search student name…" oninput="ciRender()">
   <div class="stu-seg" id="ci-filter" style="margin-bottom:12px">
     <button class="on" onclick="ciSetFilter('all',this)">All</button>
@@ -1006,50 +1011,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
   <div id="mem-practice" style="display:none"></div>
 </div>
 <div id="pane-mon" class="pane active">
-  <div class="stu-title" style="color:#d97706">Monday</div>
-  <div class="stu-sub">Jul 13 · VBS Day 1 · Tango the Quetzal</div>
-  <div class="ann-wrap">
-    <div class="ann-hdr">📣 Announcements</div>
-    <div class="ann-card"><span class="ann-ic">🚐</span><span class="ann-txt"><b>Stephanie</b> is not going on the shuttle bus — she's coming with her parent.</span></div>
-  </div>
-  <div class="mon-quick">
-    <button class="mon-qbtn" style="background:#16a34a" onclick="go('checkin',document.querySelector('.tabbar .tabitem[aria-label=\'Check-In\']'))">✅ Check-In</button>
-    <button class="mon-qbtn" style="background:#2563eb" onclick="goVbsGroups()">👥 Small Groups</button>
-  </div>
-  <div class="vday">
-    <div class="vday-h"><span class="vday-d">MON</span><span class="vday-buddy">Tango · God our Creator</span></div>
-    <div class="vday-meta">Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace</div>
-    <div class="vday-sesh am"><span class="vday-lbl">Morning</span>
-      <div class="vday-line"><b>Praise:</b> God Is · Get a Little Crazy · My God Is Powerful</div>
-      <div class="vday-line"><b>Skit:</b> Gardener</div>
-    </div>
-    <div class="vday-sesh pm"><span class="vday-lbl">Evening</span>
-      <div class="vday-line"><b>Praise:</b> Superhero · Faith · God Is</div>
-      <div class="vday-line"><b>Skit:</b> Lost Son</div>
-    </div>
-  </div>
-  <div class="days5">
-    <div class="dcard" style="background:#f5a623"><div class="dl">MON · Day 1</div><div class="db">Tango the Quetzal</div><div>God is our Creator. <em>Wow, God!</em><br>"Praise the Lord, everything he has created." (Ps 103:22)<br>God creates the world. (Gen 1)<br>→ Zoo</div></div>
-  </div>
-  <h2>Monday Schedule</h2>
-  <div class="schedules" style="grid-template-columns:1fr">
-    <div class="scol"><h3>VBS · Monday</h3>
-      <div class="srow gray"><span class="t">8:30–9:00</span><span class="l">Check-in</span></div>
-      <div class="srow hdr"><span class="t">9:00–11:30</span><span class="l">Morning Program</span></div>
-      <div class="srow ta"><span class="t">9:00–9:15</span><span class="l">Opening Praise</span></div>
-      <div class="srow gray"><span class="t">9:15–9:20</span><span class="l">Testimony</span></div>
-      <div class="srow tg"><span class="t">9:20–9:30</span><span class="l">Skit/Dance</span></div>
-      <div class="srow tc"><span class="t">9:35–9:55</span><span class="l">Bible teaching</span></div>
-      <div class="srow ta"><span class="t">10:00–10:55</span><span class="l">Small group + Craft</span></div>
-      <div class="srow tb"><span class="t">11:00–11:30</span><span class="l">Games</span></div>
-      <div class="srow gray"><span class="t">11:30–1:00</span><span class="l">Lunch</span></div>
-      <div class="srow hdr"><span class="t">1:00–5:00</span><span class="l">Afternoon Program</span></div>
-      <div class="srow gray"><span class="t">1:00–4:30</span><span class="l">Off-site · Zoo</span></div>
-      <div class="srow tg"><span class="t">4:30–4:40</span><span class="l">Skit/Dance</span></div>
-      <div class="srow ta"><span class="t">4:40–5:00</span><span class="l">Closing Praise</span></div>
-      <div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>
-    </div>
-  </div>
+  <div id="today-body"></div>
 </div>
 <div id="pane-vbs" class="pane">
   <div class="stu-title" style="color:#2563eb">VBS · BEST Camp</div>
@@ -1212,15 +1174,15 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </div>
 
 <nav class="tabbar">
-  <button class="tabitem active" style="--accent:#d97706" onclick="go('mon',this)" aria-label="Monday">
+  <button class="tabitem active" style="--accent:#d97706" onclick="go('mon',this)" aria-label="Today">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
-    <span>Monday</span>
+    <span>Today</span>
   </button>
   <button class="tabitem" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
   </button>
-  <button class="tabitem" style="--accent:#16a34a" onclick="go('checkin',this)" aria-label="Check-In">
+  <button class="tabitem" style="--accent:#16a34a" onclick="goCheckin(this)" aria-label="Check-In">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
     <span>Check-In</span>
   </button>
@@ -1889,7 +1851,19 @@ var CI_FLAT=(function(){
   out.sort(function(a,b){return a.name.localeCompare(b.name);});
   return out;
 })();
-function ciDateKey(){var t=twNow();return t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');}
+// The VBS camp runs Jul 13-17, 2026 (Mon-Fri). Attendance is always keyed to one of
+// these five days — even if a device's clock is off or someone opens the app before/
+// after the week, so testing and real use both land in a valid, consistent bucket.
+var VBS_DAY_DATES=['2026-07-13','2026-07-14','2026-07-15','2026-07-16','2026-07-17'];
+var VBS_DAY_LABELS=['Mon','Tue','Wed','Thu','Fri'];
+function vbsDayInfo(){
+  var t=twNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  var idx=VBS_DAY_DATES.indexOf(key);
+  if(idx<0) idx = key<VBS_DAY_DATES[0] ? 0 : 4;
+  return {idx:idx,label:VBS_DAY_LABELS[idx],date:VBS_DAY_DATES[idx]};
+}
+function ciDateKey(){return vbsDayInfo().date;}
 function ciTimeStr(){
   return new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',hour:'numeric',minute:'2-digit',hour12:true}).format(new Date());
 }
@@ -1898,6 +1872,31 @@ function ciSaveLog(log){try{localStorage.setItem('ci_'+ciDateKey(),JSON.stringif
 function ciToast(msg){
   var t=document.getElementById('ci-toast');t.textContent=msg;t.classList.add('show');
   clearTimeout(window._ciToastTimer);window._ciToastTimer=setTimeout(function(){t.classList.remove('show');},2200);
+}
+function goCheckin(btn){go('checkin',btn);ciSyncFromSheet();}
+// Pulls the day's checked-in list from the Google Sheet (shared across every device)
+// and merges it into this device's local log, so a fresh phone — or one that had its
+// browser storage cleared — shows everyone's real check-ins, not just its own.
+function ciSyncFromSheet(){
+  if(!CHECKIN_ENDPOINT)return;
+  var btn=document.getElementById('ci-sync-btn'),note=document.getElementById('ci-sync-note');
+  if(btn)btn.classList.add('busy');
+  if(note)note.textContent='Syncing…';
+  fetch(CHECKIN_ENDPOINT+'?day='+encodeURIComponent(vbsDayInfo().label))
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var log=ciGetLog();
+      (data.names||[]).forEach(function(name){
+        if(!log[name])log[name]={time:'synced'};
+      });
+      ciSaveLog(log);
+      ciRender();
+      if(note)note.textContent='Synced from Google Sheet just now';
+    })
+    .catch(function(){
+      if(note)note.textContent='Offline — showing this device\'s check-ins only';
+    })
+    .finally(function(){if(btn)btn.classList.remove('busy');});
 }
 var ciFilter='all';
 function ciSetFilter(f,btn){
@@ -1980,9 +1979,101 @@ function ciConfirm(name){
 }
 function ciUndo(name){
   var log=ciGetLog();delete log[name];ciSaveLog(log);
+  if(CHECKIN_ENDPOINT){
+    fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+      date:ciDateKey(),name:name,undo:true
+    })}).catch(function(){});
+  }
   closeCiModal();ciRender();
 }
 ciRender();
+ciSyncFromSheet();
+</script>
+<script>
+/* ===== Today tab (auto-advances Mon -> Fri through the VBS week) ===== */
+var TODAY_DATA=[
+  {dow:'MON',label:'Monday',color:'#f5a623',buddy:'Tango the Quetzal',buddyShort:'Tango',theme:'God is our Creator',
+   verse:'"Praise the Lord, everything he has created." (Ps 103:22)',story:'God creates the world. (Gen 1)',offsite:'Zoo',
+   meta:'Team A + Andrew &amp; Rubin · Dance lead: Jane · Testimony: Grace',
+   am:{praise:'God Is · Get a Little Crazy · My God Is Powerful',skit:'Gardener'},
+   pm:{praise:'Superhero · Faith · God Is',skit:'Lost Son'},
+   ann:[{ic:'🚐',html:'<b>Stephanie 趙唯真</b> is not going on the shuttle bus — she\'s coming with her parent.'}]},
+  {dow:'TUE',label:'Tuesday',color:'#4ab8d8',buddy:'Seymour the Glass Frog',buddyShort:'Seymour',theme:'God knows everything',
+   verse:'"O Lord, you have examined my heart." (Ps 139:1)',story:'David celebrates all God knows. (Ps 139)',offsite:'Swimming',
+   meta:'Team A + Jean &amp; Caleb · Dance lead: Grace · Testimony: Owen',
+   am:{praise:'One Way · Get a Little Crazy · God Is',skit:'Contagious',perf:"Thank God I'm Free"},
+   pm:{praise:'Every Move I Make · God Loves Us So · God Is',skit:'Joyrobber',note:'Get a Little Crazy if needed'},
+   ann:[]},
+  {dow:'WED',label:'Wednesday',color:'#009e8e',buddy:'Dottie the Ocelot',buddyShort:'Dottie',theme:'God is our safe place',
+   verse:'"You are my place of refuge." (Ps 142:5)',story:'David hides from Saul. (1 Sam 23–24)',offsite:'Amusement Park',
+   meta:'Team A + Owen &amp; Rubin · Dance lead: Esther · Testimony: Janet',
+   am:{praise:'Get a Little Crazy · Every Move I Make · Superhero',skit:'Race',note:'One Way if needed'},
+   pm:{praise:'God Is · Faith · My God Is Powerful',skit:'Fruit Stand'},
+   ann:[]},
+  {dow:'THU',label:'Thursday',color:'#c8102e',buddy:'Tia the Giant Anteater',buddyShort:'Tia',theme:'God is love',
+   verse:'"His faithful love endures forever." (Ps 136:1)',story:'Jesus dies and comes to life. (Luke 22:39–24:12)',offsite:'TBD',
+   meta:'Team A + Andrew &amp; Caleb · Dance lead: Irene · Testimony: Rubin',
+   am:{praise:'Superhero · God Is · One Way',skit:'Chair',note:'My God Is Powerful if needed'},
+   pm:{praise:'Get a Little Crazy · God Loves Us So · God Is',perf:'Joyful Joyful'},
+   ann:[]},
+  {dow:'FRI',label:'Friday',color:'#6b7c1e',buddy:'Howie the Howler Monkey',buddyShort:'Howie',theme:'God is forever',
+   verse:'"Praise the Lord both now and forever!" (Ps 115:18)',story:'God gives John a vision of heaven. (Rev 7:17; 21–22)',offsite:'TBD',
+   meta:'Team A + Owen &amp; Jean · Dance lead: TBD · Testimony: Andrew Back',
+   am:{praise:'Get a Little Crazy · My God Is Powerful · Every Move I Make',skit:'Wall',perf:'The Joy'},
+   pm:{praise:'Faith · Superhero · God Is',skit:'Good Good Father'},
+   ann:[]}
+];
+function vsesh(lbl,cls,s){
+  if(!s)return'';
+  var h='<div class="vday-sesh '+cls+'"><span class="vday-lbl">'+lbl+'</span>';
+  if(s.praise)h+='<div class="vday-line"><b>Praise:</b> '+s.praise+'</div>';
+  if(s.skit)h+='<div class="vday-line"><b>Skit:</b> '+s.skit+(s.note?' <span class="vday-note">('+s.note+')</span>':'')+'</div>';
+  if(s.perf)h+='<div class="vday-line vday-perf">★ Performance: '+s.perf+'</div>';
+  h+='</div>';
+  return h;
+}
+function renderToday(){
+  var info=vbsDayInfo(),d=TODAY_DATA[info.idx];
+  var annHtml=d.ann.length?('<div class="ann-wrap"><div class="ann-hdr">📣 Announcements</div>'
+    +d.ann.map(function(a){return '<div class="ann-card"><span class="ann-ic">'+a.ic+'</span><span class="ann-txt">'+a.html+'</span></div>';}).join('')
+    +'</div>'):'';
+  var html=''
+    +'<div class="stu-title" style="color:#d97706">'+d.label+'</div>'
+    +'<div class="stu-sub">'+VBS_DAY_DATES[info.idx].slice(5).replace('-','/')+' · VBS Day '+(info.idx+1)+' · '+d.buddyShort+'</div>'
+    +annHtml
+    +'<div class="mon-quick">'
+      +'<button class="mon-qbtn" style="background:#16a34a" onclick="goCheckin(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'Check-In\\\']\'))">✅ Check-In</button>'
+      +'<button class="mon-qbtn" style="background:#2563eb" onclick="goVbsGroups()">👥 Small Groups</button>'
+    +'</div>'
+    +'<div class="vday">'
+      +'<div class="vday-h"><span class="vday-d">'+d.dow+'</span><span class="vday-buddy">'+d.buddyShort+' · '+d.theme+'</span></div>'
+      +'<div class="vday-meta">'+d.meta+'</div>'
+      +vsesh('Morning','am',d.am)
+      +vsesh('Evening','pm',d.pm)
+    +'</div>'
+    +'<div class="days5">'
+      +'<div class="dcard" style="background:'+d.color+'"><div class="dl">'+d.dow+' · Day '+(info.idx+1)+'</div><div class="db">'+d.buddy+'</div><div>'+d.theme+'. <em>Wow, God!</em><br>'+d.verse+'<br>'+d.story+'<br>→ '+d.offsite+'</div></div>'
+    +'</div>'
+    +'<h2>'+d.label+' Schedule</h2>'
+    +'<div class="schedules" style="grid-template-columns:1fr"><div class="scol"><h3>VBS · '+d.label+'</h3>'
+      +'<div class="srow gray"><span class="t">8:30–9:00</span><span class="l">Check-in</span></div>'
+      +'<div class="srow hdr"><span class="t">9:00–11:30</span><span class="l">Morning Program</span></div>'
+      +'<div class="srow ta"><span class="t">9:00–9:15</span><span class="l">Opening Praise</span></div>'
+      +'<div class="srow gray"><span class="t">9:15–9:20</span><span class="l">Testimony</span></div>'
+      +'<div class="srow tg"><span class="t">9:20–9:30</span><span class="l">Skit/Dance</span></div>'
+      +'<div class="srow tc"><span class="t">9:35–9:55</span><span class="l">Bible teaching</span></div>'
+      +'<div class="srow ta"><span class="t">10:00–10:55</span><span class="l">Small group + Craft</span></div>'
+      +'<div class="srow tb"><span class="t">11:00–11:30</span><span class="l">Games</span></div>'
+      +'<div class="srow gray"><span class="t">11:30–1:00</span><span class="l">Lunch</span></div>'
+      +'<div class="srow hdr"><span class="t">1:00–5:00</span><span class="l">Afternoon Program</span></div>'
+      +'<div class="srow gray"><span class="t">1:00–4:30</span><span class="l">Off-site · '+d.offsite+'</span></div>'
+      +'<div class="srow tg"><span class="t">4:30–4:40</span><span class="l">Skit/Dance</span></div>'
+      +'<div class="srow ta"><span class="t">4:40–5:00</span><span class="l">Closing Praise</span></div>'
+      +'<div class="srow gray"><span class="t">5:30</span><span class="l">Pickup</span></div>'
+    +'</div></div>';
+  document.getElementById('today-body').innerHTML=html;
+}
+renderToday();
 </script>
 <script>
 (function(){

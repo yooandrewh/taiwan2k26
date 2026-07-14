@@ -356,6 +356,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-alg{color:#c2410c;font-weight:800;font-size:13px;}
 .sg-submitted{background:#16a34a;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;}
 .sg-notrecorded{background:var(--surface2);color:var(--text3);font-size:9px;font-weight:700;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;border:1px solid var(--border);}
+.retreat-badge{background:#7c3aed;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;margin-left:4px;}
 .faith-stat{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:16px;margin:6px 0 14px;text-align:center;}
 .faith-stat-num{font-size:32px;font-weight:800;line-height:1.1;}
 .faith-stat-lbl{font-size:12px;opacity:.9;margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
@@ -594,8 +595,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-14T23:28:58+08:00";
-var APP_VERSION=155; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T00:01:39+08:00";
+var APP_VERSION=157; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -619,7 +620,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v155 · Jul 14, 2026 · 11:28 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v157 · Jul 15, 2026 · 12:01 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1744,6 +1745,14 @@ const VBS_SG={
      kids:[{name:"Riley",g:1},{name:"Elonnie Pak",g:1},{name:"Deborah Lo",g:0},{name:"Papillon Lo",g:0},{name:"Abigail Guo",g:-1}]}
   ]
 };
+// People also going to the retreat site — highlighted with a small badge wherever
+// their name shows up (Groups, Check-In, My Group Today, Faith & Notes), so leaders
+// can spot at a glance who's on both rosters. Defined here (not near TEACHER_GROUPS
+// further down) because sgRender() below is invoked immediately at parse time, and
+// this needs to exist before that first call.
+var RETREAT_NAMES=['Andrew Yoo','Caleb Su','Esther Yang','Keren Choi','Jean Kim','Andrew Back','Jane Kim','Becca Park','Rubin Jang','Owen Lee','Irene Song','Sammy Taing','Roba','Timothy Kim','Grace Yoon','Janet Phee','Ethan Nam','Lane Hartshorne','Claire','Eliana Wan','Owen Wu','Owen Nam','Ruhamah','Yuqi Chiu','Ezra','Hao-Chen Li','Adeline','Ellery','Zephyr Kao','Harry','Grace','Kara','Ryan Lin','Stephanie','Grace Hartshorne','Queenie','Est-elle','Hsin Hsin'];
+function isGoingToRetreat(name){return RETREAT_NAMES.indexOf(name)>=0;}
+function retreatBadge(name){return isGoingToRetreat(name)?'<span class="retreat-badge">🏕️ Retreat</span>':'';}
 const RETREAT_SG={
   boys:[
     {id:"RB1",leads:[{name:"Caleb Su",age:21,role:"L"}],
@@ -1921,6 +1930,7 @@ function sgFaithBadge(name,notesLog){
 function goFaithDash(btn){
   go('faith',btn);
   renderFaithDash();
+  pnSyncFromSheet();
 }
 function renderFaithDash(){
   var body=document.getElementById('faith-body');
@@ -2033,6 +2043,7 @@ function sgRender(){
       html+='<span class="sg-role">Leader</span>';
       html+='<span class="sg-person">'+l.name+'</span>';
       html+=(li.al?'<span class="sg-alg">✳</span>':'');
+      html+=retreatBadge(l.name);
       html+=sgFaithBadge(l.name,notesLog);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
@@ -2051,6 +2062,7 @@ function sgRender(){
       html+='<span class="sg-person vol">'+name+'</span>';
       html+=(isCovering?'<span class="sg-covering">↔ covering today</span>':'');
       html+=(li.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(li.b)?'<span class="sg-cake">🎂</span>':'');
+      html+=retreatBadge(name);
       html+=sgFaithBadge(name,notesLog);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
@@ -2063,6 +2075,7 @@ function sgRender(){
       html+='<span class="sg-dot '+dotCls+'"></span>';
       html+='<span class="sg-kname">'+k.name+'</span>';
       html+=(ki.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(ki.b)?'<span class="sg-cake">🎂</span>':'');
+      html+=retreatBadge(k.name);
       html+=sgFaithBadge(k.name,notesLog);
       html+='<span class="sg-gr" style="background:'+grColor+'">'+grShort(k.g)+'</span>';
       html+='<span class="sg-chev">›</span>';
@@ -2252,7 +2265,7 @@ function ciRender(){
     var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)
         +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
@@ -2444,9 +2457,10 @@ function pnSyncFromSheet(){
 }
 pnSyncFromSheet();
 function pnMaybeSync(){
-  if(document.visibilityState==='visible' && document.getElementById('pane-groups').classList.contains('active')){
-    pnSyncFromSheet();
-  }
+  if(document.visibilityState!=='visible')return;
+  var groupsActive=document.getElementById('pane-groups').classList.contains('active');
+  var faithActive=document.getElementById('pane-faith')&&document.getElementById('pane-faith').classList.contains('active');
+  if(groupsActive||faithActive)pnSyncFromSheet();
 }
 setInterval(pnMaybeSync,CI_SYNC_INTERVAL_MS);
 document.addEventListener('visibilitychange',pnMaybeSync);
@@ -2601,7 +2615,7 @@ function renderMyGroupBody(){
       var k=CI_FLAT.find(function(x){return x.name===n;});
       var grade=k&&k.grade!=='V'?k.grade:'';
       var leftEarly=isLeftEarlyToday(n);
-      html+='<div class="mygrp-row clickable" onclick="kidDetail(\''+n.replace(/'/g,"\\'")+'\',\''+info.group+'\',\''+grade+'\')"><span class="mygrp-name'+(leftEarly?' mygrp-left':'')+'">'+n+'</span>'
+      html+='<div class="mygrp-row clickable" onclick="kidDetail(\''+n.replace(/'/g,"\\'")+'\',\''+info.group+'\',\''+grade+'\')"><span class="mygrp-name'+(leftEarly?' mygrp-left':'')+'">'+n+'</span>'+retreatBadge(n)
         +(leftEarly?'<span class="mygrp-leftlabel">Left early</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
     });
   }

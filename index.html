@@ -508,6 +508,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .ci-age{font-size:11px;font-weight:700;color:var(--text2);background:var(--surface2);border-radius:5px;padding:2px 7px;flex-shrink:0;white-space:nowrap;}
 .ci-grp{font-size:11px;font-weight:800;color:#fff;background:#2563eb;border-radius:5px;padding:2px 7px;flex-shrink:0;}
 .ci-check{font-size:15px;color:#fff;background:#16a34a;flex-shrink:0;width:22px;height:22px;line-height:22px;border-radius:50%;text-align:center;cursor:pointer;}
+.ci-earlybadge{display:inline-block;font-size:10px;font-weight:800;color:#b45309;background:rgba(180,83,9,0.12);border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:middle;}
 .ci-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px;}
 .ci-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);max-height:88vh;overflow-y:auto;}
 .ci-head-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
@@ -516,11 +517,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .ci-head-row .bday{font-size:13px;font-weight:700;color:#d97706;background:rgba(217,119,6,0.12);border-radius:6px;padding:2px 8px;}
 .ci-legal{font-size:14px;color:var(--text3);font-weight:600;margin:2px 0 14px;}
 .ci-already{margin-bottom:12px;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.35);color:#15803d;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;text-align:center;}
-.ci-btnrow{display:flex;gap:8px;margin-top:16px;}
+.ci-earlyexit-banner{margin-bottom:12px;background:rgba(180,83,9,0.1);border:1px solid rgba(180,83,9,0.35);color:#b45309;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;text-align:center;}
+.ci-btnrow{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
 .ci-btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .ci-btn.confirm{background:#16a34a;color:#fff;}
 .ci-btn.cancel{background:var(--surface2);color:var(--text);}
 .ci-btn.undo{background:#fee2e2;color:#b91c1c;}
+.ci-btn.early{background:#fef3c7;color:#b45309;}
 .ci-toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#16a34a;color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:30px;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;}
 .ci-toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
 /* Desktop: center dialogs instead of anchoring to the bottom edge */
@@ -600,8 +603,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T00:18:16+08:00";
-var APP_VERSION=159; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T00:38:22+08:00";
+var APP_VERSION=160; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -625,7 +628,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v159 · Jul 15, 2026 · 12:18 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v160 · Jul 15, 2026 · 12:38 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1421,13 +1424,15 @@ function checkTripPw(){
 }
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
 function goTripPublic(btn){_tripFull=true;initTripDays();go('t',btn);}
-function tryGroups(btn){go('groups',btn);pnSyncFromSheet();}
+function tryGroups(btn){go('groups',btn);pnSyncFromSheet();ciSyncFromSheet();}
 function goVbsGroups(){
   var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
   go('groups',gb);
   var vbsBtn=document.querySelector('#sg-event button');
   if(vbsBtn) sgEvent('vbs',vbsBtn);
   window.scrollTo(0,0);
+  pnSyncFromSheet();
+  ciSyncFromSheet();
 }
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter'){
@@ -2027,6 +2032,26 @@ function isStaffOffToday(name){
   var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
   return key===STAFF_OFF_DATE&&STAFF_OFF_NAMES.indexOf(name)>=0;
 }
+// Standalone read of the same 'ci_early_<date>' store the Check-In tab's Early Exit
+// tool writes to (see ciEarlyGetLog() further down). Duplicated here — rather than
+// calling ciDateKey()/vbsDayInfo() — because sgRender() below is invoked immediately
+// at parse time in this earlier script block, before those later-defined functions exist.
+function sgEarlyExitLog(){
+  var t=twNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  var dates=['2026-07-13','2026-07-14','2026-07-15','2026-07-16','2026-07-17'];
+  var idx=dates.indexOf(key);
+  if(idx<0) idx = key<dates[0] ? 0 : 4;
+  try{return JSON.parse(localStorage.getItem('ci_early_'+dates[idx])||'{}');}catch(e){return {};}
+}
+function sgIsEarlyExitToday(name){
+  if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return true;
+  var e=sgEarlyExitLog()[name];
+  return !!(e&&e.value);
+}
+function sgEarlyExitBadge(name){
+  return sgIsEarlyExitToday(name)?'<span class="ci-earlybadge">🚪 Early Exit</span>':'';
+}
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
   var groups=data[sgCurrent];
@@ -2060,6 +2085,7 @@ function sgRender(){
       html+=(li.al?'<span class="sg-alg">✳</span>':'');
       html+=retreatBadge(l.name);
       html+=sgFaithBadge(l.name,notesLog);
+      html+=sgEarlyExitBadge(l.name);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });
@@ -2079,6 +2105,7 @@ function sgRender(){
       html+=(li.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(li.b)?'<span class="sg-cake">🎂</span>':'');
       html+=retreatBadge(name);
       html+=sgFaithBadge(name,notesLog);
+      html+=sgEarlyExitBadge(name);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });
@@ -2092,6 +2119,7 @@ function sgRender(){
       html+=(ki.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(ki.b)?'<span class="sg-cake">🎂</span>':'');
       html+=retreatBadge(k.name);
       html+=sgFaithBadge(k.name,notesLog);
+      html+=sgEarlyExitBadge(k.name);
       html+='<span class="sg-gr" style="background:'+grColor+'">'+grShort(k.g)+'</span>';
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
@@ -2233,8 +2261,10 @@ function ciSyncFromSheet(){
         ciPostCheckin(name,k,KID_INFO[name]||{},entry.time&&entry.time!=='synced'?entry.time:ciTimeStr());
       });
       if(changed)ciSaveLog(log);
+      ciEarlySyncFromSheet(data);
       ciRender();
       renderMyGroupBody();
+      if(document.getElementById('sg-list'))sgRender();
       if(note)note.textContent='Synced from Google Sheet just now';
     })
     .catch(function(){
@@ -2284,7 +2314,7 @@ function ciRender(){
     var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">🚪 Early Exit</span>':'')
         +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
@@ -2311,11 +2341,13 @@ function ciOpen(name){
   rows+=row('👤','Parent',info.pa);
   rows+=row('📞','Phone',info.ph?'<a href="tel:'+info.ph.replace(/[^0-9+]/g,'')+'">'+info.ph+'</a>':'');
   rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
+  var earlyNow=already&&isEarlyExitToday(name);
   var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
+  var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">🚪 Marked as Early Exit <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
   var buttons=already
-    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button></div>'
+    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">🚪 Mark Early Exit</button>')+'</div>'
     : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
-  document.getElementById('ci-body').innerHTML=head+banner+'<div class="kd-rows">'+rows+'</div>'+buttons;
+  document.getElementById('ci-body').innerHTML=head+banner+earlyBanner+'<div class="kd-rows">'+rows+'</div>'+buttons;
   document.getElementById('ci-modal').style.display='flex';
 }
 function closeCiModal(){document.getElementById('ci-modal').style.display='none';}
@@ -2340,6 +2372,77 @@ function ciUndo(name){
   closeCiModal();ciRender();
   renderMyGroupBody();
 }
+// ===== Early Exit (Check-In tab + Groups tab) =====
+// A separate, dynamic per-day flag layered on top of check-in — never touches ciGetLog(),
+// so marking/undoing someone as an Early Exit cannot accidentally change their real
+// check-in status. Unlike ciUndo() above (local-only, one-way audit trail), this needs
+// real bidirectional sync: leaders correct mis-taps, and every device must agree on the
+// current state, so each write carries an updatedAt for last-write-wins (same pattern as
+// Faith & Notes' pnSyncFromSheet()).
+function ciEarlyGetLog(){try{return JSON.parse(localStorage.getItem('ci_early_'+ciDateKey())||'{}');}catch(e){return {};}}
+function ciEarlySaveLog(log){try{localStorage.setItem('ci_early_'+ciDateKey(),JSON.stringify(log));}catch(e){}}
+function isEarlyExitToday(name){
+  if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return true;
+  var e=ciEarlyGetLog()[name];
+  return !!(e&&e.value);
+}
+function ciPostEarlyExit(name,value,updatedAt){
+  if(!CHECKIN_ENDPOINT)return;
+  fetch(CHECKIN_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+    type:'earlyexit',date:ciDateKey(),name:name,value:value,updatedAt:updatedAt
+  })}).catch(function(){});
+}
+function ciMarkEarlyExit(name){
+  var updatedAt=Date.now();
+  var log=ciEarlyGetLog();
+  log[name]={value:true,updatedAt:updatedAt,synced:false,tries:0,lastTry:updatedAt};
+  ciEarlySaveLog(log);
+  ciPostEarlyExit(name,true,updatedAt);
+  closeCiModal();
+  ciToast('🚪 '+name+' marked as Early Exit');
+  ciRender();
+  renderMyGroupBody();
+  if(document.getElementById('sg-list'))sgRender();
+}
+function ciUndoEarlyExit(name){
+  var updatedAt=Date.now();
+  var log=ciEarlyGetLog();
+  log[name]={value:false,updatedAt:updatedAt,synced:false,tries:0,lastTry:updatedAt};
+  ciEarlySaveLog(log);
+  ciPostEarlyExit(name,false,updatedAt);
+  closeCiModal();
+  ciToast('↩️ '+name+' un-marked from Early Exit');
+  ciRender();
+  renderMyGroupBody();
+  if(document.getElementById('sg-list'))sgRender();
+}
+// Reuses the same day-query response ciSyncFromSheet() already fetches (extended
+// server-side to also include an earlyExit map), rather than a second round-trip.
+function ciEarlySyncFromSheet(data){
+  var log=ciEarlyGetLog();
+  var changed=false;
+  var serverExit=data.earlyExit||{};
+  Object.keys(serverExit).forEach(function(name){
+    var s=serverExit[name];
+    var local=log[name];
+    if(!local||Number(s.updatedAt||0)>=Number(local.updatedAt||0)){
+      log[name]={value:!!s.value,updatedAt:Number(s.updatedAt||0),synced:true};
+      changed=true;
+    }
+  });
+  var now=Date.now();
+  Object.keys(log).forEach(function(name){
+    var entry=log[name];
+    if(entry.synced)return;
+    var backoff=(entry.tries||0)>=8?300000:7000;
+    if(entry.lastTry&&now-entry.lastTry<backoff)return;
+    entry.tries=(entry.tries||0)+1;
+    entry.lastTry=now;
+    changed=true;
+    ciPostEarlyExit(name,entry.value,entry.updatedAt);
+  });
+  if(changed)ciEarlySaveLog(log);
+}
 ciRender();
 ciSyncFromSheet();
 // Auto-sync every 5s while the Check-In tab is visible on screen, plus immediately
@@ -2355,7 +2458,8 @@ function ciMaybeSync(){
   if(document.visibilityState!=='visible')return;
   var checkinActive=document.getElementById('pane-checkin').classList.contains('active');
   var todayActive=document.getElementById('pane-mon').classList.contains('active');
-  if(checkinActive||todayActive)ciSyncFromSheet();
+  var groupsActive=document.getElementById('pane-groups').classList.contains('active');
+  if(checkinActive||todayActive||groupsActive)ciSyncFromSheet();
 }
 setInterval(ciMaybeSync,CI_SYNC_INTERVAL_MS);
 document.addEventListener('visibilitychange',ciMaybeSync);
@@ -2577,9 +2681,9 @@ function renderMasterCounts(){
   function sideCounts(side){
     var s={studentsChecked:0,studentsTotal:0,volsChecked:0,volsTotal:0,teachers:0};
     VBS_SG[side].forEach(function(grp){
-      grp.kids.forEach(function(k){s.studentsTotal++;if(log[k.name]&&!isLeftEarlyToday(k.name))s.studentsChecked++;});
+      grp.kids.forEach(function(k){s.studentsTotal++;if(log[k.name]&&!isEarlyExitToday(k.name))s.studentsChecked++;});
       grp.leads.forEach(function(l){
-        if(l.role==='V'){s.volsTotal++;if(log[l.name]&&!isLeftEarlyToday(l.name))s.volsChecked++;}
+        if(l.role==='V'){s.volsTotal++;if(log[l.name]&&!isEarlyExitToday(l.name))s.volsChecked++;}
         else s.teachers++;
       });
     });
@@ -2597,7 +2701,8 @@ function renderMasterCounts(){
     return '<div class="mygrp-row'+(clickName?' clickable':'')+'"'+click+'><span class="mygrp-name">'+label+'</span><span class="mygrp-time">'+checked+' / '+total+'</span></div>';
   }
   var offToday=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(isStaffOffToday);
-  var html=leftEarlyActive()?'<div class="mstr-leftearly">🚗 '+LEFT_EARLY_NAMES.length+' left early today — already excluded from the counts below</div>':'';
+  var earlyExitToday=CI_FLAT.filter(function(k){return log[k.name]&&isEarlyExitToday(k.name);});
+  var html=earlyExitToday.length?'<div class="mstr-leftearly">🚪 '+earlyExitToday.length+' marked Early Exit today — already excluded from the counts below</div>':'';
   if(offToday.length)html+='<div class="mstr-leftearly">🚫 '+offToday.join(', ')+' off today — excluded from Other Staff</div>';
   html+='<div class="mstr-block"><div class="mstr-side">👦 Boys — '+boysTotal+'</div>'
     +row('Students',boys.studentsChecked,boys.studentsTotal)
@@ -2624,7 +2729,7 @@ function renderMyGroupBody(){
   if(!info){body.innerHTML='';return;}
   var log=ciGetLog();
   var checkedIn=info.kids.filter(function(n){return !!log[n];});
-  var stillHere=checkedIn.filter(function(n){return !isLeftEarlyToday(n);});
+  var stillHere=checkedIn.filter(function(n){return !isEarlyExitToday(n);});
   var html='<div class="mygrp-count">'+stillHere.length+' / '+info.kids.length+' checked in · Group '+info.group+'</div>';
   if(!checkedIn.length){
     html+='<div class="mygrp-empty">No one from your group has checked in yet.</div>';
@@ -2634,9 +2739,9 @@ function renderMyGroupBody(){
       var t=entry.time&&entry.time!=='synced'?entry.time:'';
       var k=CI_FLAT.find(function(x){return x.name===n;});
       var grade=k&&k.grade!=='V'?k.grade:'';
-      var leftEarly=isLeftEarlyToday(n);
+      var leftEarly=isEarlyExitToday(n);
       html+='<div class="mygrp-row clickable" onclick="kidDetail(\''+n.replace(/'/g,"\\'")+'\',\''+info.group+'\',\''+grade+'\')"><span class="mygrp-name'+(leftEarly?' mygrp-left':'')+'">'+n+'</span>'+retreatBadge(n)
-        +(leftEarly?'<span class="mygrp-leftlabel">Left early</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
+        +(leftEarly?'<span class="mygrp-leftlabel">🚪 Early Exit</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
     });
   }
   body.innerHTML=html;

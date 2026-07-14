@@ -570,8 +570,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-14T08:52:24+08:00";
-var APP_VERSION=144; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-14T08:59:18+08:00";
+var APP_VERSION=145; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -595,7 +595,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v144 · Jul 14, 2026 · 8:52 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v145 · Jul 14, 2026 · 8:59 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -2492,17 +2492,17 @@ function renderToday(){
 function getScheduleRows(d){
   return [
     {s:510,e:540,l:'Check-in',cls:'gray',t:'8:30–9:00'},
-    {s:540,e:690,l:'Morning Program',cls:'hdr',t:'9:00–11:30'},
-    {s:540,e:555,l:'Opening Praise',cls:'ta',t:'9:00–9:15'},
-    {s:555,e:560,l:'Testimony',cls:'gray',t:'9:15–9:20'},
-    {s:560,e:570,l:'Skit/Dance',cls:'tg',t:'9:20–9:30'},
-    {s:570,e:595,l:'Bible teaching',cls:'tc',t:'9:30–9:55'},
-    {s:595,e:655,l:'Small group + Craft',cls:'ta',t:'9:55–10:55'},
-    {s:655,e:690,l:'Games',cls:'tb',t:'10:55–11:30'},
-    {s:690,e:720,l:'Lunch',cls:'gray',t:'11:30–12:00'},
-    {s:720,e:730,l:'Skit/Dance',cls:'tg',t:'12:00–12:10'},
-    {s:730,e:730,l:'Wash up',cls:'gray',t:'12:10'},
-    {s:760,e:760,l:'Head down to BTU',cls:'gray',t:'12:40'},
+    {s:540,e:680,l:'Morning Program',cls:'hdr',t:'9:00–11:20'},
+    {s:540,e:545,l:'Opening Praise',cls:'ta',t:'9:00–9:05'},
+    {s:545,e:550,l:'Testimony',cls:'gray',t:'9:05–9:10'},
+    {s:550,e:560,l:'Skit/Dance',cls:'tg',t:'9:10–9:20'},
+    {s:560,e:585,l:'Bible teaching',cls:'tc',t:'9:20–9:45'},
+    {s:585,e:645,l:'Small group + Craft',cls:'ta',t:'9:45–10:45'},
+    {s:645,e:680,l:'Games',cls:'tb',t:'10:45–11:20'},
+    {s:680,e:710,l:'Lunch',cls:'gray',t:'11:20–11:50'},
+    {s:710,e:720,l:'Skit/Dance',cls:'tg',t:'11:50–12:00'},
+    {s:720,e:720,l:'Wash up',cls:'gray',t:'12:00'},
+    {s:750,e:750,l:'Head down to BTU',cls:'gray',t:'12:30'},
     {s:780,e:1020,l:'Afternoon Program',cls:'hdr',t:'1:00–5:00'},
     {s:780,e:780,l:'Depart',cls:'gray',t:'1:00'},
     {s:780,e:990,l:'Off-site · '+d.offsite,cls:'gray',t:'1:00–4:30'},

@@ -355,6 +355,8 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-cake{font-size:13px;}
 .sg-alg{color:#c2410c;font-weight:800;font-size:13px;}
 .sg-submitted{background:#16a34a;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;}
+.sg-covering{background:#d97706;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;}
+.sg-novol{opacity:.7;}
 .sg-chev{color:var(--text3);font-size:17px;font-weight:700;margin-left:1px;}
 .sg-bday{background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.35);border-radius:12px;padding:10px 13px;font-size:13px;font-weight:700;color:#b45309;margin-bottom:14px;line-height:1.5;}
 .kd-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
@@ -570,8 +572,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-14T08:59:18+08:00";
-var APP_VERSION=145; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-14T09:03:12+08:00";
+var APP_VERSION=146; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -595,7 +597,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v145 · Jul 14, 2026 · 8:59 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v146 · Jul 14, 2026 · 9:03 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1875,6 +1877,18 @@ function closeKidModal(){document.getElementById('kid-modal').style.display='non
 // function lives in a later <script> block, and sgRender() is invoked immediately
 // at parse time below, before that block has run.
 function sgNotesLog(){try{return JSON.parse(localStorage.getItem('person_notes')||'{}');}catch(e){return {};}}
+// Temporary, single-day volunteer coverage — Timothy Kim (normally B5) is out on
+// 2026-07-14, so everyone shifts down one group and Caleb (B1) covers with none.
+// Scoped to this exact date (via twNow(), which is safe to call this early — see
+// the comment at its definition) so it silently stops applying on its own once the
+// date rolls to Wednesday, with nothing to manually revert.
+var SG_VOL_OVERRIDE_DATE='2026-07-14';
+var SG_VOL_OVERRIDE={'B1':[],'B2':['Owen Wu'],'B3':['Owen Nam'],'B4':['Lane Hartshorne'],'B5':['Roba','Ethan Nam']};
+function sgVolOverrideActive(){
+  var t=twNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  return key===SG_VOL_OVERRIDE_DATE;
+}
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
   var groups=data[sgCurrent];
@@ -1900,13 +1914,31 @@ function sgRender(){
     html+='<span class="sg-headname">'+grp.leads[0].name+'</span>';
     html+='<span class="sg-count">'+kidCount+' kids</span>';
     html+='</div>';
-    grp.leads.forEach(function(l){
+    grp.leads.filter(function(l){return l.role!=='V';}).forEach(function(l){
       var li=KID_INFO[l.name]||{};
       html+='<div class="sg-staff tapp" onclick="kidDetail(\''+l.name.replace(/'/g,"\\'")+'\',\''+grp.id+'\',\'\')">';
-      html+='<span class="sg-role">'+(l.role==='V'?'Vol.':'Leader')+'</span>';
-      html+='<span class="sg-person'+(l.role==='V'?' vol':'')+'">'+l.name+'</span>';
-      html+=(li.al?'<span class="sg-alg">✳</span>':'')+((l.role==='V'&&bdayInTrip(li.b))?'<span class="sg-cake">🎂</span>':'');
+      html+='<span class="sg-role">Leader</span>';
+      html+='<span class="sg-person">'+l.name+'</span>';
+      html+=(li.al?'<span class="sg-alg">✳</span>':'');
       html+=(notesLog[l.name]?'<span class="sg-submitted">📝 Submitted</span>':'');
+      html+='<span class="sg-chev">›</span>';
+      html+='</div>';
+    });
+    var normalVolNames=grp.leads.filter(function(l){return l.role==='V';}).map(function(l){return l.name;});
+    var overrideOn=sgVolOverrideActive()&&SG_VOL_OVERRIDE[grp.id]!==undefined;
+    var volNames=overrideOn?SG_VOL_OVERRIDE[grp.id]:normalVolNames;
+    if(overrideOn&&!volNames.length){
+      html+='<div class="sg-staff sg-novol"><span class="sg-role">Vol.</span><span class="sg-person" style="color:var(--text3);font-style:italic;">None today (covering elsewhere)</span></div>';
+    }
+    volNames.forEach(function(name){
+      var li=KID_INFO[name]||{};
+      var isCovering=overrideOn&&normalVolNames.indexOf(name)<0;
+      html+='<div class="sg-staff tapp" onclick="kidDetail(\''+name.replace(/'/g,"\\'")+'\',\''+grp.id+'\',\'\')">';
+      html+='<span class="sg-role">Vol.</span>';
+      html+='<span class="sg-person vol">'+name+'</span>';
+      html+=(isCovering?'<span class="sg-covering">↔ covering today</span>':'');
+      html+=(li.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(li.b)?'<span class="sg-cake">🎂</span>':'');
+      html+=(notesLog[name]?'<span class="sg-submitted">📝 Submitted</span>':'');
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });

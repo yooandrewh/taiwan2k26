@@ -355,6 +355,24 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-cake{font-size:13px;}
 .sg-alg{color:#c2410c;font-weight:800;font-size:13px;}
 .sg-submitted{background:#16a34a;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;}
+.sg-notrecorded{background:var(--surface2);color:var(--text3);font-size:9px;font-weight:700;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;border:1px solid var(--border);}
+.faith-stat{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:16px;margin:6px 0 14px;text-align:center;}
+.faith-stat-num{font-size:32px;font-weight:800;line-height:1.1;}
+.faith-stat-lbl{font-size:12px;opacity:.9;margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.faith-breakdown{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.faith-breakdown span{flex:1;text-align:center;padding:8px 6px;border-radius:10px;font-size:12px;font-weight:700;background:var(--surface);border:1px solid var(--border);}
+.faith-yes{color:#15803d;}
+.faith-no{color:#b45309;}
+.faith-pending{color:var(--text3);}
+.faith-groups{display:flex;flex-direction:column;gap:10px;}
+.faith-grp-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.faith-grp-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.faith-grp-id{background:#2563eb;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:6px;}
+.faith-grp-leader{font-size:13px;font-weight:700;color:var(--text);flex:1;}
+.faith-grp-count{font-size:13px;font-weight:800;color:var(--text2);}
+.faith-grp-missing{font-size:12px;color:var(--text3);line-height:1.6;}
+.faith-missing-name{color:#b45309;font-weight:700;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;}
+.faith-grp-done{font-size:12px;color:#15803d;font-weight:700;}
 .sg-covering{background:#d97706;color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;flex-shrink:0;}
 .sg-novol{opacity:.7;}
 .sg-chev{color:var(--text3);font-size:17px;font-weight:700;margin-left:1px;}
@@ -573,8 +591,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-14T10:22:56+08:00";
-var APP_VERSION=151; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-14T10:29:09+08:00";
+var APP_VERSION=152; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -598,7 +616,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v151 · Jul 14, 2026 · 10:22 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v152 · Jul 14, 2026 · 10:29 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1127,6 +1145,11 @@ setInterval(renderBuildAge,60000);
     <div id="sg-list"></div>
   </div>
 </div>
+<div id="pane-faith" class="pane">
+  <div class="stu-title" style="color:#16a34a">Faith &amp; Notes</div>
+  <div class="stu-sub">Who's been recorded so far</div>
+  <div id="faith-body"></div>
+</div>
 <div id="pane-mem" class="pane">
   <div class="stu-title" style="color:#d97706">Memorize Verses</div>
   <div class="stu-sub">The Roman Road & Great Commission · NIV</div>
@@ -1308,6 +1331,10 @@ setInterval(renderBuildAge,60000);
   <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#16a34a" onclick="goFaithDash(this)" aria-label="Faith">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12c-2.5 4.5-9.5 9-9.5 9z"/><path d="M9 12h2l1-2 2 4 1-2h1"/></svg>
+    <span>Faith</span>
   </button>
   <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('sun',this)" aria-label="Sunday">
     <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
@@ -1878,6 +1905,64 @@ function closeKidModal(){document.getElementById('kid-modal').style.display='non
 // function lives in a later <script> block, and sgRender() is invoked immediately
 // at parse time below, before that block has run.
 function sgNotesLog(){try{return JSON.parse(localStorage.getItem('person_notes')||'{}');}catch(e){return {};}}
+// Shows both states — recorded AND not-yet-recorded — so recorders can spot who
+// still needs a Faith & Notes entry without opening every single person.
+function sgFaithBadge(name,notesLog){
+  var e=notesLog[name];
+  if(e&&e.christian)return '<span class="sg-submitted">✅ Recorded</span>';
+  return '<span class="sg-notrecorded">⬜ Not recorded</span>';
+}
+// Faith & Notes dashboard — a dedicated tab (separate from Groups) answering "how
+// many kids have had their faith status recorded" at a glance, with a per-group
+// breakdown so recorders can see exactly who's still missing.
+function goFaithDash(btn){
+  go('faith',btn);
+  renderFaithDash();
+}
+function renderFaithDash(){
+  var body=document.getElementById('faith-body');
+  if(!body)return;
+  var notesLog=sgNotesLog();
+  var allGroups=VBS_SG.boys.concat(VBS_SG.girls);
+  var totalKids=0,recorded=0,yesCount=0,noCount=0;
+  var groupRows=[];
+  allGroups.forEach(function(grp){
+    var gTotal=grp.kids.length,gRecorded=0,missing=[];
+    grp.kids.forEach(function(k){
+      totalKids++;
+      var e=notesLog[k.name];
+      if(e&&e.christian){
+        recorded++;gRecorded++;
+        if(e.christian==='yes')yesCount++;else if(e.christian==='no')noCount++;
+      }else{
+        missing.push({name:k.name,g:k.g});
+      }
+    });
+    var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;}).join(' & ');
+    groupRows.push({id:grp.id,leader:leaderNames,total:gTotal,recorded:gRecorded,missing:missing});
+  });
+  var pct=totalKids?Math.round(100*recorded/totalKids):0;
+  var html='<div class="faith-stat"><div class="faith-stat-num">'+recorded+' / '+totalKids+'</div><div class="faith-stat-lbl">Kids recorded ('+pct+'%)</div></div>';
+  html+='<div class="faith-breakdown">'
+    +'<span class="faith-yes">✝️ Christian: '+yesCount+'</span>'
+    +'<span class="faith-no">Not yet: '+noCount+'</span>'
+    +'<span class="faith-pending">Unanswered: '+(totalKids-recorded)+'</span>'
+  +'</div>';
+  html+='<div class="faith-groups">';
+  groupRows.forEach(function(g){
+    html+='<div class="faith-grp-card"><div class="faith-grp-hdr"><span class="faith-grp-id">'+g.id+'</span><span class="faith-grp-leader">'+g.leader+'</span><span class="faith-grp-count">'+g.recorded+' / '+g.total+'</span></div>';
+    if(g.missing.length){
+      html+='<div class="faith-grp-missing">Still need recording: '+g.missing.map(function(m){
+        return '<span class="faith-missing-name tapp" onclick="kidDetail(\''+m.name.replace(/'/g,"\\'")+'\',\''+g.id+'\',\''+m.g+'\')">'+m.name+'</span>';
+      }).join(', ')+'</div>';
+    }else{
+      html+='<div class="faith-grp-done">✅ All recorded</div>';
+    }
+    html+='</div>';
+  });
+  html+='</div>';
+  body.innerHTML=html;
+}
 // Temporary, single-day volunteer coverage — Timothy Kim (normally B5) is out on
 // 2026-07-14, so everyone shifts down one group and Caleb (B1) covers with none.
 // Scoped to this exact date (via twNow(), which is safe to call this early — see
@@ -1921,7 +2006,7 @@ function sgRender(){
       html+='<span class="sg-role">Leader</span>';
       html+='<span class="sg-person">'+l.name+'</span>';
       html+=(li.al?'<span class="sg-alg">✳</span>':'');
-      html+=(notesLog[l.name]?'<span class="sg-submitted">📝 Submitted</span>':'');
+      html+=sgFaithBadge(l.name,notesLog);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });
@@ -1939,7 +2024,7 @@ function sgRender(){
       html+='<span class="sg-person vol">'+name+'</span>';
       html+=(isCovering?'<span class="sg-covering">↔ covering today</span>':'');
       html+=(li.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(li.b)?'<span class="sg-cake">🎂</span>':'');
-      html+=(notesLog[name]?'<span class="sg-submitted">📝 Submitted</span>':'');
+      html+=sgFaithBadge(name,notesLog);
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
     });
@@ -1951,7 +2036,7 @@ function sgRender(){
       html+='<span class="sg-dot '+dotCls+'"></span>';
       html+='<span class="sg-kname">'+k.name+'</span>';
       html+=(ki.al?'<span class="sg-alg">✳</span>':'')+(bdayInTrip(ki.b)?'<span class="sg-cake">🎂</span>':'');
-      html+=(notesLog[k.name]?'<span class="sg-submitted">📝 Submitted</span>':'');
+      html+=sgFaithBadge(k.name,notesLog);
       html+='<span class="sg-gr" style="background:'+grColor+'">'+grShort(k.g)+'</span>';
       html+='<span class="sg-chev">›</span>';
       html+='</div>';
@@ -2284,6 +2369,7 @@ function pnSave(name,grpId){
   }
   ciToast(christian?'✅ Church status recorded for '+name:'💾 Notes saved for '+name);
   if(document.getElementById('sg-list'))sgRender();
+  if(document.getElementById('faith-body'))renderFaithDash();
 }
 function pnRefreshStatus(name){
   if(window._pnOpenName!==name)return;
@@ -2325,6 +2411,7 @@ function pnSyncFromSheet(){
       if(changed)pnSaveLog(log);
       if(window._pnOpenName)pnRefreshStatus(window._pnOpenName);
       if(changed&&document.getElementById('sg-list'))sgRender();
+      if(changed&&document.getElementById('faith-body'))renderFaithDash();
     })
     .catch(function(){});
 }

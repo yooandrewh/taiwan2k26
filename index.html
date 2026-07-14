@@ -594,8 +594,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-14T13:22:05+08:00";
-var APP_VERSION=154; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-14T23:28:58+08:00";
+var APP_VERSION=155; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -619,7 +619,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v154 · Jul 14, 2026 · 1:22 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v155 · Jul 14, 2026 · 11:28 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1993,6 +1993,15 @@ function leftEarlyActive(){
 function isLeftEarlyToday(name){
   return leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0;
 }
+// Staff who are off on a specific day — separate list/date from the kids' early-
+// pickup one above (different reason, shouldn't be coupled together).
+var STAFF_OFF_DATE='2026-07-14';
+var STAFF_OFF_NAMES=['Grace (FPC)'];
+function isStaffOffToday(name){
+  var t=twNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  return key===STAFF_OFF_DATE&&STAFF_OFF_NAMES.indexOf(name)>=0;
+}
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
   var groups=data[sgCurrent];
@@ -2546,13 +2555,16 @@ function renderMasterCounts(){
   var boysTotal=boys.studentsChecked+boys.volsChecked+boys.teachers;
   var girlsTotal=girls.studentsChecked+girls.volsChecked+girls.teachers;
   // Trip-wide staff who aren't tied to any one small group (don't check in — always
-  // counted as present) but still need to be on the bus headcount.
-  var OTHER_STAFF=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'];
+  // counted as present) but still need to be on the bus headcount. Anyone off
+  // today (see isStaffOffToday) is filtered out, auto-restored tomorrow.
+  var OTHER_STAFF=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(function(n){return !isStaffOffToday(n);});
   function row(label,checked,total,clickName){
     var click=clickName?' onclick="kidDetail(\''+clickName.replace(/'/g,"\\'")+'\',\'Staff\',\'\')"':'';
     return '<div class="mygrp-row'+(clickName?' clickable':'')+'"'+click+'><span class="mygrp-name">'+label+'</span><span class="mygrp-time">'+checked+' / '+total+'</span></div>';
   }
+  var offToday=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(isStaffOffToday);
   var html=leftEarlyActive()?'<div class="mstr-leftearly">🚗 '+LEFT_EARLY_NAMES.length+' left early today — already excluded from the counts below</div>':'';
+  if(offToday.length)html+='<div class="mstr-leftearly">🚫 '+offToday.join(', ')+' off today — excluded from Other Staff</div>';
   html+='<div class="mstr-block"><div class="mstr-side">👦 Boys — '+boysTotal+'</div>'
     +row('Students',boys.studentsChecked,boys.studentsTotal)
     +row('Boy volunteers',boys.volsChecked,boys.volsTotal)

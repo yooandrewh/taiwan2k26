@@ -220,9 +220,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .tabitem.active{color:var(--accent);}
 .tabitem:active{opacity:.55;}
 /* ---- Park Map (pinch/pan zoom viewer, exempt from the app-wide zoom lock) ---- */
-.pmap-wrap{position:relative;}
-.pmap-viewport{overflow:hidden;touch-action:none;border-radius:14px;background:#eef2f7;height:72vh;position:relative;border:1px solid var(--border);}
+.pmap-viewport{overflow:hidden;touch-action:none;background:#eef2f7;position:relative;}
 .pmap-viewport img{max-width:none;transform-origin:0 0;will-change:transform;-webkit-user-drag:none;user-select:none;}
+/* Fills the whole screen (down to the tab bar) — cancels out body's 16px
+   padding and hides the header/banner (see go() in the script below) so the
+   map itself gets every available pixel. */
+.pmap-pane{margin:-16px -16px 0 -16px;width:calc(100% + 32px);}
+.pmap-viewport.pmap-full{height:calc(100vh - 60px - env(safe-area-inset-bottom));}
 /* ---- collapsible Recent Updates ---- */
 .uhdr{cursor:pointer;user-select:none;-webkit-user-select:none;}
 .ucaret{margin-left:auto;font-size:11px;transition:transform .2s ease;opacity:.7;}
@@ -607,8 +611,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T10:27:16+08:00";
-var APP_VERSION=175; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T10:40:33+08:00";
+var APP_VERSION=176; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -632,7 +636,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v175 · Jul 15, 2026 · 10:27 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v176 · Jul 15, 2026 · 10:40 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1136,7 +1140,7 @@ setInterval(renderBuildAge,60000);
     <button class="on" onclick="ciSetFilter('all',this)">All</button>
     <button onclick="ciSetFilter('done',this)">Checked In</button>
     <button onclick="ciSetFilter('pending',this)">Not Yet</button>
-    <button onclick="ciSetFilter('early',this)">🚪 Early Exit</button>
+    <button onclick="ciSetFilter('early',this)">Early Exit</button>
   </div>
   <div id="ci-list"></div>
 </div>
@@ -1297,28 +1301,12 @@ setInterval(renderBuildAge,60000);
   <div id="map-canvas"></div>
   <div id="map-list"></div>
 </div>
-<div id="pane-parkmap" class="pane">
-  <div class="stu-title" style="color:#ec4899">Amusement Park Map</div>
-  <div class="stu-sub">Pinch to zoom &middot; drag to pan around</div>
-  <div class="pmap-wrap">
-    <div class="pmap-viewport" id="pmap-viewport">
-      <picture>
-        <source srcset="park-map.webp" type="image/webp">
-        <img id="pmap-img" src="park-map.jpg" alt="Taipei Children's Amusement Park map" draggable="false">
-      </picture>
-    </div>
-  </div>
-</div>
-<div id="pane-parkmapv" class="pane">
-  <div class="stu-title" style="color:#ec4899">Amusement Park Map (Vertical)</div>
-  <div class="stu-sub">Pinch to zoom &middot; drag to pan around</div>
-  <div class="pmap-wrap">
-    <div class="pmap-viewport" id="pmap-viewport-v">
-      <picture>
-        <source srcset="park-map-v.webp" type="image/webp">
-        <img id="pmap-img-v" src="park-map-v.jpg" alt="Taipei Children's Amusement Park map (vertical)" draggable="false">
-      </picture>
-    </div>
+<div id="pane-parkmap" class="pane pmap-pane">
+  <div class="pmap-viewport pmap-full" id="pmap-viewport-v">
+    <picture>
+      <source srcset="park-map-v.webp" type="image/webp">
+      <img id="pmap-img-v" src="park-map-v.jpg" alt="Taipei Children's Amusement Park map" draggable="false">
+    </picture>
   </div>
 </div>
 <div id="pane-pray" class="pane">
@@ -1381,10 +1369,6 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
     <span>Park Map</span>
   </button>
-  <button class="tabitem" style="--accent:#ec4899" onclick="goParkMapV(this)" aria-label="Park Map Vertical">
-    <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
-    <span>Map (V)</span>
-  </button>
   <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('sun',this)" aria-label="Sunday">
     <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
     <span>Sunday</span>
@@ -1419,6 +1403,22 @@ function go(id,btn){
   document.querySelectorAll('.tabbar .tabitem').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   window.scrollTo(0,0);
+  // The Park Map tab wants every pixel it can get, so it hides the header/
+  // banner (normally always visible above every other tab) while active.
+  // The notif banner has its own show/hide logic (dismissed vs enabled vs
+  // pending) — remember whether it was actually showing before we hide it
+  // for the map, instead of force-showing it again on the way out.
+  var fullscreen=(id==='parkmap');
+  var topbar=document.querySelector('.topbar'),buildAge=document.querySelector('.build-age'),notif=document.getElementById('notif-banner');
+  if(fullscreen){
+    if(topbar)topbar.style.display='none';
+    if(buildAge)buildAge.style.display='none';
+    if(notif){window._notifWasVisible=(notif.style.display!=='none');notif.style.display='none';}
+  }else{
+    if(topbar)topbar.style.display='';
+    if(buildAge)buildAge.style.display='';
+    if(notif&&window._notifWasVisible)notif.style.display='';
+  }
 }
 function tryLeaders(btn){
   _leaderBtn=btn;
@@ -2093,7 +2093,7 @@ function sgIsEarlyExitToday(name){
   return !!(e&&e.value);
 }
 function sgEarlyExitBadge(name){
-  return sgIsEarlyExitToday(name)?'<span class="ci-earlybadge">🚪 Early Exit</span>':'';
+  return sgIsEarlyExitToday(name)?'<span class="ci-earlybadge">Early Exit</span>':'';
 }
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
@@ -2358,7 +2358,7 @@ function ciRender(){
     var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">🚪 Early Exit</span>':'')
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">Early Exit</span>':'')
         +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
@@ -2387,9 +2387,9 @@ function ciOpen(name){
   rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
   var earlyNow=already&&isEarlyExitToday(name);
   var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
-  var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">🚪 Marked as Early Exit <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
+  var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">Marked as Early Exit <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
   var buttons=already
-    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">🚪 Mark Early Exit</button>')+'</div>'
+    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Mark Early Exit</button>')+'</div>'
     : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
   document.getElementById('ci-body').innerHTML=head+banner+earlyBanner+'<div class="kd-rows">'+rows+'</div>'+buttons;
   document.getElementById('ci-modal').style.display='flex';
@@ -2443,7 +2443,7 @@ function ciMarkEarlyExit(name){
   ciEarlySaveLog(log);
   ciPostEarlyExit(name,true,updatedAt);
   closeCiModal();
-  ciToast('🚪 '+name+' marked as Early Exit');
+  ciToast(name+' marked as Early Exit');
   ciRender();
   renderMyGroupBody();
   if(document.getElementById('sg-list'))sgRender();
@@ -2455,7 +2455,7 @@ function ciUndoEarlyExit(name){
   ciEarlySaveLog(log);
   ciPostEarlyExit(name,false,updatedAt);
   closeCiModal();
-  ciToast('↩️ '+name+' un-marked from Early Exit');
+  ciToast(name+' un-marked from Early Exit');
   ciRender();
   renderMyGroupBody();
   if(document.getElementById('sg-list'))sgRender();
@@ -2663,7 +2663,6 @@ var TODAY_DATA=[
    am:{praise:'Get a Little Crazy · Every Move I Make · Superhero',skit:'Race',note:'One Way if needed'},
    pm:{praise:'God Is · Faith · My God Is Powerful',skit:'Fruit Stand'},
    ann:[
-     {ic:'📋',html:'<b>Afternoon schedule:</b> Est. 1pm arrive at the park &middot; 3:30pm all groups gather at the stage (Hopping Square — 樹蛙表演場, marked on the park map) for more snacks &middot; 4:10pm start heading to the exit &middot; 4:20–4:30pm getting on the bus.'},
      {ic:'🛏️',html:'<b>Becca:</b> Ruhamah is having a sleepover at Hannah\'s tonight — she\'ll go home with Hannah today, picked up by Hannah\'s dad or grandma.'},
      {ic:'🚗',html:'<b>Andrew Back / Grace Yoon:</b> Paul and Riley will be picked up directly from the amusement park today.'},
      {ic:'🚗',html:'<b>Irene Song:</b> Dorcas Chen and Celia will be picked up directly from the amusement park this afternoon.'},
@@ -2778,7 +2777,7 @@ function renderMasterCounts(){
   }
   var offToday=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(isStaffOffToday);
   var earlyExitToday=CI_FLAT.filter(function(k){return log[k.name]&&isEarlyExitToday(k.name);});
-  var html=earlyExitToday.length?'<div class="mstr-leftearly">🚪 '+earlyExitToday.length+' marked Early Exit today — already excluded from the counts below</div>':'';
+  var html=earlyExitToday.length?'<div class="mstr-leftearly">'+earlyExitToday.length+' marked Early Exit today — already excluded from the counts below</div>':'';
   if(offToday.length)html+='<div class="mstr-leftearly">🚫 '+offToday.join(', ')+' off today — excluded from Other Staff</div>';
   html+='<div class="mstr-block"><div class="mstr-side">👦 Boys — '+boysTotal+'</div>'
     +row('Students',boys.studentsChecked,boys.studentsTotal)
@@ -2817,7 +2816,7 @@ function renderMyGroupBody(){
       var grade=k&&k.grade!=='V'?k.grade:'';
       var leftEarly=isEarlyExitToday(n);
       html+='<div class="mygrp-row clickable" onclick="kidDetail(\''+n.replace(/'/g,"\\'")+'\',\''+info.group+'\',\''+grade+'\')"><span class="mygrp-name'+(leftEarly?' mygrp-left':'')+'">'+n+'</span>'+retreatBadge(n)
-        +(leftEarly?'<span class="mygrp-leftlabel">🚪 Early Exit</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
+        +(leftEarly?'<span class="mygrp-leftlabel">Early Exit</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
     });
   }
   body.innerHTML=html;
@@ -2868,20 +2867,24 @@ function renderToday(){
 function getScheduleRows(d){
   return [
     {s:510,e:540,l:'Check-in',cls:'gray',t:'8:30–9:00'},
-    {s:555,e:675,l:'Morning Program',cls:'hdr',t:'9:15–11:15'},
+    {s:555,e:660,l:'Morning Program',cls:'hdr',t:'9:15–11:00'},
     {s:555,e:585,l:'Opening Praise',cls:'ta',t:'9:15–9:45'},
     {s:585,e:590,l:'Testimony',cls:'gray',t:'9:45–9:50'},
     {s:590,e:595,l:'Skit/Dance',cls:'tg',t:'9:50–9:55'},
     {s:595,e:605,l:'Bible teaching',cls:'tc',t:'9:55–10:05'},
-    {s:605,e:640,l:'Small group + Craft',cls:'ta',t:'10:05–10:40'},
-    {s:640,e:675,l:'Games',cls:'tb',t:'10:40–11:15'},
-    {s:675,e:710,l:'Lunch',cls:'gray',t:'11:15–11:50'},
-    {s:710,e:715,l:'Skit/Dance',cls:'tg',t:'11:50–11:55'},
-    {s:715,e:715,l:'Wash up',cls:'gray',t:'11:55'},
+    {s:605,e:635,l:'Small group + Craft',cls:'ta',t:'10:05–10:35'},
+    {s:635,e:660,l:'Games',cls:'tb',t:'10:35–11:00'},
+    {s:660,e:660,l:'Wash up',cls:'gray',t:'11:00'},
+    {s:660,e:705,l:'Lunch',cls:'gray',t:'11:00–11:45'},
+    {s:705,e:710,l:'Skit/Dance',cls:'tg',t:'11:45–11:50'},
     {s:720,e:720,l:'Head down to BTU',cls:'gray',t:'12:00'},
     {s:750,e:1050,l:'Afternoon Program',cls:'hdr',t:'12:30–5:30'},
     {s:750,e:750,l:'Depart',cls:'gray',t:'12:30'},
-    {s:750,e:1020,l:'Off-site · '+d.offsite,cls:'gray',t:'12:30–5:00'},
+    {s:780,e:780,l:'Arrive at park (est.)',cls:'gray',t:'1:00'},
+    {s:780,e:930,l:'Off-site · '+d.offsite,cls:'gray',t:'1:00–3:30'},
+    {s:930,e:970,l:'Gather at stage for snacks',cls:'gray',t:'3:30–4:10'},
+    {s:970,e:970,l:'Head to exit',cls:'gray',t:'4:10'},
+    {s:980,e:990,l:'Board bus',cls:'gray',t:'4:20–4:30'},
     {s:1020,e:1050,l:'Closing Praise',cls:'ta',t:'5:00–5:30'},
     {s:1050,e:1050,l:'Pickup',cls:'gray',t:'5:30'}
   ];
@@ -3524,8 +3527,8 @@ function showUpdateBanner(){
 // CSS transform, scoped to just one viewport box, instead of touching the global
 // viewport meta (which stays locked down for every other page). No on-screen
 // zoom buttons on purpose — pinch (or, for desktop preview, mouse wheel/drag) is
-// all that's needed. Factory so the horizontal and vertical map tabs each get
-// their own independent scale/pan state instead of sharing one.
+// all that's needed. Kept as a factory (rather than one set of global vars) in
+// case a second map view gets added back later.
 function createPmapViewer(viewportId,imgId){
   var scale=1,x=0,y=0,minScale=1,maxScale=4,imgW=0,imgH=0;
   function apply(){
@@ -3621,15 +3624,12 @@ function createPmapViewer(viewportId,imgId){
   }
   return {reset:reset};
 }
-var pmapViewerH=createPmapViewer('pmap-viewport','pmap-img');
-var pmapViewerV=createPmapViewer('pmap-viewport-v','pmap-img-v');
+var pmapViewer=createPmapViewer('pmap-viewport-v','pmap-img-v');
 function goParkMap(btn){
   go('parkmap',btn);
-  setTimeout(pmapViewerH.reset,50);
-}
-function goParkMapV(btn){
-  go('parkmapv',btn);
-  setTimeout(pmapViewerV.reset,50);
+  // The header/banner hide (see go()) changes the viewport's available
+  // height, so wait a tick for layout to settle before fitting the image.
+  setTimeout(pmapViewer.reset,60);
 }
 </script>
 </body>

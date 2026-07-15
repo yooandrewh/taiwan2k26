@@ -391,6 +391,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sg-novol{opacity:.7;}
 .sg-chev{color:var(--text3);font-size:17px;font-weight:700;margin-left:1px;}
 .sg-bday{background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.35);border-radius:12px;padding:10px 13px;font-size:13px;font-weight:700;color:#b45309;margin-bottom:14px;line-height:1.5;}
+/* ---- Special Overnight schedule ---- */
+.on-sched{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 14px;margin-bottom:14px;}
+.on-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.on-row:last-child{border-bottom:none;}
+.on-time{font-size:12px;font-weight:800;color:#9333ea;background:rgba(147,51,234,0.12);border-radius:8px;padding:5px 9px;white-space:nowrap;flex-shrink:0;min-width:76px;text-align:center;}
+.on-label{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;}
+.on-sub{font-size:12px;color:var(--text3);font-weight:600;margin-top:2px;}
 .kd-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
 .kd-name{font-size:22px;font-weight:800;color:var(--text);}
 .kd-cn{font-size:16px;font-weight:600;color:var(--text3);margin-left:5px;}
@@ -623,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T22:51:02+08:00";
-var APP_VERSION=182; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T23:07:04+08:00";
+var APP_VERSION=183; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -648,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v182 · Jul 15, 2026 · 10:51 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v183 · Jul 15, 2026 · 11:07 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1182,17 +1189,17 @@ setInterval(renderBuildAge,60000);
   <div class="stu-title" style="color:#9333ea">Special Overnight</div>
   <div class="stu-sub">VBS overnight event · rosters &amp; schedule (tentative)</div>
 
-  <div class="today-sched">
-    <div class="today-sched-hdr">🌙 Schedule</div>
-    <div class="srow"><span class="t">6:00–7:00</span><span class="l">Depart &amp; Travel</span></div>
-    <div class="srow"><span class="t">7:00–8:00</span><span class="l">Eat &amp; Share in Small Groups</span></div>
-    <div class="srow"><span class="t">8:00–8:15</span><span class="l">Icebreaker</span></div>
-    <div class="srow"><span class="t">8:15–8:20</span><span class="l">Dance — "Thank God I'm Free"</span></div>
-    <div class="srow"><span class="t">8:20–8:40</span><span class="l">Worship</span></div>
-    <div class="srow"><span class="t">8:40–9:00</span><span class="l">Sermon</span></div>
-    <div class="srow"><span class="t">9:00–9:05</span><span class="l">Skit — "Good Good Father"</span></div>
-    <div class="srow"><span class="t">9:05–9:40</span><span class="l">Response Worship</span></div>
-    <div class="srow"><span class="t">9:40–10:00</span><span class="l">Snacks · Small Groups</span></div>
+  <div class="sg-section">🌙 Schedule</div>
+  <div class="on-sched">
+    <div class="on-row"><span class="on-time">6:00–7:00</span><div><div class="on-label">Depart &amp; Travel</div></div></div>
+    <div class="on-row"><span class="on-time">7:00–8:00</span><div><div class="on-label">Eat &amp; Share in Small Groups</div></div></div>
+    <div class="on-row"><span class="on-time">8:00–8:15</span><div><div class="on-label">Icebreaker</div></div></div>
+    <div class="on-row"><span class="on-time">8:15–8:20</span><div><div class="on-label">Dance</div><div class="on-sub">"Thank God I'm Free"</div></div></div>
+    <div class="on-row"><span class="on-time">8:20–8:40</span><div><div class="on-label">Worship</div></div></div>
+    <div class="on-row"><span class="on-time">8:40–9:00</span><div><div class="on-label">Sermon</div></div></div>
+    <div class="on-row"><span class="on-time">9:00–9:05</span><div><div class="on-label">Skit</div><div class="on-sub">"Good Good Father"</div></div></div>
+    <div class="on-row"><span class="on-time">9:05–9:40</span><div><div class="on-label">Response Worship</div></div></div>
+    <div class="on-row"><span class="on-time">9:40–10:00</span><div><div class="on-label">Snacks · Small Groups</div></div></div>
   </div>
 
   <div class="sg-bday">🎤 Worship Team (not leading a small group): Jean Kim, Andrew Back</div>
@@ -1257,6 +1264,42 @@ setInterval(renderBuildAge,60000);
       <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Kara (10)</span></div>
       <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Grace (10)</span></div>
       <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Stephanie (10)</span></div>
+    </div>
+  </div>
+
+  <div class="sg-section">Room Assignments (Tentative)</div>
+  <div class="dbyd-scroll"><table class="dbyd">
+    <tr><th></th><th>16 Male · C4</th><th>11 Male · C2</th><th>16 Female · C1</th><th>11 Female · C3</th></tr>
+    <tr><td class="dk">1</td><td>Andrew Yoo</td><td>Caleb Su</td><td>Esther Yang</td><td>Keren Choi</td></tr>
+    <tr><td class="dk">2</td><td>Jean Kim</td><td>Andrew Back</td><td>Jane Kim</td><td>Becca Park</td></tr>
+    <tr><td class="dk">3</td><td>Rubin Jang</td><td>Owen Lee</td><td>Irene Song</td><td>Sammy Taing</td></tr>
+    <tr><td class="dk">4</td><td>Roba</td><td>Timothy Kim</td><td>Grace Yoon</td><td>Janet Phee</td></tr>
+    <tr><td class="dk">5</td><td>Ethan Nam</td><td>Lane Hartshorne</td><td>Claire</td><td>Eliana Wan</td></tr>
+    <tr><td class="dk">6</td><td>Owen Wu</td><td>Owen Nam</td><td>Ruhamah</td><td>Yuqi Chiu</td></tr>
+    <tr><td class="dk">7</td><td>Ezra</td><td>Hao-Chen Li</td><td>Adeline</td><td>Ellery</td></tr>
+    <tr><td class="dk">8</td><td>Zephyr Kao</td><td>Harry</td><td>Grace</td><td>Kara</td></tr>
+    <tr><td class="dk">9</td><td></td><td>Ryan Lin</td><td>Stephanie</td><td>Grace Hartshorne</td></tr>
+    <tr><td class="dk">10</td><td></td><td></td><td>Queenie</td><td></td></tr>
+    <tr><td class="dk">11</td><td></td><td></td><td>Est-elle</td><td></td></tr>
+    <tr><td class="dk">12</td><td></td><td></td><td>Hsin Hsin (心心)</td><td></td></tr>
+  </table></div>
+
+  <div class="sg-section">Unassigned Pool</div>
+  <div class="sg-card">
+    <div class="sg-head"><span class="sg-headname">Girls not yet in a group</span><span class="sg-count">6</span></div>
+    <div class="sg-kids">
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Claire (12)</span></div>
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Grace Hartshorne (12)</span></div>
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Ruhamah (11)</span></div>
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Eliana Wan (11)</span></div>
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Queenie (11)</span></div>
+      <div class="sg-kid"><span class="sg-dot f"></span><span class="sg-kname">Yuqi Chiu (10)</span></div>
+    </div>
+  </div>
+  <div class="sg-card">
+    <div class="sg-head"><span class="sg-headname">Helpers not yet in a group</span><span class="sg-count">1</span></div>
+    <div class="sg-kids">
+      <div class="sg-kid"><span class="sg-dot m"></span><span class="sg-kname">Roba (18)</span></div>
     </div>
   </div>
 </div>
@@ -1459,11 +1502,11 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
     <span>Overnight</span>
   </button>
-  <button class="tabitem" style="--accent:#16a34a" onclick="goFaithDash(this)" aria-label="Faith">
+  <button class="tabitem" style="--accent:#16a34a;display:none" onclick="goFaithDash(this)" aria-label="Faith">
     <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12c-2.5 4.5-9.5 9-9.5 9z"/><path d="M9 12h2l1-2 2 4 1-2h1"/></svg>
     <span>Faith</span>
   </button>
-  <button class="tabitem" style="--accent:#ec4899" onclick="goParkMap(this)" aria-label="Park Map">
+  <button class="tabitem" style="--accent:#ec4899;display:none" onclick="goParkMap(this)" aria-label="Park Map">
     <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
     <span>Park Map</span>
   </button>

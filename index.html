@@ -611,8 +611,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T11:36:38+08:00";
-var APP_VERSION=178; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T11:45:25+08:00";
+var APP_VERSION=179; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -636,7 +636,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v178 · Jul 15, 2026 · 11:36 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v179 · Jul 15, 2026 · 11:45 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -3569,18 +3569,23 @@ function createPmapViewer(viewportId,imgId){
   }
   var vp=document.getElementById(viewportId);
   if(vp){
-    var lastDist=null,dragging=false,dragStart=null,panStart=null;
+    var lastDist=null,dragging=false,dragStart=null,panStart=null,lastTouchCount=0;
     function dist(t1,t2){return Math.hypot(t1.clientX-t2.clientX,t1.clientY-t2.clientY);}
     function mid(t1,t2,rect){return {x:(t1.clientX+t2.clientX)/2-rect.left,y:(t1.clientY+t2.clientY)/2-rect.top};}
+    function startPan(touch){
+      dragging=true;
+      dragStart={x:touch.clientX,y:touch.clientY};
+      panStart={x:x,y:y};
+    }
     vp.addEventListener('touchstart',function(e){
       e.preventDefault();
       if(e.touches.length===2){
         lastDist=dist(e.touches[0],e.touches[1]);
+        dragging=false;
       } else if(e.touches.length===1){
-        dragging=true;
-        dragStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
-        panStart={x:x,y:y};
+        startPan(e.touches[0]);
       }
+      lastTouchCount=e.touches.length;
     },{passive:false});
     vp.addEventListener('touchmove',function(e){
       e.preventDefault();
@@ -3590,16 +3595,23 @@ function createPmapViewer(viewportId,imgId){
         var m=mid(e.touches[0],e.touches[1],rect);
         zoomTo(scale*(d/lastDist),m.x,m.y);
         lastDist=d;
-      } else if(e.touches.length===1&&dragging){
+      } else if(e.touches.length===1){
+        // Coming from a pinch (2 fingers -> 1) or a fresh touch this handler
+        // hasn't seen yet — re-anchor to the current finger position first,
+        // otherwise the pan math below uses a stale start point from before
+        // the pinch and the map jumps/snaps on the very next move.
+        if(lastTouchCount!==1||!dragging)startPan(e.touches[0]);
         x=panStart.x+(e.touches[0].clientX-dragStart.x);
         y=panStart.y+(e.touches[0].clientY-dragStart.y);
         clamp();
         apply();
       }
+      lastTouchCount=e.touches.length;
     },{passive:false});
     function endTouch(e){
       if(e.touches.length<2)lastDist=null;
       if(e.touches.length===0)dragging=false;
+      lastTouchCount=e.touches.length;
     }
     vp.addEventListener('touchend',endTouch,{passive:false});
     vp.addEventListener('touchcancel',endTouch,{passive:false});

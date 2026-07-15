@@ -603,8 +603,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T09:45:44+08:00";
-var APP_VERSION=172; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T09:52:17+08:00";
+var APP_VERSION=173; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -628,7 +628,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v172 · Jul 15, 2026 · 9:45 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v173 · Jul 15, 2026 · 9:52 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -2692,10 +2692,9 @@ function selectMyGroup(name){
 // No per-kid detail on purpose — Andrew just needs the numbers, not the names.
 // One-off volunteers joining a specific small group today who aren't part of the
 // permanent VBS_SG roster (so they have no CI_FLAT entry to check in through the
-// app — counted as always-present, same as teachers). Distinct from the FPC
-// helpers pulled from TODAY_DATA.helpers in renderMasterCounts() below, which go
-// under Other Staff instead of a side's volunteer count.
-var EXTRA_VOL_TODAY={boys:['Steven'],girls:[]};
+// app — counted as always-present, same as teachers). Currently empty — Steven is
+// counted under Other Staff instead (see EXTRA_STAFF_TODAY below).
+var EXTRA_VOL_TODAY={boys:[],girls:[]};
 function renderMasterCounts(){
   var log=ciGetLog();
   function sideCounts(side){
@@ -2729,7 +2728,10 @@ function renderMasterCounts(){
       if(fpcNames.indexOf(n)<0)fpcNames.push(n);
     });
   }
-  var OTHER_STAFF=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(function(n){return !isStaffOffToday(n);}).concat(fpcNames);
+  // One-off staff/volunteers added today who aren't tied to a specific side's
+  // headcount (e.g. Steven) — same date gate as today's SG_VOL_OVERRIDE.
+  var extraStaffToday=sgVolOverrideActive()?['Steven']:[];
+  var OTHER_STAFF=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(function(n){return !isStaffOffToday(n);}).concat(fpcNames).concat(extraStaffToday);
   function row(label,checked,total,clickName){
     var click=clickName?' onclick="kidDetail(\''+clickName.replace(/'/g,"\\'")+'\',\'Staff\',\'\')"':'';
     return '<div class="mygrp-row'+(clickName?' clickable':'')+'"'+click+'><span class="mygrp-name">'+label+'</span><span class="mygrp-time">'+checked+' / '+total+'</span></div>';

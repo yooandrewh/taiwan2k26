@@ -603,8 +603,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T08:49:06+08:00";
-var APP_VERSION=165; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T08:53:41+08:00";
+var APP_VERSION=166; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -628,7 +628,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v165 · Jul 15, 2026 · 8:49 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v166 · Jul 15, 2026 · 8:53 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1997,17 +1997,16 @@ function renderFaithDash(){
   body.innerHTML=html;
 }
 // Temporary, single-day volunteer coverage. 2026-07-15 (amusement park day):
-// Owen Lee's group (B5) gets extra help — Ethan Nam (normally B4, and still
-// also shown under B4 — intentionally duplicated across both) plus FPC
-// helpers Ira and Defni join Timothy Kim for the day. Also: Lane Hartshorne
-// (normally B3) covers B4 alongside Ethan Nam, Owen Nam (normally B2) covers
-// B3 in Lane's place, Roba (normally B5) covers Jean Kim's B2 in Owen Nam's
+// Ethan Nam (normally B4) moves entirely to Owen Lee's B5 alongside Timothy
+// Kim and FPC helpers Ira and Defni — B4 keeps only Lane Hartshorne
+// (normally B3), who covers there instead. Owen Nam (normally B2) covers B3
+// in Lane's place, Roba (normally B5) covers Jean Kim's B2 in Owen Nam's
 // place, and Owen Wu (normally B1) covers Grace Yoon's girls group (G7) for
 // the day. Scoped to this exact date (via twNow(), which is safe to call
 // this early — see the comment at its definition) so it silently stops
 // applying on its own tomorrow, with nothing to manually revert.
 var SG_VOL_OVERRIDE_DATE='2026-07-15';
-var SG_VOL_OVERRIDE={'B1':[],'B2':['Roba'],'B3':['Owen Nam'],'B4':['Ethan Nam','Lane Hartshorne'],'B5':['Timothy Kim','Ethan Nam','Ira','Defni'],'G7':['Owen Wu']};
+var SG_VOL_OVERRIDE={'B1':[],'B2':['Roba'],'B3':['Owen Nam'],'B4':['Lane Hartshorne'],'B5':['Timothy Kim','Ethan Nam','Ira','Defni'],'G7':['Owen Wu']};
 function sgVolOverrideActive(){
   var t=twNow();
   var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');

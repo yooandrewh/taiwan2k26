@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T23:45:57+08:00";
-var APP_VERSION=190; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T23:47:34+08:00";
+var APP_VERSION=191; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v190 · Jul 15, 2026 · 11:45 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v191 · Jul 15, 2026 · 11:47 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1204,6 +1204,9 @@ setInterval(renderBuildAge,60000);
 
   <div class="sg-section">Small Group Conversation Guide</div>
   <div class="sg-card" style="padding:13px 14px;font-size:14px;line-height:1.6;color:var(--text2);">Start by getting to know them on a personal level — make it fun, and take as long as you need. Then ask about their understanding of the gospel and what that practically looks like as a personal relationship with Jesus. Finally, ask what one thing they'd want God to give or answer, and try to go deeper here.</div>
+
+  <div class="sg-section">Closing Debrief · Snacks Small Groups</div>
+  <div class="sg-card" style="padding:13px 14px;font-size:14px;line-height:1.6;color:var(--text2);">Ask how tonight went for them and what they learned. Do they understand the gospel, and what does that practically look like in their life?</div>
 
   <div class="sg-bday">🎤 Worship Team (not leading a small group): Jean Kim, Andrew Back</div>
 

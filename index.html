@@ -221,9 +221,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .tabitem:active{opacity:.55;}
 /* ---- Park Map (pinch/pan zoom viewer, exempt from the app-wide zoom lock) ---- */
 .pmap-wrap{position:relative;}
-.pmap-zoombar{position:absolute;top:10px;right:10px;z-index:5;display:flex;gap:7px;}
-.pmap-zoombar button{width:38px;height:38px;border-radius:50%;border:none;background:rgba(0,0,0,0.65);color:#fff;font-size:19px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.pmap-zoombar button:active{background:rgba(0,0,0,0.85);}
 .pmap-viewport{overflow:hidden;touch-action:none;border-radius:14px;background:#eef2f7;height:72vh;position:relative;border:1px solid var(--border);}
 .pmap-viewport img{max-width:none;transform-origin:0 0;will-change:transform;-webkit-user-drag:none;user-select:none;}
 /* ---- collapsible Recent Updates ---- */
@@ -610,8 +607,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T10:19:20+08:00";
-var APP_VERSION=174; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T10:27:16+08:00";
+var APP_VERSION=175; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -635,7 +632,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v174 · Jul 15, 2026 · 10:19 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v175 · Jul 15, 2026 · 10:27 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1302,17 +1299,24 @@ setInterval(renderBuildAge,60000);
 </div>
 <div id="pane-parkmap" class="pane">
   <div class="stu-title" style="color:#ec4899">Amusement Park Map</div>
-  <div class="stu-sub">Pinch or use the buttons to zoom &middot; drag to pan around</div>
+  <div class="stu-sub">Pinch to zoom &middot; drag to pan around</div>
   <div class="pmap-wrap">
-    <div class="pmap-zoombar">
-      <button onclick="pmapZoom(-1)" aria-label="Zoom out">−</button>
-      <button onclick="pmapReset()" aria-label="Reset zoom">Reset</button>
-      <button onclick="pmapZoom(1)" aria-label="Zoom in">+</button>
-    </div>
     <div class="pmap-viewport" id="pmap-viewport">
       <picture>
         <source srcset="park-map.webp" type="image/webp">
         <img id="pmap-img" src="park-map.jpg" alt="Taipei Children's Amusement Park map" draggable="false">
+      </picture>
+    </div>
+  </div>
+</div>
+<div id="pane-parkmapv" class="pane">
+  <div class="stu-title" style="color:#ec4899">Amusement Park Map (Vertical)</div>
+  <div class="stu-sub">Pinch to zoom &middot; drag to pan around</div>
+  <div class="pmap-wrap">
+    <div class="pmap-viewport" id="pmap-viewport-v">
+      <picture>
+        <source srcset="park-map-v.webp" type="image/webp">
+        <img id="pmap-img-v" src="park-map-v.jpg" alt="Taipei Children's Amusement Park map (vertical)" draggable="false">
       </picture>
     </div>
   </div>
@@ -1376,6 +1380,10 @@ setInterval(renderBuildAge,60000);
   <button class="tabitem" style="--accent:#ec4899" onclick="goParkMap(this)" aria-label="Park Map">
     <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
     <span>Park Map</span>
+  </button>
+  <button class="tabitem" style="--accent:#ec4899" onclick="goParkMapV(this)" aria-label="Park Map Vertical">
+    <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
+    <span>Map (V)</span>
   </button>
   <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('sun',this)" aria-label="Sunday">
     <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
@@ -2865,8 +2873,8 @@ function getScheduleRows(d){
     {s:585,e:590,l:'Testimony',cls:'gray',t:'9:45–9:50'},
     {s:590,e:595,l:'Skit/Dance',cls:'tg',t:'9:50–9:55'},
     {s:595,e:605,l:'Bible teaching',cls:'tc',t:'9:55–10:05'},
-    {s:605,e:655,l:'Small group + Craft',cls:'ta',t:'10:05–10:55'},
-    {s:655,e:675,l:'Games',cls:'tb',t:'10:55–11:15'},
+    {s:605,e:640,l:'Small group + Craft',cls:'ta',t:'10:05–10:40'},
+    {s:640,e:675,l:'Games',cls:'tb',t:'10:40–11:15'},
     {s:675,e:710,l:'Lunch',cls:'gray',t:'11:15–11:50'},
     {s:710,e:715,l:'Skit/Dance',cls:'tg',t:'11:50–11:55'},
     {s:715,e:715,l:'Wash up',cls:'gray',t:'11:55'},
@@ -3513,118 +3521,116 @@ function showUpdateBanner(){
 // stray pinches were messing with the layout) blocks native browser pinch-zoom
 // everywhere — including here, where zooming into a dense park map is the whole
 // point. So this is a self-contained, custom pan/zoom built on touch events and a
-// CSS transform, scoped to just the #pmap-viewport box, instead of touching the
-// global viewport meta (which stays locked down for every other page).
-var pmapScale=1, pmapX=0, pmapY=0, pmapMinScale=1, pmapMaxScale=4;
-var pmapImgW=0, pmapImgH=0;
-function pmapApply(){
-  var img=document.getElementById('pmap-img');
-  if(!img)return;
-  img.style.transform='translate('+pmapX+'px,'+pmapY+'px) scale('+pmapScale+')';
-}
-function pmapClamp(){
-  var vp=document.getElementById('pmap-viewport');
-  if(!vp||!pmapImgW)return;
-  var vw=vp.clientWidth,vh=vp.clientHeight;
-  var iw=pmapImgW*pmapScale,ih=pmapImgH*pmapScale;
-  var minX=Math.min(0,vw-iw),minY=Math.min(0,vh-ih);
-  pmapX=Math.max(minX,Math.min(0,pmapX));
-  pmapY=Math.max(minY,Math.min(0,pmapY));
-}
-function pmapReset(){
-  var vp=document.getElementById('pmap-viewport'),img=document.getElementById('pmap-img');
-  if(!vp||!img)return;
-  function fit(){
-    pmapImgW=img.naturalWidth;pmapImgH=img.naturalHeight;
-    if(!pmapImgW||!pmapImgH)return;
-    var vw=vp.clientWidth,vh=vp.clientHeight;
-    pmapMinScale=Math.min(vw/pmapImgW,vh/pmapImgH);
-    pmapScale=pmapMinScale;
-    pmapX=(vw-pmapImgW*pmapScale)/2;
-    pmapY=(vh-pmapImgH*pmapScale)/2;
-    pmapApply();
+// CSS transform, scoped to just one viewport box, instead of touching the global
+// viewport meta (which stays locked down for every other page). No on-screen
+// zoom buttons on purpose — pinch (or, for desktop preview, mouse wheel/drag) is
+// all that's needed. Factory so the horizontal and vertical map tabs each get
+// their own independent scale/pan state instead of sharing one.
+function createPmapViewer(viewportId,imgId){
+  var scale=1,x=0,y=0,minScale=1,maxScale=4,imgW=0,imgH=0;
+  function apply(){
+    var img=document.getElementById(imgId);
+    if(img)img.style.transform='translate('+x+'px,'+y+'px) scale('+scale+')';
   }
-  if(img.complete&&img.naturalWidth)fit();
-  else img.onload=fit;
+  function clamp(){
+    var vp=document.getElementById(viewportId);
+    if(!vp||!imgW)return;
+    var vw=vp.clientWidth,vh=vp.clientHeight;
+    var iw=imgW*scale,ih=imgH*scale;
+    var minX=Math.min(0,vw-iw),minY=Math.min(0,vh-ih);
+    x=Math.max(minX,Math.min(0,x));
+    y=Math.max(minY,Math.min(0,y));
+  }
+  function reset(){
+    var vp=document.getElementById(viewportId),img=document.getElementById(imgId);
+    if(!vp||!img)return;
+    function fit(){
+      imgW=img.naturalWidth;imgH=img.naturalHeight;
+      if(!imgW||!imgH)return;
+      var vw=vp.clientWidth,vh=vp.clientHeight;
+      minScale=Math.min(vw/imgW,vh/imgH);
+      scale=minScale;
+      x=(vw-imgW*scale)/2;
+      y=(vh-imgH*scale)/2;
+      apply();
+    }
+    if(img.complete&&img.naturalWidth)fit();
+    else img.onload=fit;
+  }
+  function zoomTo(newScale,cx,cy){
+    var ix=(cx-x)/scale,iy=(cy-y)/scale;
+    scale=Math.max(minScale,Math.min(maxScale,newScale));
+    x=cx-ix*scale;
+    y=cy-iy*scale;
+    clamp();
+    apply();
+  }
+  var vp=document.getElementById(viewportId);
+  if(vp){
+    var lastDist=null,dragging=false,dragStart=null,panStart=null;
+    function dist(t1,t2){return Math.hypot(t1.clientX-t2.clientX,t1.clientY-t2.clientY);}
+    function mid(t1,t2,rect){return {x:(t1.clientX+t2.clientX)/2-rect.left,y:(t1.clientY+t2.clientY)/2-rect.top};}
+    vp.addEventListener('touchstart',function(e){
+      e.preventDefault();
+      if(e.touches.length===2){
+        lastDist=dist(e.touches[0],e.touches[1]);
+      } else if(e.touches.length===1){
+        dragging=true;
+        dragStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
+        panStart={x:x,y:y};
+      }
+    },{passive:false});
+    vp.addEventListener('touchmove',function(e){
+      e.preventDefault();
+      if(e.touches.length===2&&lastDist!=null){
+        var d=dist(e.touches[0],e.touches[1]);
+        var rect=vp.getBoundingClientRect();
+        var m=mid(e.touches[0],e.touches[1],rect);
+        zoomTo(scale*(d/lastDist),m.x,m.y);
+        lastDist=d;
+      } else if(e.touches.length===1&&dragging){
+        x=panStart.x+(e.touches[0].clientX-dragStart.x);
+        y=panStart.y+(e.touches[0].clientY-dragStart.y);
+        clamp();
+        apply();
+      }
+    },{passive:false});
+    function endTouch(e){
+      if(e.touches.length<2)lastDist=null;
+      if(e.touches.length===0)dragging=false;
+    }
+    vp.addEventListener('touchend',endTouch,{passive:false});
+    vp.addEventListener('touchcancel',endTouch,{passive:false});
+    // Mouse drag + wheel-zoom so this also works when previewing in a desktop browser.
+    vp.addEventListener('mousedown',function(e){
+      dragging=true;dragStart={x:e.clientX,y:e.clientY};panStart={x:x,y:y};
+    });
+    window.addEventListener('mousemove',function(e){
+      if(!dragging||!panStart)return;
+      x=panStart.x+(e.clientX-dragStart.x);
+      y=panStart.y+(e.clientY-dragStart.y);
+      clamp();
+      apply();
+    });
+    window.addEventListener('mouseup',function(){dragging=false;});
+    vp.addEventListener('wheel',function(e){
+      e.preventDefault();
+      var rect=vp.getBoundingClientRect();
+      zoomTo(scale*(e.deltaY<0?1.15:1/1.15),e.clientX-rect.left,e.clientY-rect.top);
+    },{passive:false});
+  }
+  return {reset:reset};
 }
-function pmapZoom(dir,cx,cy){
-  var vp=document.getElementById('pmap-viewport');
-  if(!vp)return;
-  var vw=vp.clientWidth,vh=vp.clientHeight;
-  var cxr=cx!=null?cx:vw/2,cyr=cy!=null?cy:vh/2;
-  var newScale=Math.max(pmapMinScale,Math.min(pmapMaxScale,pmapScale*(dir>0?1.4:1/1.4)));
-  var ix=(cxr-pmapX)/pmapScale,iy=(cyr-pmapY)/pmapScale;
-  pmapScale=newScale;
-  pmapX=cxr-ix*newScale;
-  pmapY=cyr-iy*newScale;
-  pmapClamp();
-  pmapApply();
-}
+var pmapViewerH=createPmapViewer('pmap-viewport','pmap-img');
+var pmapViewerV=createPmapViewer('pmap-viewport-v','pmap-img-v');
 function goParkMap(btn){
   go('parkmap',btn);
-  setTimeout(pmapReset,50);
+  setTimeout(pmapViewerH.reset,50);
 }
-(function(){
-  var vp=document.getElementById('pmap-viewport');
-  if(!vp)return;
-  var lastDist=null,dragging=false,dragStart=null,panStart=null;
-  function dist(t1,t2){return Math.hypot(t1.clientX-t2.clientX,t1.clientY-t2.clientY);}
-  function mid(t1,t2,rect){return {x:(t1.clientX+t2.clientX)/2-rect.left,y:(t1.clientY+t2.clientY)/2-rect.top};}
-  vp.addEventListener('touchstart',function(e){
-    e.preventDefault();
-    if(e.touches.length===2){
-      lastDist=dist(e.touches[0],e.touches[1]);
-    } else if(e.touches.length===1){
-      dragging=true;
-      dragStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
-      panStart={x:pmapX,y:pmapY};
-    }
-  },{passive:false});
-  vp.addEventListener('touchmove',function(e){
-    e.preventDefault();
-    if(e.touches.length===2&&lastDist!=null){
-      var d=dist(e.touches[0],e.touches[1]);
-      var rect=vp.getBoundingClientRect();
-      var m=mid(e.touches[0],e.touches[1],rect);
-      var newScale=Math.max(pmapMinScale,Math.min(pmapMaxScale,pmapScale*(d/lastDist)));
-      var ix=(m.x-pmapX)/pmapScale,iy=(m.y-pmapY)/pmapScale;
-      pmapScale=newScale;
-      pmapX=m.x-ix*newScale;
-      pmapY=m.y-iy*newScale;
-      pmapClamp();
-      pmapApply();
-      lastDist=d;
-    } else if(e.touches.length===1&&dragging){
-      pmapX=panStart.x+(e.touches[0].clientX-dragStart.x);
-      pmapY=panStart.y+(e.touches[0].clientY-dragStart.y);
-      pmapClamp();
-      pmapApply();
-    }
-  },{passive:false});
-  function endTouch(e){
-    if(e.touches.length<2)lastDist=null;
-    if(e.touches.length===0)dragging=false;
-  }
-  vp.addEventListener('touchend',endTouch,{passive:false});
-  vp.addEventListener('touchcancel',endTouch,{passive:false});
-  // Mouse drag + wheel-zoom so this also works when previewing in a desktop browser.
-  vp.addEventListener('mousedown',function(e){
-    dragging=true;dragStart={x:e.clientX,y:e.clientY};panStart={x:pmapX,y:pmapY};
-  });
-  window.addEventListener('mousemove',function(e){
-    if(!dragging||!panStart)return;
-    pmapX=panStart.x+(e.clientX-dragStart.x);
-    pmapY=panStart.y+(e.clientY-dragStart.y);
-    pmapClamp();
-    pmapApply();
-  });
-  window.addEventListener('mouseup',function(){dragging=false;});
-  vp.addEventListener('wheel',function(e){
-    e.preventDefault();
-    var rect=vp.getBoundingClientRect();
-    pmapZoom(e.deltaY<0?1:-1,e.clientX-rect.left,e.clientY-rect.top);
-  },{passive:false});
-})();
+function goParkMapV(btn){
+  go('parkmapv',btn);
+  setTimeout(pmapViewerV.reset,50);
+}
 </script>
 </body>
 </html>

@@ -596,6 +596,18 @@ function twNow(){
   var o={};p.forEach(function(x){o[x.type]=x.value;});
   return {y:+o.year,mo:+o.month,d:+o.day,min:(+o.hour%24)*60+(+o.minute)};
 }
+// Minute-of-day (Taiwan time) for an arbitrary past timestamp — used to decide
+// whether a checkout happened before the "early" cutoff, not just "now".
+function twMinutesOf(ms){
+  var p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date(ms));
+  var o={};p.forEach(function(x){o[x.type]=x.value;});
+  return (+o.hour%24)*60+(+o.minute);
+}
+// Checkouts before 4:40pm Taiwan are "Early Check Out"; at/after, just "Checked
+// Out" (matches normal pickup time) — one shared cutoff for both script blocks
+// that render this (Groups tab renders before Check-In's block is defined, so
+// each keeps its own tiny label helper, but both read this same constant).
+var CHECKOUT_CUTOFF_MIN=16*60+40;
 // Manual refresh — for standalone Home Screen mode, where iOS gives no pull-to-
 // refresh or address bar. Asks the service worker to check for an update, then
 // reloads, which re-fetches the latest app (network-first) and re-syncs Check-In,
@@ -611,8 +623,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T13:01:39+08:00";
-var APP_VERSION=180; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T19:24:05+08:00";
+var APP_VERSION=181; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -636,7 +648,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v180 · Jul 15, 2026 · 1:01 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v181 · Jul 15, 2026 · 7:24 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1140,7 +1152,7 @@ setInterval(renderBuildAge,60000);
     <button class="on" onclick="ciSetFilter('all',this)">All</button>
     <button onclick="ciSetFilter('done',this)">Checked In</button>
     <button onclick="ciSetFilter('pending',this)">Not Yet</button>
-    <button onclick="ciSetFilter('early',this)">Early Exit</button>
+    <button onclick="ciSetFilter('early',this)">Checked Out</button>
   </div>
   <div id="ci-list"></div>
 </div>
@@ -2092,8 +2104,14 @@ function sgIsEarlyExitToday(name){
   var e=sgEarlyExitLog()[name];
   return !!(e&&e.value);
 }
+function sgCheckOutLabel(name){
+  if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return 'Early Check Out';
+  var e=sgEarlyExitLog()[name];
+  if(e&&e.updatedAt!=null&&twMinutesOf(e.updatedAt)>=CHECKOUT_CUTOFF_MIN)return 'Checked Out';
+  return 'Early Check Out';
+}
 function sgEarlyExitBadge(name){
-  return sgIsEarlyExitToday(name)?'<span class="ci-earlybadge">Early Exit</span>':'';
+  return sgIsEarlyExitToday(name)?'<span class="ci-earlybadge">'+sgCheckOutLabel(name)+'</span>':'';
 }
 function sgRender(){
   var data=sgCurrentEvent==='retreat'?RETREAT_SG:VBS_SG;
@@ -2358,7 +2376,7 @@ function ciRender(){
     var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">Early Exit</span>':'')
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">'+ciCheckOutLabel(k.name)+'</span>':'')
         +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
@@ -2387,9 +2405,9 @@ function ciOpen(name){
   rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
   var earlyNow=already&&isEarlyExitToday(name);
   var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
-  var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">Marked as Early Exit <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
+  var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">Marked as '+ciCheckOutLabel(name)+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
   var buttons=already
-    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Mark Early Exit</button>')+'</div>'
+    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Check Out</button>')+'</div>'
     : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
   document.getElementById('ci-body').innerHTML=head+banner+earlyBanner+'<div class="kd-rows">'+rows+'</div>'+buttons;
   document.getElementById('ci-modal').style.display='flex';
@@ -2416,19 +2434,29 @@ function ciUndo(name){
   closeCiModal();ciRender();
   renderMyGroupBody();
 }
-// ===== Early Exit (Check-In tab + Groups tab) =====
+// ===== Check Out (Check-In tab + Groups tab) =====
 // A separate, dynamic per-day flag layered on top of check-in — never touches ciGetLog(),
-// so marking/undoing someone as an Early Exit cannot accidentally change their real
-// check-in status. Unlike ciUndo() above (local-only, one-way audit trail), this needs
-// real bidirectional sync: leaders correct mis-taps, and every device must agree on the
-// current state, so each write carries an updatedAt for last-write-wins (same pattern as
-// Faith & Notes' pnSyncFromSheet()).
+// so marking/undoing a checkout cannot accidentally change their real check-in status.
+// Unlike ciUndo() above (local-only, one-way audit trail), this needs real bidirectional
+// sync: leaders correct mis-taps, and every device must agree on the current state, so
+// each write carries an updatedAt for last-write-wins (same pattern as Faith & Notes'
+// pnSyncFromSheet()). Wire format/localStorage key/backend column still say "earlyexit"
+// (kept for backward compatibility with already-synced data) even though the UI now
+// calls this "Check Out" generally — see ciCheckOutLabel() for the early/not-early split.
 function ciEarlyGetLog(){try{return JSON.parse(localStorage.getItem('ci_early_'+ciDateKey())||'{}');}catch(e){return {};}}
 function ciEarlySaveLog(log){try{localStorage.setItem('ci_early_'+ciDateKey(),JSON.stringify(log));}catch(e){}}
 function isEarlyExitToday(name){
   if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return true;
   var e=ciEarlyGetLog()[name];
   return !!(e&&e.value);
+}
+// Checked out before 4:40pm Taiwan (CHECKOUT_CUTOFF_MIN, defined up near twNow())
+// reads as "Early Check Out"; at/after (normal pickup window) just "Checked Out".
+function ciCheckOutLabel(name){
+  if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return 'Early Check Out';
+  var e=ciEarlyGetLog()[name];
+  if(e&&e.updatedAt!=null&&twMinutesOf(e.updatedAt)>=CHECKOUT_CUTOFF_MIN)return 'Checked Out';
+  return 'Early Check Out';
 }
 function ciPostEarlyExit(name,value,updatedAt){
   if(!CHECKIN_ENDPOINT)return;
@@ -2443,7 +2471,7 @@ function ciMarkEarlyExit(name){
   ciEarlySaveLog(log);
   ciPostEarlyExit(name,true,updatedAt);
   closeCiModal();
-  ciToast(name+' marked as Early Exit');
+  ciToast(name+' marked as '+ciCheckOutLabel(name));
   ciRender();
   renderMyGroupBody();
   if(document.getElementById('sg-list'))sgRender();
@@ -2455,7 +2483,7 @@ function ciUndoEarlyExit(name){
   ciEarlySaveLog(log);
   ciPostEarlyExit(name,false,updatedAt);
   closeCiModal();
-  ciToast(name+' un-marked from Early Exit');
+  ciToast(name+' un-marked from Checked Out');
   ciRender();
   renderMyGroupBody();
   if(document.getElementById('sg-list'))sgRender();
@@ -2776,7 +2804,7 @@ function renderMasterCounts(){
   }
   var offToday=['Andrew Yoo','Grace (FPC)','Keren Choi','LP'].filter(isStaffOffToday);
   var earlyExitToday=CI_FLAT.filter(function(k){return log[k.name]&&isEarlyExitToday(k.name);});
-  var html=earlyExitToday.length?'<div class="mstr-leftearly">'+earlyExitToday.length+' marked Early Exit today — already excluded from the counts below</div>':'';
+  var html=earlyExitToday.length?'<div class="mstr-leftearly">'+earlyExitToday.length+' checked out today — already excluded from the counts below</div>':'';
   if(offToday.length)html+='<div class="mstr-leftearly">🚫 '+offToday.join(', ')+' off today — excluded from Other Staff</div>';
   html+='<div class="mstr-block"><div class="mstr-side">👦 Boys — '+boysTotal+'</div>'
     +row('Students',boys.studentsChecked,boys.studentsTotal)
@@ -2815,7 +2843,7 @@ function renderMyGroupBody(){
       var grade=k&&k.grade!=='V'?k.grade:'';
       var leftEarly=isEarlyExitToday(n);
       html+='<div class="mygrp-row clickable" onclick="kidDetail(\''+n.replace(/'/g,"\\'")+'\',\''+info.group+'\',\''+grade+'\')"><span class="mygrp-name'+(leftEarly?' mygrp-left':'')+'">'+n+'</span>'+retreatBadge(n)
-        +(leftEarly?'<span class="mygrp-leftlabel">Early Exit</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
+        +(leftEarly?'<span class="mygrp-leftlabel">'+ciCheckOutLabel(n)+'</span>':'<span class="mygrp-time">✓ '+t+'</span>')+'</div>';
     });
   }
   body.innerHTML=html;

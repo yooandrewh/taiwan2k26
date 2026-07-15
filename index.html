@@ -603,8 +603,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-15T09:29:10+08:00";
-var APP_VERSION=169; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-15T09:43:29+08:00";
+var APP_VERSION=171; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -628,7 +628,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v169 · Jul 15, 2026 · 9:29 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v171 · Jul 15, 2026 · 9:43 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1998,15 +1998,17 @@ function renderFaithDash(){
 }
 // Temporary, single-day volunteer coverage. 2026-07-15 (amusement park day):
 // Ethan Nam (normally B4) moves entirely to Owen Lee's B5 alongside Timothy
-// Kim and FPC helpers Ira and Defni — B4 keeps only Lane Hartshorne
-// (normally B3), who covers there instead. Owen Nam (normally B2) covers B3
-// in Lane's place, Roba (normally B5) covers Jean Kim's B2 in Owen Nam's
-// place, and Owen Wu (normally B1) covers Grace Yoon's girls group (G7) for
-// the day. Scoped to this exact date (via twNow(), which is safe to call
-// this early — see the comment at its definition) so it silently stops
-// applying on its own tomorrow, with nothing to manually revert.
+// Kim, FPC helper Ira, and new volunteer Steven — B4 keeps only Lane
+// Hartshorne (normally B3), who covers there instead. Owen Nam (normally
+// B2) covers B3 in Lane's place, Roba (normally B5) covers Jean Kim's B2 in
+// Owen Nam's place, Owen Wu (normally B1) covers Grace Yoon's girls group
+// (G7), and FPC helper Defni moves over to Janet Phee's girls group (G6)
+// for the day (instead of B5). Scoped to this exact date (via twNow(),
+// which is safe to call this early — see the comment at its definition) so
+// it silently stops applying on its own tomorrow, with nothing to manually
+// revert.
 var SG_VOL_OVERRIDE_DATE='2026-07-15';
-var SG_VOL_OVERRIDE={'B1':[],'B2':['Roba'],'B3':['Owen Nam'],'B4':['Lane Hartshorne'],'B5':['Timothy Kim','Ethan Nam','Ira','Defni'],'G7':['Owen Wu']};
+var SG_VOL_OVERRIDE={'B1':[],'B2':['Roba'],'B3':['Owen Nam'],'B4':['Lane Hartshorne'],'B5':['Timothy Kim','Ethan Nam','Ira','Steven'],'G6':['Defni'],'G7':['Owen Wu']};
 function sgVolOverrideActive(){
   var t=twNow();
   var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
@@ -2685,6 +2687,12 @@ function selectMyGroup(name){
 // Macro headcount — boys/girls totals (students checked in + volunteers checked in +
 // teachers, who don't check in but are always present) for a quick bus-boarding count.
 // No per-kid detail on purpose — Andrew just needs the numbers, not the names.
+// One-off volunteers joining a specific small group today who aren't part of the
+// permanent VBS_SG roster (so they have no CI_FLAT entry to check in through the
+// app — counted as always-present, same as teachers). Distinct from the FPC
+// helpers pulled from TODAY_DATA.helpers in renderMasterCounts() below, which go
+// under Other Staff instead of a side's volunteer count.
+var EXTRA_VOL_TODAY={boys:['Steven'],girls:[]};
 function renderMasterCounts(){
   var log=ciGetLog();
   function sideCounts(side){
@@ -2696,6 +2704,11 @@ function renderMasterCounts(){
         else s.teachers++;
       });
     });
+    if(sgVolOverrideActive()){
+      var extra=EXTRA_VOL_TODAY[side]||[];
+      s.volsTotal+=extra.length;
+      s.volsChecked+=extra.length;
+    }
     return s;
   }
   var boys=sideCounts('boys'),girls=sideCounts('girls');

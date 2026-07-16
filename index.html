@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-16T10:00:59+08:00";
-var APP_VERSION=199; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-16T10:09:44+08:00";
+var APP_VERSION=200; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v199 · Jul 16, 2026 · 10:00 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v200 · Jul 16, 2026 · 10:09 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1213,7 +1213,11 @@ setInterval(renderBuildAge,60000);
   <div class="sg-section">☀️ Friday Schedule</div>
   <div class="on-sched">
     <div class="on-row"><span class="on-time">7:20–8:00</span><div><div class="on-label">Get Up / Wash Up / Pack Up</div></div></div>
-    <div class="on-row"><span class="on-time">8:00–10:00</span><div><div class="on-label">Breakfast</div><div class="on-sub">Bring all bags &amp; belongings</div></div></div>
+    <div class="on-row"><span class="on-time">8:00–9:00</span><div><div class="on-label">Breakfast</div><div class="on-sub">Bring all bags &amp; belongings</div></div></div>
+    <div class="on-row"><span class="on-time">9:00</span><div><div class="on-label">Bus Leaves Retreat Site</div><div class="on-sub">Est. arrival back at Thrive ~9:45am</div></div></div>
+    <div class="on-row"><span class="on-time">9:15</span><div><div class="on-label">Clara (FPC) Arrives to Open Thrive</div></div></div>
+    <div class="on-row"><span class="on-time">9:30</span><div><div class="on-label">Younger Kids Drop-Off Begins</div></div></div>
+    <div class="on-row"><span class="on-time">9:45</span><div><div class="on-label">Bus Arrives Back at Thrive (est.)</div></div></div>
     <div class="on-row"><span class="on-time">10:00</span><div><div class="on-label">VBS Start</div></div></div>
     <div class="on-row"><span class="on-time">10:00–10:30</span><div><div class="on-label">Worship</div></div></div>
     <div class="on-row"><span class="on-time">10:30–11:00</span><div><div class="on-label">Bible Teaching</div></div></div>

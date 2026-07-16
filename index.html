@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-16T10:51:43+08:00";
-var APP_VERSION=206; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-16T12:31:59+08:00";
+var APP_VERSION=207; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v206 · Jul 16, 2026 · 10:51 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v207 · Jul 16, 2026 · 12:31 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1190,8 +1190,8 @@ setInterval(renderBuildAge,60000);
   <div class="stu-sub">VBS overnight event · rosters &amp; schedule (tentative)</div>
 
   <div class="eth-card"><div class="eth-h">Overnight at a Glance</div><div class="vbs-stats">
-    <div class="vs-cell"><div class="vs-num">18</div><div class="vs-lbl">Students</div></div>
-    <div class="vs-cell"><div class="vs-num">5·13</div><div class="vs-lbl">Boys · Girls</div></div>
+    <div class="vs-cell"><div class="vs-num">17</div><div class="vs-lbl">Students</div></div>
+    <div class="vs-cell"><div class="vs-num">4·13</div><div class="vs-lbl">Boys · Girls</div></div>
     <div class="vs-cell"><div class="vs-num">12</div><div class="vs-lbl">Teachers</div></div>
     <div class="vs-cell"><div class="vs-num">6</div><div class="vs-lbl">Helpers</div></div>
   </div></div>
@@ -1248,12 +1248,11 @@ setInterval(renderBuildAge,60000);
     </div>
   </div>
   <div class="sg-card">
-    <div class="sg-head"><span class="sg-id boy">2</span><span class="sg-headname">Rubin Jang</span><span class="sg-count">2 kids</span></div>
+    <div class="sg-head"><span class="sg-id boy">2</span><span class="sg-headname">Rubin Jang</span><span class="sg-count">1 kid</span></div>
     <div class="sg-staff"><span class="sg-role">Helper</span><span class="sg-person">Lane Hartshorne (14)</span></div>
     <div class="sg-staff"><span class="sg-role">Helper</span><span class="sg-person">Ethan Nam (14)</span></div>
     <div class="sg-kids">
       <div class="sg-kid"><span class="sg-dot m"></span><span class="sg-kname">Harry (10)</span></div>
-      <div class="sg-kid"><span class="sg-dot m"></span><span class="sg-kname">Zephyr Kao (10)</span></div>
     </div>
   </div>
   <div class="sg-card">
@@ -1321,7 +1320,7 @@ setInterval(renderBuildAge,60000);
     <tr><td class="dk">5</td><td>Ethan Nam</td><td>Lane Hartshorne</td><td>Claire</td><td>Eliana Wan</td></tr>
     <tr><td class="dk">6</td><td>Owen Wu</td><td>Owen Nam</td><td>Ruhamah</td><td>Yuqi Chiu</td></tr>
     <tr><td class="dk">7</td><td>Ezra</td><td>Hao-Chen Li</td><td>Adeline</td><td>Ellery</td></tr>
-    <tr><td class="dk">8</td><td>Zephyr Kao</td><td>Harry</td><td>Grace</td><td>Kara</td></tr>
+    <tr><td class="dk">8</td><td></td><td>Harry</td><td>Grace</td><td>Kara</td></tr>
     <tr><td class="dk">9</td><td></td><td>Ryan Lin</td><td>Stephanie</td><td>Grace Hartshorne</td></tr>
     <tr><td class="dk">10</td><td></td><td></td><td>Queenie</td><td></td></tr>
     <tr><td class="dk">11</td><td></td><td></td><td>Est-elle</td><td></td></tr>
@@ -1971,7 +1970,7 @@ const VBS_SG={
 // can spot at a glance who's on both rosters. Defined here (not near TEACHER_GROUPS
 // further down) because sgRender() below is invoked immediately at parse time, and
 // this needs to exist before that first call.
-var RETREAT_NAMES=['Andrew Yoo','Caleb Su','Esther Yang','Keren Choi','Jean Kim','Andrew Back','Jane Kim','Becca Park','Rubin Jang','Owen Lee','Irene Song','Sammy Taing','Roba','Timothy Kim','Grace Yoon','Janet Phee','Ethan Nam','Lane Hartshorne','Claire','Eliana Wan','Owen Wu','Owen Nam','Ruhamah','Yuqi Chiu','Ezra','Hao-Chen Li','Adeline','Ellery','Zephyr Kao','Harry','Grace','Kara','Ryan Lin','Stephanie','Grace Hartshorne','Queenie','Est-elle','Hsin Hsin'];
+var RETREAT_NAMES=['Andrew Yoo','Caleb Su','Esther Yang','Keren Choi','Jean Kim','Andrew Back','Jane Kim','Becca Park','Rubin Jang','Owen Lee','Irene Song','Sammy Taing','Roba','Timothy Kim','Grace Yoon','Janet Phee','Ethan Nam','Lane Hartshorne','Claire','Eliana Wan','Owen Wu','Owen Nam','Ruhamah','Yuqi Chiu','Ezra','Hao-Chen Li','Adeline','Ellery','Harry','Grace','Kara','Ryan Lin','Stephanie','Grace Hartshorne','Queenie','Est-elle','Hsin Hsin'];
 function isGoingToRetreat(name){return RETREAT_NAMES.indexOf(name)>=0;}
 function retreatBadge(name){return isGoingToRetreat(name)?'<span class="retreat-badge">🏕️ Retreat</span>':'';}
 const RETREAT_SG={

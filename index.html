@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-16T13:01:22+08:00";
-var APP_VERSION=214; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-16T13:06:04+08:00";
+var APP_VERSION=215; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v214 · Jul 16, 2026 · 1:01 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v215 · Jul 16, 2026 · 1:06 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1239,8 +1239,6 @@ setInterval(renderBuildAge,60000);
   <div class="sg-section">Boy Small Groups (Tentative)</div>
   <div class="sg-card">
     <div class="sg-head"><span class="sg-id boy">1</span><span class="sg-headname">Caleb Su</span><span class="sg-count">2 kids</span></div>
-    <div class="sg-staff"><span class="sg-role">Leader</span><span class="sg-person">Jean Kim</span><span class="sg-covering">↔ temporary</span></div>
-    <div class="sg-staff"><span class="sg-role">Leader</span><span class="sg-person">Owen Lee</span><span class="sg-covering">↔ temporary</span></div>
     <div class="sg-staff"><span class="sg-role">Helper</span><span class="sg-person">Timothy Kim (15)</span></div>
     <div class="sg-kids">
       <div class="sg-kid"><span class="sg-dot m"></span><span class="sg-kname">Hao-Chen Li (11)</span></div>
@@ -1258,6 +1256,7 @@ setInterval(renderBuildAge,60000);
   </div>
   <div class="sg-card">
     <div class="sg-head"><span class="sg-id boy">3</span><span class="sg-headname">Andrew Back</span><span class="sg-count">0 kids</span></div>
+    <div class="sg-staff"><span class="sg-role">Leader</span><span class="sg-person">Jean Kim</span><span class="sg-covering">↔ temporary</span></div>
     <div class="sg-staff"><span class="sg-role">Helper</span><span class="sg-person">Owen Nam (13)</span></div>
     <div class="sg-staff"><span class="sg-role">Helper</span><span class="sg-person">Owen Wu (12)</span></div>
     <div class="sg-kids"></div>
@@ -2220,6 +2219,17 @@ function leftEarlyActive(){
 function isLeftEarlyToday(name){
   return leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0;
 }
+// Kids done with camp entirely starting a given date — stays true every day from
+// CAMP_DONE_FROM_DATE through the end of camp (unlike LEFT_EARLY_NAMES above, which
+// only applies on one specific date). Once marked, they read as checked-out/greyed
+// out everywhere and are excluded from headcounts for the rest of the week.
+var CAMP_DONE_FROM_DATE='2026-07-16';
+var CAMP_DONE_NAMES=['Zephyr Kao','Atlas Kao'];
+function isCampDoneToday(name){
+  var t=twNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  return key>=CAMP_DONE_FROM_DATE&&CAMP_DONE_NAMES.indexOf(name)>=0;
+}
 // Staff who are off on a specific day — separate list/date from the kids' early-
 // pickup one above (different reason, shouldn't be coupled together).
 var STAFF_OFF_DATE='2026-07-14';
@@ -2242,11 +2252,13 @@ function sgEarlyExitLog(){
   try{return JSON.parse(localStorage.getItem('ci_early_'+dates[idx])||'{}');}catch(e){return {};}
 }
 function sgIsEarlyExitToday(name){
+  if(isCampDoneToday(name))return true;
   if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return true;
   var e=sgEarlyExitLog()[name];
   return !!(e&&e.value);
 }
 function sgCheckOutLabel(name){
+  if(isCampDoneToday(name))return 'Out for Camp';
   if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return 'Early Check Out';
   var e=sgEarlyExitLog()[name];
   if(e&&e.updatedAt!=null&&twMinutesOf(e.updatedAt)>=CHECKOUT_CUTOFF_MIN)return 'Checked Out';
@@ -2604,13 +2616,17 @@ function ciUndo(name){
 function ciEarlyGetLog(){try{return JSON.parse(localStorage.getItem('ci_early_'+ciDateKey())||'{}');}catch(e){return {};}}
 function ciEarlySaveLog(log){try{localStorage.setItem('ci_early_'+ciDateKey(),JSON.stringify(log));}catch(e){}}
 function isEarlyExitToday(name){
+  if(isCampDoneToday(name))return true;
   if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return true;
   var e=ciEarlyGetLog()[name];
   return !!(e&&e.value);
 }
 // Checked out before 4:40pm Taiwan (CHECKOUT_CUTOFF_MIN, defined up near twNow())
 // reads as "Early Check Out"; at/after (normal pickup window) just "Checked Out".
+// Kids marked in CAMP_DONE_NAMES read as "Out for Camp" instead, since they're not
+// coming back for the rest of the week (see isCampDoneToday()).
 function ciCheckOutLabel(name){
+  if(isCampDoneToday(name))return 'Out for Camp';
   if(leftEarlyActive()&&LEFT_EARLY_NAMES.indexOf(name)>=0)return 'Early Check Out';
   var e=ciEarlyGetLog()[name];
   if(e&&e.updatedAt!=null&&twMinutesOf(e.updatedAt)>=CHECKOUT_CUTOFF_MIN)return 'Checked Out';

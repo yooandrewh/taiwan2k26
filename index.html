@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-16T08:28:55+08:00";
-var APP_VERSION=193; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-16T08:35:03+08:00";
+var APP_VERSION=194; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v193 · Jul 16, 2026 · 8:28 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v194 · Jul 16, 2026 · 8:35 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1193,11 +1193,11 @@ setInterval(renderBuildAge,60000);
   <div class="on-sched">
     <div class="on-row"><span class="on-time">6:00–7:00</span><div><div class="on-label">Depart &amp; Travel</div></div></div>
     <div class="on-row"><span class="on-time">7:00–8:00</span><div><div class="on-label">Eat &amp; Share in Small Groups</div></div></div>
-    <div class="on-row"><span class="on-time">8:00–8:15</span><div><div class="on-label">Icebreaker</div><div class="on-sub">(Teacher Prayer Meeting)</div></div></div>
-    <div class="on-row"><span class="on-time">8:15–8:20</span><div><div class="on-label">Performance Dance</div><div class="on-sub">TBD</div></div></div>
+    <div class="on-row"><span class="on-time">8:00–8:15</span><div><div class="on-label">Icebreaker</div><div class="on-sub">Led by Keren</div></div></div>
+    <div class="on-row"><span class="on-time">8:15–8:20</span><div><div class="on-label">Testimony from Sister</div></div></div>
     <div class="on-row"><span class="on-time">8:20–8:40</span><div><div class="on-label">Worship</div></div></div>
     <div class="on-row"><span class="on-time">8:40–9:00</span><div><div class="on-label">Sermon</div></div></div>
-    <div class="on-row"><span class="on-time">9:00–9:05</span><div><div class="on-label">Skit</div><div class="on-sub">"Everything"</div></div></div>
+    <div class="on-row"><span class="on-time">9:00–9:05</span><div><div class="on-label">Skit</div><div class="on-sub">"Good Good Father"</div></div></div>
     <div class="on-row"><span class="on-time">9:05–9:40</span><div><div class="on-label">Response Worship</div></div></div>
     <div class="on-row"><span class="on-time">9:40–10:00</span><div><div class="on-label">Snacks · Small Groups</div></div></div>
   </div>
@@ -1484,7 +1484,7 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
     <span>Today</span>
   </button>
-  <button class="tabitem" style="--accent:#2563eb" onclick="go('vbs',this)" aria-label="VBS Week">
+  <button class="tabitem" style="--accent:#2563eb;display:none" onclick="go('vbs',this)" aria-label="VBS Week">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
   </button>
@@ -2089,24 +2089,15 @@ function bdayInTrip(b){ // trip window: Jun 29 – Jul 30
   if(m===6&&d>=29)return true;
   return false;
 }
+// Alias kept for every existing call site (Groups tab, My Group Today, Faith
+// dashboard) — ciOpen() (defined in a later script block, but only ever invoked
+// from onclick handlers after the whole page has parsed) now handles both
+// checkable people (adds Check-In/Check-Out) and everyone else (read-only info),
+// so every name-tap across the app gets the same unified card.
 function kidDetail(name,grpId,grade){
-  var info=KID_INFO[name]||{};
-  function row(ic,label,val){return val?'<div class="kd-row"><span class="kd-ic">'+ic+'</span><span class="kd-lbl">'+label+'</span><span class="kd-val">'+val+'</span></div>':'';}
-  var gr=(grade!==''&&grade!=null)?grShort(parseInt(grade,10)):'';
-  var head='<div class="kd-name">'+name+(info.cn?' <span class="kd-cn">'+info.cn+'</span>':'')+'</div>'
-    +'<div class="kd-sub">Group '+grpId+(gr?' · '+gr:'')+'</div>';
-  var rows='';
-  rows+=row('🎂','Birthday', info.b?(info.b+(bdayInTrip(info.b)?' <b style="color:#d97706">· during the trip!</b>':'')):'');
-  rows+=row('⚠️','Allergy / medical', info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'');
-  rows+=row('👕','Shirt size', info.sz);
-  rows+=row('👤','Parent', info.pa);
-  rows+=row('📞','Phone', info.ph?'<a href="tel:'+info.ph.replace(/[^0-9+]/g,'')+'">'+info.ph+'</a>':'');
-  if(!rows) rows='<div class="kd-none">No extra info on file.</div>';
-  document.getElementById('kid-body').innerHTML=head+'<div class="kd-rows">'+rows+'</div>'+pnSectionHtml(name,grpId);
-  document.getElementById('kid-modal').style.display='flex';
-  window._pnOpenName=name;
+  ciOpen(name,grpId,grade);
 }
-function closeKidModal(){document.getElementById('kid-modal').style.display='none';window._pnOpenName=null;}
+function closeKidModal(){closeCiModal();}
 // Reads the Faith & Notes store directly rather than calling pnGetLog() — that
 // function lives in a later <script> block, and sgRender() is invoked immediately
 // at parse time below, before that block has run.
@@ -2520,34 +2511,50 @@ function ciRender(){
   });
   document.getElementById('ci-list').innerHTML=html;
 }
-function ciOpen(name){
+// Universal "tap a name" handler — used by the Check-In list AND every other tab
+// (Groups, My Group Today, Faith) via the kidDetail() alias below, so check-in/
+// check-out is reachable from wherever a name shows up, not just the Check-In tab.
+// Checkable people (CI_FLAT: students + youth volunteers) get the full check-in
+// banner/buttons; everyone else (adult teachers/staff) gets a read-only info card.
+function ciOpen(name,grpId,grade){
   var k=CI_FLAT.find(function(x){return x.name===name;});
-  if(!k)return;
   var info=KID_INFO[name]||{};
-  var log=ciGetLog();
-  var already=log[name];
   var legal=info.cn||'';
   var head='<div class="ci-head-row"><span class="nm">'+name+'</span>'+(legal?'<span class="cn">'+legal+'</span>':'')+(info.b?'<span class="bday">🎂 '+info.b+'</span>':'')+'</div>';
   function row(ic,label,val){return val?'<div class="kd-row"><span class="kd-ic">'+ic+'</span><span class="kd-lbl">'+label+'</span><span class="kd-val">'+val+'</span></div>':'';}
   var rows='';
-  rows+=row('👥','Small group',k.group);
-  rows+=row('🧑‍🏫','Group teacher',k.leader);
-  rows+=row('🏫','Grade',grShort(k.grade));
+  var effGrpId=k?k.group:(grpId||'');
+  if(k){
+    rows+=row('👥','Small group',k.group);
+    rows+=row('🧑‍🏫','Group teacher',k.leader);
+    rows+=row('🏫','Grade',grShort(k.grade));
+  }else if(grpId){
+    rows+=row('👥','Group',grpId);
+    if(grade!=null&&grade!=='')rows+=row('🏫','Grade',grShort(parseInt(grade,10)));
+  }
   rows+=row('🎈','Age',info.ag!=null?(info.ag+' years old'):'');
   rows+=row('👕','Shirt size',info.sz);
   rows+=row('👤','Parent',info.pa);
   rows+=row('📞','Phone',info.ph?'<a href="tel:'+info.ph.replace(/[^0-9+]/g,'')+'">'+info.ph+'</a>':'');
   rows+=row('⚠️','Allergies',info.al?'<b style="color:#b91c1c">'+info.al+'</b>':'None on file');
+  var log=k?ciGetLog():{};
+  var already=k?log[name]:null;
   var earlyNow=already&&isEarlyExitToday(name);
   var banner=already?'<div class="ci-already">✅ Checked in at '+already.time+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndo(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
   var earlyBanner=earlyNow?'<div class="ci-earlyexit-banner">Marked as '+ciCheckOutLabel(name)+' <span style="text-decoration:underline;cursor:pointer;margin-left:8px;font-weight:600" onclick="ciUndoEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Undo</span></div>':'';
-  var buttons=already
-    ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Check Out</button>')+'</div>'
-    : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
-  document.getElementById('ci-body').innerHTML=head+banner+earlyBanner+'<div class="kd-rows">'+rows+'</div>'+buttons;
+  var buttons;
+  if(k){
+    buttons=already
+      ? '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button>'+(earlyNow?'':'<button class="ci-btn early" onclick="ciMarkEarlyExit(\''+name.replace(/'/g,"\\'")+'\')">Check Out</button>')+'</div>'
+      : '<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Cancel</button><button class="ci-btn confirm" onclick="ciConfirm(\''+name.replace(/'/g,"\\'")+'\')">✅ Confirm Check-In</button></div>';
+  }else{
+    buttons='<div class="ci-btnrow"><button class="ci-btn cancel" onclick="closeCiModal()">Close</button></div>';
+  }
+  document.getElementById('ci-body').innerHTML=head+banner+earlyBanner+'<div class="kd-rows">'+rows+'</div>'+pnSectionHtml(name,effGrpId)+buttons;
   document.getElementById('ci-modal').style.display='flex';
+  window._pnOpenName=name;
 }
-function closeCiModal(){document.getElementById('ci-modal').style.display='none';}
+function closeCiModal(){document.getElementById('ci-modal').style.display='none';window._pnOpenName=null;}
 function ciConfirm(name){
   var k=CI_FLAT.find(function(x){return x.name===name;});
   if(!k)return;

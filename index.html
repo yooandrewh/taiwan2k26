@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-17T15:00:23+08:00";
-var APP_VERSION=228; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-17T15:12:00+08:00";
+var APP_VERSION=229; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v228 · Jul 17, 2026 · 3:00 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v229 · Jul 17, 2026 · 3:12 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1215,67 +1215,6 @@ setInterval(renderBuildAge,60000);
   </div>
   <div id="tmf-sched-body"></div>
   <p class="note">* Daily themes subject to change</p>
-  <h2>Team Roster</h2>
-  <div class="roster">
-    <div class="rcard" style="background:var(--ra);border:1px solid var(--sa)"><h4>Team A</h4><p>Esther · Jane · Grace · Irene</p></div>
-    <div class="rcard" style="background:var(--rb);border:1px solid var(--sb)"><h4>Team B</h4><p>Keren · Caleb · Janet · Owen · Rubin</p></div>
-    <div class="rcard" style="background:var(--rc);border:1px solid var(--sc)"><h4>Team C</h4><p>Jean · Becca · Sammy · Andrew Back</p></div>
-  </div>
-  <h2>Team Tasks · Effective Hours</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
-    <div class="tcol"><div class="chdr" style="background:#b91c1c">Team A</div>
-    <div class="trow"><span>VBS Dance Lead</span><span class="hrs">5h</span></div>
-    <div class="trow"><span>VBS Crafts × 5</span><span class="hrs">10h</span></div>
-    <div class="trow"><span>Evening SG Qs × 4</span><span class="hrs">5h</span></div>
-    <div class="trow"><span>Wed AM + Tue PM</span><span class="hrs">4h</span></div>
-    <div class="trow"><span>Street EV + Olympics</span><span class="hrs">10h</span></div>
-    <div class="ttot"><span>Total</span><span>34h</span></div></div>
-    <div class="tcol"><div class="chdr" style="background:#2563eb">Team B</div>
-    <div class="trow"><span>VBS Games × 5</span><span class="hrs">10h</span></div>
-    <div class="trow"><span>Morning SG Qs × 4</span><span class="hrs">5h</span></div>
-    <div class="trow"><span>Fri AM + Thu PM</span><span class="hrs">4h</span></div>
-    <div class="trow"><span>Street EV + Olympics</span><span class="hrs">10h</span></div>
-    <div class="ttot"><span>Total</span><span>29h</span></div></div>
-    <div class="tcol"><div class="chdr" style="background:#16a34a">Team C</div>
-    <div class="trow"><span>VBS Bible Teach × 5</span><span class="hrs">10h</span></div>
-    <div class="trow"><span>VBS SG Qs × 5</span><span class="hrs">5h</span></div>
-    <div class="trow"><span>Thu AM + Wed PM</span><span class="hrs">4h</span></div>
-    <div class="trow"><span>Street EV + Olympics</span><span class="hrs">10h</span></div>
-    <div class="ttot"><span>Total</span><span>29h</span></div></div>
-  </div>
-  <div class="bar gray">Global Tasks · All Members</div>
-  <div class="txcard"><div class="txname">Global · Everyone</div>
-  <div class="txrow"><span class="txlbl">Includes</span><span class="txval">5 VBS dances · 5 adult worship dances · 10 skits</span></div>
-  <div class="txrow"><span class="txlbl">Total raw</span><span class="txval">~62.5h ÷ 13 members · Worship Team: +10.4h each</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Faithfully practice your assigned roles</span></div></div>
-  <div class="txcard">
-    <div class="txname">Fri Olympics · Global</div>
-    <div class="txrow"><span class="txlbl">What it is</span><span class="txval">An all-hands collaborative event — every team comes together to plan and run a small-group Olympics. Points from each game accumulate throughout, building toward a final result. Team leaders will take the lead on this.</span></div>
-    <div class="txrow"><span class="txlbl">Games</span><span class="txval">Fun games such as Protect the Hen, Blind Barbarian, Paper Folding, and similar</span></div>
-    <div class="txrow"><span class="txlbl">Prep</span><span class="txval">Prepare an indoor version in case of rain</span></div>
-  </div>
-  <h2>Task Explanations</h2>
-  <div class="bar amber">Team A tasks</div>
-  <div class="txcard"><div class="txname">VBS Dance Lead</div><div class="txrow"><span class="txlbl">Lead</span><span class="txval">Each member takes the lead on one day — rotate</span></div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Lead VBS worship — call kids up, interact with crowd, prompts between songs</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Prepare worship set per day and plan interactive moments</span></div></div>
-  <div class="txcard"><div class="txname">VBS Crafts × 5 days</div><div class="txrow"><span class="txlbl">Lead</span><span class="txval">Each member takes the lead on one day — rotate</span></div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Design and lead 5 theme-based crafts — craft, kid-friendly explanation, full session experience</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Research 5 crafts; source materials in Taiwan; prepare instructions and energy</span></div></div>
-  <div class="txcard"><div class="txname">Evening SG Questions × 4</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Write and facilitate evening SG questions tied to each day's theme</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Write 4 sets of SG questions on-site (one per retreat day)</span></div></div>
-  <div class="txcard"><div class="txname">Wed AM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Fun team competition — think skit-making, banner making, cheer-off, dance battle, or Minute-to-Win-It games; can be indoors or outdoors</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 AM event with clear rules, scoring, and materials ready</span></div></div>
-  <div class="txcard"><div class="txname">Tue PM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Active/sports competition; must have indoor backup for rain</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 PM sports event with indoor backup, materials, and scoring</span></div></div><div class="bar teal">Team B tasks</div>
-  <div class="txcard"><div class="txname">VBS Games × 5 days</div><div class="txrow"><span class="txlbl">Lead</span><span class="txval">Each member takes the lead on one day — rotate</span></div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Design and lead 5 theme-based active games — indoor and outdoor versions</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Research 5 games with full session plan including energy and flow</span></div></div>
-  <div class="txcard"><div class="txname">Morning SG Questions × 4</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Write and facilitate morning SG questions tied to each day's theme</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Write 4 sets of SG questions on-site (one per retreat day)</span></div></div>
-  <div class="txcard"><div class="txname">Fri AM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Fun team competition — think skit-making, banner making, cheer-off, dance battle, or Minute-to-Win-It games; can be indoors or outdoors</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 AM event with clear rules, scoring, and materials ready</span></div></div>
-  <div class="txcard"><div class="txname">Thu PM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Active/sports competition; must have indoor backup for rain</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 PM sports event with indoor backup, materials, and scoring</span></div></div>
-  <div class="txcard"><div class="txname">Fri Olympics</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Friday Olympics is a global collaborative event — all teams participate together</span></div></div><div class="bar purple">Team C tasks</div>
-  <div class="txcard"><div class="txname">VBS Bible Teaching × 5 days</div><div class="txrow"><span class="txlbl">Lead</span><span class="txval">Each member takes the lead on one day — rotate</span></div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Teach the daily Bible lesson — tied to that day's Bible Buddy; age-appropriate for ages 5–12</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Team C decides curriculum approach; prepare lesson and engagement plan per day</span></div></div>
-  <div class="txcard"><div class="txname">VBS SG Questions × 5 days</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Write and facilitate VBS small group questions tied to each day's theme</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Write 5 sets of kid-appropriate SG questions (one per VBS day)</span></div></div>
-  <div class="txcard"><div class="txname">Thu AM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Fun team competition — think skit-making, banner making, cheer-off, dance battle, or Minute-to-Win-It games; can be indoors or outdoors</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 AM event with clear rules, scoring, and materials ready</span></div></div>
-  <div class="txcard"><div class="txname">Wed PM Activity</div><div class="txrow"><span class="txlbl">What it is</span><span class="txval">Active/sports competition; must have indoor backup for rain</span></div><div class="txrow"><span class="txlbl">Purpose</span><span class="txval">All activities are small group competitions — points accumulate across the week and are tallied at the end of the retreat</span></div><div class="txrow"><span class="txlbl">Prep</span><span class="txval">Plan 1 PM sports event with indoor backup, materials, and scoring</span></div></div><div class="bar" style="background:#4a4a6a">Personal · each member</div>
-  <div class="txcard"><div class="txname">Testimony</div>
-  <div class="txrow"><span class="txlbl">What it is</span><span class="txval">Share personal story: life before God · encounter with God · life after God — tailored to audience</span></div>
-  <div class="txrow"><span class="txlbl">Prep</span><span class="txval">Write and practice; consider engagement and age-appropriateness</span></div></div>
-  <h2>Prep Week Schedule · Jun 15–19</h2>
-  <p class="note">Mainly occupied by skits and dance learning · daily time block TBD</p>
-  <h2>Intensive Week Schedule · Jun 22–26</h2>
-  <p class="note">Week immediately following Prep Week · days × hrs TBD</p>
 </div>
 <div id="pane-overnight" class="pane">
   <div class="stu-title" style="color:#9333ea">Special Overnight</div>
@@ -1740,28 +1679,29 @@ function tryTMF(btn){
 // (meals, free time, lights out) apply the same to every day; the rest carry a
 // per-day value, with "—" meaning that session doesn't happen that day (Monday
 // only has the evening block, since the group arrives that afternoon).
+var TMF_SESSION_NAMES={1:'Session 1 · Morning Worship',2:'Session 2 · Morning Activity',3:'Session 3 · Afternoon',4:'Session 4 · Evening Worship'};
 var TMF_SCHED_ROWS=[
-  {t:'7:00',s:'Wake Up',all:'Wake Up'},
-  {t:'7:30–8:30',s:'Breakfast',all:'Breakfast'},
-  {t:'8:30–8:40',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global'},
-  {t:'8:40–8:50',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther'},
-  {t:'8:50–9:00',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
-  {t:'9:00–9:10',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren'},
-  {t:'9:10–9:35',s:'Personal Devo Time',all:'Personal Devo Time'},
-  {t:'9:35–10:30',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B'},
-  {t:'10:30–12:00',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B'},
-  {t:'12:00–1:00',s:'Lunch',all:'Lunch'},
-  {t:'1:00–1:10',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global'},
-  {t:'1:10–1:20',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren'},
-  {t:'1:30–3:00',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)'},
-  {t:'3:00–5:30',s:'Hang Out with Students',all:'Hang Out with Students'},
-  {t:'5:30–6:30',s:'Dinner',all:'Dinner'},
-  {t:'6:30–6:45',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
-  {t:'6:45–7:15',s:'Sermon',mon:'Andrew',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew'},
-  {t:'7:15–7:30',s:'Response Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
-  {t:'7:30–8:00',s:'Evening SG',mon:'Global·Qs:A',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A'},
-  {t:'8:00–11:00',s:'Hang Out with Students',all:'Hang Out with Students'},
-  {t:'11:00–12:00',s:'Debrief / Lights Out',all:'Debrief / Lights Out'}
+  {t:'7:00',s:'Wake Up',all:'Wake Up',session:1},
+  {t:'7:30–8:30',s:'Breakfast',all:'Breakfast',session:1},
+  {t:'8:30–8:40',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:1},
+  {t:'8:40–8:50',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther',session:1},
+  {t:'8:50–9:00',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:1},
+  {t:'9:00–9:10',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren',session:1},
+  {t:'9:10–9:35',s:'Personal Devo Time',all:'Personal Devo Time',session:1},
+  {t:'9:35–10:30',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2},
+  {t:'10:30–12:00',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2},
+  {t:'12:00–1:00',s:'Lunch',all:'Lunch',session:3},
+  {t:'1:00–1:10',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:3},
+  {t:'1:10–1:20',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren',session:3},
+  {t:'1:30–3:00',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)',session:3},
+  {t:'3:00–5:30',s:'Hang Out with Students',all:'Hang Out with Students',session:3},
+  {t:'5:30–6:30',s:'Dinner',all:'Dinner',session:3},
+  {t:'6:30–6:45',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
+  {t:'6:45–7:15',s:'Sermon',mon:'Andrew',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4},
+  {t:'7:15–7:30',s:'Response Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
+  {t:'7:30–8:00',s:'Evening SG',mon:'Global·Qs:A',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A',session:4},
+  {t:'8:00–11:00',s:'Hang Out with Students',all:'Hang Out with Students',session:4},
+  {t:'11:00–12:00',s:'Debrief / Lights Out',all:'Debrief / Lights Out',session:4}
 ];
 function tmfSchedWeekHtml(){
   var html='<div class="dbyd-scroll"><table class="dbyd"><tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>';
@@ -1776,11 +1716,18 @@ function tmfSchedWeekHtml(){
   return html;
 }
 function tmfSchedDayHtml(day){
-  var html='<div class="on-sched">';
+  var html='';
+  var curSession=null;
   TMF_SCHED_ROWS.forEach(function(r){
     var val=r.all?r.all:r[day];
     if(val==='—')return; // doesn't happen this day
-    html+='<div class="on-row"><span class="on-time">'+r.t+'</span><div><div class="on-label">'+r.s+'</div>'+(val&&val!==r.s?'<div class="on-sub">'+val+'</div>':'')+'</div></div>';
+    if(r.session!==curSession){
+      if(curSession!==null)html+='</div>';
+      curSession=r.session;
+      html+='<div class="sg-section">'+TMF_SESSION_NAMES[curSession]+'</div><div class="on-sched">';
+    }
+    var lead=(val&&val!==r.s)?'Lead: '+val:'';
+    html+='<div class="on-row"><span class="on-time">'+r.t+'</span><div><div class="on-label">'+r.s+'</div>'+(lead?'<div class="on-sub">'+lead+'</div>':'')+'</div></div>';
   });
   html+='</div>';
   return html;

@@ -398,6 +398,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .on-time{font-size:12px;font-weight:800;color:#9333ea;background:rgba(147,51,234,0.12);border-radius:8px;padding:5px 9px;white-space:nowrap;flex-shrink:0;min-width:76px;text-align:center;}
 .on-label{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;}
 .on-sub{font-size:12px;color:var(--text3);font-weight:600;margin-top:2px;}
+.on-dur{font-size:11px;color:var(--text3);font-weight:600;flex-shrink:0;white-space:nowrap;}
 .kd-sheet{background:var(--bg);border-radius:18px 18px 0 0;padding:22px 20px;padding-bottom:calc(22px + env(safe-area-inset-bottom));width:100%;max-width:480px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);}
 .kd-name{font-size:22px;font-weight:800;color:var(--text);}
 .kd-cn{font-size:16px;font-weight:600;color:var(--text3);margin-left:5px;}
@@ -630,8 +631,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-17T15:55:58+08:00";
-var APP_VERSION=230; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-17T16:06:28+08:00";
+var APP_VERSION=231; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +656,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v230 · Jul 17, 2026 · 3:55 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v231 · Jul 17, 2026 · 4:06 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1681,35 +1682,35 @@ function tryTMF(btn){
 // only has the evening block, since the group arrives that afternoon).
 var TMF_SESSION_NAMES={1:'Session 1 · Morning Worship',2:'Session 2 · Morning Activity',3:'Session 3 · Afternoon',4:'Session 4 · Evening Worship'};
 var TMF_SCHED_ROWS=[
-  {t:'7:00',s:'Wake Up',all:'Wake Up',session:1},
-  {t:'7:30–8:30',s:'Breakfast',all:'Breakfast',session:1},
-  {t:'8:30–8:40',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:1},
-  {t:'8:40–8:50',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther',session:1},
-  {t:'8:50–9:00',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:1},
-  {t:'9:00–9:10',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren',session:1},
-  {t:'9:10–9:35',s:'Personal Devo Time',all:'Personal Devo Time',session:1},
-  {t:'9:35–10:30',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2},
-  {t:'10:30–12:00',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2},
-  {t:'12:00–1:00',s:'Lunch',all:'Lunch',session:3},
-  {t:'1:00–1:10',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:3},
-  {t:'1:10–1:20',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren',session:3},
-  {t:'1:30–3:00',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)',session:3},
-  {t:'3:00–5:30',s:'Hang Out with Students',all:'Hang Out with Students',session:3},
-  {t:'5:30–6:30',s:'Dinner',all:'Dinner',session:3},
-  {t:'6:30–6:45',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
-  {t:'6:45–7:15',s:'Sermon',mon:'Andrew',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4},
-  {t:'7:15–7:30',s:'Response Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
-  {t:'7:30–8:00',s:'Evening SG',mon:'Global·Qs:A',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A',session:4},
-  {t:'8:00–11:00',s:'Hang Out with Students',all:'Hang Out with Students',session:4},
-  {t:'11:00–12:00',s:'Debrief / Lights Out',all:'Debrief / Lights Out',session:4}
+  {t:'7:00',tr:'7:00',dur:'',s:'Wake Up',all:'Wake Up',session:1},
+  {t:'7:30',tr:'7:30–8:30',dur:'60 min',s:'Breakfast',all:'Breakfast',session:1},
+  {t:'8:30',tr:'8:30–8:40',dur:'10 min',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:1},
+  {t:'8:40',tr:'8:40–8:50',dur:'10 min',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther',session:1},
+  {t:'8:50',tr:'8:50–9:00',dur:'10 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:1},
+  {t:'9:00',tr:'9:00–9:10',dur:'10 min',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren',session:1},
+  {t:'9:10',tr:'9:10–9:35',dur:'25 min',s:'Personal Devo Time',all:'Personal Devo Time',session:1},
+  {t:'9:35',tr:'9:35–10:30',dur:'55 min',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2},
+  {t:'10:30',tr:'10:30–12:00',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2},
+  {t:'12:00',tr:'12:00–1:00',dur:'60 min',s:'Lunch',all:'Lunch',session:3},
+  {t:'1:00',tr:'1:00–1:10',dur:'10 min',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global',session:3},
+  {t:'1:10',tr:'1:10–1:20',dur:'10 min',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren',session:3},
+  {t:'1:30',tr:'1:30–3:00',dur:'1h 30m',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)',session:3},
+  {t:'3:00',tr:'3:00–5:30',dur:'2h 30m',s:'Hang Out with Students',all:'Hang Out with Students',session:3},
+  {t:'5:30',tr:'5:30–6:30',dur:'60 min',s:'Dinner',all:'Dinner',session:3},
+  {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
+  {t:'6:45',tr:'6:45–7:15',dur:'30 min',s:'Sermon',mon:'Andrew',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4},
+  {t:'7:15',tr:'7:15–7:30',dur:'15 min',s:'Response Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4},
+  {t:'7:30',tr:'7:30–8:00',dur:'30 min',s:'Evening SG',mon:'Global·Qs:A',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A',session:4},
+  {t:'8:00',tr:'8:00–11:00',dur:'3h',s:'Hang Out with Students',all:'Hang Out with Students',session:4},
+  {t:'11:00',tr:'11:00–12:00',dur:'60 min',s:'Debrief / Lights Out',all:'Debrief / Lights Out',session:4}
 ];
 function tmfSchedWeekHtml(){
   var html='<div class="dbyd-scroll"><table class="dbyd"><tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>';
   TMF_SCHED_ROWS.forEach(function(r){
     if(r.all){
-      html+='<tr><td class="dk">'+r.t+'</td><td>'+r.s+'</td><td colspan="5" class="tbd" style="text-align:center">'+r.all+' · all groups</td></tr>';
+      html+='<tr><td class="dk">'+r.tr+'</td><td>'+r.s+'</td><td colspan="5" class="tbd" style="text-align:center">'+r.all+' · all groups</td></tr>';
     }else{
-      html+='<tr><td class="dk">'+r.t+'</td><td>'+r.s+'</td><td class="tbd">'+r.mon+'</td><td class="cg">'+r.tue+'</td><td class="cg">'+r.wed+'</td><td class="cg">'+r.thu+'</td><td class="cg">'+r.fri+'</td></tr>';
+      html+='<tr><td class="dk">'+r.tr+'</td><td>'+r.s+'</td><td class="tbd">'+r.mon+'</td><td class="cg">'+r.tue+'</td><td class="cg">'+r.wed+'</td><td class="cg">'+r.thu+'</td><td class="cg">'+r.fri+'</td></tr>';
     }
   });
   html+='</table></div>';
@@ -1730,7 +1731,7 @@ function tmfSchedDayHtml(day){
       html+='<div class="sg-section">'+TMF_SESSION_NAMES[curSession]+'</div><div class="on-sched">';
     }
     var lead=(val&&val!==r.s)?'Lead: '+val:'';
-    html+='<div class="on-row"><span class="on-time">'+r.t+'</span><div><div class="on-label">'+r.s+'</div>'+(lead?'<div class="on-sub">'+lead+'</div>':'')+'</div></div>';
+    html+='<div class="on-row"><span class="on-time">'+r.t+'</span><div style="flex:1"><div class="on-label">'+r.s+'</div>'+(lead?'<div class="on-sub">'+lead+'</div>':'')+'</div>'+(r.dur?'<span class="on-dur">'+r.dur+'</span>':'')+'</div>';
   });
   html+='</div>';
   return html;

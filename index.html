@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-17T14:54:34+08:00";
-var APP_VERSION=227; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-17T15:00:23+08:00";
+var APP_VERSION=228; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v227 · Jul 17, 2026 · 2:54 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v228 · Jul 17, 2026 · 3:00 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1205,35 +1205,16 @@ setInterval(renderBuildAge,60000);
     <div class="dcard" style="background:var(--rc);border:1px solid var(--sc);color:var(--text);font-weight:500;"><div class="dl">THU</div><div class="db">Joseph</div><div style="color:var(--text2)">Loving others · Genesis 50</div></div>
     <div class="dcard" style="background:var(--rg);border:1px solid var(--sg);color:var(--text);font-weight:500;"><div class="dl">FRI</div><div class="db">Loving the Nations</div><div style="color:var(--text2)">Matthew 28</div></div>
   </div>
-  <div class="dbyd-scroll"><table class="dbyd">
-  <tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>
-  <tr style="height:22px"><td class="dk">7:00</td><td>Wake Up</td><td colspan="5" class="tbd" style="text-align:center">Wake Up · all groups</td></tr>
-  <tr style="height:34px"><td class="dk">7:30–8:30</td><td>Breakfast</td><td colspan="5" class="tbd" style="text-align:center">Breakfast · all groups</td></tr>
-  <tr style="height:24px"><td class="dk">8:30–8:40</td><td>Skit</td><td class="tbd">—</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-  <tr style="height:24px"><td class="dk">8:40–8:50</td><td>Testimony #1</td><td class="tbd">—</td><td class="redact">Sammy</td><td class="redact">Jean</td><td class="redact">Becca</td><td class="redact">Esther</td></tr>
-  <tr style="height:24px"><td class="dk">8:50–9:00</td><td>Worship</td><td class="tbd">—</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
-  <tr style="height:24px"><td class="dk">9:00–9:10</td><td>Devotional</td><td class="tbd">—</td><td class="cp">Andrew</td><td class="redact">Keren</td><td class="redact">Keren</td><td class="redact">Keren</td></tr>
-  <tr style="height:45px"><td class="dk">9:35–10:30</td><td>Morning SG</td><td class="tbd">—</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td></tr>
-  <tr style="height:60px"><td class="dk">10:30–12:00</td><td>AM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cc">Team C</td><td class="ca">Team A</td><td class="cb">Team B</td></tr>
-  <tr style="height:47px"><td class="dk">12:00–1:00</td><td>Lunch</td><td colspan="5" class="tbd" style="text-align:center">Lunch · all groups</td></tr>
-  <tr style="height:24px"><td class="dk">1:00–1:10</td><td>Skit</td><td class="tbd">—</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
-  <tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td class="redact">Irene</td><td class="redact">Jane</td><td class="redact">Caleb</td><td class="redact">Keren</td></tr>
-  <tr style="height:60px"><td class="dk">1:30–3:00</td><td>PM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cb">Team B</td><td class="cc">Team C</td><td class="cg">Global<div style="font-size:9px;font-weight:400;opacity:.85">Olympics</div></td></tr>
-  <tr style="height:88px"><td class="dk">3:00–5:30</td><td>Hang Out with Students</td><td colspan="5" class="tbd" style="text-align:center">Hang Out with Students · all groups</td></tr>
-  <tr style="height:34px"><td class="dk">5:30–6:30</td><td>Dinner</td><td colspan="5" class="tbd" style="text-align:center">Dinner · all groups</td></tr>
-  <tr style="height:27px"><td class="dk">6:30–6:45</td><td>Worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
-  <tr style="height:34px"><td class="dk">6:45–7:15</td><td>Sermon</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td></tr>
-  <tr style="height:24px"><td class="dk">7:15–7:30</td><td>Response worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
-  <tr style="height:34px"><td class="dk">7:30–8:00</td><td>Evening SG</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td></tr>
-  <tr style="height:34px"><td class="dk">8:00–11:00</td><td>Hang Out with Students</td><td colspan="5" class="tbd" style="text-align:center">Hang Out with Students · all groups</td></tr>
-  <tr style="height:34px"><td class="dk">11:00–12:00</td><td>Debrief / Lights Out</td><td colspan="5" class="tbd" style="text-align:center">Debrief / Lights Out · all groups</td></tr>
-  </table></div>
-  <p class="note">* Daily themes subject to change</p>
-  <h2>Task Pool</h2>
-  <div class="pool">
-    <div>· 13 testimonies (5 VBS + 8 retreat)<br>· VBS dance lead<br>· VBS crafts × 5<br>· VBS games × 5<br>· Devotionals × 4 (retreat)</div>
-    <div>· VBS Bible teach × 5<br>· Retreat AM activities × 3<br>· Retreat PM activities × 3<br>· Fri Olympics<br>· Street EV</div>
+  <div class="stu-seg" id="tmf-sched-tabs">
+    <button class="on" onclick="tmfSchedTab('week',this)">Week</button>
+    <button onclick="tmfSchedTab('mon',this)">Mon</button>
+    <button onclick="tmfSchedTab('tue',this)">Tue</button>
+    <button onclick="tmfSchedTab('wed',this)">Wed</button>
+    <button onclick="tmfSchedTab('thu',this)">Thu</button>
+    <button onclick="tmfSchedTab('fri',this)">Fri</button>
   </div>
+  <div id="tmf-sched-body"></div>
+  <p class="note">* Daily themes subject to change</p>
   <h2>Team Roster</h2>
   <div class="roster">
     <div class="rcard" style="background:var(--ra);border:1px solid var(--sa)"><h4>Team A</h4><p>Esther · Jane · Grace · Irene</p></div>
@@ -1753,6 +1734,62 @@ function tryTMF(btn){
   pnSyncFromSheet();
   ciSyncFromSheet();
 }
+// TMF Schedule — one data array drives both the full week grid (all 5 days side
+// by side, needs horizontal scroll) and a single-day view (vertical list, no
+// scroll needed) so the schedule is actually usable on an iPhone. "all:true" rows
+// (meals, free time, lights out) apply the same to every day; the rest carry a
+// per-day value, with "—" meaning that session doesn't happen that day (Monday
+// only has the evening block, since the group arrives that afternoon).
+var TMF_SCHED_ROWS=[
+  {t:'7:00',s:'Wake Up',all:'Wake Up'},
+  {t:'7:30–8:30',s:'Breakfast',all:'Breakfast'},
+  {t:'8:30–8:40',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global'},
+  {t:'8:40–8:50',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther'},
+  {t:'8:50–9:00',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
+  {t:'9:00–9:10',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren'},
+  {t:'9:10–9:35',s:'Personal Devo Time',all:'Personal Devo Time'},
+  {t:'9:35–10:30',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B'},
+  {t:'10:30–12:00',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B'},
+  {t:'12:00–1:00',s:'Lunch',all:'Lunch'},
+  {t:'1:00–1:10',s:'Skit',mon:'—',tue:'Global',wed:'Global',thu:'Global',fri:'Global'},
+  {t:'1:10–1:20',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren'},
+  {t:'1:30–3:00',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)'},
+  {t:'3:00–5:30',s:'Hang Out with Students',all:'Hang Out with Students'},
+  {t:'5:30–6:30',s:'Dinner',all:'Dinner'},
+  {t:'6:30–6:45',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
+  {t:'6:45–7:15',s:'Sermon',mon:'Andrew',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew'},
+  {t:'7:15–7:30',s:'Response Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team'},
+  {t:'7:30–8:00',s:'Evening SG',mon:'Global·Qs:A',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A'},
+  {t:'8:00–11:00',s:'Hang Out with Students',all:'Hang Out with Students'},
+  {t:'11:00–12:00',s:'Debrief / Lights Out',all:'Debrief / Lights Out'}
+];
+function tmfSchedWeekHtml(){
+  var html='<div class="dbyd-scroll"><table class="dbyd"><tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>';
+  TMF_SCHED_ROWS.forEach(function(r){
+    if(r.all){
+      html+='<tr><td class="dk">'+r.t+'</td><td>'+r.s+'</td><td colspan="5" class="tbd" style="text-align:center">'+r.all+' · all groups</td></tr>';
+    }else{
+      html+='<tr><td class="dk">'+r.t+'</td><td>'+r.s+'</td><td class="tbd">'+r.mon+'</td><td class="cg">'+r.tue+'</td><td class="cg">'+r.wed+'</td><td class="cg">'+r.thu+'</td><td class="cg">'+r.fri+'</td></tr>';
+    }
+  });
+  html+='</table></div>';
+  return html;
+}
+function tmfSchedDayHtml(day){
+  var html='<div class="on-sched">';
+  TMF_SCHED_ROWS.forEach(function(r){
+    var val=r.all?r.all:r[day];
+    if(val==='—')return; // doesn't happen this day
+    html+='<div class="on-row"><span class="on-time">'+r.t+'</span><div><div class="on-label">'+r.s+'</div>'+(val&&val!==r.s?'<div class="on-sub">'+val+'</div>':'')+'</div></div>';
+  });
+  html+='</div>';
+  return html;
+}
+function tmfSchedTab(mode,btn){
+  document.querySelectorAll('#tmf-sched-tabs button').forEach(function(b){b.classList.toggle('on',b===btn);});
+  document.getElementById('tmf-sched-body').innerHTML=(mode==='week')?tmfSchedWeekHtml():tmfSchedDayHtml(mode);
+}
+tmfSchedTab('week',document.querySelector('#tmf-sched-tabs button'));
 function goVbsGroups(){
   var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
   go('groups',gb);

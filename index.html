@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-17T11:04:48+08:00";
-var APP_VERSION=221; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-17T11:09:21+08:00";
+var APP_VERSION=222; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v221 · Jul 17, 2026 · 11:04 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v222 · Jul 17, 2026 · 11:09 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -3087,17 +3087,20 @@ function renderToday(){
 // Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /
 // Up next" card and the full schedule table below it, so the two never drift apart.
 function getScheduleRows(d){
+  // Friday's Games run 30min longer (until 11:30, feeding straight into an
+  // 11:30-12:30 Lunch) instead of the usual 11:00 cutoff + separate Wash up point.
+  var friGames=(d.dow==='FRI');
   var rows=[
     {s:510,e:540,l:'Check-in',cls:'gray',t:'8:30–9:00'},
-    {s:555,e:660,l:'Morning Program',cls:'hdr',t:'9:15–11:00'},
+    {s:555,e:(friGames?690:660),l:'Morning Program',cls:'hdr',t:friGames?'9:15–11:30':'9:15–11:00'},
     {s:555,e:585,l:'Opening Praise',cls:'ta',t:'9:15–9:45'},
     {s:585,e:590,l:'Testimony',cls:'gray',t:'9:45–9:50'},
     {s:590,e:595,l:'Skit/Dance',cls:'tg',t:'9:50–9:55'},
     {s:595,e:605,l:'Bible teaching',cls:'tc',t:'9:55–10:05'},
     {s:605,e:635,l:'Small group + Craft',cls:'ta',t:'10:05–10:35'},
-    {s:635,e:660,l:'Games',cls:'tb',t:'10:35–11:00'},
-    {s:660,e:660,l:'Wash up',cls:'gray',t:'11:00'}
+    {s:635,e:(friGames?690:660),l:'Games',cls:'tb',t:friGames?'10:35–11:30':'10:35–11:00'}
   ];
+  if(!friGames)rows.push({s:660,e:660,l:'Wash up',cls:'gray',t:'11:00'});
   // Thursday stays on-site (no off-site trip this day) — lunch runs later and
   // Game Time/Half Time/Winners Announcement replace the usual off-site-park
   // afternoon block below.
@@ -3116,7 +3119,7 @@ function getScheduleRows(d){
     // Last day: Carnival moved to Thrive (was Triangle Park), ending in send-off
     // instead of the usual off-site-park bus loop.
     rows.push(
-      {s:660,e:705,l:'Lunch',cls:'gray',t:'11:00–11:45'},
+      {s:690,e:750,l:'Lunch',cls:'gray',t:'11:30–12:30'},
       {s:750,e:1050,l:'Afternoon Program',cls:'hdr',t:'12:30–5:30'},
       {s:750,e:930,l:'Carnival @ Thrive (changed from Triangle Park)',cls:'tb',t:'12:30–3:30'},
       {s:900,e:900,l:'Start wrapping up (slowly)',cls:'gray',t:'3:00'},

@@ -630,8 +630,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-17T11:09:21+08:00";
-var APP_VERSION=222; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-17T14:38:34+08:00";
+var APP_VERSION=224; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -655,7 +655,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v222 · Jul 17, 2026 · 11:09 AM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v224 · Jul 17, 2026 · 2:38 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1186,6 +1186,40 @@ setInterval(renderBuildAge,60000);
     <div id="sg-list"></div>
   </div>
 </div>
+<div id="pane-tmfsched" class="pane">
+  <div class="stu-title" style="color:#16a34a">TMF Schedule</div>
+  <div class="stu-sub">Retreat · Day-by-Day · Jul 20–24</div>
+  <h3>Youth Retreat · Family of God <span style="font-size:13px;font-weight:400;color:var(--text3)">Eph 2:19-20</span></h3>
+  <div style="font-size:13px;color:var(--text2);line-height:1.6;margin:6px 0 14px;padding:10px 14px;background:var(--surface);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;"><sup>19</sup> You are no longer foreigners and strangers, but fellow citizens with God's people and also members of his household, <sup>20</sup> built on the foundation of the apostles and prophets, with Christ Jesus himself as the chief cornerstone.</div>
+  <div class="retdays">
+    <div class="dcard" style="background:var(--rn);border:1px solid var(--sn);color:var(--text)"><div class="dl">MON</div><div class="db">Introduction</div><div>Vision · Eph 2:19</div></div>
+    <div class="dcard" style="background:var(--rb);border:1px solid var(--sb);color:var(--text);font-weight:500;"><div class="dl">TUE</div><div class="db">Moses</div><div style="color:var(--text2)">God's great love · Exodus 3</div></div>
+    <div class="dcard" style="background:var(--ra);border:1px solid var(--sa);color:var(--text);font-weight:500;"><div class="dl">WED</div><div class="db">Abraham</div><div style="color:var(--text2)">Loving God · Genesis 22</div></div>
+    <div class="dcard" style="background:var(--rc);border:1px solid var(--sc);color:var(--text);font-weight:500;"><div class="dl">THU</div><div class="db">Joseph</div><div style="color:var(--text2)">Loving others · Genesis 50</div></div>
+    <div class="dcard" style="background:var(--rg);border:1px solid var(--sg);color:var(--text);font-weight:500;"><div class="dl">FRI</div><div class="db">Loving the Nations</div><div style="color:var(--text2)">Matthew 28</div></div>
+  </div>
+  <div class="dbyd-scroll"><table class="dbyd">
+  <tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>
+  <tr style="height:24px"><td class="dk">8:30–8:40</td><td>Testimony #1</td><td class="tbd">—</td><td class="redact">Sammy</td><td class="redact">Jean</td><td class="redact">Becca</td><td class="redact">Esther</td></tr>
+  <tr style="height:24px"><td class="dk">8:40–8:50</td><td>Worship</td><td class="tbd">—</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
+  <tr style="height:27px"><td class="dk">8:50–9:05</td><td>Devotional</td><td class="tbd">—</td><td class="cp">Andrew</td><td class="redact">Keren</td><td class="redact">Keren</td><td class="redact">Keren</td></tr>
+  <tr style="height:45px"><td class="dk">9:35–10:30</td><td>Morning SG</td><td class="tbd">—</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td><td class="cg">Global·Qs:B</td></tr>
+  <tr style="height:60px"><td class="dk">10:30–12:00</td><td>AM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cc">Team C</td><td class="ca">Team A</td><td class="cb">Team B</td></tr>
+  <tr style="height:47px"><td class="dk">12:00–1:00</td><td>Lunch</td><td colspan="5" class="tbd" style="text-align:center">Lunch · all groups</td></tr>
+  <tr style="height:24px"><td class="dk">1:00–1:10</td><td>Skit</td><td class="tbd">—</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
+  <tr style="height:24px"><td class="dk">1:10–1:20</td><td>Testimony #2</td><td class="tbd">—</td><td class="redact">Irene</td><td class="redact">Jane</td><td class="redact">Caleb</td><td class="redact">Keren</td></tr>
+  <tr style="height:60px"><td class="dk">1:30–3:00</td><td>PM Activity</td><td class="tbd">—</td><td class="ca">Team A</td><td class="cb">Team B</td><td class="cc">Team C</td><td class="cg">Global</td></tr>
+  <tr style="height:88px"><td class="dk">3:00–5:30</td><td>Free time</td><td colspan="5" class="tbd" style="text-align:center">Free time · all groups</td></tr>
+  <tr style="height:34px"><td class="dk">5:30–6:30</td><td>Dinner</td><td colspan="5" class="tbd" style="text-align:center">Dinner · all groups</td></tr>
+  <tr style="height:27px"><td class="dk">6:30–6:45</td><td>Worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
+  <tr style="height:22px"><td class="dk">6:45–6:50</td><td>Skit</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td><td class="cg">Global</td></tr>
+  <tr style="height:34px"><td class="dk">6:50–7:20</td><td>Sermon</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td><td class="cp">Andrew</td></tr>
+  <tr style="height:24px"><td class="dk">7:20–7:30</td><td>Response worship</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td><td class="cg">Worship Team</td></tr>
+  <tr style="height:34px"><td class="dk">7:30–8:00</td><td>Evening SG</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td><td class="cg">Global·Qs:A</td></tr>
+  <tr style="height:34px"><td class="dk">8:00–11:00</td><td>Hang Out with Students</td><td colspan="5" class="tbd" style="text-align:center">Hang Out with Students · all groups</td></tr>
+  </table></div>
+  <p class="note">* Daily themes subject to change</p>
+</div>
 <div id="pane-overnight" class="pane">
   <div class="stu-title" style="color:#9333ea">Special Overnight</div>
   <div class="stu-sub">VBS overnight event · rosters &amp; schedule (tentative)</div>
@@ -1517,9 +1551,17 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.2-9-8C1.5 9.5 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.5 0 4.5 4 3 6.5-2.5 3.8-9 8-9 8z"/></svg>
     <span>Pray</span>
   </button>
-  <button class="tabitem" style="--accent:#2563eb" onclick="tryGroups(this)" aria-label="Small Groups">
+  <button class="tabitem" style="--accent:#2563eb;display:none" onclick="tryGroups(this)" aria-label="Small Groups">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#16a34a" onclick="tryTMF(this)" aria-label="TMF">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><path d="M3 19c0-2.8 2.2-4.8 5.5-4.8h1M21 19c0-2.8-2.2-4.8-5.5-4.8h-1M11.5 14.2c-2.5 0-4.5 1.8-4.5 4.8M12.5 14.2c2.5 0 4.5 1.8 4.5 4.8"/><circle cx="12" cy="9" r="2.8"/></svg>
+    <span>TMF</span>
+  </button>
+  <button class="tabitem" style="--accent:#16a34a" onclick="go('tmfsched',this)" aria-label="TMF Schedule">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
+    <span>Schedule</span>
   </button>
   <button class="tabitem" style="--accent:#9333ea;display:none" onclick="go('overnight',this)" aria-label="Special Overnight">
     <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -1626,6 +1668,15 @@ function checkTripPw(){
 function closeTripGate(){document.getElementById('trip-gate').style.display='none';}
 function goTripPublic(btn){_tripFull=true;initTripDays();go('t',btn);}
 function tryGroups(btn){go('groups',btn);pnSyncFromSheet();ciSyncFromSheet();}
+// TMF (the youth retreat, Jul 20-24) reuses the same Groups pane/rendering as VBS —
+// just opens straight into Retreat mode instead of defaulting to VBS.
+function tryTMF(btn){
+  go('groups',btn);
+  var retreatBtn=document.querySelectorAll('#sg-event button')[1];
+  if(retreatBtn)sgEvent('retreat',retreatBtn);
+  pnSyncFromSheet();
+  ciSyncFromSheet();
+}
 function goVbsGroups(){
   var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
   go('groups',gb);

@@ -97,6 +97,10 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .dbyd td.dk{font-weight:600;color:var(--text);white-space:nowrap;}
 @media(max-width:680px){.dbyd td.dk,.dbyd th:first-child,.dbyd th:nth-child(2),.dbyd td:first-child,.dbyd td:nth-child(2){position:sticky;background:var(--bg);z-index:1;}.dbyd td:first-child,.dbyd th:first-child{left:0;min-width:70px;}.dbyd td:nth-child(2),.dbyd th:nth-child(2){left:70px;min-width:60px;box-shadow:2px 0 4px rgba(0,0,0,0.1);}}
 .dbyd td.tbd{color:var(--text3);font-style:italic;}
+/* Week view: session divider rows so the full week reads as blocks, not one long list */
+.dbyd td.wk-sess{background:#7c3aed;color:#fff;font-weight:800;font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:6px 8px;position:sticky;left:0;}
+.dbyd tr.wk-all td{background:var(--surface2);}
+.dbyd td.wk-allval{text-align:center;font-style:normal;color:var(--text2);font-weight:600;}
 .dbyd td.redact{color:var(--text);}
 .dbyd td.ca{background:var(--ra);font-weight:500;}
 .dbyd td.cb{background:var(--rb);font-weight:500;}
@@ -657,7 +661,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v238 · Jul 18, 2026 · 9:11 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v239 · Jul 18, 2026 · 9:14 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1533,7 +1537,7 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
   </button>
-  <button class="tabitem" style="--accent:#16a34a" onclick="goCheckin(this)" aria-label="Check-In">
+  <button class="tabitem" style="--accent:#16a34a;display:none" onclick="goCheckin(this)" aria-label="Check-In">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
     <span>Check-In</span>
   </button>
@@ -1561,15 +1565,11 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
     <span>Overnight</span>
   </button>
-  <button class="tabitem" style="--accent:#16a34a;display:none" onclick="goFaithDash(this)" aria-label="Faith">
-    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12c-2.5 4.5-9.5 9-9.5 9z"/><path d="M9 12h2l1-2 2 4 1-2h1"/></svg>
-    <span>Faith</span>
-  </button>
   <button class="tabitem" style="--accent:#ec4899;display:none" onclick="goParkMap(this)" aria-label="Park Map">
     <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
     <span>Park Map</span>
   </button>
-  <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('sun',this)" aria-label="Sunday">
+  <button class="tabitem" style="--accent:#7c3aed" onclick="go('sun',this)" aria-label="Sunday">
     <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
     <span>Sunday</span>
   </button>
@@ -1679,7 +1679,7 @@ function tryTMF(btn){
 // only has the evening block, since the group arrives that afternoon).
 var TMF_SESSION_NAMES={1:'Session 1 · Morning Worship',2:'Session 2 · Morning Activity',3:'Session 3 · Afternoon',4:'Session 4 · Evening Worship'};
 var TMF_SCHED_ROWS=[
-  {t:'7:00',tr:'7:00–8:30',dur:'90 min',s:'Wake Up &amp; Breakfast',all:'Wake Up &amp; Breakfast',session:1,standalone:true,cls:'gray'},
+  {t:'7:00',tr:'7:00–8:30',dur:'90 min',s:'Pre-Session Time',all:'Pre-Session Time',session:1,standalone:true,cls:'gray'},
   {t:'8:30',tr:'8:30–8:40',dur:'10 min',s:'Skit #1',mon:'—',tue:'Lost Son',wed:'Good Good Father',thu:'Everything',fri:'Heal Our Land',session:1,cls:'tg',songTitle:true},
   {t:'8:40',tr:'8:40–8:50',dur:'10 min',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'Jean',thu:'Becca',fri:'Esther',session:1,cls:'gray'},
   {t:'8:50',tr:'8:50–9:00',dur:'10 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:1,cls:'tg'},
@@ -1710,9 +1710,17 @@ function tmfActivityCls(val){
 }
 function tmfSchedWeekHtml(){
   var html='<div class="dbyd-scroll"><table class="dbyd"><tr><th>Time</th><th>Session</th><th>MON*</th><th>TUE*</th><th>WED*</th><th>THU*</th><th>FRI*</th></tr>';
+  // Break the week into Session 1–4 blocks with a divider row, so it scans as chunks
+  // instead of one 19-row wall. Standalone rows (meals, pre-session, free time) don't
+  // open a block — they're logistics that sit between sessions.
+  var curSession=null;
   TMF_SCHED_ROWS.forEach(function(r){
+    if(!r.standalone&&r.session!==curSession){
+      curSession=r.session;
+      html+='<tr><td colspan="7" class="wk-sess">'+TMF_SESSION_NAMES[curSession]+'</td></tr>';
+    }
     if(r.all){
-      html+='<tr><td class="dk">'+r.tr+'</td><td>'+r.s+'</td><td colspan="5" class="tbd" style="text-align:center">'+r.all+' · all groups</td></tr>';
+      html+='<tr class="wk-all"><td class="dk">'+r.tr+'</td><td>'+r.s+'</td><td colspan="5" class="wk-allval">'+r.all+' · all groups</td></tr>';
     }else{
       html+='<tr><td class="dk">'+r.tr+'</td><td>'+r.s+'</td><td class="tbd">'+r.mon+'</td><td class="cg">'+r.tue+'</td><td class="cg">'+r.wed+'</td><td class="cg">'+r.thu+'</td><td class="cg">'+r.fri+'</td></tr>';
     }

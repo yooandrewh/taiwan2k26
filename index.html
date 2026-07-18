@@ -657,7 +657,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v237 · Jul 18, 2026 · 9:03 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v238 · Jul 18, 2026 · 9:11 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
@@ -1176,10 +1176,6 @@ setInterval(renderBuildAge,60000);
   <div id="groups-content">
     <div class="stu-title" style="color:#2563eb">Small Groups</div>
     <div class="stu-sub">Assignments by grade</div>
-    <div class="stu-seg" id="sg-event">
-      <button class="on" onclick="sgEvent('vbs',this)">VBS · Jul 13–17</button>
-      <button onclick="sgEvent('retreat',this)">Retreat · Jul 20–24</button>
-    </div>
     <div class="stu-seg" id="sg-seg" style="margin-top:6px">
       <button class="on" onclick="sgMode('boys',this)">Boys</button>
       <button onclick="sgMode('girls',this)">Girls</button>
@@ -1773,8 +1769,6 @@ tmfSchedTab('week',document.querySelector('#tmf-sched-tabs button'));
 function goVbsGroups(){
   var gb=document.querySelector('.tabbar .tabitem[aria-label="Small Groups"]');
   go('groups',gb);
-  var vbsBtn=document.querySelector('#sg-event button');
-  if(vbsBtn) sgEvent('vbs',vbsBtn);
   window.scrollTo(0,0);
   pnSyncFromSheet();
   ciSyncFromSheet();
@@ -2105,7 +2099,7 @@ const VBS_SG={
 // can spot at a glance who's on both rosters. Defined here (not near TEACHER_GROUPS
 // further down) because sgRender() below is invoked immediately at parse time, and
 // this needs to exist before that first call.
-var RETREAT_NAMES=['Andrew Yoo','Caleb Su','Esther Yang','Keren Choi','Jean Kim','Andrew Back','Jane Kim','Becca Park','Rubin Jang','Owen Lee','Irene Song','Sammy Taing','Timothy Kim','Grace Yoon','Janet Phee','Ethan Nam','Lane Hartshorne','Claire','Eliana Wan','Owen Wu','Owen Nam','Ruhamah','Yuqi Chiu','Ezra','Hao-Chen Li','Adeline','Ellery','Harry','Grace','Kara','Ryan Lin','Stephanie','Grace Hartshorne','Queenie','Est-elle','Hsin Hsin'];
+var RETREAT_NAMES=['Andrew Yoo','Caleb Su','Esther Yang','Keren Choi','Jean Kim','Andrew Back','Jane Kim','Becca Park','Rubin Jang','Owen Lee','Irene Song','Sammy Taing','Timothy Kim','Grace Yoon','Janet Phee','Ethan Nam','Lane Hartshorne','Claire','Eliana Wan','Owen Wu','Owen Nam','Ruhamah','Yuqi Chiu','Hao-Chen Li','Adeline','Ellery','Harry','Grace','Kara','Ryan Lin','Stephanie','Grace Hartshorne','Queenie','Est-elle','Hsin Hsin'];
 function isGoingToRetreat(name){return RETREAT_NAMES.indexOf(name)>=0;}
 function retreatBadge(name){return isGoingToRetreat(name)?'<span class="retreat-badge">🏕️ Retreat</span>':'';}
 const RETREAT_SG={
@@ -2115,7 +2109,7 @@ const RETREAT_SG={
     {id:"RB2",leads:[{name:"Jean Kim",age:20,role:"L"}],
      kids:[{name:"Gabriel",g:10},{name:"Samuel",g:10},{name:"Timothy Kim",g:10},{name:"Ethan Nam",g:9},{name:"Hamish",g:9}]},
     {id:"RB3",leads:[{name:"Andrew Back",age:19,role:"L"}],
-     kids:[{name:"Owen Nam",g:8},{name:"Ezra",g:8},{name:"Jonathan",g:8}]},
+     kids:[{name:"Owen Nam",g:8},{name:"Ezra Biers",g:8},{name:"Jonathan",g:8}]},
     {id:"RB4",leads:[{name:"Owen Lee",age:19,role:"L"},{name:"Rubin Jang",age:19,role:"L"}],
      kids:[{name:"Peter",g:6},{name:"Josiah",g:7},{name:"Jude",g:7}]}
   ],
@@ -2131,7 +2125,7 @@ const RETREAT_SG={
   ]
 };
 var sgCurrent='boys';
-var sgCurrentEvent='vbs';
+var sgCurrentEvent='retreat';   // VBS is over — Small Groups shows the retreat only
 var GR_COLORS={
   '-1':'#d946ef',
   0:'#a855f7',1:'#6366f1',2:'#3b82f6',3:'#06b6d4',4:'#22c55e',
@@ -2265,11 +2259,8 @@ function closeKidModal(){closeCiModal();}
 function sgNotesLog(){try{return JSON.parse(localStorage.getItem('person_notes')||'{}');}catch(e){return {};}}
 // Shows both states — recorded AND not-yet-recorded — so recorders can spot who
 // still needs a Faith & Notes entry without opening every single person.
-function sgFaithBadge(name,notesLog){
-  var e=notesLog[name];
-  if(e&&e.christian)return '<span class="sg-submitted">✅ Recorded</span>';
-  return '<span class="sg-notrecorded">⬜ Not recorded</span>';
-}
+// Faith/church status is no longer tracked — badge intentionally renders nothing.
+function sgFaithBadge(name,notesLog){return '';}
 // Faith & Notes dashboard — a dedicated tab (separate from Groups) answering "how
 // many kids have had their faith status recorded" at a glance, with a per-group
 // breakdown so recorders can see exactly who's still missing.
@@ -2884,29 +2875,12 @@ function pnSectionHtml(name,grpId){
   var pending=e.synced===false;
   var esc=function(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
   var html='<div class="pn-section">';
-  html+='<div class="pn-title">📝 Faith &amp; Notes</div>';
-  html+='<div class="pn-toggle-row">';
-  html+='<button type="button" class="pn-toggle yes'+(christian==='yes'?' on':'')+'" id="pn-yes" onclick="pnSetChristian(\'yes\')">Christian: Yes</button>';
-  html+='<button type="button" class="pn-toggle no'+(christian==='no'?' on':'')+'" id="pn-no" onclick="pnSetChristian(\'no\')">No</button>';
-  html+='</div>';
-  html+='<div class="pn-recorded" id="pn-recorded" style="'+(christian?'':'display:none')+'">✅ Church status recorded'+(christian==='yes'&&church?' — '+esc(church):'')+'</div>';
-  html+='<input type="text" class="pn-church" id="pn-church" placeholder="Which church?" value="'+esc(church)+'" style="'+(christian==='yes'?'':'display:none')+'">';
-  html+='<textarea class="pn-notes" id="pn-notes" placeholder="Other notes for group leaders…">'+esc(notes)+'</textarea>';
+  html+='<div class="pn-title">📝 Notes</div>';
+  html+='<textarea class="pn-notes" id="pn-notes" placeholder="Notes for group leaders…">'+esc(notes)+'</textarea>';
   html+='<button type="button" class="pn-save-btn" onclick="pnSave(\''+name.replace(/'/g,"\\'")+'\',\''+grpId+'\')">💾 Save Notes</button>';
   html+='<div class="pn-status'+(pending?' pending':'')+'" id="pn-status">'+(pending?'⏳ Saving to shared sheet…':(e.updatedAt?'✅ Synced across all devices':'Not saved yet'))+'</div>';
   html+='</div>';
   return html;
-}
-function pnSetChristian(val){
-  var yesBtn=document.getElementById('pn-yes'),noBtn=document.getElementById('pn-no'),church=document.getElementById('pn-church');
-  if(!yesBtn||!noBtn)return;
-  // Tapping the already-selected choice clears it back to unanswered, rather than
-  // being stuck once picked.
-  var alreadyOn=(val==='yes'&&yesBtn.classList.contains('on'))||(val==='no'&&noBtn.classList.contains('on'));
-  var newVal=alreadyOn?'':val;
-  yesBtn.classList.toggle('on',newVal==='yes');
-  noBtn.classList.toggle('on',newVal==='no');
-  if(church)church.style.display=newVal==='yes'?'block':'none';
 }
 function pnPostNote(name,entry){
   if(!CHECKIN_ENDPOINT)return;
@@ -2915,26 +2889,18 @@ function pnPostNote(name,entry){
   })}).catch(function(){});
 }
 function pnSave(name,grpId){
-  var christian=document.getElementById('pn-yes').classList.contains('on')?'yes':(document.getElementById('pn-no').classList.contains('on')?'no':'');
-  var church=(document.getElementById('pn-church').value||'').trim();
+  // Faith/church status is no longer collected — notes only. Any christian/church
+  // value already saved on a person is preserved rather than blanked out.
   var notes=(document.getElementById('pn-notes').value||'').trim();
   var log=pnGetLog();
+  var prev=log[name]||{};
   var updatedAt=Date.now();
-  log[name]={group:grpId,christian:christian,church:christian==='yes'?church:'',notes:notes,updatedAt:updatedAt,synced:false,tries:0,lastTry:updatedAt};
+  log[name]={group:grpId,christian:prev.christian||'',church:prev.church||'',notes:notes,updatedAt:updatedAt,synced:false,tries:0,lastTry:updatedAt};
   pnSaveLog(log);
   pnPostNote(name,log[name]);
   var status=document.getElementById('pn-status');
   if(status){status.textContent='⏳ Saving to shared sheet…';status.classList.add('pending');}
-  var recorded=document.getElementById('pn-recorded');
-  if(recorded){
-    if(christian){
-      recorded.style.display='block';
-      recorded.textContent='✅ Church status recorded'+(christian==='yes'&&church?' — '+church:'');
-    }else{
-      recorded.style.display='none';
-    }
-  }
-  ciToast(christian?'✅ Church status recorded for '+name:'💾 Notes saved for '+name);
+  ciToast('💾 Notes saved for '+name);
   if(document.getElementById('sg-list'))sgRender();
   if(document.getElementById('faith-body'))renderFaithDash();
 }

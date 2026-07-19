@@ -23,6 +23,14 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0e0e0c;--text:#f0eee8;--text2:#b8b5ac;--text3:#807d75;--border:#2a2825;
   --ra:rgba(245,100,80,0.2);--rb:rgba(80,130,255,0.2);--rc:rgba(50,200,100,0.2);
   --rg:rgba(180,120,255,0.2);--rn:rgba(160,160,160,0.1);}}
+/* Manual theme toggle overrides — win over the OS-level media query above
+   since an attribute selector on :root is more specific than a bare :root. */
+:root[data-theme="dark"]{--bg:#0e0e0c;--text:#f0eee8;--text2:#b8b5ac;--text3:#807d75;--border:#2a2825;
+  --ra:rgba(245,100,80,0.2);--rb:rgba(80,130,255,0.2);--rc:rgba(50,200,100,0.2);
+  --rg:rgba(180,120,255,0.2);--rn:rgba(160,160,160,0.1);}
+:root[data-theme="light"]{--bg:#fafaf7;--text:#1a1a1a;--text2:#555;--text3:#888;--border:#d4d4d0;
+  --ra:rgba(185,28,28,0.15);--rb:rgba(37,99,235,0.15);--rc:rgba(22,163,74,0.15);
+  --rg:rgba(124,58,237,0.15);--rn:rgba(100,116,139,0.1);}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{overscroll-behavior-y:none;}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,system-ui,sans-serif;font-size:13px;padding:16px;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;}
@@ -154,6 +162,8 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 /* ---- Students tab ---- */
 :root{--surface:#ffffff;--surface2:#eceae4;}
 @media(prefers-color-scheme:dark){:root{--surface:#1b1a17;--surface2:#26241f;}}
+:root[data-theme="dark"]{--surface:#1b1a17;--surface2:#26241f;}
+:root[data-theme="light"]{--surface:#ffffff;--surface2:#eceae4;}
 .tabs{position:sticky;top:0;background:var(--bg);z-index:50;}
 .tab.active.ts{color:#0d9488;border-bottom-color:#0d9488;}
 .stu-title{font-size:22px;font-weight:700;color:#0d9488;padding:12px 0 2px;}
@@ -203,6 +213,14 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .ht-pnb{background:#450a0a;color:#fca5a5;}
 .ht-bday{background:#431407;color:#fdba74;}
 }
+:root[data-theme="dark"] .ht-ret{background:#422006;color:#fde68a;}
+:root[data-theme="dark"] .ht-fpc{background:#1e3a5f;color:#93c5fd;}
+:root[data-theme="dark"] .ht-pnb{background:#450a0a;color:#fca5a5;}
+:root[data-theme="dark"] .ht-bday{background:#431407;color:#fdba74;}
+:root[data-theme="light"] .ht-ret{background:#fef9c3;color:#92400e;}
+:root[data-theme="light"] .ht-fpc{background:#eff6ff;color:#2563eb;}
+:root[data-theme="light"] .ht-pnb{background:#fef2f2;color:#b91c1c;}
+:root[data-theme="light"] .ht-bday{background:#fff7ed;color:#c2410c;}
 .hb-row{margin-bottom:10px;}
 .hb-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
 .hb-lbl{font-size:12.5px;color:var(--text);}
@@ -218,6 +236,8 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 /* ---- iOS bottom tab bar ---- */
 :root{--bar:rgba(250,250,247,0.82);}
 @media(prefers-color-scheme:dark){:root{--bar:rgba(18,18,15,0.82);}}
+:root[data-theme="dark"]{--bar:rgba(18,18,15,0.82);}
+:root[data-theme="light"]{--bar:rgba(250,250,247,0.82);}
 body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:100;display:flex;background:var(--bar);border-top:1px solid var(--border);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);padding-bottom:env(safe-area-inset-bottom);}
 .tabitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 0 7px;border:none;background:none;cursor:pointer;color:var(--text3);font-size:10px;font-weight:600;-webkit-tap-highlight-color:transparent;}
@@ -430,6 +450,8 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .pn-status.pending{color:#b45309;font-weight:700;}
 .sg-blacked{display:inline-block;width:88px;height:13px;background:#1a1a1a;border-radius:2px;vertical-align:middle;}
 @media(prefers-color-scheme:dark){.sg-blacked{background:#c4c3bc;}}
+:root[data-theme="dark"] .sg-blacked{background:#c4c3bc;}
+:root[data-theme="light"] .sg-blacked{background:#1a1a1a;}
 /* Memorize */
 .mv-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 15px;margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:12px;}
 .mv-card:active{background:var(--surface2);}
@@ -601,6 +623,26 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 </head>
 <body>
 <script>
+// Apply any saved manual theme choice immediately, before first paint, so
+// there's no flash of the wrong theme. Must run before any other script/CSS
+// that reads the resulting colors.
+try{
+  var _savedTheme=localStorage.getItem('theme');
+  if(_savedTheme==='light'||_savedTheme==='dark')document.documentElement.setAttribute('data-theme',_savedTheme);
+}catch(e){}
+function toggleTheme(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var mql=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // First tap flips away from whatever's currently showing (explicit or OS-driven).
+  var showingDark=cur?cur==='dark':mql;
+  var next=showingDark?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('theme',next);}catch(e){}
+  var btn=document.getElementById('theme-toggle-btn');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+}
+</script>
+<script>
 // Taiwan time (UTC+8) helper — defined first, at the very top, since several
 // later scripts (Check-In sync, Today tab, Trip day picker) all depend on it
 // during their initial page-load render, not just on later user interaction.
@@ -636,8 +678,8 @@ function appRefresh(btn){
 }
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
-var BUILD_TIME="2026-07-18T19:01:19+08:00";
-var APP_VERSION=235; // bump alongside version.json's "v" on every deploy
+var BUILD_TIME="2026-07-19T21:36:11+08:00";
+var APP_VERSION=241; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -661,8 +703,16 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v240 · Jul 18, 2026 · 10:32 PM (Taiwan)<button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v241 · Jul 19, 2026 · 9:36 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
+<script>
+(function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var mql=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var showingDark=cur?cur==='dark':mql;
+  document.getElementById('theme-toggle-btn').textContent=showingDark?'☀️':'🌙';
+})();
+</script>
 <div class="build-age" id="build-age"></div>
 <button class="build-update-btn" id="build-update-btn" onclick="appRefresh(this)">
   <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
@@ -1569,7 +1619,7 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><path d="M9 3 3 5.5v15L9 18l6 2.5 6-2.5v-15L15 5.5 9 3z"/><path d="M9 3v15M15 5.5v15"/></svg>
     <span>Park Map</span>
   </button>
-  <button class="tabitem" style="--accent:#7c3aed" onclick="go('sun',this)" aria-label="Sunday">
+  <button class="tabitem" style="--accent:#7c3aed;display:none" onclick="go('sun',this)" aria-label="Sunday">
     <svg viewBox="0 0 24 24"><path d="M12 3v3.5M10.5 4.5h3"/><path d="M4 21V11l8-4.5 8 4.5v10"/><path d="M9.5 21v-5a2.5 2.5 0 0 1 5 0v5"/></svg>
     <span>Sunday</span>
   </button>
@@ -1686,11 +1736,11 @@ var TMF_SCHED_ROWS=[
   {t:'9:00',tr:'9:00–9:10',dur:'10 min',s:'Devotional',mon:'—',tue:'Andrew',wed:'Keren',thu:'Keren',fri:'Keren',session:1,cls:'gray'},
   {t:'9:10',tr:'9:10–9:35',dur:'25 min',s:'Personal Devo Time',all:'Personal Devo Time',session:1,cls:'gray'},
   {t:'9:35',tr:'9:35–10:30',dur:'55 min',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2,cls:'tg'},
-  {t:'10:30',tr:'10:30–12:00',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2,notes:{tue:'SG Name/Banner Making Presentation',thu:'Mad Gab, Scattergories, Heads Up'}},
+  {t:'10:30',tr:'10:30–12:00',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2,notes:{tue:'Banner Making, Chant Making, 3rd game TBA — in small groups',wed:'Skit Making — materials: props',thu:'Mad Gab, Scattergories, Heads Up'}},
   {t:'12:00',tr:'12:00–1:00',dur:'60 min',s:'Lunch',all:'Lunch',session:3,standalone:true,cls:'gray'},
   {t:'1:00',tr:'1:00–1:10',dur:'10 min',s:'Dance',mon:'—',tue:'The Joy',wed:'Thank God I\'m Free',thu:'Joyful Joyful',fri:'Blood',session:3,cls:'tg',songTitle:true},
   {t:'1:10',tr:'1:10–1:20',dur:'10 min',s:'Testimony #2',mon:'—',tue:'Irene',wed:'Jane',thu:'Caleb',fri:'Keren',session:3,cls:'gray'},
-  {t:'1:30',tr:'1:30–3:00',dur:'1h 30m',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)',session:3},
+  {t:'1:30',tr:'1:30–3:00',dur:'1h 30m',s:'PM Activity',mon:'—',tue:'Team A',wed:'Team B',thu:'Team C',fri:'Global (Olympics)',session:3,notes:{tue:'Dance teaching'}},
   {t:'3:00',tr:'3:00–5:30',dur:'2h 30m',s:'Hang Out with Students',all:'Hang Out with Students',session:3,standalone:true,cls:'gray'},
   {t:'5:30',tr:'5:30–6:30',dur:'60 min',s:'Dinner',all:'Dinner',session:3,standalone:true,cls:'gray'},
   {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'Worship Team',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4,cls:'tg'},

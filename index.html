@@ -688,7 +688,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=247; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=248; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -712,7 +712,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v247 · Jul 20, 2026 · 11:32 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v248 · Jul 21, 2026 · 7:49 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1793,6 +1793,25 @@ function tmfTodayInfo(){
   var idx=TMF_DAY_DATES.indexOf(key);
   if(idx<0)idx=key<TMF_DAY_DATES[0]?0:4;
   return {idx:idx,key:TMF_DAY_KEYS[idx],label:TMF_DAY_LABELS[idx],date:TMF_DAY_DATES[idx]};
+}
+// Small group discussion questions, keyed by retreat day — filled in as each
+// day's set is written. Shown on the Today tab (see tmfSgQuestionsHtml()).
+var TMF_SG_QUESTIONS={
+  mon:[
+    'Think of someone in your life who loves you well. How do you actually know they love you? What do they do, not just say, that makes it real? And has anyone ever said "I love you" and it didn\'t land? What was missing?',
+    'Read v. 18. Paul doesn\'t pray they\'d learn facts about God\'s love; he prays they\'d have power to grasp it. What\'s the difference between knowing something is true and actually grasping it? (Let v. 19\'s "surpasses knowledge" come up here naturally; you don\'t need a separate question for it.)',
+    'Paul says this love is wide, long, high, and deep. Walk each one: wide, who does it reach? Long, how long does it last? High and deep, what can it overcome? Why wasn\'t one word like "great" enough for him?',
+    'Verse 17: believers are "rooted and established in love." Whose love is the soil, ours for God or his for us? Why does getting that direction right change how secure you feel?',
+    'Verse 19 ends with being "filled to the measure of all the fullness of God." If God\'s love fills you with God himself, what does that say about how big this love is?',
+    'Quiet one, journal or silent reflection: is there a place where you know God loves you as a fact, but it doesn\'t feel real? What\'s in the way?',
+    'If you spent this week actually trying to grasp this, not just agree with it, what would look different in a normal Tuesday?'
+  ]
+};
+function tmfSgQuestionsHtml(dayKey){
+  var qs=TMF_SG_QUESTIONS[dayKey];
+  if(!qs||!qs.length)return '';
+  var items=qs.map(function(q,i){return '<div class="sgq-item"><span class="sgq-num">'+(i+1)+'</span><span class="sgq-txt">'+q+'</span></div>';}).join('');
+  return '<div class="sgq-wrap"><div class="sgq-hdr">📋 Small Group Questions</div>'+items+'</div>';
 }
 // AM/PM Activity's color follows whichever team leads that day (ta/tb/tc);
 // "Global"/"—" fall back to the default section color.
@@ -3359,7 +3378,8 @@ function renderTodayTMF(){
       +'<button class="mon-qbtn" style="background:#2563eb" onclick="go(\'tmfsched\',document.querySelector(\'.tabbar .tabitem[aria-label=\\\'TMF Schedule\\\']\'))">📅 Full Week</button>'
     +'</div>'
     +'<h2>'+info.label+' Schedule</h2>'
-    +tmfSchedDayHtml(info.key);
+    +tmfSchedDayHtml(info.key)
+    +tmfSgQuestionsHtml(info.key);
   document.getElementById('today-body').innerHTML=html;
 }
 // Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /

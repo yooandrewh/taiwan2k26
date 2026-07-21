@@ -719,7 +719,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=277; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=278; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -743,7 +743,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v277 · Jul 21, 2026 · 3:43 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v278 · Jul 21, 2026 · 3:47 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4728,18 +4728,29 @@ function computeGame2Total(){
   return SCORE_GROUPS.map(function(grp){return {group:grp.id,points:totals[grp.id]};}).sort(function(a,b){return b.points-a.points;});
 }
 // Combines every game's own leaderboard into one overall standing via
-// placement points: within each scored game (Game 1/3), only groups that
-// have at least one score are ranked (n>0), 1st place gets N points (N =
-// how many groups have been scored in that game so far) down to 1 point
-// for last - so a game still being scored doesn't unfairly zero out
-// groups nobody's gotten to yet. Game 2's contribution is its own summed
-// mini-game total (see computeGame2Total()), not 6 separate entries.
+// placement points: EVERY master game (Game 1, Game 2 Tue PM, Game 3...)
+// is converted to the same rank-based scale before summing, so each game
+// counts equally toward the Cumulative regardless of how its own internal
+// scoring works. Within each scored game (Game 1/3), only groups that have
+// at least one score are ranked (n>0), 1st place gets N points (N = how
+// many groups have been scored in that game so far) down to 1 point for
+// last - so a game still being scored doesn't unfairly zero out groups
+// nobody's gotten to yet. Game 2's raw total (sum of its 6 mini-games, see
+// computeGame2Total()) is itself re-ranked 1st..Nth and converted to the
+// same N..1 placement points, instead of adding its larger raw point total
+// directly - otherwise Game 2 would outweigh Game 1/3 in the Cumulative.
 function computeCumulativeRanking(){
   var totals={},breakdown={};
   SCORE_GROUPS.forEach(function(g){totals[g.id]=0;breakdown[g.id]={};});
   GAMES.forEach(function(game,i){
     if(game.id==='game2'){
-      computeGame2Total().forEach(function(r){totals[r.group]+=r.points;breakdown[r.group][game.id]=r.points;});
+      var g2=computeGame2Total().filter(function(r){return r.points>0;});
+      var n2=g2.length;
+      g2.forEach(function(r,i){
+        var pts=n2-i;
+        totals[r.group]+=pts;
+        breakdown[r.group][game.id]=pts;
+      });
       return;
     }
     if(i>0&&!_backendSupportsGames)return; // locked games have no real (confirmed) data yet

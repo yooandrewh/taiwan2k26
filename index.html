@@ -611,6 +611,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .sgq-txt{font-size:14px;color:var(--text);line-height:1.5;}
 .score-team-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px;}
 .score-team-hdr{font-size:14px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.score-team-hdr-sub{font-size:12px;font-weight:600;color:var(--text3);}
 .score-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}
 .score-lbl{font-size:13px;color:var(--text2);}
 .score-input{font-size:14px;font-weight:700;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);}
@@ -621,7 +622,8 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .score-lb-rank{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
 .score-lb-team{flex:1;font-size:14px;font-weight:700;}
 .score-chips{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:middle;}
-.score-chip{display:inline-block;background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
+.score-chip{display:inline-flex;flex-direction:column;align-items:center;line-height:1.3;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
+.score-chip-sub{font-size:10px;font-weight:600;color:var(--text3);}
 .score-lb-overall{flex-shrink:0;font-size:16px;font-weight:800;color:#f59e0b;}
 .random-pick-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 16px;margin-top:20px;text-align:center;}
 .random-pick-display{font-size:22px;font-weight:800;color:var(--text);min-height:60px;display:flex;align-items:center;justify-content:center;padding:0 8px;transition:transform .08s ease;}
@@ -719,7 +721,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=278; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=280; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -743,7 +745,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v278 · Jul 21, 2026 · 3:47 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v280 · Jul 21, 2026 · 3:53 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4398,17 +4400,27 @@ try{currentGameId=localStorage.getItem('scoreCurrentGame')||null;}catch(e){}
 if(!currentGameId||!GAMES.find(function(g){return g.id===currentGameId;}))currentGameId=GAMES[0].id;
 var SCORE_WEIGHTS={'Andrew Yoo':3,'Keren Choi':3}; // everyone else defaults to 1
 function scoreWeightOf(name){return SCORE_WEIGHTS[name]||1;}
-// All 8 small groups, flattened, labeled by their leader(s) since groups
-// haven't picked team names yet. shortLabel is the compact "First First
-// Team" form (e.g. "Irene Sammy Team") used everywhere in the UI instead
-// of the full "Irene Song & Sammy Taing's Group".
+// Each group's own chosen team name, keyed by SCORE_GROUPS id.
+var SCORE_TEAM_NAMES={
+  RB1:"60%",
+  RB2:"J.S.T.H.E.",
+  RB3:"God's Chosen Hoopers",
+  RB4:"The Holy Cow",
+  RG1:"Bang Gang",
+  RG2:"Itching 4 Christ",
+  RG3:"Mosaic of God",
+  RG4:"GELJEC"
+};
+// All 8 small groups, flattened. shortLabel is each group's own team name
+// (SCORE_TEAM_NAMES), used everywhere in the UI instead of the full
+// "Irene Song & Sammy Taing's Group" leader-based label.
 var SCORE_GROUPS=[];
 (function(){
   ['boys','girls'].forEach(function(side){
     RETREAT_SG[side].forEach(function(grp){
       var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;});
       var firstNames=leaderNames.map(function(n){return n.split(' ')[0];});
-      SCORE_GROUPS.push({id:grp.id,label:leaderNames.join(' & ')+"'s Group",shortLabel:firstNames.join(' ')+' Team',leaders:leaderNames});
+      SCORE_GROUPS.push({id:grp.id,label:leaderNames.join(' & ')+"'s Group",shortLabel:SCORE_TEAM_NAMES[grp.id]||(firstNames.join(' ')+' Team'),leaders:leaderNames});
     });
   });
 })();
@@ -4626,7 +4638,7 @@ function renderScoreForm(){
       return '<div class="score-row"><span class="score-lbl">'+cat.label+'</span>'
         +'<select class="score-input" data-group="'+grp.id+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
     }).join('');
-    return '<div class="score-team-card"><div class="score-team-hdr">'+grp.shortLabel+'</div>'+rows+'</div>';
+    return '<div class="score-team-card"><div class="score-team-hdr">'+grp.shortLabel+' <span class="score-team-hdr-sub">('+grp.leaders.map(function(n){return n.split(' ')[0];}).join(' & ')+')</span></div>'+rows+'</div>';
   }).join('');
   html+='<button class="mon-qbtn" style="background:#16a34a;width:100%;margin-top:4px" onclick="submitScores()">Save Scores</button>'
     +'<div class="ci-sync-note" id="score-save-note" style="text-align:center;margin-top:8px"></div>';
@@ -4679,11 +4691,15 @@ function scoreWeightedAvg(items){ // items: [{v,w}]
 function scoreFmt(v){return v==null?'-':v.toFixed(1);}
 // Renders a group (or a tied pair of groups) as compact chips instead of
 // one long "Name & Name's Group" string — easier to scan, especially once
-// two groups are tied together for a placement.
+// two groups are tied together for a placement. Each chip also shows the
+// group's teacher/leader name(s) as a small subtitle, since the chosen team
+// names (e.g. "60%", "GELJEC") aren't obviously tied to a group otherwise.
 function groupChipsHtml(groupIds){
   return '<span class="score-chips">'+groupIds.map(function(gid){
     var g=SCORE_GROUPS.find(function(x){return x.id===gid;});
-    return '<span class="score-chip">'+(g?g.shortLabel:gid)+'</span>';
+    if(!g)return '<span class="score-chip">'+gid+'</span>';
+    var leaderFirsts=g.leaders.map(function(n){return n.split(' ')[0];}).join(' & ');
+    return '<span class="score-chip">'+g.shortLabel+'<span class="score-chip-sub">'+leaderFirsts+'</span></span>';
   }).join('')+'</span>';
 }
 function computeLeaderboard(gameId){

@@ -626,6 +626,13 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .random-pick-display.spinning{color:var(--text3);}
 .random-pick-display.winner{color:#ec4899;transform:scale(1.08);}
 .score-lb-detail{font-size:11px;color:var(--text3);margin:2px 0 0 28px;}
+#score-individual-toggle{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+.score-ind-group{margin-bottom:10px;}
+.score-ind-group:last-child{margin-bottom:0;}
+.score-ind-grouphdr{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.score-ind-row{display:flex;justify-content:space-between;gap:10px;padding:4px 0 4px 10px;font-size:12px;border-left:2px solid var(--border);}
+.score-ind-teacher{color:var(--text2);font-weight:600;flex-shrink:0;}
+.score-ind-vals{color:var(--text3);text-align:right;}
 .mygrp-wrap{margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
 .mygrp-hdr{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px;}
 .mygrp-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
@@ -710,7 +717,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=273; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=274; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -734,7 +741,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v273 · Jul 21, 2026 · 3:14 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v274 · Jul 21, 2026 · 3:23 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1306,9 +1313,12 @@ setInterval(renderBuildAge,60000);
   <div id="cumulative-body"></div>
   <div id="game-scoring-body">
     <div class="sgq-wrap"><div class="sgq-hdr">🏆 Leaderboard</div><div id="score-leaderboard-body"></div></div>
-    <div class="mygrp-hdr" style="margin-top:16px">Tap your name to score each group</div>
-    <div class="mygrp-tabs" id="score-teacher-tabs"></div>
-    <div id="score-form-body"></div>
+    <div class="sgq-wrap" id="score-individual-wrap"><div class="sgq-hdr" id="score-individual-toggle" onclick="toggleIndividualScores()">📋 Individual Scores <span id="score-individual-caret">▾</span></div><div id="score-individual-body" style="display:none"></div></div>
+    <div id="score-submit-section">
+      <div class="mygrp-hdr" style="margin-top:16px" id="score-teacher-hdr">Tap your name to score each group</div>
+      <div class="mygrp-tabs" id="score-teacher-tabs"></div>
+      <div id="score-form-body"></div>
+    </div>
   </div>
 </div>
 <div id="pane-random" class="pane">
@@ -4344,7 +4354,7 @@ var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'C
 // them via placement points (see computeCumulativeRanking()). Add more
 // entries here as future games get announced.
 var GAMES=[
-  {id:'game1',name:'Game 1 · Skit Game'},
+  {id:'game1',name:'Game 1 · Skit Game',closed:true}, // voting's over — leaderboard still shows, no new submissions
   {id:'game2',name:'Game 2 · Tue PM'},
   {id:'game3',name:'Game 3 · Wed AM Skit Making'}
 ];
@@ -4478,7 +4488,9 @@ function scoreSyncFromSheet(){
     if(changed)scoreSaveLog(log);
     var tabsEl=document.getElementById('game-tabs');
     if(tabsEl)tabsEl.innerHTML=gameTabsHtml(); // reflect newly-unlocked games as soon as the backend supports them
+    renderSubmitSection(); // in case a locked/unlocked state just changed
     renderLeaderboard();
+    renderIndividualScores();
     renderCumulative();
   }).catch(function(){});
 }
@@ -4496,19 +4508,19 @@ function selectScoreTeacher(name){
   renderScoreForm();
 }
 function gameTabsHtml(){
+  // Every tab is clickable — you can always click through to see a game's
+  // leaderboard and individual scores. Whether NEW submissions are allowed
+  // for that game is decided separately in renderScoreForm() (closed games
+  // like Game 1, or games still waiting on the backend update).
   var cumBtn='<button class="'+(currentGameId==='cumulative'?'on':'')+'" data-id="cumulative" onclick="selectGame(\'cumulative\')">Cumulative</button>';
   var gameBtns=GAMES.map(function(g,i){
-    // Only Game 1 works until the backend is updated to store a "game"
-    // column — see _backendSupportsGames above. Disabled buttons are still
-    // rendered (so the plan is visible) but can't be tapped into.
-    var disabled=(i>0&&!_backendSupportsGames);
-    return '<button class="'+(currentGameId===g.id?'on':'')+'"'+(disabled?' disabled title="Waiting on the updated Sheet script"':'')+' data-id="'+g.id+'" onclick="'+(disabled?'':'selectGame(\''+g.id+'\')')+'">'+g.name+(disabled?' 🔒':'')+'</button>';
+    var waitingOnBackend=(i>0&&!_backendSupportsGames);
+    var badge=g.closed?' 🔒':(waitingOnBackend?' ⏳':'');
+    return '<button class="'+(currentGameId===g.id?'on':'')+'" data-id="'+g.id+'" onclick="selectGame(\''+g.id+'\')">'+g.name+badge+'</button>';
   }).join('');
   return cumBtn+gameBtns;
 }
 function selectGame(gameId){
-  var idx=GAMES.findIndex(function(g){return g.id===gameId;});
-  if(idx>0&&!_backendSupportsGames)return; // guarded in gameTabsHtml() too; belt-and-suspenders
   currentGameId=gameId;
   try{localStorage.setItem('scoreCurrentGame',gameId);}catch(e){}
   document.querySelectorAll('#game-tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.id===gameId);});
@@ -4520,14 +4532,41 @@ function selectGame(gameId){
   }else{
     cumBody.style.display='none';
     gameBody.style.display='';
-    renderScoreForm();
+    renderSubmitSection();
     renderLeaderboard();
+    renderIndividualScores();
   }
 }
 function scoreOptionsHtml(selected){
   var html='<option value="">-</option>';
   for(var i=1;i<=10;i++)html+='<option value="'+i+'"'+(Number(selected)===i?' selected':'')+'>'+i+'</option>';
   return html;
+}
+// A game accepts new submissions unless it's explicitly closed (Game 1 -
+// voting's over) or it's still waiting on the backend update (Game 2/3,
+// before _backendSupportsGames flips true).
+function currentGameIsOpen(){
+  var idx=GAMES.findIndex(function(g){return g.id===currentGameId;});
+  if(idx<0)return false;
+  var game=GAMES[idx];
+  if(game.closed)return false;
+  if(idx>0&&!_backendSupportsGames)return false;
+  return true;
+}
+function renderSubmitSection(){
+  var hdr=document.getElementById('score-teacher-hdr'),tabs=document.getElementById('score-teacher-tabs'),form=document.getElementById('score-form-body');
+  if(!hdr)return;
+  if(currentGameIsOpen()){
+    hdr.textContent='Tap your name to score each group';
+    hdr.style.display='';tabs.style.display='';form.style.display='';
+    tabs.innerHTML=scoreTeacherTabsHtml();
+    renderScoreForm();
+  }else{
+    var game=GAMES.find(function(g){return g.id===currentGameId;});
+    hdr.style.display='';tabs.style.display='none';form.style.display='';
+    hdr.textContent='';
+    form.innerHTML='<div class="mygrp-empty">'+(game&&game.closed?'This game is closed - voting has ended.':'Scoring opens here once the Sheet script is updated to track games separately.')+'</div>';
+  }
 }
 function renderScoreForm(){
   var body=document.getElementById('score-form-body');
@@ -4572,6 +4611,7 @@ function submitScores(){
   var note=document.getElementById('score-save-note');
   if(note)note.textContent=savedAny?'Saved - syncing...':'Fill in all 3 scores for a group before saving it';
   renderLeaderboard();
+  renderIndividualScores();
   if(savedAny)scoreSyncFromSheet(); // confirm/retry right away instead of waiting for the next periodic sync
 }
 function localScoresFlat(gameId){
@@ -4686,14 +4726,40 @@ function renderLeaderboard(){
     +'</div>';
   }).join('');
 }
+var _individualScoresOpen=false;
+function toggleIndividualScores(){
+  _individualScoresOpen=!_individualScoresOpen;
+  document.getElementById('score-individual-body').style.display=_individualScoresOpen?'':'none';
+  document.getElementById('score-individual-caret').textContent=_individualScoresOpen?'▸':'▾';
+}
+// Per-teacher breakdown for the current game — exactly who gave which
+// group what score, not just the averaged leaderboard row. Groups sorted
+// by their leaderboard rank, teachers within a group sorted alphabetically.
+function renderIndividualScores(){
+  var el=document.getElementById('score-individual-body');
+  if(!el||currentGameId==='cumulative')return;
+  var confirmedKeys={};
+  (_allGroupScores||[]).filter(function(s){return s.game===currentGameId;}).forEach(function(s){confirmedKeys[scoreKey(s.teacher,s.group,currentGameId)]=true;});
+  var all=(_allGroupScores||[]).filter(function(s){return s.game===currentGameId;})
+    .concat(localScoresFlat(currentGameId).filter(function(s){return !confirmedKeys[scoreKey(s.teacher,s.group,currentGameId)];}));
+  var lbOrder=computeLeaderboard(currentGameId).map(function(r){return r.group;});
+  var byGroup={};
+  all.forEach(function(s){(byGroup[s.group]=byGroup[s.group]||[]).push(s);});
+  if(!all.length){el.innerHTML='<div class="mygrp-empty">No individual scores yet.</div>';return;}
+  el.innerHTML=lbOrder.filter(function(gid){return byGroup[gid];}).map(function(gid){
+    var grp=SCORE_GROUPS.find(function(g){return g.id===gid;});
+    var rows=byGroup[gid].sort(function(a,b){return a.teacher.localeCompare(b.teacher);}).map(function(s){
+      return '<div class="score-ind-row"><span class="score-ind-teacher">'+s.teacher+'</span><span class="score-ind-vals">Banner '+s.banner+' - Chant '+s.chant+' - Creativity '+s.creativity+'</span></div>';
+    }).join('');
+    return '<div class="score-ind-group"><div class="score-ind-grouphdr">'+grp.label+'</div>'+rows+'</div>';
+  }).join('');
+}
 function goScoring(btn){
   go('scoring',btn);
   document.getElementById('game-tabs').innerHTML=gameTabsHtml();
-  document.getElementById('score-teacher-tabs').innerHTML=scoreTeacherTabsHtml();
   var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body');
   if(currentGameId==='cumulative'){cumBody.style.display='';gameBody.style.display='none';}
-  else{cumBody.style.display='none';gameBody.style.display='';}
-  renderScoreForm();
+  else{cumBody.style.display='none';gameBody.style.display='';renderSubmitSection();renderIndividualScores();}
   renderLeaderboard();
   renderCumulative();
   scoreSyncFromSheet();

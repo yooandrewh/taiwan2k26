@@ -615,21 +615,22 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .score-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}
 .score-lbl{font-size:13px;color:var(--text2);}
 .score-input{font-size:14px;font-weight:700;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);}
-.score-lb-row{padding:10px 0;border-bottom:1px solid var(--border);}
-.score-lb-row:last-child{border-bottom:none;}
-.score-lb-row.top{background:rgba(245,158,11,0.08);border-radius:8px;padding:10px 8px;}
-.score-lb-top{display:flex;align-items:center;gap:8px;}
-.score-lb-rank{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
-.score-lb-team{flex:1;font-size:14px;font-weight:700;}
-.score-chips{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:middle;}
+.score-lb-row{padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--surface);}
+.score-lb-row.top{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.35);}
+.score-lb-top{display:flex;align-items:center;gap:10px;}
+.score-lb-rank{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.score-lb-team{flex:1;font-size:14px;font-weight:700;min-width:0;}
+.score-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle;}
 .score-chip{display:inline-flex;flex-direction:column;align-items:center;line-height:1.3;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;}
 .score-chip-sub{font-size:10px;font-weight:600;color:var(--text3);}
 .score-lb-overall{flex-shrink:0;font-size:16px;font-weight:800;color:#f59e0b;}
+.score-lb-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.score-lb-tag{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;}
+.score-lb-tag b{color:var(--text);font-weight:800;}
 .random-pick-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 16px;margin-top:20px;text-align:center;}
 .random-pick-display{font-size:22px;font-weight:800;color:var(--text);min-height:60px;display:flex;align-items:center;justify-content:center;padding:0 8px;transition:transform .08s ease;}
 .random-pick-display.spinning{color:var(--text3);}
 .random-pick-display.winner{color:#ec4899;transform:scale(1.08);}
-.score-lb-detail{font-size:11px;color:var(--text3);margin:2px 0 0 28px;}
 #score-individual-toggle{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
 .score-ind-group{margin-bottom:10px;}
 .score-ind-group:last-child{margin-bottom:0;}
@@ -721,7 +722,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=280; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=281; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -745,7 +746,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v280 · Jul 21, 2026 · 3:53 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v281 · Jul 21, 2026 · 3:57 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4790,12 +4791,16 @@ function renderCumulative(){
   var html='<div class="sgq-wrap"><div class="sgq-hdr">Cumulative Ranking - across all games</div>'
     +rows.map(function(r,i){
       var isTop=r.points===maxPts&&maxPts>0;
-      var detail=GAMES.map(function(g){return g.name.replace(/^Game \d+ . /,'')+': '+(r.breakdown[g.id]!=null?r.breakdown[g.id]+'pts':'-');}).join(' | ');
+      var tags=GAMES.map(function(g){
+        var shortName=g.name.replace(/^Game \d+ . /,'').replace(' Skit Making','').replace(' Game','');
+        var val=r.breakdown[g.id];
+        return '<span class="score-lb-tag">'+shortName+' <b>'+(val!=null?val+'pts':'-')+'</b></span>';
+      }).join('');
       return '<div class="score-lb-row'+(isTop?' top':'')+'">'
         +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
           +'<span class="score-lb-team">'+groupChipsHtml([r.group])+(isTop?' \ud83c\udfc6':'')+'</span>'
           +'<span class="score-lb-overall">'+r.points+'pts</span></div>'
-        +'<div class="score-lb-detail">'+detail+'</div>'
+        +'<div class="score-lb-tags">'+tags+'</div>'
       +'</div>';
     }).join('')
   +'</div>';
@@ -4808,11 +4813,15 @@ function renderLeaderboard(){
   var maxOverall=Math.max.apply(null,rows.map(function(r){return r.overall||0;}));
   el.innerHTML=rows.map(function(r,i){
     var isTop=r.overall!=null&&r.overall===maxOverall&&maxOverall>0;
+    var tags=['<span class="score-lb-tag">Banner <b>'+scoreFmt(r.banner)+'</b></span>',
+      '<span class="score-lb-tag">Chant <b>'+scoreFmt(r.chant)+'</b></span>',
+      '<span class="score-lb-tag">Creativity <b>'+scoreFmt(r.creativity)+'</b></span>',
+      '<span class="score-lb-tag">'+r.n+' '+(r.n===1?'scorer':'scorers')+'</span>'].join('');
     return '<div class="score-lb-row'+(isTop?' top':'')+'">'
       +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
         +'<span class="score-lb-team">'+groupChipsHtml([r.group])+(isTop?' \ud83c\udfc6':'')+'</span>'
         +'<span class="score-lb-overall">'+scoreFmt(r.overall)+'</span></div>'
-      +'<div class="score-lb-detail">Banner '+scoreFmt(r.banner)+' - Chant '+scoreFmt(r.chant)+' - Creativity '+scoreFmt(r.creativity)+' <span style="opacity:.6">('+r.n+' '+(r.n===1?'scorer':'scorers')+')</span></div>'
+      +'<div class="score-lb-tags">'+tags+'</div>'
     +'</div>';
   }).join('');
 }

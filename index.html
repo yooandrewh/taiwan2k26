@@ -717,7 +717,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=275; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=276; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -741,7 +741,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v275 · Jul 21, 2026 · 3:27 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v276 · Jul 21, 2026 · 3:36 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1320,6 +1320,7 @@ setInterval(renderBuildAge,60000);
       <div id="score-form-body"></div>
     </div>
   </div>
+  <div id="game2-minigames-body" style="display:none"></div>
 </div>
 <div id="pane-random" class="pane">
   <div class="stu-title" style="color:#ec4899">Random Pick</div>
@@ -2002,7 +2003,6 @@ const RETREAT=[
   {name:"Naomi Smith",group:"girls",age:13},
   {name:"Ethan Nam",group:"boys",age:14},
   {name:"Hamish Denham",group:"boys",age:14,bday:"🎂 Jul 26"},
-  {name:"Gabriel Keller",group:"boys",age:15},
   {name:"Samuel Biers",group:"boys",age:15,ret:true},
   {name:"Timothy Kim",group:"boys",age:15,ret:true},
   {name:"Justus Shultz",group:"boys",age:16,ret:true},
@@ -2312,7 +2312,7 @@ const RETREAT_SG={
     {id:"RB1",leads:[{name:"Caleb Su",age:21,role:"L"}],
      kids:[{name:"Justus",g:11},{name:"Luke",g:11},{name:"Timothy Keller",g:12},{name:"Jaydon",g:12}]},
     {id:"RB2",leads:[{name:"Jean Kim",age:20,role:"L"}],
-     kids:[{name:"Gabriel",g:10},{name:"Samuel",g:10},{name:"Timothy Kim",g:10},{name:"Ethan Nam",g:9},{name:"Hamish",g:9}]},
+     kids:[{name:"Samuel",g:10},{name:"Timothy Kim",g:10},{name:"Ethan Nam",g:9},{name:"Hamish",g:9}]},
     {id:"RB3",leads:[{name:"Andrew Back",age:19,role:"L"}],
      kids:[{name:"Owen Nam",g:8},{name:"Ezra Biers",g:8}]},
     {id:"RB4",leads:[{name:"Owen Lee",age:19,role:"L"},{name:"Rubin Jang",age:19,role:"L"}],
@@ -2320,7 +2320,7 @@ const RETREAT_SG={
   ],
   girls:[
     {id:"RG1",leads:[{name:"Esther Yang",age:21,role:"L"}],
-     kids:[{name:"Lydia",g:11},{name:"Anna",g:13}]},
+     kids:[{name:"Lydia",g:11},{name:"Anna",g:13},{name:"Evangeline Biers",g:12}]},
     {id:"RG2",leads:[{name:"Jane Kim",age:20,role:"L"},{name:"Becca Park",age:21,role:"L"}],
      kids:[{name:"Keira",g:8},{name:"Naomi",g:8},{name:"Betty Wang",g:8}]},
     {id:"RG3",leads:[{name:"Irene Song",age:19,role:"L"},{name:"Sammy Taing",age:20,role:"L"}],
@@ -4514,7 +4514,9 @@ function gameTabsHtml(){
   // like Game 1, or games still waiting on the backend update).
   var cumBtn='<button class="'+(currentGameId==='cumulative'?'on':'')+'" data-id="cumulative" onclick="selectGame(\'cumulative\')">Cumulative</button>';
   var gameBtns=GAMES.map(function(g,i){
-    var waitingOnBackend=(i>0&&!_backendSupportsGames);
+    // Game 2 shows its 6 mini-games directly (renderGame2MiniGames) instead
+    // of a teacher-scored form, so it's never backend-gated like Game 3 is.
+    var waitingOnBackend=(g.id!=='game1'&&g.id!=='game2'&&!_backendSupportsGames);
     var badge=g.closed?' 🔒':(waitingOnBackend?' ⏳':'');
     return '<button class="'+(currentGameId===g.id?'on':'')+'" data-id="'+g.id+'" onclick="selectGame(\''+g.id+'\')">'+g.name+badge+'</button>';
   }).join('');
@@ -4524,18 +4526,44 @@ function selectGame(gameId){
   currentGameId=gameId;
   try{localStorage.setItem('scoreCurrentGame',gameId);}catch(e){}
   document.querySelectorAll('#game-tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.id===gameId);});
-  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body');
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('game2-minigames-body');
   if(gameId==='cumulative'){
     cumBody.style.display='';
     gameBody.style.display='none';
+    mini.style.display='none';
     renderCumulative();
+  }else if(gameId==='game2'){
+    // Tuesday PM wasn't a single teacher-scored category — it was these 6
+    // mini-games, so "Game 2" just displays their results directly instead
+    // of a Banner/Chant/Creativity form.
+    cumBody.style.display='none';
+    gameBody.style.display='none';
+    mini.style.display='';
+    renderGame2MiniGames();
   }else{
     cumBody.style.display='none';
     gameBody.style.display='';
+    mini.style.display='none';
     renderSubmitSection();
     renderLeaderboard();
     renderIndividualScores();
   }
+}
+function renderGame2MiniGames(){
+  var el=document.getElementById('game2-minigames-body');
+  if(!el)return;
+  el.innerHTML=MANUAL_GAMES.map(function(game){
+    var pointsByGroup=computeManualGamePoints(game);
+    var rankedTiers=game.tiers.map(function(tierGroups,i){
+      var rankStart=game.tiers.slice(0,i).reduce(function(a,t){return a+t.length;},0)+1;
+      return {rank:rankStart,groups:tierGroups,pts:pointsByGroup[tierGroups[0]]};
+    });
+    var rows=rankedTiers.map(function(tier){
+      var labels=tier.groups.map(function(gid){var g=SCORE_GROUPS.find(function(x){return x.id===gid;});return g?g.label:gid;}).join(' & ');
+      return '<div class="score-lb-row"><div class="score-lb-top"><span class="score-lb-rank">'+tier.rank+'</span><span class="score-lb-team">'+labels+'</span><span class="score-lb-overall">'+tier.pts+'pts</span></div></div>';
+    }).join('');
+    return '<div class="sgq-wrap"><div class="sgq-hdr">'+game.name+'</div>'+rows+'</div>';
+  }).join('');
 }
 function scoreOptionsHtml(selected){
   var html='<option value="">-</option>';
@@ -4757,9 +4785,16 @@ function renderIndividualScores(){
 function goScoring(btn){
   go('scoring',btn);
   document.getElementById('game-tabs').innerHTML=gameTabsHtml();
-  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body');
-  if(currentGameId==='cumulative'){cumBody.style.display='';gameBody.style.display='none';}
-  else{cumBody.style.display='none';gameBody.style.display='';renderSubmitSection();renderIndividualScores();}
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('game2-minigames-body');
+  if(currentGameId==='cumulative'){
+    cumBody.style.display='';gameBody.style.display='none';mini.style.display='none';
+  }else if(currentGameId==='game2'){
+    cumBody.style.display='none';gameBody.style.display='none';mini.style.display='';
+    renderGame2MiniGames();
+  }else{
+    cumBody.style.display='none';gameBody.style.display='';mini.style.display='none';
+    renderSubmitSection();renderIndividualScores();
+  }
   renderLeaderboard();
   renderCumulative();
   scoreSyncFromSheet();

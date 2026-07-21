@@ -556,6 +556,7 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .ci-info{flex:1;min-width:0;}
 .ci-name{font-size:15px;font-weight:700;color:var(--text);}
 .ci-cn{font-size:12px;color:var(--text3);font-weight:600;margin-left:6px;}
+.ci-teacher{font-size:12px;color:var(--text3);font-weight:600;margin-left:6px;}
 .ci-time{font-size:11px;color:#16a34a;font-weight:700;margin-top:1px;}
 .ci-age{font-size:11px;font-weight:700;color:var(--text2);background:var(--surface2);border-radius:5px;padding:2px 7px;flex-shrink:0;white-space:nowrap;}
 .ci-grp{font-size:11px;font-weight:800;color:#fff;background:#2563eb;border-radius:5px;padding:2px 7px;flex-shrink:0;}
@@ -688,7 +689,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=249; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=250; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -712,7 +713,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v249 · Jul 21, 2026 · 8:38 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v250 · Jul 21, 2026 · 8:54 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1216,7 +1217,7 @@ setInterval(renderBuildAge,60000);
 </div>
 <div id="pane-checkin" class="pane">
   <div class="stu-title" style="color:#16a34a">Check-In</div>
-  <div class="stu-sub">VBS · search a student to check them in</div>
+  <div class="stu-sub">TMF Retreat · search a student to check them in</div>
   <div class="ci-counter"><div><div class="n" id="ci-count">0 / 0</div><div class="lbl">checked in today</div></div><div style="font-size:26px">✅</div></div>
   <div class="ci-counter" style="margin-top:6px"><div><div class="n" id="ci-count-out" style="color:#b45309">0</div><div class="lbl">checked out today</div></div><div style="font-size:26px">🚪</div></div>
   <div class="ci-sync"><span class="ci-sync-note" id="ci-sync-note">Shared with all devices via Google Sheet</span><button class="ci-sync-btn" id="ci-sync-btn" onclick="ciSyncFromSheet()">🔄 Sync</button></div>
@@ -1596,7 +1597,7 @@ setInterval(renderBuildAge,60000);
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.2 5.2 7 7M17 17l1.8 1.8M18.8 5.2 17 7M7 17l-1.8 1.8"/></svg>
     <span>VBS Week</span>
   </button>
-  <button class="tabitem" style="--accent:#16a34a;display:none" onclick="goCheckin(this)" aria-label="Check-In">
+  <button class="tabitem" style="--accent:#16a34a" onclick="goCheckin(this)" aria-label="Check-In">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
     <span>Check-In</span>
   </button>
@@ -1749,23 +1750,26 @@ var TMF_SCHED_ROWS=[
   {t:'–',tr:'–12:00',dur:'Until 12:00 PM',s:'Travel',mon:'Travel',tue:'—',wed:'—',thu:'—',fri:'—',session:0,cls:'gray',m:0,me:720,monArrival:true},
   {t:'12:00',tr:'12:00–6:30',dur:'6h 30m',s:'Check-in / Hang Out with Students',mon:'Check-in / Hang Out with Students',tue:'—',wed:'—',thu:'—',fri:'—',session:0,cls:'gray',m:720,me:1110,monArrival:true},
   {t:'7:00',tr:'7:00–8:30',dur:'90 min',s:'Pre-Session Time',all:'Pre-Session Time',session:0,standalone:true,cls:'gray',m:420},
-  // Wednesday only — different order than Tue/Thu/Fri's Skit-first flow, and
-  // Personal Devo Time is dropped entirely (straight from Skit into AM Activity).
-  // Placed before the shared rows below so the Week grid's time column still
-  // reads chronologically within Session 1/2, same reasoning as Monday's block.
+  // Wednesday only — different order than Tue/Thu/Fri's Skit-first flow (still
+  // keeps Personal Devo Time, just moved after Devotional instead of after
+  // Morning SG). Placed before the shared rows below so the Week grid's time
+  // column still reads chronologically within Session 1, same reasoning as
+  // Monday's block. Session 2's AM Activity lands back on the shared 10:30
+  // slot below — the reordered Session 1 items add up to exactly 2 hours
+  // (8:30-10:30), same as Tue/Thu/Fri's, so no separate AM Activity row needed.
   {t:'8:30',tr:'8:30–8:40',dur:'10 min',s:'Testimony #1',mon:'—',tue:'—',wed:'Jean',thu:'—',fri:'—',session:1,cls:'gray',m:510,me:520},
   {t:'8:40',tr:'8:40–8:50',dur:'10 min',s:'Worship',mon:'—',tue:'—',wed:'Worship Team',thu:'—',fri:'—',session:1,cls:'tg',m:520,me:530},
   {t:'8:50',tr:'8:50–9:00',dur:'10 min',s:'Devotional',mon:'—',tue:'—',wed:'Keren',thu:'—',fri:'—',session:1,cls:'gray',m:530,me:540},
-  {t:'9:00',tr:'9:00–9:55',dur:'55 min',s:'Small Group',mon:'—',tue:'—',wed:'Global·Qs:B',thu:'—',fri:'—',session:1,cls:'tg',m:540,me:595},
-  {t:'9:55',tr:'9:55–10:05',dur:'10 min',s:'Skit #1',mon:'—',tue:'—',wed:'Good Good Father',thu:'—',fri:'—',session:2,cls:'tg',songTitle:true,m:595,me:605},
-  {t:'10:05',tr:'10:05–11:35',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'—',wed:'Team C',thu:'—',fri:'—',session:2,notes:{wed:'Skit Making — materials: props'},m:605,me:695},
+  {t:'9:00',tr:'9:00–9:25',dur:'25 min',s:'Personal Devo Time',mon:'—',tue:'—',wed:'Personal Devo Time',thu:'—',fri:'—',session:1,cls:'gray',m:540,me:565},
+  {t:'9:25',tr:'9:25–10:20',dur:'55 min',s:'Small Group',mon:'—',tue:'—',wed:'Global·Qs:B',thu:'—',fri:'—',session:1,cls:'tg',m:565,me:620},
+  {t:'10:20',tr:'10:20–10:30',dur:'10 min',s:'Skit #1',mon:'—',tue:'—',wed:'Good Good Father',thu:'—',fri:'—',session:2,cls:'tg',songTitle:true,m:620,me:630},
   {t:'8:30',tr:'8:30–8:40',dur:'10 min',s:'Skit #1',mon:'—',tue:'Lost Son',wed:'—',thu:'Everything',fri:'Heal Our Land',session:1,cls:'tg',songTitle:true,m:510},
   {t:'8:40',tr:'8:40–8:50',dur:'10 min',s:'Testimony #1',mon:'—',tue:'Sammy',wed:'—',thu:'Becca',fri:'Esther',session:1,cls:'gray',m:520},
   {t:'8:50',tr:'8:50–9:00',dur:'10 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'—',thu:'Worship Team',fri:'Worship Team',session:1,cls:'tg',m:530},
   {t:'9:00',tr:'9:00–9:10',dur:'10 min',s:'Devotional',mon:'—',tue:'Andrew',wed:'—',thu:'Keren',fri:'Keren',session:1,cls:'gray',m:540},
   {t:'9:10',tr:'9:10–9:35',dur:'25 min',s:'Personal Devo Time',mon:'—',tue:'Personal Devo Time',wed:'—',thu:'Personal Devo Time',fri:'Personal Devo Time',session:1,cls:'gray',m:550},
   {t:'9:35',tr:'9:35–10:30',dur:'55 min',s:'Morning SG',mon:'—',tue:'Global·Qs:B',wed:'—',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2,cls:'tg',m:575},
-  {t:'10:30',tr:'10:30–12:00',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'Team A',wed:'—',thu:'Team A',fri:'Team B',session:2,notes:{tue:'Banner Making, Chant Making, 3rd game TBA — in small groups',thu:'Mad Gab, Scattergories, Heads Up'},m:630},
+  {t:'10:30',tr:'10:30–12:00',dur:'1h 30m',s:'AM Activity',mon:'—',tue:'Team A',wed:'Team C',thu:'Team A',fri:'Team B',session:2,notes:{tue:'Banner Making, Chant Making, 3rd game TBA — in small groups',wed:'Skit Making — materials: props',thu:'Mad Gab, Scattergories, Heads Up'},m:630},
   {t:'12:00',tr:'12:00–1:00',dur:'60 min',s:'Lunch',all:'Lunch',session:3,standalone:true,cls:'gray',m:720},
   {t:'1:00',tr:'1:00–1:10',dur:'10 min',s:'Dance',mon:'—',tue:'The Joy',wed:'Thank God I\'m Free',thu:'Joyful Joyful',fri:'Blood',session:3,cls:'tg',songTitle:true,m:780},
   {t:'1:10',tr:'1:10–1:20',dur:'10 min',s:'Testimony #2',mon:'—',tue:'Jane',wed:'Irene',thu:'Caleb',fri:'Keren',session:3,cls:'gray',m:790},
@@ -1784,7 +1788,7 @@ var TMF_SCHED_ROWS=[
   {t:'7:10',tr:'7:10–7:30',dur:'20 min',s:'Message',mon:'Andrew',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'gray',m:1150,me:1170,monArrival:true},
   {t:'7:30',tr:'7:30–7:45',dur:'15 min',s:'Worship',mon:'Worship Team',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1170,me:1185,monArrival:true},
   {t:'7:45',tr:'7:45–8:00',dur:'15 min',s:'Small Group',mon:'Global·Qs:A',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1185,me:1200,monArrival:true},
-  {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4,cls:'tg',m:1110},
+  {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4,cls:'tg',m:1110},
   {t:'6:45',tr:'6:45–7:15',dur:'30 min',s:'Sermon',mon:'—',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4,cls:'gray',m:1125},
   {t:'7:15',tr:'7:15–7:30',dur:'15 min',s:'Response Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4,cls:'tg',m:1155},
   {t:'7:30',tr:'7:30–8:00',dur:'30 min',s:'Evening SG',mon:'—',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A',session:4,cls:'tg',m:1170},
@@ -2252,7 +2256,7 @@ const RETREAT_SG={
     {id:"RG2",leads:[{name:"Jane Kim",age:20,role:"L"},{name:"Becca Park",age:21,role:"L"}],
      kids:[{name:"Keira",g:8},{name:"Naomi",g:8}]},
     {id:"RG3",leads:[{name:"Irene Song",age:19,role:"L"},{name:"Sammy Taing",age:20,role:"L"}],
-     kids:[{name:"Claire",g:7},{name:"Abby",g:7},{name:"Maria",g:7}]},
+     kids:[{name:"Claire Kim",g:7},{name:"Abby",g:7},{name:"Maria",g:7}]},
     {id:"RG4",leads:[{name:"Grace Yoon",age:18,role:"L"},{name:"Janet Phee",age:18,role:"L"}],
      kids:[{name:"Christie",g:6},{name:"Evelyn",g:6},{name:"Jasmine",g:6}]}
   ]
@@ -2658,6 +2662,27 @@ var CI_FLAT=(function(){
   out.sort(function(a,b){return a.name.localeCompare(b.name);});
   return out;
 })();
+// Same shape as CI_FLAT, sourced from the retreat roster (RETREAT_SG) instead of
+// VBS_SG — this is what the (retreat-only, now that VBS is over) Check-In tab
+// actually checks students against. See ciDateKey() below for why this reuses
+// the same Sheet/endpoint as VBS: it just keys off the retreat's own dates.
+var CI_FLAT_RETREAT=(function(){
+  var out=[];
+  ['boys','girls'].forEach(function(side){
+    RETREAT_SG[side].forEach(function(grp){
+      var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;});
+      if(!leaderNames.length) leaderNames=grp.leads.map(function(l){return l.name;});
+      grp.kids.forEach(function(k){
+        out.push({name:k.name,grade:k.g,group:grp.id,leader:leaderNames.join(' & ')});
+      });
+      grp.leads.filter(function(l){return l.role==='V';}).forEach(function(v){
+        out.push({name:v.name,grade:'V',group:grp.id,leader:leaderNames.join(' & ')});
+      });
+    });
+  });
+  out.sort(function(a,b){return a.name.localeCompare(b.name);});
+  return out;
+})();
 // Adult teacher (role "L") -> their small group's kid roster, so a teacher can pull up
 // just their own group instead of scrolling the full Groups tab.
 var TEACHER_GROUPS=(function(){
@@ -2683,7 +2708,9 @@ function vbsDayInfo(){
   if(idx<0) idx = key<VBS_DAY_DATES[0] ? 0 : 4;
   return {idx:idx,label:VBS_DAY_LABELS[idx],date:VBS_DAY_DATES[idx]};
 }
-function ciDateKey(){return vbsDayInfo().date;}
+// Check-In is retreat-only now that VBS has wrapped (Jul 17) — same pattern as
+// Small Groups (sgCurrentEvent) and the Today tab already switching over.
+function ciDateKey(){return tmfTodayInfo().date;}
 function ciTimeStr(){
   return new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',hour:'numeric',minute:'2-digit',hour12:true}).format(new Date());
 }
@@ -2717,13 +2744,18 @@ function ciSyncFromSheet(){
   var btn=document.getElementById('ci-sync-btn'),note=document.getElementById('ci-sync-note');
   if(btn)btn.classList.add('busy');
   if(note)note.textContent='Syncing…';
-  fetch(CHECKIN_ENDPOINT+'?day='+encodeURIComponent(vbsDayInfo().label))
+  fetch(CHECKIN_ENDPOINT+'?day='+encodeURIComponent(tmfTodayInfo().label.slice(0,3)))
     .then(function(r){return r.json();})
     .then(function(data){
       var log=ciGetLog();
       var changed=false;
       var confirmed={};
+      // The Sheet's ?day= filter only matches weekday (Mon/Tue/...), not the actual
+      // date — so a retreat Tuesday sync also pulls back VBS's own Tuesday names
+      // (different week entirely). Only accept names that are actually on the
+      // retreat roster, so stale/unrelated VBS check-ins can never leak in here.
       (data.names||[]).forEach(function(name){
+        if(!CI_FLAT_RETREAT.find(function(x){return x.name===name;}))return;
         confirmed[name]=true;
         if(!log[name]){log[name]={time:'synced',synced:true};changed=true;}
         else if(!log[name].synced){log[name].synced=true;changed=true;}
@@ -2738,7 +2770,7 @@ function ciSyncFromSheet(){
         // one this app hit) turns into permanently silent, unrecoverable data.
         var backoff=(entry.tries||0)>=8?300000:7000;
         if(entry.lastTry&&now-entry.lastTry<backoff)return;
-        var k=CI_FLAT.find(function(x){return x.name===name;});
+        var k=CI_FLAT_RETREAT.find(function(x){return x.name===name;});
         if(!k)return;
         entry.tries=(entry.tries||0)+1;
         entry.lastTry=now;
@@ -2789,12 +2821,12 @@ function ciRender(){
   // Count only entries that match a current roster member — Object.keys(log).length
   // would also count stale local entries left over from anyone since removed from the
   // roster, silently inflating the header number above the real total.
-  var checkedCount=CI_FLAT.filter(function(k){return !!log[k.name];}).length;
-  document.getElementById('ci-count').textContent=checkedCount+' / '+CI_FLAT.length;
-  var checkedOutCount=CI_FLAT.filter(function(k){return log[k.name]&&isEarlyExitToday(k.name);}).length;
+  var checkedCount=CI_FLAT_RETREAT.filter(function(k){return !!log[k.name];}).length;
+  document.getElementById('ci-count').textContent=checkedCount+' / '+CI_FLAT_RETREAT.length;
+  var checkedOutCount=CI_FLAT_RETREAT.filter(function(k){return log[k.name]&&isEarlyExitToday(k.name);}).length;
   var outEl=document.getElementById('ci-count-out');
   if(outEl)outEl.textContent=checkedOutCount;
-  var list=CI_FLAT;
+  var list=CI_FLAT_RETREAT;
   if(q){
     list=list.filter(function(k){
       var info=KID_INFO[k.name]||{};
@@ -2812,7 +2844,7 @@ function ciRender(){
     var unsynced=done&&!done.synced&&(done.tries||0)>0;
     html+='<div class="ci-row'+(done?' done':'')+'" onclick="ciOpen(\''+k.name.replace(/'/g,"\\'")+'\')">'
       +'<span class="ci-dot"></span>'
-      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">'+ciCheckOutLabel(k.name)+'</span>':'')
+      +'<div class="ci-info"><span class="ci-name">'+k.name+'</span>'+(k.leader?'<span class="ci-teacher">'+k.leader+'</span>':'')+(info.cn?'<span class="ci-cn">'+info.cn+'</span>':'')+retreatBadge(k.name)+(done&&isEarlyExitToday(k.name)?'<span class="ci-earlybadge">'+ciCheckOutLabel(k.name)+'</span>':'')
         +(done?'<div class="ci-time" style="'+(unsynced?'color:#b45309':'')+'">'+(unsynced?'⏳ ':'✓ ')+'Checked in '+(done.time&&done.time!=='synced'?done.time:'')+(unsynced?' · syncing…':'')+'</div>':'')+'</div>'
       +(info.ag!=null?'<span class="ci-age">Age '+info.ag+'</span>':'')
       +'<span class="ci-grp">'+k.group+'</span>'
@@ -2827,7 +2859,7 @@ function ciRender(){
 // Checkable people (CI_FLAT: students + youth volunteers) get the full check-in
 // banner/buttons; everyone else (adult teachers/staff) gets a read-only info card.
 function ciOpen(name,grpId,grade){
-  var k=CI_FLAT.find(function(x){return x.name===name;});
+  var k=CI_FLAT_RETREAT.find(function(x){return x.name===name;});
   var info=KID_INFO[name]||{};
   var legal=info.cn||'';
   var head='<div class="ci-head-row"><span class="nm">'+name+'</span>'+(legal?'<span class="cn">'+legal+'</span>':'')+(info.b?'<span class="bday">🎂 '+info.b+'</span>':'')+'</div>';
@@ -2866,7 +2898,7 @@ function ciOpen(name,grpId,grade){
 }
 function closeCiModal(){document.getElementById('ci-modal').style.display='none';window._pnOpenName=null;}
 function ciConfirm(name){
-  var k=CI_FLAT.find(function(x){return x.name===name;});
+  var k=CI_FLAT_RETREAT.find(function(x){return x.name===name;});
   if(!k)return;
   var info=KID_INFO[name]||{};
   var time=ciTimeStr();
@@ -2950,7 +2982,10 @@ function ciEarlySyncFromSheet(data){
   var log=ciEarlyGetLog();
   var changed=false;
   var serverExit=data.earlyExit||{};
+  // Same weekday-only-matching issue as ciSyncFromSheet() above — only merge
+  // early-exit flags for people actually on the retreat roster.
   Object.keys(serverExit).forEach(function(name){
+    if(!CI_FLAT_RETREAT.find(function(x){return x.name===name;}))return;
     var s=serverExit[name];
     var local=log[name];
     if(!local||Number(s.updatedAt||0)>=Number(local.updatedAt||0)){
@@ -3384,8 +3419,9 @@ function renderTodayTMF(){
     +'<div class="stu-sub">'+info.date.slice(5).replace('-','/')+' · TMF Retreat Day '+(info.idx+1)+'</div>'
     +tmfNowNextHtml(info.key)
     +'<div class="mon-quick">'
-      +'<button class="mon-qbtn" style="background:#16a34a" onclick="tryTMF(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'TMF\\\']\'))">👥 Small Groups</button>'
-      +'<button class="mon-qbtn" style="background:#2563eb" onclick="go(\'tmfsched\',document.querySelector(\'.tabbar .tabitem[aria-label=\\\'TMF Schedule\\\']\'))">📅 Full Week</button>'
+      +'<button class="mon-qbtn" style="background:#16a34a" onclick="goCheckin(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'Check-In\\\']\'))">✅ Check-In</button>'
+      +'<button class="mon-qbtn" style="background:#2563eb" onclick="tryTMF(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'TMF\\\']\'))">👥 Small Groups</button>'
+      +'<button class="mon-qbtn" style="background:#9333ea" onclick="go(\'tmfsched\',document.querySelector(\'.tabbar .tabitem[aria-label=\\\'TMF Schedule\\\']\'))">📅 Full Week</button>'
     +'</div>'
     +'<h2>'+info.label+' Schedule</h2>'
     +tmfSchedDayHtml(info.key)

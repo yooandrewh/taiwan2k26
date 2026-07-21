@@ -692,7 +692,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=260; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=261; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -716,7 +716,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v260 · Jul 21, 2026 · 10:29 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v261 · Jul 21, 2026 · 10:47 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1770,6 +1770,7 @@ var TMF_SCHED_ROWS=[
   {t:'8:40',tr:'8:40–8:50',dur:'10 min',s:'Devotional',mon:'—',tue:'—',wed:'Keren',thu:'Keren',fri:'Keren',session:1,cls:'gray',m:520,me:540},
   {t:'9:00',tr:'9:00–9:30',dur:'30 min',s:'Personal Devo Time',mon:'—',tue:'—',wed:'Personal Devo Time',thu:'Personal Devo Time',fri:'Personal Devo Time',session:1,cls:'gray',m:540,me:570},
   {t:'9:30',tr:'9:30–10:25',dur:'55 min',s:'Small Group',mon:'—',tue:'—',wed:'Global·Qs:B',thu:'Global·Qs:B',fri:'Global·Qs:B',session:2,cls:'tg',m:570,me:625},
+  {t:'10:00',tr:'10:00',dur:'',s:'Small Group Pictures (in the lobby)',mon:'—',tue:'—',wed:'Small Group Pictures (in the lobby)',thu:'—',fri:'—',session:2,cls:'gray',m:600},
   {t:'10:25',tr:'10:25–10:35',dur:'10 min',s:'Skit #1',mon:'—',tue:'—',wed:'Good Good Father',thu:'Everything',fri:'Heal Our Land',session:2,cls:'tg',songTitle:true,m:625,me:635},
   {t:'10:35',tr:'10:35–10:45',dur:'10 min',s:'Testimony #1',mon:'—',tue:'—',wed:'Jean',thu:'Becca',fri:'Esther',session:2,cls:'gray',m:635,me:645},
   {t:'10:45',tr:'10:45–12:00',dur:'1h 15m',s:'AM Activity',mon:'—',tue:'—',wed:'Team C',thu:'Team A',fri:'Team B',session:2,notes:{wed:'Skit Making — materials: props',thu:'Mad Gab, Scattergories, Heads Up'},m:645,me:720},

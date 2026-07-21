@@ -709,7 +709,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=267; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=269; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -733,7 +733,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v267 · Jul 21, 2026 · 11:41 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v269 · Jul 21, 2026 · 2:03 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1838,13 +1838,13 @@ var TMF_SCHED_ROWS=[
   // back to 6:30 mid-block.
   {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Icebreaker',mon:'Icebreaker',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1110,me:1125,monArrival:true},
   {t:'6:45',tr:'6:45–6:55',dur:'10 min',s:'Skit / Dance',mon:'Skit / Dance',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1125,me:1135,monArrival:true},
-  {t:'6:55',tr:'6:55–7:10',dur:'15 min',s:'Worship',mon:'Worship Team',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1135,me:1150,monArrival:true},
+  {t:'6:55',tr:'6:55–7:10',dur:'15 min',s:'Worship',mon:'Jean',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1135,me:1150,monArrival:true},
   {t:'7:10',tr:'7:10–7:30',dur:'20 min',s:'Message',mon:'Andrew',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'gray',m:1150,me:1170,monArrival:true},
-  {t:'7:30',tr:'7:30–7:45',dur:'15 min',s:'Worship',mon:'Worship Team',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1170,me:1185,monArrival:true},
+  {t:'7:30',tr:'7:30–7:45',dur:'15 min',s:'Worship',mon:'Jean',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1170,me:1185,monArrival:true},
   {t:'7:45',tr:'7:45–8:00',dur:'15 min',s:'Small Group',mon:'Global·Qs:A',tue:'—',wed:'—',thu:'—',fri:'—',session:4,cls:'tg',m:1185,me:1200,monArrival:true},
-  {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'—',tue:'Worship Team',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4,cls:'tg',m:1110},
+  {t:'6:30',tr:'6:30–6:45',dur:'15 min',s:'Worship',mon:'—',tue:'Jean',wed:'Jean',thu:'Jean',fri:'Jean',session:4,cls:'tg',m:1110},
   {t:'6:45',tr:'6:45–7:15',dur:'30 min',s:'Sermon',mon:'—',tue:'Andrew',wed:'Andrew',thu:'Andrew',fri:'Andrew',session:4,cls:'gray',m:1125},
-  {t:'7:15',tr:'7:15–7:30',dur:'15 min',s:'Response Worship',mon:'—',tue:'Worship Team',wed:'Worship Team',thu:'Worship Team',fri:'Worship Team',session:4,cls:'tg',m:1155},
+  {t:'7:15',tr:'7:15–7:30',dur:'15 min',s:'Response Worship',mon:'—',tue:'Jean',wed:'Jean',thu:'Jean',fri:'Jean',session:4,cls:'tg',m:1155},
   {t:'7:30',tr:'7:30–8:00',dur:'30 min',s:'Evening SG',mon:'—',tue:'Global·Qs:A',wed:'Global·Qs:A',thu:'Global·Qs:A',fri:'Global·Qs:A',session:4,cls:'tg',m:1170},
   {t:'8:00',tr:'8:00–11:00',dur:'3h',s:'Hang Out with Students',all:'Hang Out with Students',session:4,standalone:true,cls:'gray',m:1200},
   {t:'11:00',tr:'11:00–12:00',dur:'60 min',s:'Debrief / Lights Out',all:'Debrief / Lights Out',session:4,standalone:true,cls:'gray',m:1380}
@@ -1983,7 +1983,6 @@ const RETREAT=[
   {name:"Maria Sawatzky",group:"girls",age:12},
   {name:"Owen Nam",group:"boys",age:13},
   {name:"Ezra Biers",group:"boys",age:13,ret:true},
-  {name:"Jonathan Keller",group:"boys",age:13},
   {name:"Keira Spencer",group:"girls",age:13,ret:true},
   {name:"Naomi Smith",group:"girls",age:13},
   {name:"Ethan Nam",group:"boys",age:14},
@@ -2300,7 +2299,7 @@ const RETREAT_SG={
     {id:"RB2",leads:[{name:"Jean Kim",age:20,role:"L"}],
      kids:[{name:"Gabriel",g:10},{name:"Samuel",g:10},{name:"Timothy Kim",g:10},{name:"Ethan Nam",g:9},{name:"Hamish",g:9}]},
     {id:"RB3",leads:[{name:"Andrew Back",age:19,role:"L"}],
-     kids:[{name:"Owen Nam",g:8},{name:"Ezra Biers",g:8},{name:"Jonathan",g:8}]},
+     kids:[{name:"Owen Nam",g:8},{name:"Ezra Biers",g:8}]},
     {id:"RB4",leads:[{name:"Owen Lee",age:19,role:"L"},{name:"Rubin Jang",age:19,role:"L"}],
      kids:[{name:"Peter",g:6},{name:"Josiah",g:7},{name:"Jude",g:7}]}
   ],
@@ -4367,10 +4366,54 @@ function scorePost(teacher,groupId,vals){
   })}).catch(function(){});
 }
 var _allGroupScores=null;
+// Pulls every submitted score from the Sheet (shared across every device) and
+// reconciles it against this device's local log — same pattern as Check-In's
+// ciSyncFromSheet(). scorePost() is fire-and-forget (mode:'no-cors' can't
+// report success/failure), so on flaky wifi a submission can silently never
+// reach the Sheet while still looking "saved" on the submitter's own phone.
+// Comparing local entries against the Sheet's confirmed list every sync
+// catches that and retries until it actually lands.
 function scoreSyncFromSheet(){
   if(!SCORE_ENDPOINT)return;
   fetch(SCORE_ENDPOINT).then(function(r){return r.json();}).then(function(data){
-    _allGroupScores=data.scores||[];
+    // The Sheet can end up with duplicate (teacher, group) rows when two
+    // submissions race — both read "no existing row" before either write
+    // commits, so both append instead of one updating (fixed at the source
+    // by adding LockService to the Apps Script, but dedupe here too as a
+    // safety net for rows already written before that fix, or any future
+    // race the lock doesn't fully close). Keep only the most recent row per
+    // (teacher, group) pair.
+    var raw=data.scores||[];
+    var latest={};
+    raw.forEach(function(s){
+      var key=s.teacher+''+s.group;
+      if(!latest[key]||new Date(s.timestamp)>new Date(latest[key].timestamp))latest[key]=s;
+    });
+    _allGroupScores=Object.keys(latest).map(function(k){return latest[k];});
+    var confirmed={};
+    _allGroupScores.forEach(function(s){confirmed[s.teacher+''+s.group]=true;});
+    var log=scoreGetLog();
+    var changed=false;
+    var now=Date.now();
+    Object.keys(log).forEach(function(teacher){
+      Object.keys(log[teacher]).forEach(function(groupId){
+        var entry=log[teacher][groupId];
+        var key=teacher+''+groupId;
+        if(confirmed[key]){
+          if(!entry.synced){entry.synced=true;changed=true;}
+          return;
+        }
+        // Not yet confirmed in the Sheet — retry with backoff (fast at first,
+        // then every 5 min), same cadence as Check-In's retry loop.
+        var backoff=(entry.tries||0)>=8?300000:7000;
+        if(entry.lastTry&&now-entry.lastTry<backoff)return;
+        entry.tries=(entry.tries||0)+1;
+        entry.lastTry=now;
+        changed=true;
+        scorePost(teacher,groupId,entry);
+      });
+    });
+    if(changed)scoreSaveLog(log);
     renderLeaderboard();
   }).catch(function(){});
 }
@@ -4426,14 +4469,15 @@ function submitScores(){
   Object.keys(byGroup).forEach(function(groupId){
     var vals=byGroup[groupId];
     if(vals.banner==null||vals.chant==null||vals.creativity==null)return; // only save a group once all 3 are filled in
-    mine[groupId]=vals;
+    mine[groupId]={banner:vals.banner,chant:vals.chant,creativity:vals.creativity,synced:false,tries:0,lastTry:Date.now()};
     scorePost(scoreSelectedTeacher,groupId,vals);
     savedAny=true;
   });
   scoreSaveLog(log);
   var note=document.getElementById('score-save-note');
-  if(note)note.textContent=savedAny?'Saved'+(SCORE_ENDPOINT?' and synced':' (connect the Sheet to sync across devices)'):'Fill in all 3 scores for a group before saving it';
+  if(note)note.textContent=savedAny?'Saved'+(SCORE_ENDPOINT?' — syncing…':' (connect the Sheet to sync across devices)'):'Fill in all 3 scores for a group before saving it';
   renderLeaderboard();
+  if(savedAny)scoreSyncFromSheet(); // confirm/retry right away instead of waiting for the next periodic sync
 }
 function localScoresFlat(){
   var log=scoreGetLog(),out=[];
@@ -4453,7 +4497,14 @@ function scoreWeightedAvg(items){ // items: [{v,w}]
 }
 function scoreFmt(v){return v==null?'—':v.toFixed(1);}
 function computeLeaderboard(){
-  var source=(_allGroupScores&&_allGroupScores.length)?_allGroupScores:localScoresFlat();
+  // Merge, don't choose-one: Sheet data is authoritative for anything it
+  // already has, plus any local submissions not yet confirmed there (so a
+  // pending/still-retrying submit still shows up instead of vanishing).
+  var sheetData=_allGroupScores||[];
+  var confirmed={};
+  sheetData.forEach(function(s){confirmed[s.teacher+''+s.group]=true;});
+  var pendingLocal=localScoresFlat().filter(function(s){return !confirmed[s.teacher+''+s.group];});
+  var source=sheetData.concat(pendingLocal);
   var byGroup={};
   SCORE_GROUPS.forEach(function(g){byGroup[g.id]={banner:[],chant:[],creativity:[],scorers:0};});
   source.forEach(function(s){
@@ -4496,6 +4547,14 @@ function goScoring(btn){
   renderLeaderboard();
   scoreSyncFromSheet();
 }
+// Keep retrying/reconciling while the Scores tab is on screen — otherwise a
+// submission that failed to reach the Sheet would only ever get retried the
+// next time someone happens to re-open this tab.
+setInterval(function(){
+  if(document.visibilityState!=='visible')return;
+  var pane=document.getElementById('pane-scoring');
+  if(pane&&pane.classList.contains('active'))scoreSyncFromSheet();
+},10000);
 // Slot-machine-style reveal: cycles rapidly through random group names,
 // slowing down toward the end, then settles on the actual (separately
 // rolled) winner — reuses SCORE_GROUPS so it's always in sync with the

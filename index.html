@@ -613,13 +613,14 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .score-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}
 .score-lbl{font-size:13px;color:var(--text2);}
 .score-input{font-size:14px;font-weight:700;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);}
-.score-lb-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
+.score-lb-row{padding:10px 0;border-bottom:1px solid var(--border);}
 .score-lb-row:last-child{border-bottom:none;}
-.score-lb-row.top{background:rgba(245,158,11,0.08);border-radius:8px;padding:9px 8px;}
+.score-lb-row.top{background:rgba(245,158,11,0.08);border-radius:8px;padding:10px 8px;}
+.score-lb-top{display:flex;align-items:center;gap:8px;}
 .score-lb-rank{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
-.score-lb-team{flex-shrink:0;font-size:14px;font-weight:700;width:70px;}
-.score-lb-detail{flex:1;font-size:11px;color:var(--text3);}
+.score-lb-team{flex:1;font-size:14px;font-weight:700;}
 .score-lb-overall{flex-shrink:0;font-size:16px;font-weight:800;color:#f59e0b;}
+.score-lb-detail{font-size:11px;color:var(--text3);margin:2px 0 0 28px;}
 .mygrp-wrap{margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
 .mygrp-hdr{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px;}
 .mygrp-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
@@ -704,7 +705,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=265; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=266; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -728,7 +729,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v265 · Jul 21, 2026 · 11:17 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v266 · Jul 21, 2026 · 11:29 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4307,17 +4308,36 @@ function goParkMap(btn){
 })();
 </script>
 <script>
-/* ===== Team Scoring (Banner Making / Chant / Overall Creativity) =====
-   One-time final score per team, submitted by each of the 12 retreat team
-   leads, averaged across everyone who scored. Same POST/GET-to-a-Sheet
+/* ===== Small Group Scoring (Banner Making / Chant / Overall Creativity) =====
+   One-time final score per small group (all 8 — RB1-4 + RG1-4), submitted by
+   each scorer, averaged across everyone who scored that group. A scorer
+   never sees/scores their own group (bias). Andrew/Keren's scores count
+   3x a regular teacher's in the average (SCORE_WEIGHTS) since they're
+   grading everyone, not just "the other" groups. Same POST/GET-to-a-Sheet
    pattern as Check-In, but its own endpoint/backend — paste the deployed
    Apps Script Web App URL below once it exists. Until then this still
    works fully offline (localStorage), it just won't sync across devices. */
 const SCORE_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/AKfycb.../exec"
-var SCORE_TEAMS=['Team A','Team B','Team C'];
 var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'Chant'},{key:'creativity',label:'Overall Creativity (incl. team name)'}];
-// Dedup team leads across every RETREAT_SG group — a couple of groups are
-// co-led, so the same name can appear in more than one group's leads.
+var SCORE_WEIGHTS={'Andrew Yoo':3,'Keren Choi':3}; // everyone else defaults to 1
+function scoreWeightOf(name){return SCORE_WEIGHTS[name]||1;}
+// All 8 small groups, flattened, labeled by their leader(s) since groups
+// haven't picked team names yet. TEACHER_TO_GROUP maps each leader to the
+// one group they lead, so that group can be excluded from their own
+// scoring form. Andrew Yoo/Keren Choi lead no group, so they score all 8.
+var SCORE_GROUPS=[];
+var TEACHER_TO_GROUP={};
+(function(){
+  ['boys','girls'].forEach(function(side){
+    RETREAT_SG[side].forEach(function(grp){
+      var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;});
+      SCORE_GROUPS.push({id:grp.id,label:leaderNames.join(' & ')+"'s Group",leaders:leaderNames});
+      leaderNames.forEach(function(n){TEACHER_TO_GROUP[n]=grp.id;});
+    });
+  });
+})();
+// Dedup team leads across every RETREAT_SG group (a couple are co-led), plus
+// Andrew/Keren who score every group rather than leading one themselves.
 var SCORE_TEACHERS=(function(){
   var seen={},out=[];
   ['boys','girls'].forEach(function(side){
@@ -4328,21 +4348,22 @@ var SCORE_TEACHERS=(function(){
     });
   });
   out.sort();
+  ['Andrew Yoo','Keren Choi'].forEach(function(n){if(!seen[n]){seen[n]=true;out.unshift(n);}});
   return out;
 })();
-function scoreGetLog(){try{return JSON.parse(localStorage.getItem('teamScores')||'{}');}catch(e){return {};}}
-function scoreSaveLog(log){try{localStorage.setItem('teamScores',JSON.stringify(log));}catch(e){}}
-function scorePost(teacher,team,vals){
+function scoreGetLog(){try{return JSON.parse(localStorage.getItem('groupScores')||'{}');}catch(e){return {};}}
+function scoreSaveLog(log){try{localStorage.setItem('groupScores',JSON.stringify(log));}catch(e){}}
+function scorePost(teacher,groupId,vals){
   if(!SCORE_ENDPOINT)return;
   fetch(SCORE_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
-    teacher:teacher,team:team,banner:vals.banner,chant:vals.chant,creativity:vals.creativity
+    teacher:teacher,group:groupId,banner:vals.banner,chant:vals.chant,creativity:vals.creativity
   })}).catch(function(){});
 }
-var _allTeamScores=null;
+var _allGroupScores=null;
 function scoreSyncFromSheet(){
   if(!SCORE_ENDPOINT)return;
   fetch(SCORE_ENDPOINT).then(function(r){return r.json();}).then(function(data){
-    _allTeamScores=data.scores||[];
+    _allGroupScores=data.scores||[];
     renderLeaderboard();
   }).catch(function(){});
 }
@@ -4367,16 +4388,18 @@ function scoreOptionsHtml(selected){
 function renderScoreForm(){
   var body=document.getElementById('score-form-body');
   if(!body)return;
-  if(!scoreSelectedTeacher){body.innerHTML='<div class="mygrp-empty">Tap your name above to score each team.</div>';return;}
+  if(!scoreSelectedTeacher){body.innerHTML='<div class="mygrp-empty">Tap your name above to score each group.</div>';return;}
   var log=scoreGetLog();
   var mine=log[scoreSelectedTeacher]||{};
-  var html=SCORE_TEAMS.map(function(team){
-    var vals=mine[team]||{};
+  var ownGroup=TEACHER_TO_GROUP[scoreSelectedTeacher];
+  var scorable=SCORE_GROUPS.filter(function(g){return g.id!==ownGroup;});
+  var html=scorable.map(function(grp){
+    var vals=mine[grp.id]||{};
     var rows=SCORE_CATEGORIES.map(function(cat){
       return '<div class="score-row"><span class="score-lbl">'+cat.label+'</span>'
-        +'<select class="score-input" data-team="'+team+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
+        +'<select class="score-input" data-group="'+grp.id+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
     }).join('');
-    return '<div class="score-team-card"><div class="score-team-hdr">'+team+'</div>'+rows+'</div>';
+    return '<div class="score-team-card"><div class="score-team-hdr">'+grp.label+'</div>'+rows+'</div>';
   }).join('');
   html+='<button class="mon-qbtn" style="background:#16a34a;width:100%;margin-top:4px" onclick="submitScores()">✅ Save Scores</button>'
     +'<div class="ci-sync-note" id="score-save-note" style="text-align:center;margin-top:8px"></div>';
@@ -4386,53 +4409,62 @@ function submitScores(){
   if(!scoreSelectedTeacher)return;
   var log=scoreGetLog();
   var mine=log[scoreSelectedTeacher]=log[scoreSelectedTeacher]||{};
-  var byTeam={};
+  var byGroup={};
   document.querySelectorAll('#score-form-body .score-input').forEach(function(sel){
-    var team=sel.dataset.team,cat=sel.dataset.cat,val=parseInt(sel.value,10);
-    if(!byTeam[team])byTeam[team]={};
-    byTeam[team][cat]=isNaN(val)?null:val;
+    var groupId=sel.dataset.group,cat=sel.dataset.cat,val=parseInt(sel.value,10);
+    if(!byGroup[groupId])byGroup[groupId]={};
+    byGroup[groupId][cat]=isNaN(val)?null:val;
   });
   var savedAny=false;
-  SCORE_TEAMS.forEach(function(team){
-    var vals=byTeam[team]||{};
-    if(vals.banner==null||vals.chant==null||vals.creativity==null)return; // only save a team once all 3 are filled in
-    mine[team]=vals;
-    scorePost(scoreSelectedTeacher,team,vals);
+  Object.keys(byGroup).forEach(function(groupId){
+    var vals=byGroup[groupId];
+    if(vals.banner==null||vals.chant==null||vals.creativity==null)return; // only save a group once all 3 are filled in
+    mine[groupId]=vals;
+    scorePost(scoreSelectedTeacher,groupId,vals);
     savedAny=true;
   });
   scoreSaveLog(log);
   var note=document.getElementById('score-save-note');
-  if(note)note.textContent=savedAny?'Saved'+(SCORE_ENDPOINT?' and synced':' (connect the Sheet to sync across devices)'):'Fill in all 3 scores for a team before saving it';
+  if(note)note.textContent=savedAny?'Saved'+(SCORE_ENDPOINT?' and synced':' (connect the Sheet to sync across devices)'):'Fill in all 3 scores for a group before saving it';
   renderLeaderboard();
 }
 function localScoresFlat(){
   var log=scoreGetLog(),out=[];
   Object.keys(log).forEach(function(teacher){
-    Object.keys(log[teacher]).forEach(function(team){
-      var v=log[teacher][team];
-      out.push({teacher:teacher,team:team,banner:v.banner,chant:v.chant,creativity:v.creativity});
+    Object.keys(log[teacher]).forEach(function(groupId){
+      var v=log[teacher][groupId];
+      out.push({teacher:teacher,group:groupId,banner:v.banner,chant:v.chant,creativity:v.creativity});
     });
   });
   return out;
 }
-function scoreAvg(arr){return arr.length?(arr.reduce(function(a,b){return a+b;},0)/arr.length):null;}
+function scoreWeightedAvg(items){ // items: [{v,w}]
+  if(!items.length)return null;
+  var wsum=0,vsum=0;
+  items.forEach(function(it){wsum+=it.w;vsum+=it.v*it.w;});
+  return wsum?vsum/wsum:null;
+}
 function scoreFmt(v){return v==null?'—':v.toFixed(1);}
 function computeLeaderboard(){
-  var source=(_allTeamScores&&_allTeamScores.length)?_allTeamScores:localScoresFlat();
-  var byTeam={};
-  SCORE_TEAMS.forEach(function(t){byTeam[t]={banner:[],chant:[],creativity:[]};});
+  var source=(_allGroupScores&&_allGroupScores.length)?_allGroupScores:localScoresFlat();
+  var byGroup={};
+  SCORE_GROUPS.forEach(function(g){byGroup[g.id]={banner:[],chant:[],creativity:[],scorers:0};});
   source.forEach(function(s){
-    if(!byTeam[s.team])return;
+    if(!byGroup[s.group])return;
+    var w=scoreWeightOf(s.teacher);
+    var any=false;
     ['banner','chant','creativity'].forEach(function(cat){
       var v=Number(s[cat]);
-      if(!isNaN(v)&&v>0)byTeam[s.team][cat].push(v);
+      if(!isNaN(v)&&v>0){byGroup[s.group][cat].push({v:v,w:w});any=true;}
     });
+    if(any)byGroup[s.group].scorers++;
   });
-  return SCORE_TEAMS.map(function(team){
-    var b=scoreAvg(byTeam[team].banner),c=scoreAvg(byTeam[team].chant),cr=scoreAvg(byTeam[team].creativity);
-    var vals=[b,c,cr].filter(function(v){return v!=null;});
-    var overall=vals.length?(vals.reduce(function(a,x){return a+x;},0)/vals.length):null;
-    return {team:team,banner:b,chant:c,creativity:cr,overall:overall,n:byTeam[team].banner.length};
+  return SCORE_GROUPS.map(function(grp){
+    var g=byGroup[grp.id];
+    var b=scoreWeightedAvg(g.banner),c=scoreWeightedAvg(g.chant),cr=scoreWeightedAvg(g.creativity);
+    var parts=[b,c,cr].filter(function(v){return v!=null;});
+    var overall=parts.length?(parts.reduce(function(a,x){return a+x;},0)/parts.length):null;
+    return {group:grp.id,label:grp.label,banner:b,chant:c,creativity:cr,overall:overall,n:g.scorers};
   }).sort(function(a,b){return (b.overall||0)-(a.overall||0);});
 }
 function renderLeaderboard(){
@@ -4443,10 +4475,10 @@ function renderLeaderboard(){
   el.innerHTML=rows.map(function(r,i){
     var isTop=r.overall!=null&&r.overall===maxOverall&&maxOverall>0;
     return '<div class="score-lb-row'+(isTop?' top':'')+'">'
-      +'<span class="score-lb-rank">'+(i+1)+'</span>'
-      +'<span class="score-lb-team">'+r.team+(isTop?' 🏆':'')+'</span>'
-      +'<span class="score-lb-detail">Banner '+scoreFmt(r.banner)+' · Chant '+scoreFmt(r.chant)+' · Creativity '+scoreFmt(r.creativity)+' <span style="opacity:.6">('+r.n+' '+(r.n===1?'scorer':'scorers')+')</span></span>'
-      +'<span class="score-lb-overall">'+scoreFmt(r.overall)+'</span>'
+      +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
+        +'<span class="score-lb-team">'+r.label+(isTop?' 🏆':'')+'</span>'
+        +'<span class="score-lb-overall">'+scoreFmt(r.overall)+'</span></div>'
+      +'<div class="score-lb-detail">Banner '+scoreFmt(r.banner)+' · Chant '+scoreFmt(r.chant)+' · Creativity '+scoreFmt(r.creativity)+' <span style="opacity:.6">('+r.n+' '+(r.n===1?'scorer':'scorers')+')</span></div>'
     +'</div>';
   }).join('');
 }

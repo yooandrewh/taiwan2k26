@@ -620,6 +620,10 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .score-lb-rank{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
 .score-lb-team{flex:1;font-size:14px;font-weight:700;}
 .score-lb-overall{flex-shrink:0;font-size:16px;font-weight:800;color:#f59e0b;}
+.random-pick-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 16px;margin-top:20px;text-align:center;}
+.random-pick-display{font-size:22px;font-weight:800;color:var(--text);min-height:60px;display:flex;align-items:center;justify-content:center;padding:0 8px;transition:transform .08s ease;}
+.random-pick-display.spinning{color:var(--text3);}
+.random-pick-display.winner{color:#ec4899;transform:scale(1.08);}
 .score-lb-detail{font-size:11px;color:var(--text3);margin:2px 0 0 28px;}
 .mygrp-wrap{margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
 .mygrp-hdr{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px;}
@@ -705,7 +709,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=266; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=267; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -729,7 +733,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v266 · Jul 21, 2026 · 11:29 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v267 · Jul 21, 2026 · 11:41 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1302,6 +1306,14 @@ setInterval(renderBuildAge,60000);
   <div class="mygrp-tabs" id="score-teacher-tabs"></div>
   <div id="score-form-body"></div>
 </div>
+<div id="pane-random" class="pane">
+  <div class="stu-title" style="color:#ec4899">Random Pick</div>
+  <div class="stu-sub">Tap to randomly choose a small group</div>
+  <div class="random-pick-wrap">
+    <div class="random-pick-display" id="random-pick-result">?</div>
+    <button class="mon-qbtn" style="background:#ec4899;width:100%;margin-top:16px" id="random-pick-btn" onclick="pickRandomGroup()">🎲 Pick a Random Group</button>
+  </div>
+</div>
 <div id="pane-overnight" class="pane">
   <div class="stu-title" style="color:#9333ea">Special Overnight</div>
   <div class="stu-sub">VBS overnight event · rosters &amp; schedule (tentative)</div>
@@ -1648,6 +1660,10 @@ setInterval(renderBuildAge,60000);
   <button class="tabitem" style="--accent:#f59e0b" onclick="goScoring(this)" aria-label="Team Scoring">
     <svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.7 7.1-.6z"/></svg>
     <span>Scores</span>
+  </button>
+  <button class="tabitem" style="--accent:#ec4899" onclick="go('random',this)" aria-label="Random Pick">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none"/></svg>
+    <span>Random</span>
   </button>
   <button class="tabitem" style="--accent:#9333ea;display:none" onclick="go('overnight',this)" aria-label="Special Overnight">
     <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -4317,40 +4333,31 @@ function goParkMap(btn){
    pattern as Check-In, but its own endpoint/backend — paste the deployed
    Apps Script Web App URL below once it exists. Until then this still
    works fully offline (localStorage), it just won't sync across devices. */
-const SCORE_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/AKfycb.../exec"
+const SCORE_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVFJ8bBwsUWgOTbCSemYHDfmMT-pXNxHsK7UH4mEEuqgzhvjqIDqJdd6eZEQvAoJL7cw/exec";
 var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'Chant'},{key:'creativity',label:'Overall Creativity (incl. team name)'}];
 var SCORE_WEIGHTS={'Andrew Yoo':3,'Keren Choi':3}; // everyone else defaults to 1
 function scoreWeightOf(name){return SCORE_WEIGHTS[name]||1;}
 // All 8 small groups, flattened, labeled by their leader(s) since groups
-// haven't picked team names yet. TEACHER_TO_GROUP maps each leader to the
-// one group they lead, so that group can be excluded from their own
-// scoring form. Andrew Yoo/Keren Choi lead no group, so they score all 8.
+// haven't picked team names yet.
 var SCORE_GROUPS=[];
-var TEACHER_TO_GROUP={};
 (function(){
   ['boys','girls'].forEach(function(side){
     RETREAT_SG[side].forEach(function(grp){
       var leaderNames=grp.leads.filter(function(l){return l.role==='L';}).map(function(l){return l.name;});
       SCORE_GROUPS.push({id:grp.id,label:leaderNames.join(' & ')+"'s Group",leaders:leaderNames});
-      leaderNames.forEach(function(n){TEACHER_TO_GROUP[n]=grp.id;});
     });
   });
 })();
-// Dedup team leads across every RETREAT_SG group (a couple are co-led), plus
-// Andrew/Keren who score every group rather than leading one themselves.
-var SCORE_TEACHERS=(function(){
-  var seen={},out=[];
-  ['boys','girls'].forEach(function(side){
-    RETREAT_SG[side].forEach(function(grp){
-      grp.leads.filter(function(l){return l.role==='L';}).forEach(function(l){
-        if(!seen[l.name]){seen[l.name]=true;out.push(l.name);}
-      });
-    });
-  });
-  out.sort();
-  ['Andrew Yoo','Keren Choi'].forEach(function(n){if(!seen[n]){seen[n]=true;out.unshift(n);}});
-  return out;
-})();
+// One voter per small group — co-leaders (e.g. "Jane Kim & Becca Park") vote
+// together as a single unit, not as two separate individual votes. Andrew
+// Yoo/Keren Choi are added as their own voters since they don't lead a group
+// (and so can score all 8, not 7 — see ownGroup:null below).
+var SCORE_TEACHERS=SCORE_GROUPS.map(function(g){return g.leaders.join(' & ');});
+['Andrew Yoo','Keren Choi'].forEach(function(n){if(SCORE_TEACHERS.indexOf(n)<0)SCORE_TEACHERS.unshift(n);});
+function scoreOwnGroupOf(voterLabel){
+  var g=SCORE_GROUPS.find(function(g){return g.leaders.join(' & ')===voterLabel;});
+  return g?g.id:null;
+}
 function scoreGetLog(){try{return JSON.parse(localStorage.getItem('groupScores')||'{}');}catch(e){return {};}}
 function scoreSaveLog(log){try{localStorage.setItem('groupScores',JSON.stringify(log));}catch(e){}}
 function scorePost(teacher,groupId,vals){
@@ -4391,7 +4398,7 @@ function renderScoreForm(){
   if(!scoreSelectedTeacher){body.innerHTML='<div class="mygrp-empty">Tap your name above to score each group.</div>';return;}
   var log=scoreGetLog();
   var mine=log[scoreSelectedTeacher]||{};
-  var ownGroup=TEACHER_TO_GROUP[scoreSelectedTeacher];
+  var ownGroup=scoreOwnGroupOf(scoreSelectedTeacher);
   var scorable=SCORE_GROUPS.filter(function(g){return g.id!==ownGroup;});
   var html=scorable.map(function(grp){
     var vals=mine[grp.id]||{};
@@ -4488,6 +4495,38 @@ function goScoring(btn){
   renderScoreForm();
   renderLeaderboard();
   scoreSyncFromSheet();
+}
+// Slot-machine-style reveal: cycles rapidly through random group names,
+// slowing down toward the end, then settles on the actual (separately
+// rolled) winner — reuses SCORE_GROUPS so it's always in sync with the
+// same 8 small groups used for scoring.
+var _randomPickRunning=false;
+function pickRandomGroup(){
+  if(_randomPickRunning)return;
+  _randomPickRunning=true;
+  var btn=document.getElementById('random-pick-btn');
+  var display=document.getElementById('random-pick-result');
+  btn.disabled=true;
+  display.classList.remove('winner');
+  display.classList.add('spinning');
+  var ticks=0,maxTicks=22;
+  function tick(){
+    var g=SCORE_GROUPS[Math.floor(Math.random()*SCORE_GROUPS.length)];
+    display.textContent=g.label;
+    ticks++;
+    if(ticks<maxTicks){
+      var delay=70+Math.pow(ticks/maxTicks,2)*260;
+      setTimeout(tick,delay);
+    }else{
+      var winner=SCORE_GROUPS[Math.floor(Math.random()*SCORE_GROUPS.length)];
+      display.textContent=winner.label;
+      display.classList.remove('spinning');
+      display.classList.add('winner');
+      btn.disabled=false;
+      _randomPickRunning=false;
+    }
+  }
+  tick();
 }
 </script>
 </body>

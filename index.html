@@ -193,6 +193,7 @@ ul.bul li::before{content:"· ";color:var(--text3);}
 .stu-seg{display:flex;background:var(--surface2);border-radius:11px;padding:3px;margin-bottom:16px;}
 .stu-seg button{flex:1;padding:9px 0;border:none;background:transparent;border-radius:9px;font-size:14px;font-weight:600;color:var(--text3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s;}
 .stu-seg button.on{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.14);}
+.stu-seg button:disabled{opacity:.45;cursor:not-allowed;}
 .stu-gh{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding:10px 4px 6px;}
 .stu-row{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 14px;margin-bottom:7px;display:flex;align-items:center;gap:11px;}
 .stu-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
@@ -709,7 +710,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=269; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=270; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -733,7 +734,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v269 · Jul 21, 2026 · 2:03 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v270 · Jul 21, 2026 · 2:31 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1301,10 +1302,14 @@ setInterval(renderBuildAge,60000);
 <div id="pane-scoring" class="pane">
   <div class="stu-title" style="color:#f59e0b">Team Scoring</div>
   <div class="stu-sub">Banner Making · Chant · Overall Creativity — score 1-10</div>
-  <div class="sgq-wrap"><div class="sgq-hdr">🏆 Leaderboard</div><div id="score-leaderboard-body"></div></div>
-  <div class="mygrp-hdr" style="margin-top:16px">Tap your name to score each team</div>
-  <div class="mygrp-tabs" id="score-teacher-tabs"></div>
-  <div id="score-form-body"></div>
+  <div class="stu-seg" id="game-tabs" style="margin-bottom:14px"></div>
+  <div id="cumulative-body"></div>
+  <div id="game-scoring-body">
+    <div class="sgq-wrap"><div class="sgq-hdr">🏆 Leaderboard</div><div id="score-leaderboard-body"></div></div>
+    <div class="mygrp-hdr" style="margin-top:16px">Tap your name to score each group</div>
+    <div class="mygrp-tabs" id="score-teacher-tabs"></div>
+    <div id="score-form-body"></div>
+  </div>
 </div>
 <div id="pane-random" class="pane">
   <div class="stu-title" style="color:#ec4899">Random Pick</div>
@@ -4334,6 +4339,18 @@ function goParkMap(btn){
    works fully offline (localStorage), it just won't sync across devices. */
 const SCORE_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVFJ8bBwsUWgOTbCSemYHDfmMT-pXNxHsK7UH4mEEuqgzhvjqIDqJdd6eZEQvAoJL7cw/exec";
 var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'Chant'},{key:'creativity',label:'Overall Creativity (incl. team name)'}];
+// Each competition ("game") is scored independently — same 3 categories,
+// separate leaderboard per game, plus a Cumulative tab combining all of
+// them via placement points (see computeCumulativeRanking()). Add more
+// entries here as future games get announced.
+var GAMES=[
+  {id:'game1',name:'Game 1 · Skit Game'},
+  {id:'game2',name:'Game 2 · Tue PM'},
+  {id:'game3',name:'Game 3 · Wed AM Skit Making'}
+];
+var currentGameId=null;
+try{currentGameId=localStorage.getItem('scoreCurrentGame')||null;}catch(e){}
+if(!currentGameId||!GAMES.find(function(g){return g.id===currentGameId;}))currentGameId=GAMES[0].id;
 var SCORE_WEIGHTS={'Andrew Yoo':3,'Keren Choi':3}; // everyone else defaults to 1
 function scoreWeightOf(name){return SCORE_WEIGHTS[name]||1;}
 // All 8 small groups, flattened, labeled by their leader(s) since groups
@@ -4359,13 +4376,21 @@ function scoreOwnGroupOf(voterLabel){
 }
 function scoreGetLog(){try{return JSON.parse(localStorage.getItem('groupScores')||'{}');}catch(e){return {};}}
 function scoreSaveLog(log){try{localStorage.setItem('groupScores',JSON.stringify(log));}catch(e){}}
-function scorePost(teacher,groupId,vals){
+function scoreKey(teacher,groupId,gameId){return teacher+''+groupId+''+gameId;}
+function scorePost(teacher,groupId,gameId,vals){
   if(!SCORE_ENDPOINT)return;
   fetch(SCORE_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
-    teacher:teacher,group:groupId,banner:vals.banner,chant:vals.chant,creativity:vals.creativity
+    teacher:teacher,group:groupId,game:gameId,banner:vals.banner,chant:vals.chant,creativity:vals.creativity
   })}).catch(function(){});
 }
-var _allGroupScores=null;
+var _allGroupScores=null; // every game's rows, flat — each entry carries its own .game
+// The Apps Script needs an update to actually store/return a "game" column
+// (see instructions given to the user) — until that's deployed, every row
+// upserts by (teacher, group) alone, so submitting to Game 2/3 would silently
+// overwrite that teacher's Game 1 votes. Detected from the GET response: if
+// nothing comes back with a real .game value, the old script is still live,
+// so Game 2/3 stay disabled (Game 1 + Cumulative still work) until it's safe.
+var _backendSupportsGames=false;
 // Pulls every submitted score from the Sheet (shared across every device) and
 // reconciles it against this device's local log — same pattern as Check-In's
 // ciSyncFromSheet(). scorePost() is fire-and-forget (mode:'no-cors' can't
@@ -4376,45 +4401,52 @@ var _allGroupScores=null;
 function scoreSyncFromSheet(){
   if(!SCORE_ENDPOINT)return;
   fetch(SCORE_ENDPOINT).then(function(r){return r.json();}).then(function(data){
-    // The Sheet can end up with duplicate (teacher, group) rows when two
-    // submissions race — both read "no existing row" before either write
-    // commits, so both append instead of one updating (fixed at the source
-    // by adding LockService to the Apps Script, but dedupe here too as a
-    // safety net for rows already written before that fix, or any future
-    // race the lock doesn't fully close). Keep only the most recent row per
-    // (teacher, group) pair.
+    // The Sheet can end up with duplicate (teacher, group, game) rows when
+    // two submissions race - both read "no existing row" before either
+    // write commits, so both append instead of one updating (fixed at the
+    // source by adding LockService to the Apps Script, but dedupe here too
+    // as a safety net). Rows written before the multi-game update have no
+    // .game column - treat those as game1 (the original Skit Game). Keep
+    // only the most recent row per (teacher, group, game).
     var raw=data.scores||[];
+    _backendSupportsGames=raw.some(function(s){return !!s.game;});
     var latest={};
     raw.forEach(function(s){
-      var key=s.teacher+''+s.group;
-      if(!latest[key]||new Date(s.timestamp)>new Date(latest[key].timestamp))latest[key]=s;
+      var g=s.game||'game1';
+      var key=scoreKey(s.teacher,s.group,g);
+      if(!latest[key]||new Date(s.timestamp)>new Date(latest[key].timestamp))latest[key]={teacher:s.teacher,group:s.group,game:g,banner:s.banner,chant:s.chant,creativity:s.creativity,timestamp:s.timestamp};
     });
     _allGroupScores=Object.keys(latest).map(function(k){return latest[k];});
     var confirmed={};
-    _allGroupScores.forEach(function(s){confirmed[s.teacher+''+s.group]=true;});
+    _allGroupScores.forEach(function(s){confirmed[scoreKey(s.teacher,s.group,s.game)]=true;});
     var log=scoreGetLog();
     var changed=false;
     var now=Date.now();
     Object.keys(log).forEach(function(teacher){
-      Object.keys(log[teacher]).forEach(function(groupId){
-        var entry=log[teacher][groupId];
-        var key=teacher+''+groupId;
-        if(confirmed[key]){
-          if(!entry.synced){entry.synced=true;changed=true;}
-          return;
-        }
-        // Not yet confirmed in the Sheet — retry with backoff (fast at first,
-        // then every 5 min), same cadence as Check-In's retry loop.
-        var backoff=(entry.tries||0)>=8?300000:7000;
-        if(entry.lastTry&&now-entry.lastTry<backoff)return;
-        entry.tries=(entry.tries||0)+1;
-        entry.lastTry=now;
-        changed=true;
-        scorePost(teacher,groupId,entry);
+      Object.keys(log[teacher]).forEach(function(gameId){
+        Object.keys(log[teacher][gameId]).forEach(function(groupId){
+          var entry=log[teacher][gameId][groupId];
+          var key=scoreKey(teacher,groupId,gameId);
+          if(confirmed[key]){
+            if(!entry.synced){entry.synced=true;changed=true;}
+            return;
+          }
+          // Not yet confirmed in the Sheet - retry with backoff (fast at
+          // first, then every 5 min), same cadence as Check-In's retry loop.
+          var backoff=(entry.tries||0)>=8?300000:7000;
+          if(entry.lastTry&&now-entry.lastTry<backoff)return;
+          entry.tries=(entry.tries||0)+1;
+          entry.lastTry=now;
+          changed=true;
+          scorePost(teacher,groupId,gameId,entry);
+        });
       });
     });
     if(changed)scoreSaveLog(log);
+    var tabsEl=document.getElementById('game-tabs');
+    if(tabsEl)tabsEl.innerHTML=gameTabsHtml(); // reflect newly-unlocked games as soon as the backend supports them
     renderLeaderboard();
+    renderCumulative();
   }).catch(function(){});
 }
 var scoreSelectedTeacher=null;
@@ -4430,8 +4462,37 @@ function selectScoreTeacher(name){
   document.querySelectorAll('#score-teacher-tabs .mygrp-tab').forEach(function(b){b.classList.toggle('on',b.dataset.name===name);});
   renderScoreForm();
 }
+function gameTabsHtml(){
+  var cumBtn='<button class="'+(currentGameId==='cumulative'?'on':'')+'" data-id="cumulative" onclick="selectGame(\'cumulative\')">Cumulative</button>';
+  var gameBtns=GAMES.map(function(g,i){
+    // Only Game 1 works until the backend is updated to store a "game"
+    // column — see _backendSupportsGames above. Disabled buttons are still
+    // rendered (so the plan is visible) but can't be tapped into.
+    var disabled=(i>0&&!_backendSupportsGames);
+    return '<button class="'+(currentGameId===g.id?'on':'')+'"'+(disabled?' disabled title="Waiting on the updated Sheet script"':'')+' data-id="'+g.id+'" onclick="'+(disabled?'':'selectGame(\''+g.id+'\')')+'">'+g.name+(disabled?' 🔒':'')+'</button>';
+  }).join('');
+  return cumBtn+gameBtns;
+}
+function selectGame(gameId){
+  var idx=GAMES.findIndex(function(g){return g.id===gameId;});
+  if(idx>0&&!_backendSupportsGames)return; // guarded in gameTabsHtml() too; belt-and-suspenders
+  currentGameId=gameId;
+  try{localStorage.setItem('scoreCurrentGame',gameId);}catch(e){}
+  document.querySelectorAll('#game-tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.id===gameId);});
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body');
+  if(gameId==='cumulative'){
+    cumBody.style.display='';
+    gameBody.style.display='none';
+    renderCumulative();
+  }else{
+    cumBody.style.display='none';
+    gameBody.style.display='';
+    renderScoreForm();
+    renderLeaderboard();
+  }
+}
 function scoreOptionsHtml(selected){
-  var html='<option value="">—</option>';
+  var html='<option value="">-</option>';
   for(var i=1;i<=10;i++)html+='<option value="'+i+'"'+(Number(selected)===i?' selected':'')+'>'+i+'</option>';
   return html;
 }
@@ -4440,7 +4501,7 @@ function renderScoreForm(){
   if(!body)return;
   if(!scoreSelectedTeacher){body.innerHTML='<div class="mygrp-empty">Tap your name above to score each group.</div>';return;}
   var log=scoreGetLog();
-  var mine=log[scoreSelectedTeacher]||{};
+  var mine=(log[scoreSelectedTeacher]&&log[scoreSelectedTeacher][currentGameId])||{};
   var ownGroup=scoreOwnGroupOf(scoreSelectedTeacher);
   var scorable=SCORE_GROUPS.filter(function(g){return g.id!==ownGroup;});
   var html=scorable.map(function(grp){
@@ -4451,14 +4512,15 @@ function renderScoreForm(){
     }).join('');
     return '<div class="score-team-card"><div class="score-team-hdr">'+grp.label+'</div>'+rows+'</div>';
   }).join('');
-  html+='<button class="mon-qbtn" style="background:#16a34a;width:100%;margin-top:4px" onclick="submitScores()">✅ Save Scores</button>'
+  html+='<button class="mon-qbtn" style="background:#16a34a;width:100%;margin-top:4px" onclick="submitScores()">Save Scores</button>'
     +'<div class="ci-sync-note" id="score-save-note" style="text-align:center;margin-top:8px"></div>';
   body.innerHTML=html;
 }
 function submitScores(){
   if(!scoreSelectedTeacher)return;
   var log=scoreGetLog();
-  var mine=log[scoreSelectedTeacher]=log[scoreSelectedTeacher]||{};
+  var forTeacher=log[scoreSelectedTeacher]=log[scoreSelectedTeacher]||{};
+  var mine=forTeacher[currentGameId]=forTeacher[currentGameId]||{};
   var byGroup={};
   document.querySelectorAll('#score-form-body .score-input').forEach(function(sel){
     var groupId=sel.dataset.group,cat=sel.dataset.cat,val=parseInt(sel.value,10);
@@ -4470,21 +4532,23 @@ function submitScores(){
     var vals=byGroup[groupId];
     if(vals.banner==null||vals.chant==null||vals.creativity==null)return; // only save a group once all 3 are filled in
     mine[groupId]={banner:vals.banner,chant:vals.chant,creativity:vals.creativity,synced:false,tries:0,lastTry:Date.now()};
-    scorePost(scoreSelectedTeacher,groupId,vals);
+    scorePost(scoreSelectedTeacher,groupId,currentGameId,vals);
     savedAny=true;
   });
   scoreSaveLog(log);
   var note=document.getElementById('score-save-note');
-  if(note)note.textContent=savedAny?'Saved'+(SCORE_ENDPOINT?' — syncing…':' (connect the Sheet to sync across devices)'):'Fill in all 3 scores for a group before saving it';
+  if(note)note.textContent=savedAny?'Saved - syncing...':'Fill in all 3 scores for a group before saving it';
   renderLeaderboard();
   if(savedAny)scoreSyncFromSheet(); // confirm/retry right away instead of waiting for the next periodic sync
 }
-function localScoresFlat(){
+function localScoresFlat(gameId){
   var log=scoreGetLog(),out=[];
   Object.keys(log).forEach(function(teacher){
-    Object.keys(log[teacher]).forEach(function(groupId){
-      var v=log[teacher][groupId];
-      out.push({teacher:teacher,group:groupId,banner:v.banner,chant:v.chant,creativity:v.creativity});
+    var forGame=log[teacher][gameId];
+    if(!forGame)return;
+    Object.keys(forGame).forEach(function(groupId){
+      var v=forGame[groupId];
+      out.push({teacher:teacher,group:groupId,game:gameId,banner:v.banner,chant:v.chant,creativity:v.creativity});
     });
   });
   return out;
@@ -4495,15 +4559,15 @@ function scoreWeightedAvg(items){ // items: [{v,w}]
   items.forEach(function(it){wsum+=it.w;vsum+=it.v*it.w;});
   return wsum?vsum/wsum:null;
 }
-function scoreFmt(v){return v==null?'—':v.toFixed(1);}
-function computeLeaderboard(){
+function scoreFmt(v){return v==null?'-':v.toFixed(1);}
+function computeLeaderboard(gameId){
   // Merge, don't choose-one: Sheet data is authoritative for anything it
   // already has, plus any local submissions not yet confirmed there (so a
   // pending/still-retrying submit still shows up instead of vanishing).
-  var sheetData=_allGroupScores||[];
+  var sheetData=(_allGroupScores||[]).filter(function(s){return s.game===gameId;});
   var confirmed={};
-  sheetData.forEach(function(s){confirmed[s.teacher+''+s.group]=true;});
-  var pendingLocal=localScoresFlat().filter(function(s){return !confirmed[s.teacher+''+s.group];});
+  sheetData.forEach(function(s){confirmed[scoreKey(s.teacher,s.group,gameId)]=true;});
+  var pendingLocal=localScoresFlat(gameId).filter(function(s){return !confirmed[scoreKey(s.teacher,s.group,gameId)];});
   var source=sheetData.concat(pendingLocal);
   var byGroup={};
   SCORE_GROUPS.forEach(function(g){byGroup[g.id]={banner:[],chant:[],creativity:[],scorers:0};});
@@ -4525,26 +4589,73 @@ function computeLeaderboard(){
     return {group:grp.id,label:grp.label,banner:b,chant:c,creativity:cr,overall:overall,n:g.scorers};
   }).sort(function(a,b){return (b.overall||0)-(a.overall||0);});
 }
+// Combines every game's own leaderboard into one overall standing via
+// placement points: within each game, only groups that have at least one
+// score are ranked (n>0), 1st place gets N points (N = how many groups
+// have been scored in that game so far) down to 1 point for last - so a
+// game still being scored doesn't unfairly zero out groups nobody's
+// gotten to yet, and doesn't over-value a game most groups skipped.
+function computeCumulativeRanking(){
+  var totals={},breakdown={};
+  SCORE_GROUPS.forEach(function(g){totals[g.id]=0;breakdown[g.id]={};});
+  GAMES.forEach(function(game,i){
+    if(i>0&&!_backendSupportsGames)return; // locked games have no real (confirmed) data yet
+    var lb=computeLeaderboard(game.id).filter(function(r){return r.n>0;});
+    var n=lb.length;
+    lb.forEach(function(r,i){
+      var pts=n-i;
+      totals[r.group]+=pts;
+      breakdown[r.group][game.id]=pts;
+    });
+  });
+  return SCORE_GROUPS.map(function(grp){
+    return {group:grp.id,label:grp.label,points:totals[grp.id],breakdown:breakdown[grp.id]};
+  }).sort(function(a,b){return b.points-a.points;});
+}
+function renderCumulative(){
+  var el=document.getElementById('cumulative-body');
+  if(!el||currentGameId!=='cumulative')return;
+  var rows=computeCumulativeRanking();
+  var maxPts=Math.max.apply(null,rows.map(function(r){return r.points;}));
+  var html='<div class="sgq-wrap"><div class="sgq-hdr">Cumulative Ranking - across all games</div>'
+    +rows.map(function(r,i){
+      var isTop=r.points===maxPts&&maxPts>0;
+      var detail=GAMES.map(function(g){return g.name.replace(/^Game \d+ . /,'')+': '+(r.breakdown[g.id]!=null?r.breakdown[g.id]+'pts':'-');}).join(' | ');
+      return '<div class="score-lb-row'+(isTop?' top':'')+'">'
+        +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
+          +'<span class="score-lb-team">'+r.label+(isTop?' \ud83c\udfc6':'')+'</span>'
+          +'<span class="score-lb-overall">'+r.points+'pts</span></div>'
+        +'<div class="score-lb-detail">'+detail+'</div>'
+      +'</div>';
+    }).join('')
+  +'</div>';
+  el.innerHTML=html;
+}
 function renderLeaderboard(){
   var el=document.getElementById('score-leaderboard-body');
-  if(!el)return;
-  var rows=computeLeaderboard();
+  if(!el||currentGameId==='cumulative')return;
+  var rows=computeLeaderboard(currentGameId);
   var maxOverall=Math.max.apply(null,rows.map(function(r){return r.overall||0;}));
   el.innerHTML=rows.map(function(r,i){
     var isTop=r.overall!=null&&r.overall===maxOverall&&maxOverall>0;
     return '<div class="score-lb-row'+(isTop?' top':'')+'">'
       +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
-        +'<span class="score-lb-team">'+r.label+(isTop?' 🏆':'')+'</span>'
+        +'<span class="score-lb-team">'+r.label+(isTop?' \ud83c\udfc6':'')+'</span>'
         +'<span class="score-lb-overall">'+scoreFmt(r.overall)+'</span></div>'
-      +'<div class="score-lb-detail">Banner '+scoreFmt(r.banner)+' · Chant '+scoreFmt(r.chant)+' · Creativity '+scoreFmt(r.creativity)+' <span style="opacity:.6">('+r.n+' '+(r.n===1?'scorer':'scorers')+')</span></div>'
+      +'<div class="score-lb-detail">Banner '+scoreFmt(r.banner)+' - Chant '+scoreFmt(r.chant)+' - Creativity '+scoreFmt(r.creativity)+' <span style="opacity:.6">('+r.n+' '+(r.n===1?'scorer':'scorers')+')</span></div>'
     +'</div>';
   }).join('');
 }
 function goScoring(btn){
   go('scoring',btn);
+  document.getElementById('game-tabs').innerHTML=gameTabsHtml();
   document.getElementById('score-teacher-tabs').innerHTML=scoreTeacherTabsHtml();
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body');
+  if(currentGameId==='cumulative'){cumBody.style.display='';gameBody.style.display='none';}
+  else{cumBody.style.display='none';gameBody.style.display='';}
   renderScoreForm();
   renderLeaderboard();
+  renderCumulative();
   scoreSyncFromSheet();
 }
 // Keep retrying/reconciling while the Scores tab is on screen — otherwise a

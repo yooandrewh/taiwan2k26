@@ -726,7 +726,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=288; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=289; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -750,7 +750,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v288 · Jul 22, 2026 · 12:01 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v289 · Jul 22, 2026 · 5:33 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1851,7 +1851,7 @@ var TMF_SCHED_ROWS=[
   {t:'12:50',tr:'12:50–1:00',dur:'10 min',s:'Lunch Prayer',all:'Lunch Prayer',session:2.5,standalone:true,cls:'gray',m:770},
   {t:'1:00',tr:'1:00–1:10',dur:'10 min',s:'Dance',mon:'—',tue:'The Joy',wed:'Thank God I\'m Free',thu:'Joyful Joyful',fri:'Blood',session:3,cls:'tg',songTitle:true,m:780},
   {t:'1:10',tr:'1:10–1:20',dur:'10 min',s:'Testimony #2',mon:'—',tue:'Jane',wed:'Jean',thu:'Caleb',fri:'Keren',session:3,cls:'gray',m:790},
-  {t:'1:30',tr:'1:30–3:00',dur:'1h 30m',s:'PM Activity',mon:'—',tue:'Team C',wed:'Team B',thu:'Team A',fri:'Global (Olympics)',session:3,notes:{tue:'7 games — Telepathy, Cup Body, Marshmallow Tower, Human Knot, Ranking Charades, Bible Headbands, Skit Game (see Scores tab)',thu:'Dance teaching'},m:810},
+  {t:'1:30',tr:'1:30–3:00',dur:'1h 30m',s:'PM Activity',mon:'—',tue:'Team C',wed:'Team B',thu:'Team A',fri:'Global (Olympics)',session:3,notes:{tue:'7 games — Telepathy, Cup Body, Marshmallow Tower, Human Knot, Ranking Charades, Bible Headbands, Skit Game (see Scores tab)',wed:'Shoe River Cross, Hippo Hungry, Dodgeball (see Scores tab)',thu:'Dance teaching'},m:810},
   {t:'3:00',tr:'3:00–5:30',dur:'2h 30m',s:'Hang Out with Students',all:'Hang Out with Students',session:3,standalone:true,cls:'gray',m:900},
   {t:'5:30',tr:'5:30–6:30',dur:'60 min',s:'Dinner',all:'Dinner',session:3.5,standalone:true,cls:'gray',m:1050},
   {t:'6:20',tr:'6:20–6:30',dur:'10 min',s:'Dinner Prayer',all:'Dinner Prayer',session:3.5,standalone:true,cls:'gray',m:1100},
@@ -4365,7 +4365,8 @@ var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'C
 var GAMES=[
   {id:'game1',name:'Game 1 · Banner Game',closed:true}, // voting's over — leaderboard still shows, no new submissions
   {id:'game2',name:'Game 2 · Tue PM',closed:true,manual:true}, // manual:true = placement-based (see MANUAL_GAMES), no teacher scoring form
-  {id:'game3',name:'Game 3 · Mad Gabs & Scattergories',closed:true,manual:true}
+  {id:'game3',name:'Game 3 · Mad Gabs & Scattergories',closed:true,manual:true},
+  {id:'game4',name:'Game 4 · Wed PM',manual:true}
 ];
 // Games where groups temporarily paired/teamed up and the final result is
 // already known (no teacher scoring involved) — placements straight in, fed
@@ -4399,7 +4400,17 @@ var MANUAL_GAMES=[
   // Wed AM's second game - unlike Mad Gab, one player per group (not
   // paired teams). Raw scores: Andrew 9, Sammy 9, Jean 7, Esther 7,
   // Caleb 6, Becca 5, Grace 5, Rubin 4 - same rank-conversion approach.
-  {id:'scattergories',name:'Scattergories',forGame:'game3',tiers:[['RB3','RG3'],['RB2','RG1'],['RB1'],['RG2','RG4'],['RB4']]}
+  {id:'scattergories',name:'Scattergories',forGame:'game3',tiers:[['RB3','RG3'],['RB2','RG1'],['RB1'],['RG2','RG4'],['RB4']]},
+  // Wed PM's 3 games - teams: Irene/Sammy+Owen/Rubin (RG3+RB4), Andrew+
+  // Jane/Becca (RB3+RG2), Jean+Esther (RB2+RG1), Caleb+Grace/Janet
+  // (RB1+RG4). Placed 1st/2nd/3rd directly; last place confirmed separately.
+  {id:'shoerivercross',name:'Shoe River Cross',forGame:'game4',tiers:[['RG3','RB4'],['RB3','RG2'],['RB2','RG1'],['RB1','RG4']]},
+  // Raw scores: Andrew+Jane/Becca 8, Owen/Rubin+Irene/Sammy 7, Grace/
+  // Janet+Caleb 5, Jean+Esther 2 - converted to a ranking.
+  {id:'hippohungry',name:'Hippo Hungry',forGame:'game4',tiers:[['RB3','RG2'],['RB4','RG3'],['RG4','RB1'],['RB2','RG1']]},
+  // Raw scores: Jean+Esther 5, Becca/Andrew/Jane 3, Caleb+Grace/Janet 2,
+  // Owen/Rubin+Irene/Sammy last - converted to a ranking.
+  {id:'dodgeball',name:'Dodgeball',forGame:'game4',tiers:[['RB2','RG1'],['RB3','RG2'],['RB1','RG4'],['RB4','RG3']]}
 ];
 function computeManualGamePoints(game){
   var totalGroups=SCORE_GROUPS.length;

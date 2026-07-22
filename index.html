@@ -722,7 +722,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=283; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=284; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -746,7 +746,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v283 · Jul 21, 2026 · 10:03 PM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v284 · Jul 22, 2026 · 11:04 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1325,7 +1325,7 @@ setInterval(renderBuildAge,60000);
       <div id="score-form-body"></div>
     </div>
   </div>
-  <div id="game2-minigames-body" style="display:none"></div>
+  <div id="manual-games-body" style="display:none"></div>
 </div>
 <div id="pane-random" class="pane">
   <div class="stu-title" style="color:#ec4899">Random Pick</div>
@@ -4360,8 +4360,8 @@ var SCORE_CATEGORIES=[{key:'banner',label:'Banner Making'},{key:'chant',label:'C
 // entries here as future games get announced.
 var GAMES=[
   {id:'game1',name:'Game 1 · Banner Game',closed:true}, // voting's over — leaderboard still shows, no new submissions
-  {id:'game2',name:'Game 2 · Tue PM'},
-  {id:'game3',name:'Game 3 · Wed AM Skit Making'}
+  {id:'game2',name:'Game 2 · Tue PM',closed:true,manual:true}, // manual:true = placement-based (see MANUAL_GAMES), no teacher scoring form
+  {id:'game3',name:'Game 3 · Mad Gabs & Scattergories',manual:true}
 ];
 // Games where groups temporarily paired/teamed up and the final result is
 // already known (no teacher scoring involved) — placements straight in, fed
@@ -4375,15 +4375,18 @@ var GAMES=[
 // whatever rank comes after, not just "2nd place" — see
 // computeManualGamePoints() below. A plain 2-2-2-2 split (most games) works
 // out to the familiar 8/6/4/2.
+// Each entry belongs to a manual master game via forGame (see GAMES) — Game
+// 2 · Tue PM's 6 mini-games below, and Game 3 · Mad Gabs & Scattergories'
+// results will be added here once played.
 var MANUAL_GAMES=[
-  {id:'telepathy',name:'Telepathy',tiers:[['RB4','RG3'],['RG2','RB3'],['RG4','RB1'],['RG1','RB2']]},
-  {id:'cupbody',name:'Cup Body',tiers:[['RG2','RB3'],['RB4','RG3'],['RG1','RB2'],['RG4','RB1']]},
-  {id:'marshmallow',name:'Marshmallow Tower',tiers:[['RB2','RG1'],['RB4','RG3'],['RG2','RB3'],['RG4','RB1']]},
-  {id:'humanknot',name:'Human Knot',tiers:[['RG2','RB3'],['RB2','RG1'],['RB1','RG4'],['RB4','RG3']]},
+  {id:'telepathy',name:'Telepathy',forGame:'game2',tiers:[['RB4','RG3'],['RG2','RB3'],['RG4','RB1'],['RG1','RB2']]},
+  {id:'cupbody',name:'Cup Body',forGame:'game2',tiers:[['RG2','RB3'],['RB4','RG3'],['RG1','RB2'],['RG4','RB1']]},
+  {id:'marshmallow',name:'Marshmallow Tower',forGame:'game2',tiers:[['RB2','RG1'],['RB4','RG3'],['RG2','RB3'],['RG4','RB1']]},
+  {id:'humanknot',name:'Human Knot',forGame:'game2',tiers:[['RG2','RB3'],['RB2','RG1'],['RB1','RG4'],['RB4','RG3']]},
   // Charades/Headbands only named one partner per pair (same 4 pairings as
   // the games above) - the other partner is implied to be along for the ride.
-  {id:'charades',name:'Ranking Charades',tiers:[['RB1','RG4','RG2','RB3','RG1','RB2'],['RB4','RG3']]}, // Caleb+Grace/Janet, Jane/Becca+Andrew, Esther+Jean tied 1st; Rubin+Irene last
-  {id:'bibleheadbands',name:'Bible Headbands',tiers:[['RB1','RG4'],['RB4','RG3'],['RG1','RB2'],['RG2','RB3']]} // Caleb+Grace/Janet 1st, Rubin+Irene 2nd, Esther+Jean 3rd, Jane/Becca+Andrew 4th
+  {id:'charades',name:'Ranking Charades',forGame:'game2',tiers:[['RB1','RG4','RG2','RB3','RG1','RB2'],['RB4','RG3']]}, // Caleb+Grace/Janet, Jane/Becca+Andrew, Esther+Jean tied 1st; Rubin+Irene last
+  {id:'bibleheadbands',name:'Bible Headbands',forGame:'game2',tiers:[['RB1','RG4'],['RB4','RG3'],['RG1','RB2'],['RG2','RB3']]} // Caleb+Grace/Janet 1st, Rubin+Irene 2nd, Esther+Jean 3rd, Jane/Becca+Andrew 4th
 ];
 function computeManualGamePoints(game){
   var totalGroups=SCORE_GROUPS.length;
@@ -4529,12 +4532,13 @@ function gameTabsHtml(){
   // Every tab is clickable — you can always click through to see a game's
   // leaderboard and individual scores. Whether NEW submissions are allowed
   // for that game is decided separately in renderScoreForm() (closed games
-  // like Game 1, or games still waiting on the backend update).
+  // like Game 1) or renderManualGames() (manual games, always "closed" to
+  // teacher scoring since results are entered directly as tiers).
   var cumBtn='<button class="'+(currentGameId==='cumulative'?'on':'')+'" data-id="cumulative" onclick="selectGame(\'cumulative\')">Cumulative</button>';
   var gameBtns=GAMES.map(function(g,i){
-    // Game 2 shows its 6 mini-games directly (renderGame2MiniGames) instead
-    // of a teacher-scored form, so it's never backend-gated like Game 3 is.
-    var waitingOnBackend=(g.id!=='game1'&&g.id!=='game2'&&!_backendSupportsGames);
+    // Manual games (Game 2, Game 3) show placement results directly instead
+    // of a teacher-scored form, so they're never backend-gated.
+    var waitingOnBackend=(!g.manual&&g.id!=='game1'&&!_backendSupportsGames);
     var badge=g.closed?' 🔒':(waitingOnBackend?' ⏳':'');
     return '<button class="'+(currentGameId===g.id?'on':'')+'" data-id="'+g.id+'" onclick="selectGame(\''+g.id+'\')">'+g.name+badge+'</button>';
   }).join('');
@@ -4544,20 +4548,21 @@ function selectGame(gameId){
   currentGameId=gameId;
   try{localStorage.setItem('scoreCurrentGame',gameId);}catch(e){}
   document.querySelectorAll('#game-tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.id===gameId);});
-  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('game2-minigames-body');
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('manual-games-body');
+  var gameObj=GAMES.find(function(g){return g.id===gameId;});
   if(gameId==='cumulative'){
     cumBody.style.display='';
     gameBody.style.display='none';
     mini.style.display='none';
     renderCumulative();
-  }else if(gameId==='game2'){
-    // Tuesday PM wasn't a single teacher-scored category — it was these 6
-    // mini-games, so "Game 2" just displays their results directly instead
+  }else if(gameObj&&gameObj.manual){
+    // Manual games weren't a single teacher-scored category — they're
+    // placement-based mini-games, so they display results directly instead
     // of a Banner/Chant/Creativity form.
     cumBody.style.display='none';
     gameBody.style.display='none';
     mini.style.display='';
-    renderGame2MiniGames();
+    renderManualGames(gameId);
   }else{
     cumBody.style.display='none';
     gameBody.style.display='';
@@ -4567,21 +4572,31 @@ function selectGame(gameId){
     renderIndividualScores();
   }
 }
-function renderGame2MiniGames(){
-  var el=document.getElementById('game2-minigames-body');
+// Renders any manual (placement-based) master game: its own cumulative —
+// all of its mini-games summed together — shown first, since that combined
+// total is what feeds the top-level Cumulative tab as this game's single
+// contribution (see computeManualGameTotal()), followed by each individual
+// mini-game's own tier breakdown below. Reused for Game 2 · Tue PM and
+// Game 3 · Mad Gabs & Scattergories (and any future manual game).
+function renderManualGames(gameId){
+  var el=document.getElementById('manual-games-body');
   if(!el)return;
-  // Game 2's own cumulative — the 6 mini-games summed together — shown
-  // first, since that combined total is what feeds the top-level
-  // Cumulative tab as Game 2's single contribution (see computeGame2Total()).
-  var totals=computeGame2Total();
+  var games=MANUAL_GAMES.filter(function(mg){return mg.forGame===gameId;});
+  var gameObj=GAMES.find(function(g){return g.id===gameId;})||{};
+  var shortName=(gameObj.name||'').replace(/^Game \d+ . /,'');
+  if(!games.length){
+    el.innerHTML='<div class="mygrp-empty">No results entered yet for '+shortName+'.</div>';
+    return;
+  }
+  var totals=computeManualGameTotal(gameId);
   var maxPts=Math.max.apply(null,totals.map(function(r){return r.points;}));
-  var cumHtml='<div class="sgq-wrap"><div class="sgq-hdr">Game 2 Cumulative - across all 6 mini-games</div>'
+  var cumHtml='<div class="sgq-wrap"><div class="sgq-hdr">'+shortName+' Cumulative - across all '+games.length+' mini-games</div>'
     +totals.map(function(r,i){
       var isTop=r.points===maxPts&&maxPts>0;
       return '<div class="score-lb-row'+(isTop?' top':'')+'"><div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span><span class="score-lb-team">'+groupChipsHtml([r.group])+(isTop?' 🏆':'')+'</span><span class="score-lb-overall">'+r.points+'pts</span></div></div>';
     }).join('')
   +'</div>';
-  var miniHtml=MANUAL_GAMES.map(function(game){
+  var miniHtml=games.map(function(game){
     var pointsByGroup=computeManualGamePoints(game);
     var rankedTiers=game.tiers.map(function(tierGroups,i){
       var rankStart=game.tiers.slice(0,i).reduce(function(a,t){return a+t.length;},0)+1;
@@ -4737,13 +4752,14 @@ function computeLeaderboard(gameId){
     return {group:grp.id,label:grp.label,banner:b,chant:c,creativity:cr,overall:overall,n:g.scorers};
   }).sort(function(a,b){return (b.overall||0)-(a.overall||0);});
 }
-// Game 2 has no Banner/Chant/Creativity of its own - it IS the 6 mini-games
-// (Telepathy, Cup Body, etc), so its contribution to the top-level
-// Cumulative is their combined point total, not 6 separate line items.
-function computeGame2Total(){
+// A manual game (Game 2, Game 3...) has no Banner/Chant/Creativity of its
+// own - it IS a set of placement-based mini-games (see MANUAL_GAMES'
+// forGame), so its contribution to the top-level Cumulative is their
+// combined point total, not one line item per mini-game.
+function computeManualGameTotal(gameId){
   var totals={};
   SCORE_GROUPS.forEach(function(g){totals[g.id]=0;});
-  MANUAL_GAMES.forEach(function(game){
+  MANUAL_GAMES.filter(function(mg){return mg.forGame===gameId;}).forEach(function(game){
     var pointsByGroup=computeManualGamePoints(game);
     Object.keys(pointsByGroup).forEach(function(groupId){totals[groupId]+=pointsByGroup[groupId];});
   });
@@ -4757,16 +4773,16 @@ function computeGame2Total(){
 // at least one score are ranked (n>0), 1st place gets N points (N = how
 // many groups have been scored in that game so far) down to 1 point for
 // last - so a game still being scored doesn't unfairly zero out groups
-// nobody's gotten to yet. Game 2's raw total (sum of its 6 mini-games, see
-// computeGame2Total()) is itself re-ranked 1st..Nth and converted to the
-// same N..1 placement points, instead of adding its larger raw point total
-// directly - otherwise Game 2 would outweigh Game 1/3 in the Cumulative.
+// nobody's gotten to yet. A manual game's raw total (sum of its mini-games,
+// see computeManualGameTotal()) is itself re-ranked 1st..Nth and converted
+// to the same N..1 placement points, instead of adding its larger raw point
+// total directly - otherwise it would outweigh scored games in the Cumulative.
 function computeCumulativeRanking(){
   var totals={},breakdown={};
   SCORE_GROUPS.forEach(function(g){totals[g.id]=0;breakdown[g.id]={};});
   GAMES.forEach(function(game,i){
-    if(game.id==='game2'){
-      var g2=computeGame2Total().filter(function(r){return r.points>0;});
+    if(game.manual){
+      var g2=computeManualGameTotal(game.id).filter(function(r){return r.points>0;});
       var n2=g2.length;
       g2.forEach(function(r,i){
         var pts=n2-i;
@@ -4861,12 +4877,13 @@ function renderIndividualScores(){
 function goScoring(btn){
   go('scoring',btn);
   document.getElementById('game-tabs').innerHTML=gameTabsHtml();
-  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('game2-minigames-body');
+  var cumBody=document.getElementById('cumulative-body'),gameBody=document.getElementById('game-scoring-body'),mini=document.getElementById('manual-games-body');
+  var gameObj=GAMES.find(function(g){return g.id===currentGameId;});
   if(currentGameId==='cumulative'){
     cumBody.style.display='';gameBody.style.display='none';mini.style.display='none';
-  }else if(currentGameId==='game2'){
+  }else if(gameObj&&gameObj.manual){
     cumBody.style.display='none';gameBody.style.display='none';mini.style.display='';
-    renderGame2MiniGames();
+    renderManualGames(currentGameId);
   }else{
     cumBody.style.display='none';gameBody.style.display='';mini.style.display='none';
     renderSubmitSection();renderIndividualScores();

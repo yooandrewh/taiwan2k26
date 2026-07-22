@@ -722,7 +722,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=285; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=286; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -746,7 +746,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v285 · Jul 22, 2026 · 11:24 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v286 · Jul 22, 2026 · 11:57 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4387,12 +4387,15 @@ var MANUAL_GAMES=[
   // the games above) - the other partner is implied to be along for the ride.
   {id:'charades',name:'Ranking Charades',forGame:'game2',tiers:[['RB1','RG4','RG2','RB3','RG1','RB2'],['RB4','RG3']]}, // Caleb+Grace/Janet, Jane/Becca+Andrew, Esther+Jean tied 1st; Rubin+Irene last
   {id:'bibleheadbands',name:'Bible Headbands',forGame:'game2',tiers:[['RB1','RG4'],['RB4','RG3'],['RG1','RB2'],['RG2','RB3']]}, // Caleb+Grace/Janet 1st, Rubin+Irene 2nd, Esther+Jean 3rd, Jane/Becca+Andrew 4th
-  // Wed AM's first of two games (Scattergories is the second, not yet
-  // played). Raw scores were Caleb+Irene/Sammy 11, Jean+Esther 9,
-  // Andrew Back+Grace/Janet 5, Jane/Becca+Owen/Rubin 3 - converted to a
-  // ranking (like every other manual game) rather than carrying the raw
-  // point gaps through to the Cumulative.
-  {id:'madgab',name:'Mad Gab',forGame:'game3',tiers:[['RB1','RG3'],['RB2','RG1'],['RB3','RG4'],['RG2','RB4']]}
+  // Wed AM's first of two games. Raw scores were Caleb+Irene/Sammy 11,
+  // Jean+Esther 9, Andrew Back+Grace/Janet 5, Jane/Becca+Owen/Rubin 3 -
+  // converted to a ranking (like every other manual game) rather than
+  // carrying the raw point gaps through to the Cumulative.
+  {id:'madgab',name:'Mad Gab',forGame:'game3',tiers:[['RB1','RG3'],['RB2','RG1'],['RB3','RG4'],['RG2','RB4']]},
+  // Wed AM's second game - unlike Mad Gab, one player per group (not
+  // paired teams). Raw scores: Andrew 9, Sammy 9, Jean 7, Esther 7,
+  // Caleb 6, Becca 5, Grace 5, Rubin 4 - same rank-conversion approach.
+  {id:'scattergories',name:'Scattergories',forGame:'game3',tiers:[['RB3','RG3'],['RB2','RG1'],['RB1'],['RG2','RG4'],['RB4']]}
 ];
 function computeManualGamePoints(game){
   var totalGroups=SCORE_GROUPS.length;

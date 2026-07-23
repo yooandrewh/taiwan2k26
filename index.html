@@ -726,7 +726,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=291; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=292; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -750,7 +750,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v291 · Jul 23, 2026 · 9:37 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v292 · Jul 23, 2026 · 9:45 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4364,7 +4364,7 @@ const SCORE_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVFJ8bBwsUWgOTb
 // the right set for whichever game is active.
 var GAME_CATEGORIES={
   game1:[{key:'banner',label:'Banner Making'},{key:'chant',label:'Chant'},{key:'creativity',label:'Overall Creativity (incl. team name)'}],
-  game5:[{key:'banner',label:'Efficacy (authentic to prompt/lesson)'},{key:'chant',label:'Energy'},{key:'creativity',label:'Humor'}]
+  game5:[{key:'banner',label:'Authenticity (to prompt/lesson)'},{key:'chant',label:'Energy'},{key:'creativity',label:'Humor'}]
 };
 function scoreCategoriesFor(gameId){return GAME_CATEGORIES[gameId]||GAME_CATEGORIES.game1;}
 // Each competition ("game") is scored independently — separate leaderboard
@@ -4579,7 +4579,7 @@ function gameTabsHtml(){
   return cumBtn+gameBtns;
 }
 // The pane subtitle shows whichever categories apply to the active game
-// (Banner/Chant/Creativity for Game 1, Efficacy/Energy/Humor for Game 5,
+// (Banner/Chant/Creativity for Game 1, Authenticity/Energy/Humor for Game 5,
 // etc) instead of one fixed line for every game.
 function updateScoringSubtitle(gameId){
   var el=document.getElementById('scoring-sub');

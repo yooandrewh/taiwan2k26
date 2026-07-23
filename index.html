@@ -726,7 +726,7 @@ function appRefresh(btn){
 // Bump this to the real deploy time (Taiwan) every time a new version ships —
 // drives the "Updated Xh ago" line and the big red Update button once it's stale.
 var BUILD_TIME="2026-07-19T21:36:11+08:00";
-var APP_VERSION=292; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=293; // bump alongside version.json's "v" on every deploy
 var STALE_AFTER_MS=2*60*60*1000; // 2 hours
 function renderBuildAge(){
   var ageMs=Date.now()-new Date(BUILD_TIME).getTime();
@@ -750,7 +750,7 @@ setInterval(renderBuildAge,60000);
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v292 · Jul 23, 2026 · 9:45 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v293 · Jul 23, 2026 · 10:54 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -4364,7 +4364,8 @@ const SCORE_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVFJ8bBwsUWgOTb
 // the right set for whichever game is active.
 var GAME_CATEGORIES={
   game1:[{key:'banner',label:'Banner Making'},{key:'chant',label:'Chant'},{key:'creativity',label:'Overall Creativity (incl. team name)'}],
-  game5:[{key:'banner',label:'Authenticity (to prompt/lesson)'},{key:'chant',label:'Energy'},{key:'creativity',label:'Humor'}]
+  game5:[{key:'banner',label:'Entertainment'},{key:'chant',label:'Execution'},{key:'creativity',label:'Creativity'}],
+  game6:[{key:'banner',label:'Energy'},{key:'chant',label:'Execution'}] // only 2 categories - the 3rd (creativity) data slot just goes unused
 };
 function scoreCategoriesFor(gameId){return GAME_CATEGORIES[gameId]||GAME_CATEGORIES.game1;}
 // Each competition ("game") is scored independently — separate leaderboard
@@ -4376,7 +4377,8 @@ var GAMES=[
   {id:'game2',name:'Game 2 · Tue PM',closed:true,manual:true}, // manual:true = placement-based (see MANUAL_GAMES), no teacher scoring form
   {id:'game3',name:'Game 3 · Mad Gabs & Scattergories',closed:true,manual:true},
   {id:'game4',name:'Game 4 · Wed PM',closed:true,manual:true},
-  {id:'game5',name:'Game 5 · Thu AM Skit Making'} // teacher-scored like Game 1 - needs the backend "game" column deployed (see _backendSupportsGames) before it can accept real submissions
+  {id:'game5',name:'Game 5 · Thu AM Skit Making'}, // teacher-scored like Game 1, but teams combined (see GAME_TEAMS) and a restricted grader list (see GAME_TEACHERS)
+  {id:'game6',name:'Game 6 · Dance Thu PM'} // teacher-scored, per-group as usual (no team combining) - only 2 categories, see GAME_CATEGORIES
 ];
 // Games where groups temporarily paired/teamed up and the final result is
 // already known (no teacher scoring involved) — placements straight in, fed
@@ -4468,9 +4470,41 @@ var SCORE_GROUPS=[];
 // (and so can score all 8, not 7 — see ownGroup:null below).
 var SCORE_TEACHERS=SCORE_GROUPS.map(function(g){return g.leaders.join(' & ');});
 ['Andrew Yoo','Keren Choi'].forEach(function(n){if(SCORE_TEACHERS.indexOf(n)<0)SCORE_TEACHERS.unshift(n);});
+// Some games restrict who can grade (e.g. only the teachers not busy
+// running the activity itself) instead of every teacher voting. Falls back
+// to the full SCORE_TEACHERS roster when a game doesn't define its own.
+var GAME_TEACHERS={
+  game5:['Andrew Yoo','Sammy Taing','Becca Park','Keren Choi','Jean Kim']
+};
+function scoreTeachersFor(gameId){return GAME_TEACHERS[gameId]||SCORE_TEACHERS;}
+// Some games have small groups temporarily paired into teams (e.g. two
+// groups performing one skit together) - scoring applies to the whole team
+// at once, and the same scores get recorded for every group in it (fanned
+// out in submitScores()). Returns null for games scored per-group as usual.
+var GAME_TEAMS={
+  game5:[
+    {id:'g5t1',groups:['RB4','RG2']}, // Owen/Rubin <> Jane/Becca
+    {id:'g5t2',groups:['RB1','RG3']}, // Caleb <> Sammy (Irene/Sammy's group)
+    {id:'g5t3',groups:['RB3','RG4']}, // Andrew Back <> Janet (Grace/Janet's group)
+    {id:'g5t4',groups:['RB2','RG1']}  // rest: Jean <> Esther
+  ]
+};
+function gameTeamsFor(gameId){return GAME_TEAMS[gameId]||null;}
+// Matches a voter to their own small group even when they vote solo (e.g.
+// "Sammy Taing" alone for Game 5) rather than as part of a combined-leader
+// label like "Irene Song & Sammy Taing" - checks both forms.
 function scoreOwnGroupOf(voterLabel){
-  var g=SCORE_GROUPS.find(function(g){return g.leaders.join(' & ')===voterLabel;});
+  var g=SCORE_GROUPS.find(function(g){return g.leaders.join(' & ')===voterLabel||g.leaders.indexOf(voterLabel)>=0;});
   return g?g.id:null;
+}
+// For team-based games, a voter must sit out scoring their own TEAM (both
+// groups in it), not just their own single group.
+function scoreOwnTeamOf(voterLabel,gameId){
+  var teams=gameTeamsFor(gameId);
+  var ownGroup=scoreOwnGroupOf(voterLabel);
+  if(!teams||!ownGroup)return null;
+  var t=teams.find(function(t){return t.groups.indexOf(ownGroup)>=0;});
+  return t?t.id:null;
 }
 function scoreGetLog(){try{return JSON.parse(localStorage.getItem('groupScores')||'{}');}catch(e){return {};}}
 function scoreSaveLog(log){try{localStorage.setItem('groupScores',JSON.stringify(log));}catch(e){}}
@@ -4552,7 +4586,7 @@ function scoreSyncFromSheet(){
 var scoreSelectedTeacher=null;
 try{scoreSelectedTeacher=localStorage.getItem('scoreTeacher')||null;}catch(e){}
 function scoreTeacherTabsHtml(){
-  return SCORE_TEACHERS.map(function(name){
+  return scoreTeachersFor(currentGameId).map(function(name){
     return '<button class="mygrp-tab'+(name===scoreSelectedTeacher?' on':'')+'" data-name="'+name+'" onclick="selectScoreTeacher(\''+name.replace(/'/g,"\\'")+'\')">'+name+'</button>';
   }).join('');
 }
@@ -4692,17 +4726,35 @@ function renderScoreForm(){
   if(!scoreSelectedTeacher){body.innerHTML='<div class="mygrp-empty">Tap your name above to score each group.</div>';return;}
   var log=scoreGetLog();
   var mine=(log[scoreSelectedTeacher]&&log[scoreSelectedTeacher][currentGameId])||{};
-  var ownGroup=scoreOwnGroupOf(scoreSelectedTeacher);
-  var scorable=SCORE_GROUPS.filter(function(g){return g.id!==ownGroup;});
   var cats=scoreCategoriesFor(currentGameId);
-  var html=scorable.map(function(grp){
-    var vals=mine[grp.id]||{};
-    var rows=cats.map(function(cat){
-      return '<div class="score-row"><span class="score-lbl">'+cat.label+'</span>'
-        +'<select class="score-input" data-group="'+grp.id+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
+  var teams=gameTeamsFor(currentGameId);
+  var html;
+  if(teams){
+    // Team-based game: score the combined team once, fanned out to both
+    // its groups on submit (see submitScores()) - a voter sits out only
+    // their own team, not just their own single group.
+    var ownTeam=scoreOwnTeamOf(scoreSelectedTeacher,currentGameId);
+    var scorableTeams=teams.filter(function(t){return t.id!==ownTeam;});
+    html=scorableTeams.map(function(team){
+      var vals=mine[team.groups[0]]||{}; // both groups in a team always mirror each other
+      var rows=cats.map(function(cat){
+        return '<div class="score-row"><span class="score-lbl">'+cat.label+'</span>'
+          +'<select class="score-input" data-group="'+team.id+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
+      }).join('');
+      return '<div class="score-team-card"><div class="score-team-hdr">'+groupChipsHtml(team.groups)+'</div>'+rows+'</div>';
     }).join('');
-    return '<div class="score-team-card"><div class="score-team-hdr">'+grp.shortLabel+' <span class="score-team-hdr-sub">('+grp.leaders.map(function(n){return n.split(' ')[0];}).join(' & ')+')</span></div>'+rows+'</div>';
-  }).join('');
+  }else{
+    var ownGroup=scoreOwnGroupOf(scoreSelectedTeacher);
+    var scorable=SCORE_GROUPS.filter(function(g){return g.id!==ownGroup;});
+    html=scorable.map(function(grp){
+      var vals=mine[grp.id]||{};
+      var rows=cats.map(function(cat){
+        return '<div class="score-row"><span class="score-lbl">'+cat.label+'</span>'
+          +'<select class="score-input" data-group="'+grp.id+'" data-cat="'+cat.key+'">'+scoreOptionsHtml(vals[cat.key])+'</select></div>';
+      }).join('');
+      return '<div class="score-team-card"><div class="score-team-hdr">'+grp.shortLabel+' <span class="score-team-hdr-sub">('+grp.leaders.map(function(n){return n.split(' ')[0];}).join(' & ')+')</span></div>'+rows+'</div>';
+    }).join('');
+  }
   html+='<button class="mon-qbtn" style="background:#16a34a;width:100%;margin-top:4px" onclick="submitScores()">Save Scores</button>'
     +'<div class="ci-sync-note" id="score-save-note" style="text-align:center;margin-top:8px"></div>';
   body.innerHTML=html;
@@ -4712,23 +4764,28 @@ function submitScores(){
   var log=scoreGetLog();
   var forTeacher=log[scoreSelectedTeacher]=log[scoreSelectedTeacher]||{};
   var mine=forTeacher[currentGameId]=forTeacher[currentGameId]||{};
-  var byGroup={};
+  var cats=scoreCategoriesFor(currentGameId);
+  var teams=gameTeamsFor(currentGameId);
+  var byInput={};
   document.querySelectorAll('#score-form-body .score-input').forEach(function(sel){
-    var groupId=sel.dataset.group,cat=sel.dataset.cat,val=parseInt(sel.value,10);
-    if(!byGroup[groupId])byGroup[groupId]={};
-    byGroup[groupId][cat]=isNaN(val)?null:val;
+    var id=sel.dataset.group,cat=sel.dataset.cat,val=parseInt(sel.value,10);
+    if(!byInput[id])byInput[id]={};
+    byInput[id][cat]=isNaN(val)?null:val;
   });
   var savedAny=false;
-  Object.keys(byGroup).forEach(function(groupId){
-    var vals=byGroup[groupId];
-    if(vals.banner==null||vals.chant==null||vals.creativity==null)return; // only save a group once all 3 are filled in
-    mine[groupId]={banner:vals.banner,chant:vals.chant,creativity:vals.creativity,synced:false,tries:0,lastTry:Date.now()};
-    scorePost(scoreSelectedTeacher,groupId,currentGameId,vals);
-    savedAny=true;
+  Object.keys(byInput).forEach(function(id){
+    var vals=byInput[id];
+    if(!cats.every(function(cat){return vals[cat.key]!=null;}))return; // only save once every category for this game is filled in
+    var groupIds=teams?((teams.find(function(t){return t.id===id;})||{}).groups||[]):[id];
+    groupIds.forEach(function(groupId){
+      mine[groupId]={banner:vals.banner,chant:vals.chant,creativity:vals.creativity,synced:false,tries:0,lastTry:Date.now()};
+      scorePost(scoreSelectedTeacher,groupId,currentGameId,vals);
+    });
+    if(groupIds.length)savedAny=true;
   });
   scoreSaveLog(log);
   var note=document.getElementById('score-save-note');
-  if(note)note.textContent=savedAny?'Saved - syncing...':'Fill in all 3 scores for a group before saving it';
+  if(note)note.textContent=savedAny?'Saved - syncing...':'Fill in every category for a group/team before saving it';
   renderLeaderboard();
   renderIndividualScores();
   if(savedAny)scoreSyncFromSheet(); // confirm/retry right away instead of waiting for the next periodic sync
@@ -4899,14 +4956,12 @@ function renderLeaderboard(){
   if(!el||currentGameId==='cumulative')return;
   var rows=computeLeaderboard(currentGameId);
   var cats=scoreCategoriesFor(currentGameId);
-  var catShort=function(key){var c=cats.find(function(x){return x.key===key;});return c?c.label.replace(/\s*\(.*\)/,''):key;};
   var maxOverall=Math.max.apply(null,rows.map(function(r){return r.overall||0;}));
   el.innerHTML=rows.map(function(r,i){
     var isTop=r.overall!=null&&r.overall===maxOverall&&maxOverall>0;
-    var tags=['<span class="score-lb-tag">'+catShort('banner')+' <b>'+scoreFmt(r.banner)+'</b></span>',
-      '<span class="score-lb-tag">'+catShort('chant')+' <b>'+scoreFmt(r.chant)+'</b></span>',
-      '<span class="score-lb-tag">'+catShort('creativity')+' <b>'+scoreFmt(r.creativity)+'</b></span>',
-      '<span class="score-lb-tag">'+r.n+' '+(r.n===1?'scorer':'scorers')+'</span>'].join('');
+    var tags=cats.map(function(cat){
+      return '<span class="score-lb-tag">'+cat.label.replace(/\s*\(.*\)/,'')+' <b>'+scoreFmt(r[cat.key])+'</b></span>';
+    }).concat(['<span class="score-lb-tag">'+r.n+' '+(r.n===1?'scorer':'scorers')+'</span>']).join('');
     return '<div class="score-lb-row'+(isTop?' top':'')+'">'
       +'<div class="score-lb-top"><span class="score-lb-rank">'+(i+1)+'</span>'
         +'<span class="score-lb-team">'+groupChipsHtml([r.group])+(isTop?' \ud83c\udfc6':'')+'</span>'
@@ -4936,11 +4991,11 @@ function renderIndividualScores(){
   all.forEach(function(s){(byGroup[s.group]=byGroup[s.group]||[]).push(s);});
   if(!all.length){el.innerHTML='<div class="mygrp-empty">No individual scores yet.</div>';return;}
   var cats=scoreCategoriesFor(currentGameId);
-  var catShort=function(key){var c=cats.find(function(x){return x.key===key;});return c?c.label.replace(/\s*\(.*\)/,''):key;};
   el.innerHTML=lbOrder.filter(function(gid){return byGroup[gid];}).map(function(gid){
     var grp=SCORE_GROUPS.find(function(g){return g.id===gid;});
     var rows=byGroup[gid].sort(function(a,b){return a.teacher.localeCompare(b.teacher);}).map(function(s){
-      return '<div class="score-ind-row"><span class="score-ind-teacher">'+s.teacher+'</span><span class="score-ind-vals">'+catShort('banner')+' '+s.banner+' - '+catShort('chant')+' '+s.chant+' - '+catShort('creativity')+' '+s.creativity+'</span></div>';
+      var parts=cats.map(function(cat){return cat.label.replace(/\s*\(.*\)/,'')+' '+s[cat.key];});
+      return '<div class="score-ind-row"><span class="score-ind-teacher">'+s.teacher+'</span><span class="score-ind-vals">'+parts.join(' - ')+'</span></div>';
     }).join('');
     return '<div class="score-ind-group"><div class="score-ind-grouphdr">'+groupChipsHtml([gid])+'</div>'+rows+'</div>';
   }).join('');

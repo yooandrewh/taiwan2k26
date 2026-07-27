@@ -355,18 +355,27 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .kobe-wrap img{width:100%;height:100%;object-fit:cover;object-position:100% center;display:block;}
 /* Hour-by-hour Taipei forecast (Open-Meteo, no API key) — a horizontally
    scrolling strip so 24h fits without squeezing each hour unreadably thin. */
-.wx-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 0 10px;margin-bottom:6px;}
-.wx-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 14px;margin-bottom:10px;}
-.wx-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
-.wx-now{font-size:12px;font-weight:700;color:var(--text3);}
-.wx-strip{display:flex;gap:6px;overflow-x:auto;padding:0 14px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.wx-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:9px 0 7px;margin-bottom:10px;}
+.wx-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 12px;margin-bottom:7px;}
+.wx-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
+.wx-now{font-size:11px;font-weight:700;color:var(--text3);}
+.wx-days{display:flex;gap:5px;overflow-x:auto;padding:0 12px 7px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.wx-days::-webkit-scrollbar{display:none;}
+.wx-day{flex:1 1 0;min-width:0;background:var(--surface2);border:1.5px solid transparent;border-radius:9px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;gap:0;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:inherit;}
+.wx-day.on{border-color:#0ea5e9;background:rgba(14,165,233,0.14);}
+.wx-dn{font-size:10px;font-weight:800;color:var(--text);line-height:1.3;}
+.wx-dd{font-size:9px;font-weight:600;color:var(--text3);line-height:1.3;}
+.wx-di{font-size:13px;line-height:1.35;}
+.wx-dt{font-size:11px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.3;}
+.wx-dlo{font-weight:600;color:var(--text3);margin-left:2px;}
+.wx-strip{display:flex;gap:5px;overflow-x:auto;padding:0 12px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .wx-strip::-webkit-scrollbar{display:none;}
-.wx-hr{flex:0 0 auto;width:58px;background:var(--surface2);border-radius:11px;padding:8px 4px;text-align:center;}
+.wx-hr{flex:0 0 auto;width:46px;background:var(--surface2);border-radius:9px;padding:5px 3px;text-align:center;}
 .wx-hr.now{background:rgba(124,58,237,0.16);box-shadow:inset 0 0 0 1.5px rgba(124,58,237,0.5);}
-.wx-t{font-size:11px;font-weight:700;color:var(--text3);}
-.wx-ic{font-size:20px;line-height:1.3;margin:2px 0;}
-.wx-deg{font-size:15px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;}
-.wx-rain{font-size:10px;font-weight:700;color:#2563eb;min-height:13px;}
+.wx-t{font-size:10px;font-weight:700;color:var(--text3);line-height:1.3;}
+.wx-ic{font-size:15px;line-height:1.35;margin:1px 0;}
+.wx-deg{font-size:13px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.3;}
+.wx-rain{font-size:9px;font-weight:700;color:#2563eb;min-height:11px;line-height:1.3;}
 .wx-msg{padding:0 14px;font-size:13px;color:var(--text3);font-style:italic;}
 /* Donations tab */
 .don-select{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;margin-bottom:14px;-webkit-appearance:none;appearance:none;}
@@ -762,12 +771,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=306; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=308; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v306 · Jul 27, 2026 · 9:26 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v308 · Jul 27, 2026 · 9:40 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1503,9 +1512,9 @@ var APP_VERSION=306; // bump alongside version.json's "v" on every deploy
   <div id="mem-practice" style="display:none"></div>
 </div>
 <div id="pane-hype" class="pane active">
+  <div id="wx-body"></div>
   <div class="flight-countdown"></div>
   <div class="kobe-wrap"><img src="https://media1.tenor.com/m/RhlcRQ8EFF4AAAAd/kobe-jobs-not-finished.gif" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
-  <div id="wx-body"></div>
 </div>
 <div id="pane-donors" class="pane">
   <div class="stu-title" style="color:#0d9488">Donations</div>
@@ -3561,68 +3570,110 @@ function renderFlightCountdown(){
 }
 setInterval(renderFlightCountdown,1000);
 renderFlightCountdown();
-// ===== Taipei hour-by-hour forecast =====
+// ===== Taipei forecast =====
 // Open-Meteo needs no API key and sends CORS headers, so it works straight
 // from the static page. timezone=Asia/Taipei means the returned "time"
-// strings are already local Taiwan hours — no conversion needed here.
+// strings are already local Taiwan hours - no conversion needed here.
+// A day picker fronts the hours so you tap a day instead of scrolling
+// through the whole range. Days are capped at departure (see WX_LAST_DAY)
+// rather than a fixed count, so it stays right whichever day it's opened.
 var WX_URL='https://api.open-meteo.com/v1/forecast?latitude=25.033&longitude=121.5654'
-  +'&hourly=temperature_2m,precipitation_probability,weather_code&timezone=Asia%2FTaipei&forecast_days=3';
-// WMO weather codes → emoji. Night variants for the clear//mostly-clear
+  +'&hourly=temperature_2m,precipitation_probability,weather_code'
+  +'&daily=temperature_2m_max,temperature_2m_min,weather_code'
+  +'&temperature_unit=fahrenheit&timezone=Asia%2FTaipei&forecast_days=7';
+var WX_LAST_DAY='2026-07-30'; // fly home Thu Jul 30 - no point forecasting past it
+var _wx=null, _wxDay=0;
+// WMO weather codes -> emoji. Night variants for the clear/mostly-clear
 // codes only; everything else reads the same after dark.
 function wxIcon(code,hour){
   var night=(hour<6||hour>=19);
-  if(code===0)return night?'🌙':'☀️';
-  if(code===1)return night?'🌙':'🌤️';
-  if(code===2)return night?'☁️':'⛅';
-  if(code===3)return '☁️';
-  if(code===45||code===48)return '🌫️';
-  if(code>=51&&code<=57)return '🌦️';
-  if(code>=61&&code<=67)return '🌧️';
-  if(code>=71&&code<=77)return '🌨️';
-  if(code>=80&&code<=82)return '🌦️';
-  if(code===85||code===86)return '🌨️';
-  if(code>=95)return '⛈️';
-  return '☁️';
+  if(code===0)return night?'\ud83c\udf19':'\u2600\ufe0f';
+  if(code===1)return night?'\ud83c\udf19':'\ud83c\udf24\ufe0f';
+  if(code===2)return night?'\u2601\ufe0f':'\u26c5';
+  if(code===3)return '\u2601\ufe0f';
+  if(code===45||code===48)return '\ud83c\udf2b\ufe0f';
+  if(code>=51&&code<=57)return '\ud83c\udf26\ufe0f';
+  if(code>=61&&code<=67)return '\ud83c\udf27\ufe0f';
+  if(code>=71&&code<=77)return '\ud83c\udf28\ufe0f';
+  if(code>=80&&code<=82)return '\ud83c\udf26\ufe0f';
+  if(code===85||code===86)return '\ud83c\udf28\ufe0f';
+  if(code>=95)return '\u26c8\ufe0f';
+  return '\u2601\ufe0f';
 }
 function wxHourLabel(h){
   if(h===0)return '12a';
   if(h===12)return '12p';
   return (h%12)+(h<12?'a':'p');
 }
-function renderWeather(){
+// "YYYY-MM-DD" for the current Taiwan date, matching Open-Meteo's day keys.
+function wxTodayKey(){
+  var t=twNow();
+  return t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+}
+function wxSelectDay(i){_wxDay=i;drawWeather();}
+function drawWeather(){
   var el=document.getElementById('wx-body');
   if(!el)return;
-  fetch(WX_URL).then(function(r){return r.json();}).then(function(d){
-    var h=d&&d.hourly;
-    if(!h||!h.time||!h.time.length)throw new Error('no data');
-    // Find the slot for the current Taiwan hour, then show the next 24.
-    var t=twNow();
-    var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0')
-      +'T'+String(Math.floor(t.min/60)).padStart(2,'0')+':00';
-    var start=h.time.indexOf(key);
-    if(start<0)start=0;
-    var cards='';
-    for(var i=start;i<Math.min(start+24,h.time.length);i++){
-      var hr=+h.time[i].slice(11,13);
-      var temp=Math.round(h.temperature_2m[i]);
-      var pop=h.precipitation_probability[i];
-      var isNow=(i===start);
-      cards+='<div class="wx-hr'+(isNow?' now':'')+'">'
-        +'<div class="wx-t">'+(isNow?'Now':wxHourLabel(hr))+'</div>'
-        +'<div class="wx-ic">'+wxIcon(h.weather_code[i],hr)+'</div>'
-        +'<div class="wx-deg">'+temp+'°</div>'
-        +'<div class="wx-rain">'+(pop>=20?pop+'%':'')+'</div>'
-      +'</div>';
-    }
-    var nowTemp=Math.round(h.temperature_2m[start]);
-    el.innerHTML='<div class="wx-wrap">'
-      +'<div class="wx-hdr"><span class="wx-title">Taipei · next 24h</span><span class="wx-now">'+nowTemp+'° now</span></div>'
-      +'<div class="wx-strip">'+cards+'</div>'
+  if(!_wx){
+    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Taipei weather</span></div>'
+      +'<div class="wx-msg">Forecast unavailable - check your connection.</div></div>';
+    return;
+  }
+  var h=_wx.hourly, dly=_wx.daily, todayKey=wxTodayKey();
+  // Only show days up to departure. If we're already past it, fall back to
+  // whatever the API returned so the card never renders empty.
+  var dayKeys=dly.time.filter(function(d){return d<=WX_LAST_DAY;});
+  if(!dayKeys.length)dayKeys=dly.time.slice();
+  if(_wxDay>=dayKeys.length)_wxDay=0;
+  var t=twNow(), nowHour=Math.floor(t.min/60);
+  var nowIdx=h.time.indexOf(todayKey+'T'+String(nowHour).padStart(2,'0')+':00');
+  // Day picker - one chip per forecast day, each showing its high/low.
+  var days='';
+  dayKeys.forEach(function(dkey,i){
+    var dt=new Date(dkey+'T12:00:00');
+    var isToday=(dkey===todayKey);
+    var name=isToday?'Today':['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dt.getDay()];
+    days+='<button class="wx-day'+(i===_wxDay?' on':'')+'" onclick="wxSelectDay('+i+')">'
+      +'<span class="wx-dn">'+name+'</span>'
+      +'<span class="wx-dd">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</span>'
+      +'<span class="wx-di">'+wxIcon(dly.weather_code[i],13)+'</span>'
+      +'<span class="wx-dt">'+Math.round(dly.temperature_2m_max[i])+'\u00b0<span class="wx-dlo">'+Math.round(dly.temperature_2m_min[i])+'\u00b0</span></span>'
+    +'</button>';
+  });
+  // Hours for the selected day. Today starts at the current hour (past hours
+  // aren't useful); every other day shows all 24.
+  var dayKey=dayKeys[_wxDay];
+  var cards='';
+  for(var i=0;i<h.time.length;i++){
+    if(h.time[i].slice(0,10)!==dayKey)continue;
+    if(dayKey===todayKey&&nowIdx>=0&&i<nowIdx)continue;
+    var hr=+h.time[i].slice(11,13);
+    var pop=h.precipitation_probability[i];
+    var isNow=(i===nowIdx);
+    cards+='<div class="wx-hr'+(isNow?' now':'')+'">'
+      +'<div class="wx-t">'+(isNow?'Now':wxHourLabel(hr))+'</div>'
+      +'<div class="wx-ic">'+wxIcon(h.weather_code[i],hr)+'</div>'
+      +'<div class="wx-deg">'+Math.round(h.temperature_2m[i])+'\u00b0</div>'
+      +'<div class="wx-rain">'+(pop>=20?pop+'%':'')+'</div>'
     +'</div>';
+  }
+  var nowTemp=(nowIdx>=0)?Math.round(h.temperature_2m[nowIdx])+'\u00b0 now':'';
+  el.innerHTML='<div class="wx-wrap">'
+    +'<div class="wx-hdr"><span class="wx-title">Taipei weather</span><span class="wx-now">'+nowTemp+'</span></div>'
+    +'<div class="wx-days">'+days+'</div>'
+    +'<div class="wx-strip">'+cards+'</div>'
+  +'</div>';
+}
+function renderWeather(){
+  if(!document.getElementById('wx-body'))return;
+  fetch(WX_URL).then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.hourly||!d.hourly.time||!d.hourly.time.length)throw new Error('no data');
+    _wx=d;
+    drawWeather();
   }).catch(function(){
-    // Offline or the API is unreachable — say so instead of leaving a blank gap.
-    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Taipei · next 24h</span></div>'
-      +'<div class="wx-msg">Forecast unavailable — check your connection.</div></div>';
+    // Offline or the API is unreachable - say so instead of a blank gap.
+    _wx=null;
+    drawWeather();
   });
 }
 renderWeather();

@@ -370,10 +370,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .wx-msg{padding:0 14px;font-size:13px;color:var(--text3);font-style:italic;}
 /* Donations tab */
 .don-select{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;margin-bottom:14px;-webkit-appearance:none;appearance:none;}
-.don-tot{display:flex;gap:8px;margin-bottom:14px;}
-.don-tot div{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center;}
-.don-tot .dt-v{display:block;font-size:20px;font-weight:800;color:#0d9488;font-variant-numeric:tabular-nums;}
-.don-tot .dt-l{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-top:2px;}
 .don-grp{margin-bottom:12px;}
 .don-grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px 6px;}
 .don-grp-n{font-size:14px;font-weight:800;color:var(--text);}
@@ -766,12 +762,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=305; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=306; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v305 · Jul 27, 2026 · 9:24 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v306 · Jul 27, 2026 · 9:26 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5249,33 +5245,23 @@ var DONATIONS=[
   {t:'Andrew Back',d:'05/10',n:'Christina InSon Oh',a:100,y:'Zelle'},
   {t:'Andrew Back',d:'05/24',n:'Justin Kim',a:50,y:'Zelle'},
   {t:'Andrew Back',d:'06/07',n:'Bo Kim',a:100,y:'Zelle'},
-  {t:'Caleb Su',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
-  {t:'Esther Yang',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Grace Yoon',d:'04/19',n:'Jayden Wong',a:50,y:'Zelle'},
   {t:'Grace Yoon',d:'04/26',n:'Na',a:200,y:'Zelle'},
   {t:'Grace Yoon',d:'04/26',n:'Kenneth T & Gina Farnsworth',a:100,y:'Check'},
   {t:'Grace Yoon',d:'05/10',n:'Paul Yoon',a:916.61,y:'Zelle'},
   {t:'Grace Yoon',d:'05/17',n:'Paul Yoon',a:100,y:'Zelle'},
   {t:'Grace Yoon',d:'05/24',n:'Seon Kim',a:300,y:'Zelle'},
-  {t:'Grace Yoon',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Grace Yoon',d:'05/31',n:'Paul Yoon',a:162,y:'Zelle'},
   {t:'Grace Yoon',d:'06/28',n:'Paul Yoon',a:276,y:'Zelle'},
   {t:'Grace Yoon',d:'06/28',n:'Seongyeong Kang',a:100,y:'Zelle'},
   {t:'Grace Yoon',d:'06/28',n:'Paul Yoon',a:200,y:'Zelle'},
-  {t:'Irene Song',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Jane Kim',d:'04/19',n:'John N Back',a:100,y:'Zelle'},
   {t:'Jane Kim',d:'05/03',n:'Bryan & Jeong Seon Choo',a:100,y:'Check'},
   {t:'Jane Kim',d:'05/17',n:'JinYoung Mason',a:300,y:'Zelle'},
   {t:'Jane Kim',d:'05/31',n:'Mi Kong',a:100,y:'Zelle'},
-  {t:'Janet Phee',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
-  {t:'Jean Kim',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
-  {t:'Owen Lee',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Owen Lee',d:'06/14',n:'Yoon R & Yong K Lee',a:1500,y:'Check'},
-  {t:'Rebecca Park',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Rubin Jang',d:'04/19',n:'Issac JS Kim',a:25,y:'Zelle'},
   {t:'Rubin Jang',d:'05/17',n:'Kyung Jung',a:30,y:'Zelle'},
-  {t:'Rubin Jang',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
-  {t:'Samantha Taing',d:'05/24',n:'Summer of Hope',a:220,y:'Check'},
   {t:'Samantha Taing',d:'06/28',n:'Paul & Leslie Kang',a:50,y:'Check'}
 ];
 function donTotals(list){
@@ -5305,12 +5291,7 @@ function renderDonors(){
   initDonorFilter();
   var pick=(document.getElementById('don-filter')||{}).value||'';
   var list=pick?DONATIONS.filter(function(x){return x.t===pick;}):DONATIONS.slice();
-  var tot=donTotals(list);
-  var html='<div class="don-tot">'
-    +'<div><span class="dt-v">'+donMoney(tot.sum)+'</span><span class="dt-l">raised</span></div>'
-    +'<div><span class="dt-v">'+tot.n+'</span><span class="dt-l">gifts</span></div>'
-    +'<div><span class="dt-v">'+(pick?1:donProfiles().length)+'</span><span class="dt-l">'+(pick?'profile':'profiles')+'</span></div>'
-  +'</div>';
+  var html='';
   // Grouped by who the gift was for, biggest total first - that grouping IS
   // the "sort by profile" view; the dropdown just narrows it to one.
   var groups=pick?[pick]:donProfiles();

@@ -353,6 +353,21 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
    left side (blurry backdrop) to bring him into the middle of the card. */
 .kobe-wrap{width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:14px;margin:4px 0 14px;}
 .kobe-wrap img{width:100%;height:100%;object-fit:cover;object-position:100% center;display:block;}
+/* Hour-by-hour Taipei forecast (Open-Meteo, no API key) — a horizontally
+   scrolling strip so 24h fits without squeezing each hour unreadably thin. */
+.wx-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 0 10px;margin-bottom:6px;}
+.wx-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 14px;margin-bottom:10px;}
+.wx-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
+.wx-now{font-size:12px;font-weight:700;color:var(--text3);}
+.wx-strip{display:flex;gap:6px;overflow-x:auto;padding:0 14px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.wx-strip::-webkit-scrollbar{display:none;}
+.wx-hr{flex:0 0 auto;width:58px;background:var(--surface2);border-radius:11px;padding:8px 4px;text-align:center;}
+.wx-hr.now{background:rgba(124,58,237,0.16);box-shadow:inset 0 0 0 1.5px rgba(124,58,237,0.5);}
+.wx-t{font-size:11px;font-weight:700;color:var(--text3);}
+.wx-ic{font-size:20px;line-height:1.3;margin:2px 0;}
+.wx-deg{font-size:15px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;}
+.wx-rain{font-size:10px;font-weight:700;color:#2563eb;min-height:13px;}
+.wx-msg{padding:0 14px;font-size:13px;color:var(--text3);font-style:italic;}
 .tacc{margin-bottom:6px;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden;}
 .tacc-h{display:flex;align-items:center;gap:11px;padding:12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tacc-date{display:flex;align-items:baseline;gap:5px;flex-shrink:0;min-width:78px;}
@@ -737,12 +752,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=303; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=304; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v303 · Jul 27, 2026 · 8:29 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v304 · Jul 27, 2026 · 9:02 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1480,6 +1495,7 @@ var APP_VERSION=303; // bump alongside version.json's "v" on every deploy
 <div id="pane-hype" class="pane active">
   <div class="flight-countdown"></div>
   <div class="kobe-wrap"><img src="https://media1.tenor.com/m/RhlcRQ8EFF4AAAAd/kobe-jobs-not-finished.gif" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
+  <div id="wx-body"></div>
 </div>
 <div id="pane-mon" class="pane">
   <div id="today-body"></div>
@@ -3525,6 +3541,72 @@ function renderFlightCountdown(){
 }
 setInterval(renderFlightCountdown,1000);
 renderFlightCountdown();
+// ===== Taipei hour-by-hour forecast =====
+// Open-Meteo needs no API key and sends CORS headers, so it works straight
+// from the static page. timezone=Asia/Taipei means the returned "time"
+// strings are already local Taiwan hours — no conversion needed here.
+var WX_URL='https://api.open-meteo.com/v1/forecast?latitude=25.033&longitude=121.5654'
+  +'&hourly=temperature_2m,precipitation_probability,weather_code&timezone=Asia%2FTaipei&forecast_days=3';
+// WMO weather codes → emoji. Night variants for the clear//mostly-clear
+// codes only; everything else reads the same after dark.
+function wxIcon(code,hour){
+  var night=(hour<6||hour>=19);
+  if(code===0)return night?'🌙':'☀️';
+  if(code===1)return night?'🌙':'🌤️';
+  if(code===2)return night?'☁️':'⛅';
+  if(code===3)return '☁️';
+  if(code===45||code===48)return '🌫️';
+  if(code>=51&&code<=57)return '🌦️';
+  if(code>=61&&code<=67)return '🌧️';
+  if(code>=71&&code<=77)return '🌨️';
+  if(code>=80&&code<=82)return '🌦️';
+  if(code===85||code===86)return '🌨️';
+  if(code>=95)return '⛈️';
+  return '☁️';
+}
+function wxHourLabel(h){
+  if(h===0)return '12a';
+  if(h===12)return '12p';
+  return (h%12)+(h<12?'a':'p');
+}
+function renderWeather(){
+  var el=document.getElementById('wx-body');
+  if(!el)return;
+  fetch(WX_URL).then(function(r){return r.json();}).then(function(d){
+    var h=d&&d.hourly;
+    if(!h||!h.time||!h.time.length)throw new Error('no data');
+    // Find the slot for the current Taiwan hour, then show the next 24.
+    var t=twNow();
+    var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0')
+      +'T'+String(Math.floor(t.min/60)).padStart(2,'0')+':00';
+    var start=h.time.indexOf(key);
+    if(start<0)start=0;
+    var cards='';
+    for(var i=start;i<Math.min(start+24,h.time.length);i++){
+      var hr=+h.time[i].slice(11,13);
+      var temp=Math.round(h.temperature_2m[i]);
+      var pop=h.precipitation_probability[i];
+      var isNow=(i===start);
+      cards+='<div class="wx-hr'+(isNow?' now':'')+'">'
+        +'<div class="wx-t">'+(isNow?'Now':wxHourLabel(hr))+'</div>'
+        +'<div class="wx-ic">'+wxIcon(h.weather_code[i],hr)+'</div>'
+        +'<div class="wx-deg">'+temp+'°</div>'
+        +'<div class="wx-rain">'+(pop>=20?pop+'%':'')+'</div>'
+      +'</div>';
+    }
+    var nowTemp=Math.round(h.temperature_2m[start]);
+    el.innerHTML='<div class="wx-wrap">'
+      +'<div class="wx-hdr"><span class="wx-title">Taipei · next 24h</span><span class="wx-now">'+nowTemp+'° now</span></div>'
+      +'<div class="wx-strip">'+cards+'</div>'
+    +'</div>';
+  }).catch(function(){
+    // Offline or the API is unreachable — say so instead of leaving a blank gap.
+    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Taipei · next 24h</span></div>'
+      +'<div class="wx-msg">Forecast unavailable — check your connection.</div></div>';
+  });
+}
+renderWeather();
+setInterval(renderWeather,900000); // refresh every 15 min
 // Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /
 // Up next" card and the full schedule table below it, so the two never drift apart.
 function getScheduleRows(d){

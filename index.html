@@ -377,16 +377,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .wx-deg{font-size:13px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.3;}
 .wx-rain{font-size:9px;font-weight:700;color:#2563eb;min-height:11px;line-height:1.3;}
 .wx-msg{padding:0 14px;font-size:13px;color:var(--text3);font-style:italic;}
-/* Donations tab */
-.don-select{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;margin-bottom:14px;-webkit-appearance:none;appearance:none;}
-.don-grp{margin-bottom:12px;}
-.don-grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px 6px;}
-.don-grp-n{font-size:14px;font-weight:800;color:var(--text);}
-.don-grp-s{font-size:12px;font-weight:700;color:#0d9488;font-variant-numeric:tabular-nums;}
-.don-row{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 12px;margin-bottom:5px;}
-.don-name{flex:1;font-size:14px;font-weight:700;color:var(--text);min-width:0;}
-.don-meta{font-size:11px;font-weight:600;color:var(--text3);white-space:nowrap;}
-.don-amt{font-size:15px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .tacc{margin-bottom:6px;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden;}
 .tacc-h{display:flex;align-items:center;gap:11px;padding:12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tacc-date{display:flex;align-items:baseline;gap:5px;flex-shrink:0;min-width:78px;}
@@ -771,12 +761,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=308; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=309; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v308 · Jul 27, 2026 · 9:40 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v309 · Jul 27, 2026 · 9:47 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1516,12 +1506,6 @@ var APP_VERSION=308; // bump alongside version.json's "v" on every deploy
   <div class="flight-countdown"></div>
   <div class="kobe-wrap"><img src="https://media1.tenor.com/m/RhlcRQ8EFF4AAAAd/kobe-jobs-not-finished.gif" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
 </div>
-<div id="pane-donors" class="pane">
-  <div class="stu-title" style="color:#0d9488">Donations</div>
-  <div class="stu-sub" id="don-sub">Taiwan team · named donors only</div>
-  <select class="don-select" id="don-filter" onchange="renderDonors()"></select>
-  <div id="don-body"></div>
-</div>
 <div id="pane-mon" class="pane">
   <div id="today-body"></div>
 </div>
@@ -1685,10 +1669,6 @@ var APP_VERSION=308; // bump alongside version.json's "v" on every deploy
   <button class="tabitem active" style="--accent:#7c3aed" onclick="go('hype',this)" aria-label="Home">
     <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20h14V9.8"/></svg>
     <span>Home</span>
-  </button>
-  <button class="tabitem" style="--accent:#0d9488" onclick="goDonors(this)" aria-label="Donations">
-    <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><path d="M12 7.5v5M9.5 10h5"/></svg>
-    <span>Donors</span>
   </button>
   <button class="tabitem" style="--accent:#d97706;display:none" onclick="go('mon',this)" aria-label="Today">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
@@ -5207,10 +5187,6 @@ function renderIndividualScores(){
     return '<div class="score-ind-group"><div class="score-ind-grouphdr">'+groupChipsHtml([gid])+'</div>'+rows+'</div>';
   }).join('');
 }
-function goDonors(btn){
-  go('donors',btn);
-  renderDonors();
-}
 function goScoring(btn){
   go('scoring',btn);
   document.getElementById('game-tabs').innerHTML=gameTabsHtml();
@@ -5269,97 +5245,6 @@ function pickRandomGroup(){
     }
   }
   tick();
-}
-</script>
-<script>
-// ===== Donations (Taiwan team) =====
-// Pulled from the 2026 Finance Progress workbook's full_log, filtered to the
-// Taiwan roster's trainee ids (F-numbers, plus Caleb's M001) and to rows that
-// actually name a donor - anonymous/blank-donor rows are intentionally left
-// out. t = trainee the gift was intended for, y = payment type.
-var DONATIONS=[
-  {t:'Andrew Back',d:'04/19',n:'Nathan Doh',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'04/19',n:'Yale Kim',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'04/19',n:'Tyler Kim',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'04/19',n:'Justin Tran',a:10,y:'Zelle'},
-  {t:'Andrew Back',d:'04/19',n:'John Ralph Teves',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'04/19',n:'Jonathan Kim',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'04/26',n:'Hudson Lee',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Hun R Han',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Andrew Chae',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Hyun S Song',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Ashley H Takei',a:200,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Kevin Ju DDS INC',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Kevin Ju DDS INC',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'05/03',n:'Skye Choe',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/10',n:'Sang Hwang',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/10',n:'Christina InSon Oh',a:100,y:'Zelle'},
-  {t:'Andrew Back',d:'05/24',n:'Justin Kim',a:50,y:'Zelle'},
-  {t:'Andrew Back',d:'06/07',n:'Bo Kim',a:100,y:'Zelle'},
-  {t:'Grace Yoon',d:'04/19',n:'Jayden Wong',a:50,y:'Zelle'},
-  {t:'Grace Yoon',d:'04/26',n:'Na',a:200,y:'Zelle'},
-  {t:'Grace Yoon',d:'04/26',n:'Kenneth T & Gina Farnsworth',a:100,y:'Check'},
-  {t:'Grace Yoon',d:'05/10',n:'Paul Yoon',a:916.61,y:'Zelle'},
-  {t:'Grace Yoon',d:'05/17',n:'Paul Yoon',a:100,y:'Zelle'},
-  {t:'Grace Yoon',d:'05/24',n:'Seon Kim',a:300,y:'Zelle'},
-  {t:'Grace Yoon',d:'05/31',n:'Paul Yoon',a:162,y:'Zelle'},
-  {t:'Grace Yoon',d:'06/28',n:'Paul Yoon',a:276,y:'Zelle'},
-  {t:'Grace Yoon',d:'06/28',n:'Seongyeong Kang',a:100,y:'Zelle'},
-  {t:'Grace Yoon',d:'06/28',n:'Paul Yoon',a:200,y:'Zelle'},
-  {t:'Jane Kim',d:'04/19',n:'John N Back',a:100,y:'Zelle'},
-  {t:'Jane Kim',d:'05/03',n:'Bryan & Jeong Seon Choo',a:100,y:'Check'},
-  {t:'Jane Kim',d:'05/17',n:'JinYoung Mason',a:300,y:'Zelle'},
-  {t:'Jane Kim',d:'05/31',n:'Mi Kong',a:100,y:'Zelle'},
-  {t:'Owen Lee',d:'06/14',n:'Yoon R & Yong K Lee',a:1500,y:'Check'},
-  {t:'Rubin Jang',d:'04/19',n:'Issac JS Kim',a:25,y:'Zelle'},
-  {t:'Rubin Jang',d:'05/17',n:'Kyung Jung',a:30,y:'Zelle'},
-  {t:'Samantha Taing',d:'06/28',n:'Paul & Leslie Kang',a:50,y:'Check'}
-];
-function donTotals(list){
-  return {n:list.length, sum:list.reduce(function(a,x){return a+x.a;},0)};
-}
-function donMoney(v){
-  return '$'+v.toLocaleString('en-US',{minimumFractionDigits:(v%1?2:0),maximumFractionDigits:2});
-}
-function donProfiles(){
-  var seen={};
-  DONATIONS.forEach(function(x){seen[x.t]=(seen[x.t]||0)+x.a;});
-  return Object.keys(seen).sort(function(a,b){return seen[b]-seen[a];});
-}
-function initDonorFilter(){
-  var sel=document.getElementById('don-filter');
-  if(!sel||sel.options.length)return;
-  var opts='<option value="">All profiles ('+DONATIONS.length+')</option>';
-  donProfiles().forEach(function(p){
-    var t=donTotals(DONATIONS.filter(function(x){return x.t===p;}));
-    opts+='<option value="'+p.replace(/"/g,'&quot;')+'">'+p+' — '+donMoney(t.sum)+'</option>';
-  });
-  sel.innerHTML=opts;
-}
-function renderDonors(){
-  var el=document.getElementById('don-body');
-  if(!el)return;
-  initDonorFilter();
-  var pick=(document.getElementById('don-filter')||{}).value||'';
-  var list=pick?DONATIONS.filter(function(x){return x.t===pick;}):DONATIONS.slice();
-  var html='';
-  // Grouped by who the gift was for, biggest total first - that grouping IS
-  // the "sort by profile" view; the dropdown just narrows it to one.
-  var groups=pick?[pick]:donProfiles();
-  groups.forEach(function(p){
-    var rows=list.filter(function(x){return x.t===p;}).sort(function(a,b){return b.a-a.a;});
-    if(!rows.length)return;
-    var gt=donTotals(rows);
-    html+='<div class="don-grp"><div class="don-grp-h"><span class="don-grp-n">'+p+'</span>'
-      +'<span class="don-grp-s">'+donMoney(gt.sum)+' · '+gt.n+(gt.n===1?' gift':' gifts')+'</span></div>';
-    rows.forEach(function(x){
-      html+='<div class="don-row"><span class="don-name">'+x.n+'</span>'
-        +'<span class="don-meta">'+x.d+' · '+x.y+'</span>'
-        +'<span class="don-amt">'+donMoney(x.a)+'</span></div>';
-    });
-    html+='</div>';
-  });
-  el.innerHTML=html;
 }
 </script>
 </body>

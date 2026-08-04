@@ -399,6 +399,7 @@ body.fb-locked .tabbar{display:none!important;}
 .pr-name{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
 .pr-name.ours{background:rgba(124,58,237,0.16);border-color:#7c3aed;}
 .pr-plus{font-size:12px;font-weight:800;color:var(--text3);}
+.pr-trio{background:rgba(124,58,237,0.07);border-radius:9px;padding:8px 6px;}
 .pr-order{display:flex;flex-wrap:wrap;gap:5px;}
 .pr-ord{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--text2);}
 .pr-ord b{color:#7c3aed;margin-right:4px;}
@@ -821,12 +822,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=319; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=320; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v319 · Aug 3, 2026 · 11:25 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v320 · Aug 4, 2026 · 6:55 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5426,15 +5427,15 @@ function pickRandomGroup(){
 </script>
 
 <script>
-// ESR pairings, rounds 8-13. Rounds 1-7 are finished and removed - those
-// paired every older with every younger (7x7=49). What is left is only
-// older-older and younger-younger pairs, and since each half has 7 people
-// (odd) a half can never pair entirely within itself. So exactly one
-// older-younger pair must repeat each round - that is forced, not a bug,
-// and each round flags which pair it is. Andrew continues up the ladder:
-// Jane, Jean, Becca, Caleb, Esther, Keren.
+// ESR pairings, rounds 8-13. Rounds 1-7 are done and removed - they used
+// all 49 older-younger pairs, so only older-older and younger-younger
+// pairings remain. Each half has 7 people (ODD), so a half can never pair
+// entirely within itself. That forces a choice: repeat a pair, bench
+// someone, or use a group of three. We use a trio on each side - so
+// nobody sits out AND no 1-on-1 is ever repeated. Andrew climbs: Jane,
+// Jean, Becca, Caleb, Esther, Keren.
 var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
-var ESR_ROUNDS=[[["Andrew Yoo","Jane Kim"],["Esther Yang","Caleb Su"],["Becca Park","Jean Kim"],["Janet Phee","Owen Lee"],["Rubin Jang","Andrew Back"],["Irene Song","Sammy Taing"],["Keren Choi","Grace Yoon"]],[["Andrew Yoo","Jean Kim"],["Esther Yang","Becca Park"],["Caleb Su","Jane Kim"],["Grace Yoon","Owen Lee"],["Rubin Jang","Irene Song"],["Andrew Back","Sammy Taing"],["Keren Choi","Janet Phee"]],[["Andrew Yoo","Becca Park"],["Esther Yang","Jane Kim"],["Caleb Su","Jean Kim"],["Grace Yoon","Janet Phee"],["Rubin Jang","Sammy Taing"],["Andrew Back","Irene Song"],["Keren Choi","Owen Lee"]],[["Andrew Yoo","Caleb Su"],["Keren Choi","Becca Park"],["Jean Kim","Jane Kim"],["Grace Yoon","Andrew Back"],["Janet Phee","Irene Song"],["Owen Lee","Sammy Taing"],["Esther Yang","Rubin Jang"]],[["Andrew Yoo","Esther Yang"],["Keren Choi","Jean Kim"],["Becca Park","Jane Kim"],["Grace Yoon","Irene Song"],["Janet Phee","Sammy Taing"],["Owen Lee","Andrew Back"],["Caleb Su","Rubin Jang"]],[["Andrew Yoo","Keren Choi"],["Esther Yang","Jean Kim"],["Caleb Su","Becca Park"],["Grace Yoon","Sammy Taing"],["Janet Phee","Andrew Back"],["Owen Lee","Irene Song"],["Jane Kim","Rubin Jang"]]];
+var ESR_ROUNDS=[{"pairs":[["Andrew Yoo","Jane Kim"],["Keren Choi","Becca Park"],["Rubin Jang","Sammy Taing"],["Grace Yoon","Irene Song"]],"trios":[["Esther Yang","Caleb Su","Jean Kim"],["Janet Phee","Owen Lee","Andrew Back"]]},{"pairs":[["Andrew Yoo","Jean Kim"],["Esther Yang","Jane Kim"],["Janet Phee","Rubin Jang"],["Owen Lee","Andrew Back"]],"trios":[["Keren Choi","Caleb Su","Becca Park"],["Grace Yoon","Irene Song","Sammy Taing"]]},{"pairs":[["Andrew Yoo","Becca Park"],["Keren Choi","Caleb Su"],["Janet Phee","Irene Song"],["Rubin Jang","Andrew Back"]],"trios":[["Esther Yang","Jean Kim","Jane Kim"],["Grace Yoon","Owen Lee","Sammy Taing"]]},{"pairs":[["Andrew Yoo","Caleb Su"],["Esther Yang","Jean Kim"],["Grace Yoon","Owen Lee"],["Andrew Back","Sammy Taing"]],"trios":[["Keren Choi","Becca Park","Jane Kim"],["Janet Phee","Rubin Jang","Irene Song"]]},{"pairs":[["Andrew Yoo","Esther Yang"],["Keren Choi","Jane Kim"],["Owen Lee","Irene Song"],["Janet Phee","Andrew Back"]],"trios":[["Caleb Su","Becca Park","Jean Kim"],["Grace Yoon","Rubin Jang","Sammy Taing"]]},{"pairs":[["Andrew Yoo","Keren Choi"],["Esther Yang","Caleb Su"],["Grace Yoon","Sammy Taing"],["Janet Phee","Owen Lee"]],"trios":[["Becca Park","Jean Kim","Jane Kim"],["Rubin Jang","Andrew Back","Irene Song"]]}];
 var ESR_R0=8; // R1-R7 are done; numbering continues from 8
 // General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
 // no headers; pairs read VERTICALLY (a name and the one directly below it).
@@ -5464,13 +5465,18 @@ function renderPairs(){
   var el=document.getElementById('pr-body'); if(!el)return;
   var sub=document.getElementById('pr-sub');
   if(_pairMode==='esr'){
-    if(sub)sub.textContent='ESR ladder · rounds 8-13 · rounds 1-7 complete';
+    if(sub)sub.textContent='ESR ladder · rounds 8-13 · no repeats, nobody sits out';
     var chips=ESR_ROUNDS.map(function(_,i){
       return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+ESR_R0)+'</button>';
     }).join('');
-    var rows=ESR_ROUNDS[_prRound].map(function(p,i){
+    var _rd=ESR_ROUNDS[_prRound];
+    var rows=_rd.pairs.map(function(p,i){
       return '<div class="pr-row"><span class="pr-n">'+(i+1)+'</span>'
         +prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])+'</div>';
+    }).join('')
+    +(_rd.trios||[]).map(function(t,i){
+      return '<div class="pr-row pr-trio"><span class="pr-n">'+(_rd.pairs.length+i+1)+'</span>'
+        +t.map(function(n){return prChip(n);}).join('<span class="pr-plus">+</span>')+'</div>';
     }).join('');
     el.innerHTML='<div class="pr-rounds">'+chips+'</div>'
       +'<div class="sgq-wrap"><div class="sgq-hdr">Round '+(_prRound+ESR_R0)+'</div>'+rows+'</div>'
@@ -5506,7 +5512,7 @@ renderPairs();
    SEPARATE background job that retries with backoff until it lands, and also
    fires again the moment the device comes back online or the tab is refocused.
    So "saved" and "synced" are two different states and the UI says which. */
-const FEEDBACK_ENDPOINT = ""; // paste the Apps Script /exec URL here once deployed
+const FEEDBACK_ENDPOINT = "https://script.google.com/macros/s/AKfycbyYWq9WAKsVFJf6wDRZuIB_VY93TGWaJn9jml38y6ZrGo0qICV19Ss1a6JTWZQgS_GCvA/exec"; // paste the Apps Script /exec URL here once deployed
 var FB_SIGNUPS=[
   {k:'gcl', label:'Monthly GCL book meeting with LP'},
   {k:'ds',  label:'David & Susanna update letter'},

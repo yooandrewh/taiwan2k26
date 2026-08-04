@@ -355,6 +355,18 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 @media(max-width:359px){.fm-val{font-size:16px;}.fm-name{font-size:12px;}}
 /* The Tenor GIF frames Kobe right-of-centre, so the wrapper crops the empty
    left side (blurry backdrop) to bring him into the middle of the card. */
+/* ===== Feedback ===== */
+.fb-sec{margin-bottom:14px;}
+.fb-lbl{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:6px;}
+.fb-count{font-size:10px;font-weight:600;color:var(--text3);text-transform:none;letter-spacing:0;}
+.fb-bullet{border:1px solid var(--border);background:var(--surface2);color:var(--text2);border-radius:7px;padding:3px 8px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;text-transform:none;letter-spacing:0;-webkit-tap-highlight-color:transparent;}
+.fb-ta{width:100%;min-height:96px;overflow:hidden;padding:11px 12px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:15px;line-height:1.5;font-family:inherit;resize:vertical;-webkit-appearance:none;}
+.fb-ta:focus{outline:none;border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.15);}
+.fb-status{position:sticky;bottom:calc(70px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;padding:8px;border-radius:10px;background:var(--surface2);color:var(--text3);margin-top:4px;}
+.fb-status.saving{color:#d97706;}
+.fb-status.saved{color:#16a34a;}
+.fb-status.local{color:var(--text3);}
+.fb-note{font-size:12px;color:var(--text3);font-style:italic;line-height:1.5;margin-bottom:12px;}
 /* ===== Pairings (ESR ladder + 1-on-1s) ===== */
 .pr-rounds{display:flex;gap:5px;overflow-x:auto;padding-bottom:10px;margin-bottom:2px;scrollbar-width:none;}
 .pr-rounds::-webkit-scrollbar{display:none;}
@@ -788,12 +800,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=314; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=315; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v314 · Aug 3, 2026 · 9:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v315 · Aug 3, 2026 · 9:35 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1542,6 +1554,12 @@ var APP_VERSION=314; // bump alongside version.json's "v" on every deploy
   </div>
   <div id="pr-body"></div>
 </div>
+<div id="pane-feedback" class="pane">
+  <div class="stu-title" style="color:#16a34a">Feedback</div>
+  <div class="stu-sub">Tap your name · saves as you type</div>
+  <div class="mygrp-tabs" id="fb-who"></div>
+  <div id="fb-body"></div>
+</div>
 <div id="pane-debrief" class="pane">
   <div class="stu-title" style="color:#0d9488">Groups &amp; Places</div>
   <div class="stu-sub">Testimony sharing rooms · duties · meals</div>
@@ -1718,6 +1736,10 @@ var APP_VERSION=314; // bump alongside version.json's "v" on every deploy
   <button class="tabitem" style="--accent:#7c3aed" onclick="goPairs(this)" aria-label="Pairings">
     <svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2.5 19c0-2.7 2-4.6 4.5-4.6S11.5 16.3 11.5 19M12.5 19c0-2.7 2-4.6 4.5-4.6s4.5 1.9 4.5 4.6"/></svg>
     <span>Pairs</span>
+  </button>
+  <button class="tabitem" style="--accent:#16a34a" onclick="goFeedback(this)" aria-label="Feedback">
+    <svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H9l-5 4z"/><path d="M8 8.5h8M8 11.5h5"/></svg>
+    <span>Feedback</span>
   </button>
   <button class="tabitem" style="--accent:#d97706;display:none" onclick="go('mon',this)" aria-label="Today">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
@@ -5396,6 +5418,205 @@ function renderPairs(){
 }
 function goPairs(btn){go('pairs',btn);renderPairs();}
 renderPairs();
+</script>
+
+<script>
+/* ===== Feedback =====
+   Local-first by design: every keystroke is debounced into localStorage, which
+   needs no connection at all - people can fill this out at Kamlin, on a plane,
+   anywhere with no signal and nothing is lost. Pushing to the Google Sheet is a
+   SEPARATE background job that retries with backoff until it lands, and also
+   fires again the moment the device comes back online or the tab is refocused.
+   So "saved" and "synced" are two different states and the UI says which. */
+const FEEDBACK_ENDPOINT = ""; // paste the Apps Script /exec URL here once deployed
+var FB_SECTIONS=[
+  {k:'g',   label:'General notes'},
+  {k:'ev',  label:'EV Week'},
+  {k:'vbs', label:'VBS Week'},
+  {k:'tmf', label:'TMF Week'},
+  {k:'hs',  label:'Hot Springs Week'}
+];
+var FB_PEOPLE=ESR_ORDER.slice();       // the 14 on our team
+var fbWho=null;
+try{fbWho=localStorage.getItem('fbWho')||null;}catch(e){}
+function fbGetLog(){try{return JSON.parse(localStorage.getItem('feedbackLog')||'{}');}catch(e){return {};}}
+function fbSaveLog(l){try{localStorage.setItem('feedbackLog',JSON.stringify(l));}catch(e){}}
+function fbEntry(who){
+  var l=fbGetLog();
+  if(!l[who])l[who]={edited:0,synced:true,tries:0,lastTry:0};
+  return l[who];
+}
+function fbSetStatus(cls,txt){
+  var el=document.getElementById('fb-status');
+  if(el){el.className='fb-status '+cls;el.textContent=txt;}
+}
+function fbStatusFor(e){
+  if(!FEEDBACK_ENDPOINT)return ['local','Saved on this phone · sheet not connected yet'];
+  if(e.synced)return ['saved','✓ Saved &amp; synced'];
+  return ['saving','Saved on this phone · will sync when online'];
+}
+var _fbTimer=null;
+function fbInput(k,v){
+  if(!fbWho)return;
+  var l=fbGetLog();
+  var e=l[fbWho]||(l[fbWho]={edited:0,synced:true,tries:0,lastTry:0});
+  e[k]=v; e.edited=Date.now(); e.synced=false; e.tries=0; e.lastTry=0;
+  fbSaveLog(l);
+  fbSetStatus('saving','Saving…');
+  clearTimeout(_fbTimer);
+  // Debounce the upload only - the text is already on disk above.
+  _fbTimer=setTimeout(function(){
+    var st=fbStatusFor(fbGetLog()[fbWho]||{});
+    fbSetStatus(st[0],st[1].replace('&amp;','&'));
+    fbSync();
+  },900);
+}
+function fbPost(who,e){
+  if(!FEEDBACK_ENDPOINT)return;
+  var body={person:who,edited:e.edited};
+  FB_SECTIONS.forEach(function(sec){body[sec.k]=e[sec.k]||'';});
+  fetch(FEEDBACK_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(body)}).catch(function(){});
+}
+// Push anything unsynced, then reconcile against the sheet. Same retry shape as
+// Check-In/Scores: quick retries at first, then every 5 minutes.
+function fbSync(){
+  if(!FEEDBACK_ENDPOINT)return;
+  var l=fbGetLog(),now=Date.now(),changed=false;
+  Object.keys(l).forEach(function(who){
+    var e=l[who];
+    if(e.synced)return;
+    var backoff=(e.tries||0)>=6?300000:8000;
+    if(e.lastTry&&now-e.lastTry<backoff)return;
+    e.tries=(e.tries||0)+1;e.lastTry=now;changed=true;
+    fbPost(who,e);
+  });
+  if(changed)fbSaveLog(l);
+  fetch(FEEDBACK_ENDPOINT,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    var rows=(d&&d.rows)||[],l2=fbGetLog(),dirty=false;
+    rows.forEach(function(row){
+      var who=row.person;if(!who)return;
+      var e=l2[who];
+      var remoteEdited=Number(row.edited)||0;
+      if(!e){
+        e=l2[who]={edited:remoteEdited,synced:true,tries:0,lastTry:0};
+        FB_SECTIONS.forEach(function(sec){e[sec.k]=row[sec.k]||'';});
+        dirty=true;return;
+      }
+      // Our pending edit always wins; otherwise take the sheet if it's newer
+      // (covers the same person typing on a second device).
+      if(!e.synced)return;
+      if(remoteEdited>=(e.edited||0)){
+        var diff=false;
+        FB_SECTIONS.forEach(function(sec){
+          var rv=row[sec.k]||'';
+          if((e[sec.k]||'')!==rv){e[sec.k]=rv;diff=true;}
+        });
+        if(remoteEdited!==e.edited){e.edited=remoteEdited;diff=true;}
+        if(diff)dirty=true;
+      }
+    });
+    // Mark as synced anything the sheet now confirms at our edit time or later.
+    rows.forEach(function(row){
+      var e=l2[row.person];
+      if(e&&!e.synced&&(Number(row.edited)||0)>=(e.edited||0)){e.synced=true;e.tries=0;dirty=true;}
+    });
+    if(dirty)fbSaveLog(l2);
+    if(fbWho){
+      var cur=fbGetLog()[fbWho];
+      if(cur){
+        var st=fbStatusFor(cur);
+        fbSetStatus(st[0],st[1].replace('&amp;','&'));
+        // Refill only fields the user isn't actively editing.
+        FB_SECTIONS.forEach(function(sec){
+          var ta=document.getElementById('fb-'+sec.k);
+          if(ta&&document.activeElement!==ta&&ta.value!==(cur[sec.k]||''))ta.value=cur[sec.k]||'';
+        });
+      }
+    }
+  }).catch(function(){});
+}
+function fbSelect(who){
+  fbWho=who;
+  try{localStorage.setItem('fbWho',who);}catch(e){}
+  renderFeedback();
+}
+function renderFeedback(){
+  var tabs=document.getElementById('fb-who'),body=document.getElementById('fb-body');
+  if(!tabs||!body)return;
+  tabs.innerHTML=FB_PEOPLE.map(function(n){
+    return '<button class="mygrp-tab'+(n===fbWho?' on':'')+'" onclick="fbSelect(\''+n.replace(/'/g,"\\'")+'\')">'+n+'</button>';
+  }).join('');
+  if(!fbWho){body.innerHTML='<div class="mygrp-empty">Tap your name above to start.</div>';return;}
+  var e=fbEntry(fbWho);
+  var secs=FB_SECTIONS.map(function(sec){
+    var v=(e[sec.k]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<div class="fb-sec">'
+      +'<div class="fb-lbl">'+sec.label
+        +'<button type="button" class="fb-bullet" onclick="fbBullet(\''+sec.k+'\')">• bullet</button></div>'
+      +'<textarea class="fb-ta" id="fb-'+sec.k+'" placeholder="Write anything…" '
+      +'autocorrect="on" autocapitalize="sentences" spellcheck="true" autocomplete="off" '
+      +'enterkeyhint="enter" '
+      +'onkeydown="fbKey(event,\''+sec.k+'\')" '
+      +'oninput="fbInput(\''+sec.k+'\',this.value);fbGrow(this)">'+v+'</textarea></div>';
+  }).join('');
+  var st=fbStatusFor(e);
+  body.innerHTML='<div class="fb-note">Everything saves to your phone as you type — no signal needed. '
+    +'It uploads on its own once you\'re back online.</div>'
+    +secs+'<div class="fb-status '+st[0]+'" id="fb-status">'+st[1]+'</div>';
+  FB_SECTIONS.forEach(function(sec){var ta=document.getElementById('fb-'+sec.k);if(ta)fbGrow(ta);});
+}
+// Grow with the text so long answers don't get typed into a tiny scrolling box.
+function fbGrow(ta){
+  if(!ta)return;
+  ta.style.height='auto';
+  ta.style.height=Math.max(96,ta.scrollHeight+2)+'px';
+}
+var FB_BULLET='• ';
+function fbApply(k,val,caret){
+  var ta=document.getElementById('fb-'+k);
+  if(!ta)return;
+  ta.value=val;
+  if(caret!=null)ta.setSelectionRange(caret,caret);
+  fbInput(k,val);
+  fbGrow(ta);
+}
+// Insert a bullet at the start of the current line.
+function fbBullet(k){
+  var ta=document.getElementById('fb-'+k);if(!ta)return;
+  ta.focus();
+  var v=ta.value,p=ta.selectionStart;
+  var ls=v.lastIndexOf('\n',p-1)+1;
+  if(v.slice(ls).indexOf(FB_BULLET)===0){ // already bulleted - just go to end of line
+    var le=v.indexOf('\n',ls); le=le<0?v.length:le;
+    ta.setSelectionRange(le,le);return;
+  }
+  var out=v.slice(0,ls)+FB_BULLET+v.slice(ls);
+  fbApply(k,out,p+FB_BULLET.length);
+}
+// Enter continues a bullet list; Enter on an empty bullet ends the list.
+function fbKey(ev,k){
+  if(ev.key!=='Enter'||ev.shiftKey)return;
+  var ta=ev.target,v=ta.value,p=ta.selectionStart;
+  if(p!==ta.selectionEnd)return;
+  var ls=v.lastIndexOf('\n',p-1)+1;
+  var line=v.slice(ls,p);
+  var m=line.match(/^(\s*)(•\s+|-\s+|\*\s+)/);
+  if(!m)return;
+  ev.preventDefault();
+  var marker=m[1]+FB_BULLET;
+  if(line.trim()===m[2].trim()){        // empty bullet -> drop it, exit the list
+    fbApply(k,v.slice(0,ls)+v.slice(p),ls);
+    return;
+  }
+  fbApply(k,v.slice(0,p)+'\n'+marker+v.slice(p),p+1+marker.length);
+}
+function goFeedback(btn){go('feedback',btn);renderFeedback();fbSync();}
+// Retry whenever the network or the tab comes back.
+window.addEventListener('online',fbSync);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')fbSync();});
+setInterval(function(){if(document.visibilityState==='visible')fbSync();},60000);
+renderFeedback();
 </script>
 </body>
 </html>

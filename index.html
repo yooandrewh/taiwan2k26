@@ -355,6 +355,21 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 @media(max-width:359px){.fm-val{font-size:16px;}.fm-name{font-size:12px;}}
 /* The Tenor GIF frames Kobe right-of-centre, so the wrapper crops the empty
    left side (blurry backdrop) to bring him into the middle of the card. */
+/* ===== Pairings (ESR ladder + 1-on-1s) ===== */
+.pr-rounds{display:flex;gap:5px;overflow-x:auto;padding-bottom:10px;margin-bottom:2px;scrollbar-width:none;}
+.pr-rounds::-webkit-scrollbar{display:none;}
+.pr-rbtn{flex:0 0 auto;min-width:42px;padding:8px 6px;border-radius:9px;border:1.5px solid transparent;background:var(--surface2);color:var(--text2);font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;}
+.pr-rbtn.on{background:rgba(124,58,237,0.16);border-color:#7c3aed;color:var(--text);}
+.pr-row{display:flex;align-items:center;gap:7px;padding:9px 0;border-bottom:1px solid var(--border);}
+.pr-row:last-child{border-bottom:none;}
+.pr-n{flex:0 0 18px;font-size:11px;font-weight:800;color:var(--text3);}
+.pr-name{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
+.pr-name.ours{background:rgba(124,58,237,0.16);border-color:#7c3aed;}
+.pr-plus{font-size:12px;font-weight:800;color:var(--text3);}
+.pr-order{display:flex;flex-wrap:wrap;gap:5px;}
+.pr-ord{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--text2);}
+.pr-ord b{color:#7c3aed;margin-right:4px;}
+.pr-search{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-family:inherit;margin-bottom:12px;-webkit-appearance:none;}
 /* ===== Debrief schedule / groups ===== */
 .db-now-card{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:#fff;border-radius:14px;padding:13px 15px;margin:6px 0 12px;}
 .db-now-card.off{background:var(--surface);color:var(--text2);border:1px solid var(--border);}
@@ -389,30 +404,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .db-rule:last-child{border-bottom:none;}
 .kobe-wrap{width:100%;overflow:hidden;border-radius:14px;margin:4px 0 14px;}
 .kobe-wrap img{width:100%;height:auto;display:block;}
-/* Hour-by-hour Taipei forecast (Open-Meteo, no API key) — a horizontally
-   scrolling strip so 24h fits without squeezing each hour unreadably thin. */
-.wx-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:9px 0 7px;margin-bottom:10px;}
-.wx-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 12px;margin-bottom:7px;}
-.wx-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
-.wx-now{font-size:11px;font-weight:700;color:var(--text3);}
-.wx-days{display:flex;gap:5px;overflow-x:auto;padding:0 12px 7px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.wx-days::-webkit-scrollbar{display:none;}
-.wx-day{flex:1 1 0;min-width:0;background:var(--surface2);border:1.5px solid transparent;border-radius:9px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;gap:0;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:inherit;}
-.wx-day.on{border-color:#0ea5e9;background:rgba(14,165,233,0.14);}
-.wx-dn{font-size:10px;font-weight:800;color:var(--text);line-height:1.3;}
-.wx-dd{font-size:9px;font-weight:600;color:var(--text3);line-height:1.3;}
-.wx-di{font-size:13px;line-height:1.35;}
-.wx-dt{font-size:11px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.3;}
-.wx-dlo{font-weight:600;color:var(--text3);margin-left:2px;}
-.wx-strip{display:flex;gap:5px;overflow-x:auto;padding:0 12px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.wx-strip::-webkit-scrollbar{display:none;}
-.wx-hr{flex:0 0 auto;width:46px;background:var(--surface2);border-radius:9px;padding:5px 3px;text-align:center;}
-.wx-hr.now{background:rgba(124,58,237,0.16);box-shadow:inset 0 0 0 1.5px rgba(124,58,237,0.5);}
-.wx-t{font-size:10px;font-weight:700;color:var(--text3);line-height:1.3;}
-.wx-ic{font-size:15px;line-height:1.35;margin:1px 0;}
-.wx-deg{font-size:13px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.3;}
-.wx-rain{font-size:9px;font-weight:700;color:#2563eb;min-height:11px;line-height:1.3;}
-.wx-msg{padding:0 14px;font-size:13px;color:var(--text3);font-style:italic;}
 .tacc{margin-bottom:6px;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden;}
 .tacc-h{display:flex;align-items:center;gap:11px;padding:12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tacc-date{display:flex;align-items:baseline;gap:5px;flex-shrink:0;min-width:78px;}
@@ -797,12 +788,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=313; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=314; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v313 · Aug 3, 2026 · 9:20 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v314 · Aug 3, 2026 · 9:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1538,10 +1529,18 @@ var APP_VERSION=313; // bump alongside version.json's "v" on every deploy
   <div id="mem-practice" style="display:none"></div>
 </div>
 <div id="pane-hype" class="pane active">
-  <div id="wx-body"></div>
   <div id="db-now"></div>
   <div id="db-sched"></div>
   <div class="kobe-wrap"><img src="kobe.webp" width="257" height="321" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
+</div>
+<div id="pane-pairs" class="pane">
+  <div class="stu-title" style="color:#7c3aed">Pairings</div>
+  <div class="stu-sub" id="pr-sub">ESR ladder &amp; 1-on-1s</div>
+  <div class="stu-seg" id="pr-mode" style="margin-bottom:14px">
+    <button class="on" onclick="pairMode('esr',this)">ESR</button>
+    <button onclick="pairMode('ooo',this)">1-on-1</button>
+  </div>
+  <div id="pr-body"></div>
 </div>
 <div id="pane-debrief" class="pane">
   <div class="stu-title" style="color:#0d9488">Groups &amp; Places</div>
@@ -1715,6 +1714,10 @@ var APP_VERSION=313; // bump alongside version.json's "v" on every deploy
   <button class="tabitem" style="--accent:#0d9488" onclick="goGroups(this)" aria-label="Groups and Places">
     <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="2.6"/><circle cx="16.5" cy="7" r="2.2"/><path d="M3.5 19c0-3 2.4-5.2 5.5-5.2s5.5 2.2 5.5 5.2M16 13.9c2.6.2 4.5 2.2 4.5 5.1"/></svg>
     <span>Groups</span>
+  </button>
+  <button class="tabitem" style="--accent:#7c3aed" onclick="goPairs(this)" aria-label="Pairings">
+    <svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2.5 19c0-2.7 2-4.6 4.5-4.6S11.5 16.3 11.5 19M12.5 19c0-2.7 2-4.6 4.5-4.6s4.5 1.9 4.5 4.6"/></svg>
+    <span>Pairs</span>
   </button>
   <button class="tabitem" style="--accent:#d97706;display:none" onclick="go('mon',this)" aria-label="Today">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
@@ -3734,114 +3737,7 @@ function goGroups(btn){go('debrief',btn);renderGroups();}
 renderDebrief();
 renderGroups();
 setInterval(renderDebrief,30000);
-// ===== Taipei forecast =====
-// Open-Meteo needs no API key and sends CORS headers, so it works straight
-// from the static page. timezone=Asia/Taipei means the returned "time"
-// strings are already local Taiwan hours - no conversion needed here.
-// A day picker fronts the hours so you tap a day instead of scrolling
-// through the whole range. Days are capped at departure (see WX_LAST_DAY)
-// rather than a fixed count, so it stays right whichever day it's opened.
-var WX_URL='https://api.open-meteo.com/v1/forecast?latitude=33.8753&longitude=-117.5664'
-  +'&hourly=temperature_2m,precipitation_probability,weather_code'
-  +'&daily=temperature_2m_max,temperature_2m_min,weather_code'
-  +'&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=7';
-var WX_LAST_DAY='2026-08-06'; // debrief ends Thu Aug 6
-var _wx=null, _wxDay=0;
-// WMO weather codes -> emoji. Night variants for the clear/mostly-clear
-// codes only; everything else reads the same after dark.
-function wxIcon(code,hour){
-  var night=(hour<6||hour>=19);
-  if(code===0)return night?'\ud83c\udf19':'\u2600\ufe0f';
-  if(code===1)return night?'\ud83c\udf19':'\ud83c\udf24\ufe0f';
-  if(code===2)return night?'\u2601\ufe0f':'\u26c5';
-  if(code===3)return '\u2601\ufe0f';
-  if(code===45||code===48)return '\ud83c\udf2b\ufe0f';
-  if(code>=51&&code<=57)return '\ud83c\udf26\ufe0f';
-  if(code>=61&&code<=67)return '\ud83c\udf27\ufe0f';
-  if(code>=71&&code<=77)return '\ud83c\udf28\ufe0f';
-  if(code>=80&&code<=82)return '\ud83c\udf26\ufe0f';
-  if(code===85||code===86)return '\ud83c\udf28\ufe0f';
-  if(code>=95)return '\u26c8\ufe0f';
-  return '\u2601\ufe0f';
-}
-function wxHourLabel(h){
-  if(h===0)return '12a';
-  if(h===12)return '12p';
-  return (h%12)+(h<12?'a':'p');
-}
-// "YYYY-MM-DD" for the current Taiwan date, matching Open-Meteo's day keys.
-function wxTodayKey(){
-  var t=caNow();
-  return t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
-}
-function wxSelectDay(i){_wxDay=i;drawWeather();}
-function drawWeather(){
-  var el=document.getElementById('wx-body');
-  if(!el)return;
-  if(!_wx){
-    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Corona weather</span></div>'
-      +'<div class="wx-msg">Forecast unavailable - check your connection.</div></div>';
-    return;
-  }
-  var h=_wx.hourly, dly=_wx.daily, todayKey=wxTodayKey();
-  // Only show days up to departure. If we're already past it, fall back to
-  // whatever the API returned so the card never renders empty.
-  var dayKeys=dly.time.filter(function(d){return d<=WX_LAST_DAY;});
-  if(!dayKeys.length)dayKeys=dly.time.slice();
-  if(_wxDay>=dayKeys.length)_wxDay=0;
-  var t=twNow(), nowHour=Math.floor(t.min/60);
-  var nowIdx=h.time.indexOf(todayKey+'T'+String(nowHour).padStart(2,'0')+':00');
-  // Day picker - one chip per forecast day, each showing its high/low.
-  var days='';
-  dayKeys.forEach(function(dkey,i){
-    var dt=new Date(dkey+'T12:00:00');
-    var isToday=(dkey===todayKey);
-    var name=isToday?'Today':['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dt.getDay()];
-    days+='<button class="wx-day'+(i===_wxDay?' on':'')+'" onclick="wxSelectDay('+i+')">'
-      +'<span class="wx-dn">'+name+'</span>'
-      +'<span class="wx-dd">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</span>'
-      +'<span class="wx-di">'+wxIcon(dly.weather_code[i],13)+'</span>'
-      +'<span class="wx-dt">'+Math.round(dly.temperature_2m_max[i])+'\u00b0<span class="wx-dlo">'+Math.round(dly.temperature_2m_min[i])+'\u00b0</span></span>'
-    +'</button>';
-  });
-  // Hours for the selected day. Today starts at the current hour (past hours
-  // aren't useful); every other day shows all 24.
-  var dayKey=dayKeys[_wxDay];
-  var cards='';
-  for(var i=0;i<h.time.length;i++){
-    if(h.time[i].slice(0,10)!==dayKey)continue;
-    if(dayKey===todayKey&&nowIdx>=0&&i<nowIdx)continue;
-    var hr=+h.time[i].slice(11,13);
-    var pop=h.precipitation_probability[i];
-    var isNow=(i===nowIdx);
-    cards+='<div class="wx-hr'+(isNow?' now':'')+'">'
-      +'<div class="wx-t">'+(isNow?'Now':wxHourLabel(hr))+'</div>'
-      +'<div class="wx-ic">'+wxIcon(h.weather_code[i],hr)+'</div>'
-      +'<div class="wx-deg">'+Math.round(h.temperature_2m[i])+'\u00b0</div>'
-      +'<div class="wx-rain">'+(pop>=20?pop+'%':'')+'</div>'
-    +'</div>';
-  }
-  var nowTemp=(nowIdx>=0)?Math.round(h.temperature_2m[nowIdx])+'\u00b0 now':'';
-  el.innerHTML='<div class="wx-wrap">'
-    +'<div class="wx-hdr"><span class="wx-title">Corona weather</span><span class="wx-now">'+nowTemp+'</span></div>'
-    +'<div class="wx-days">'+days+'</div>'
-    +'<div class="wx-strip">'+cards+'</div>'
-  +'</div>';
-}
-function renderWeather(){
-  if(!document.getElementById('wx-body'))return;
-  fetch(WX_URL).then(function(r){return r.json();}).then(function(d){
-    if(!d||!d.hourly||!d.hourly.time||!d.hourly.time.length)throw new Error('no data');
-    _wx=d;
-    drawWeather();
-  }).catch(function(){
-    // Offline or the API is unreachable - say so instead of a blank gap.
-    _wx=null;
-    drawWeather();
-  });
-}
-renderWeather();
-setInterval(renderWeather,900000); // refresh every 15 min
+
 // Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /
 // Up next" card and the full schedule table below it, so the two never drift apart.
 function getScheduleRows(d){
@@ -5430,6 +5326,76 @@ function pickRandomGroup(){
   }
   tick();
 }
+</script>
+
+<script>
+// ESR pairings. ESR_ORDER is the team oldest -> youngest (Andrew's list;
+// Esther 3rd / Caleb 4th per his earlier note). Round 1 folds the list
+// oldest<->youngest, and each later round rotates so Andrew climbs the
+// ladder upward - Grace, Janet, Owen ... rather than jumping back to the
+// top. 13 rounds x 7 pairs = 91 = every possible pair exactly once.
+var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
+var ESR_ROUNDS=[[["Andrew Yoo","Grace Yoon"],["Keren Choi","Janet Phee"],["Esther Yang","Owen Lee"],["Caleb Su","Rubin Jang"],["Becca Park","Andrew Back"],["Jean Kim","Irene Song"],["Jane Kim","Sammy Taing"]],[["Andrew Yoo","Janet Phee"],["Grace Yoon","Owen Lee"],["Keren Choi","Rubin Jang"],["Esther Yang","Andrew Back"],["Caleb Su","Irene Song"],["Becca Park","Sammy Taing"],["Jean Kim","Jane Kim"]],[["Andrew Yoo","Owen Lee"],["Janet Phee","Rubin Jang"],["Grace Yoon","Andrew Back"],["Keren Choi","Irene Song"],["Esther Yang","Sammy Taing"],["Caleb Su","Jane Kim"],["Becca Park","Jean Kim"]],[["Andrew Yoo","Rubin Jang"],["Owen Lee","Andrew Back"],["Janet Phee","Irene Song"],["Grace Yoon","Sammy Taing"],["Keren Choi","Jane Kim"],["Esther Yang","Jean Kim"],["Caleb Su","Becca Park"]],[["Andrew Yoo","Andrew Back"],["Rubin Jang","Irene Song"],["Owen Lee","Sammy Taing"],["Janet Phee","Jane Kim"],["Grace Yoon","Jean Kim"],["Keren Choi","Becca Park"],["Esther Yang","Caleb Su"]],[["Andrew Yoo","Irene Song"],["Andrew Back","Sammy Taing"],["Rubin Jang","Jane Kim"],["Owen Lee","Jean Kim"],["Janet Phee","Becca Park"],["Grace Yoon","Caleb Su"],["Keren Choi","Esther Yang"]],[["Andrew Yoo","Sammy Taing"],["Irene Song","Jane Kim"],["Andrew Back","Jean Kim"],["Rubin Jang","Becca Park"],["Owen Lee","Caleb Su"],["Janet Phee","Esther Yang"],["Grace Yoon","Keren Choi"]],[["Andrew Yoo","Jane Kim"],["Sammy Taing","Jean Kim"],["Irene Song","Becca Park"],["Andrew Back","Caleb Su"],["Rubin Jang","Esther Yang"],["Owen Lee","Keren Choi"],["Janet Phee","Grace Yoon"]],[["Andrew Yoo","Jean Kim"],["Jane Kim","Becca Park"],["Sammy Taing","Caleb Su"],["Irene Song","Esther Yang"],["Andrew Back","Keren Choi"],["Rubin Jang","Grace Yoon"],["Owen Lee","Janet Phee"]],[["Andrew Yoo","Becca Park"],["Jean Kim","Caleb Su"],["Jane Kim","Esther Yang"],["Sammy Taing","Keren Choi"],["Irene Song","Grace Yoon"],["Andrew Back","Janet Phee"],["Rubin Jang","Owen Lee"]],[["Andrew Yoo","Caleb Su"],["Becca Park","Esther Yang"],["Jean Kim","Keren Choi"],["Jane Kim","Grace Yoon"],["Sammy Taing","Janet Phee"],["Irene Song","Owen Lee"],["Andrew Back","Rubin Jang"]],[["Andrew Yoo","Esther Yang"],["Caleb Su","Keren Choi"],["Becca Park","Grace Yoon"],["Jean Kim","Janet Phee"],["Jane Kim","Owen Lee"],["Sammy Taing","Rubin Jang"],["Irene Song","Andrew Back"]],[["Andrew Yoo","Keren Choi"],["Esther Yang","Grace Yoon"],["Caleb Su","Janet Phee"],["Becca Park","Owen Lee"],["Jean Kim","Rubin Jang"],["Jane Kim","Andrew Back"],["Sammy Taing","Irene Song"]]];
+// General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
+// no headers; pairs read VERTICALLY (a name and the one directly below it).
+// Confirmed: that reading pairs all 82 names exactly once and yields zero
+// repeats across the two sessions, whereas reading horizontally strands two
+// people and repeats a pair.
+var ONE_ON_ONE={s1:[["Chloe Chang","Caleb Kim"],["Lucas Cho","Kaitlyn Wong"],["Seth Lo","Evelyn Kim"],["Ashlee Shon","Rubin Jang"],["Elle Hwang","Owen Lee"],["Amber Khe","Kyle Chang"],["Rebecca Park","Nathan Cho"],["Serena Que","Roy Kim"],["Abigail Shin","Daniel Cha"],["Daniel Park","Justin Ok"],["Elise Hong","Janelle Roh"],["Elijah Kim","Faith Park"],["Grace Yoon","Ezra Kim"],["Jean Kim","Claire Oh"],["Song Yi Baik","Summer Hahn"],["Matthew Hyun","Caleb Su"],["Paul Song","Eugena Kang"],["Moses Paik","Flora Ka"],["Esther Yang","Ian Kim"],["Joshua Chun","Emily Oh"],["Irene Park","Noah Lee"],["Eunice Lee","Dylan Lee"],["Joanne Park","Stephen Kim"],["Sarah Lee","Joshua Han"],["Michael Hwang","Jane Kim"],["Andrew Back","Janice Ji"],["Joseph Song","Ashley Kim"],["Kate Lee","Sean Cho"],["SuhJoon Ian Kang","Irene Song"],["Naomi Pak","Noah Kimm"],["Sarah Choi","Kevin Kim"],["Joshua Park","Kristen Lee"],["Sarah Lim","Ryan Kim"],["Chloe Pyo","Ben Chan"],["Janet Kang","Kevin Chung"],["Erica Song","Nathan Noh"],["Justin Choi","Janet Phee"],["Karen Kim","David Nam"],["Joshua Lee","Samanatha Taing"],["Noah Park","Kendall Hwang"],["Tim Joo","Joshua Tsai"]],
+ s2:[["Elle Hwang","Abigail Shin"],["Owen Lee","Noah Lee"],["Amber Khe","Janet Kang"],["Nathan Noh","Joshua Park"],["Irene Park","Kristen Lee"],["Irene Song","Serena Que"],["Caleb Kim","Ryan Kim"],["Lucas Cho","Joshua Lee"],["Justin Ok","Grace Yoon"],["Daniel Park","Kate Lee"],["Kyle Chang","Jean Kim"],["Ashley Kim","Kaitlyn Wong"],["Joseph Song","Janet Phee"],["Samanatha Taing","Claire Oh"],["Matthew Hyun","Chloe Chang"],["Caleb Su","Faith Park"],["Song Yi Baik","Daniel Cha"],["Summer Hahn","Moses Paik"],["David Nam","Ezra Kim"],["Sarah Lim","Roy Kim"],["Jane Kim","Ashlee Shon"],["Rubin Jang","Seth Lo"],["Elise Hong","Ian Kim"],["Janelle Roh","Paul Song"],["Rebecca Park","Eunice Lee"],["Sean Cho","Andrew Back"],["Dylan Lee","Naomi Pak"],["Emily Oh","Erica Song"],["Joshua Chun","Kevin Chung"],["Evelyn Kim","Esther Yang"],["Tim Joo","Nathan Cho"],["Joanne Park","Janice Ji"],["Stephen Kim","Kevin Kim"],["Karen Kim","Sarah Lee"],["Joshua Tsai","Justin Choi"],["Eugena Kang","Kendall Hwang"],["Noah Kimm","SuhJoon Ian Kang"],["Chloe Pyo","Sarah Choi"],["Ben Chan","Joshua Han"],["Elijah Kim","Flora Ka"],["Noah Park","Michael Hwang"]]};
+
+// Workbook spellings that differ from our roster, so our team highlights right.
+var ESR_ALIAS={'Rebecca Park':'Becca Park','Samanatha Taing':'Sammy Taing'};
+function prCanon(n){return ESR_ALIAS[n]||n;}
+function prOurs(n){return ESR_ORDER.indexOf(prCanon(n))>=0;}
+function prChip(n){
+  return '<span class="pr-name'+(prOurs(n)?' ours':'')+'">'+n+'</span>';
+}
+var _pairMode='esr',_prRound=0,_prSess='s2',_prQ='';
+function pairMode(m,btn){
+  _pairMode=m;
+  document.querySelectorAll('#pr-mode button').forEach(function(b){b.classList.toggle('on',b===btn);});
+  renderPairs();
+}
+function prRound(i){_prRound=i;renderPairs();}
+function prSess(k,btn){_prSess=k;renderPairs();}
+function prSearch(v){_prQ=(v||'').toLowerCase().trim();renderPairs();}
+function renderPairs(){
+  var el=document.getElementById('pr-body'); if(!el)return;
+  var sub=document.getElementById('pr-sub');
+  if(_pairMode==='esr'){
+    if(sub)sub.textContent='ESR ladder · 13 rounds · everyone meets everyone once';
+    var chips=ESR_ROUNDS.map(function(_,i){
+      return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+1)+'</button>';
+    }).join('');
+    var rows=ESR_ROUNDS[_prRound].map(function(p,i){
+      return '<div class="pr-row"><span class="pr-n">'+(i+1)+'</span>'
+        +prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])+'</div>';
+    }).join('');
+    el.innerHTML='<div class="pr-rounds">'+chips+'</div>'
+      +'<div class="sgq-wrap"><div class="sgq-hdr">Round '+(_prRound+1)+(_prRound===0?' · oldest ↔ youngest':'')+'</div>'+rows+'</div>'
+      +'<div class="sgq-wrap"><div class="sgq-hdr">Age order · oldest → youngest</div>'
+        +'<div class="pr-order">'+ESR_ORDER.map(function(n,i){return '<span class="pr-ord"><b>'+(i+1)+'</b>'+n+'</span>';}).join('')+'</div></div>';
+  }else{
+    if(sub)sub.textContent='General 1-on-1s from the debrief sheet';
+    var list=ONE_ON_ONE[_prSess]||[];
+    var shown=list.filter(function(p){
+      return !_prQ||p[0].toLowerCase().indexOf(_prQ)>=0||p[1].toLowerCase().indexOf(_prQ)>=0;
+    });
+    var rows2=shown.map(function(p){
+      return '<div class="pr-row">'+prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])+'</div>';
+    }).join('')||'<div class="mygrp-empty">No one matching that name.</div>';
+    el.innerHTML='<div class="stu-seg" style="margin-bottom:10px">'
+        +'<button class="'+(_prSess==='s1'?'on':'')+'" onclick="prSess(\'s1\',this)">Session 1 · Mon</button>'
+        +'<button class="'+(_prSess==='s2'?'on':'')+'" onclick="prSess(\'s2\',this)">Session 2 · Tue</button>'
+      +'</div>'
+      +'<input class="pr-search" type="search" placeholder="Search a name…" value="'+_prQ.replace(/"/g,'&quot;')+'" oninput="prSearch(this.value)">'
+      +'<div class="sgq-wrap"><div class="sgq-hdr">'+(_prSess==='s2'?'Session 2 · Tue 4:30 PM':'Session 1 · Mon 4:30 PM')
+        +' · '+shown.length+' of '+list.length+' pairs</div>'+rows2+'</div>';
+  }
+}
+function goPairs(btn){go('pairs',btn);renderPairs();}
+renderPairs();
 </script>
 </body>
 </html>

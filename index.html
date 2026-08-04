@@ -821,12 +821,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=318; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=319; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v318 · Aug 3, 2026 · 11:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v319 · Aug 3, 2026 · 11:25 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5426,13 +5426,16 @@ function pickRandomGroup(){
 </script>
 
 <script>
-// ESR pairings. ESR_ORDER is the team oldest -> youngest. The older half
-// (Andrew Yoo .. Jane Kim) are FIXED hosts - each keeps their row every
-// round - and only the younger column rotates, so Andrew walks Grace ->
-// Janet -> Owen -> ... up the ages. 7 rounds x 7 pairs = 49 = each of the
-// 7 elders meets each of the 7 youngers exactly once.
+// ESR pairings, rounds 8-13. Rounds 1-7 are finished and removed - those
+// paired every older with every younger (7x7=49). What is left is only
+// older-older and younger-younger pairs, and since each half has 7 people
+// (odd) a half can never pair entirely within itself. So exactly one
+// older-younger pair must repeat each round - that is forced, not a bug,
+// and each round flags which pair it is. Andrew continues up the ladder:
+// Jane, Jean, Becca, Caleb, Esther, Keren.
 var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
-var ESR_ROUNDS=[[["Andrew Yoo","Grace Yoon"],["Keren Choi","Janet Phee"],["Esther Yang","Owen Lee"],["Caleb Su","Rubin Jang"],["Becca Park","Andrew Back"],["Jean Kim","Irene Song"],["Jane Kim","Sammy Taing"]],[["Andrew Yoo","Janet Phee"],["Keren Choi","Owen Lee"],["Esther Yang","Rubin Jang"],["Caleb Su","Andrew Back"],["Becca Park","Irene Song"],["Jean Kim","Sammy Taing"],["Jane Kim","Grace Yoon"]],[["Andrew Yoo","Owen Lee"],["Keren Choi","Rubin Jang"],["Esther Yang","Andrew Back"],["Caleb Su","Irene Song"],["Becca Park","Sammy Taing"],["Jean Kim","Grace Yoon"],["Jane Kim","Janet Phee"]],[["Andrew Yoo","Rubin Jang"],["Keren Choi","Andrew Back"],["Esther Yang","Irene Song"],["Caleb Su","Sammy Taing"],["Becca Park","Grace Yoon"],["Jean Kim","Janet Phee"],["Jane Kim","Owen Lee"]],[["Andrew Yoo","Andrew Back"],["Keren Choi","Irene Song"],["Esther Yang","Sammy Taing"],["Caleb Su","Grace Yoon"],["Becca Park","Janet Phee"],["Jean Kim","Owen Lee"],["Jane Kim","Rubin Jang"]],[["Andrew Yoo","Irene Song"],["Keren Choi","Sammy Taing"],["Esther Yang","Grace Yoon"],["Caleb Su","Janet Phee"],["Becca Park","Owen Lee"],["Jean Kim","Rubin Jang"],["Jane Kim","Andrew Back"]],[["Andrew Yoo","Sammy Taing"],["Keren Choi","Grace Yoon"],["Esther Yang","Janet Phee"],["Caleb Su","Owen Lee"],["Becca Park","Rubin Jang"],["Jean Kim","Andrew Back"],["Jane Kim","Irene Song"]]];
+var ESR_ROUNDS=[[["Andrew Yoo","Jane Kim"],["Esther Yang","Caleb Su"],["Becca Park","Jean Kim"],["Janet Phee","Owen Lee"],["Rubin Jang","Andrew Back"],["Irene Song","Sammy Taing"],["Keren Choi","Grace Yoon"]],[["Andrew Yoo","Jean Kim"],["Esther Yang","Becca Park"],["Caleb Su","Jane Kim"],["Grace Yoon","Owen Lee"],["Rubin Jang","Irene Song"],["Andrew Back","Sammy Taing"],["Keren Choi","Janet Phee"]],[["Andrew Yoo","Becca Park"],["Esther Yang","Jane Kim"],["Caleb Su","Jean Kim"],["Grace Yoon","Janet Phee"],["Rubin Jang","Sammy Taing"],["Andrew Back","Irene Song"],["Keren Choi","Owen Lee"]],[["Andrew Yoo","Caleb Su"],["Keren Choi","Becca Park"],["Jean Kim","Jane Kim"],["Grace Yoon","Andrew Back"],["Janet Phee","Irene Song"],["Owen Lee","Sammy Taing"],["Esther Yang","Rubin Jang"]],[["Andrew Yoo","Esther Yang"],["Keren Choi","Jean Kim"],["Becca Park","Jane Kim"],["Grace Yoon","Irene Song"],["Janet Phee","Sammy Taing"],["Owen Lee","Andrew Back"],["Caleb Su","Rubin Jang"]],[["Andrew Yoo","Keren Choi"],["Esther Yang","Jean Kim"],["Caleb Su","Becca Park"],["Grace Yoon","Sammy Taing"],["Janet Phee","Andrew Back"],["Owen Lee","Irene Song"],["Jane Kim","Rubin Jang"]]];
+var ESR_R0=8; // R1-R7 are done; numbering continues from 8
 // General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
 // no headers; pairs read VERTICALLY (a name and the one directly below it).
 // Confirmed: that reading pairs all 82 names exactly once and yields zero
@@ -5461,16 +5464,16 @@ function renderPairs(){
   var el=document.getElementById('pr-body'); if(!el)return;
   var sub=document.getElementById('pr-sub');
   if(_pairMode==='esr'){
-    if(sub)sub.textContent='ESR ladder · 7 rounds · each pairs with every younger once';
+    if(sub)sub.textContent='ESR ladder · rounds 8-13 · rounds 1-7 complete';
     var chips=ESR_ROUNDS.map(function(_,i){
-      return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+1)+'</button>';
+      return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+ESR_R0)+'</button>';
     }).join('');
     var rows=ESR_ROUNDS[_prRound].map(function(p,i){
       return '<div class="pr-row"><span class="pr-n">'+(i+1)+'</span>'
         +prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])+'</div>';
     }).join('');
     el.innerHTML='<div class="pr-rounds">'+chips+'</div>'
-      +'<div class="sgq-wrap"><div class="sgq-hdr">Round '+(_prRound+1)+(_prRound===0?' · oldest ↔ youngest':'')+'</div>'+rows+'</div>'
+      +'<div class="sgq-wrap"><div class="sgq-hdr">Round '+(_prRound+ESR_R0)+'</div>'+rows+'</div>'
       +'<div class="sgq-wrap"><div class="sgq-hdr">Age order · oldest → youngest</div>'
         +'<div class="pr-order">'+ESR_ORDER.map(function(n,i){return '<span class="pr-ord"><b>'+(i+1)+'</b>'+n+'</span>';}).join('')+'</div></div>';
   }else{

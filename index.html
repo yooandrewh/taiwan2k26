@@ -340,25 +340,6 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .trip-now .tn-next{font-size:12px;opacity:.92;margin-top:5px;}
 .trip-now.off{background:var(--surface);color:var(--text2);border:1px solid var(--border);}
 .trip-now.off .tn-l{color:var(--text3);opacity:1;}
-.fm-card{background:linear-gradient(135deg,#4c1d95,#5b21b6);color:#fff;border-radius:14px;padding:0 0 4px;margin-bottom:10px;overflow:hidden;}
-.fm-mapwrap{position:relative;width:100%;aspect-ratio:1000/347;background:#0b1220;overflow:hidden;touch-action:pan-y;-webkit-tap-highlight-color:transparent;cursor:crosshair;}
-.fm-svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
-.fm-badge{position:absolute;left:8px;top:8px;display:flex;flex-direction:column;background:rgba(11,18,32,0.72);border:1px solid rgba(255,255,255,0.18);border-radius:9px;padding:4px 8px;pointer-events:none;}
-.fm-badge-l{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;opacity:.7;}
-.fm-badge-v{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15;}
-.fm-zoom{position:absolute;right:7px;top:7px;display:grid;grid-template-columns:repeat(2,34px);gap:4px;}
-.fm-zoom button{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,0.22);background:rgba(11,18,32,0.78);color:#fff;font-size:16px;font-weight:800;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:inherit;padding:0;display:flex;align-items:center;justify-content:center;}
-.fm-zoom button:active{background:rgba(11,18,32,0.95);}
-.fm-live{position:absolute;left:8px;bottom:8px;display:flex;align-items:center;gap:5px;background:rgba(11,18,32,0.78);border:1px solid rgba(34,197,94,0.5);border-radius:8px;padding:4px 8px;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none;max-width:calc(100% - 16px);}
-.fm-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:fmpulse 1.6s ease-in-out infinite;}
-@keyframes fmpulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-/* Full screen: the card takes over the viewport and the map fills whatever
-   is left after the readout rows. The viewBox aspect follows the container
-   (see attachFlightMap.ratio) so nothing letterboxes. */
-body.fm-fullscreen{overflow:hidden;}
-body.fm-fullscreen .tabbar,body.fm-fullscreen .topbar{display:none!important;}
-.fm-card.full{position:fixed;inset:0;z-index:400;margin:0;border-radius:0;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
-.fm-card.full .fm-mapwrap{flex:1 1 auto;aspect-ratio:auto;min-height:0;touch-action:none;}
 .fm-trace{padding:7px 13px;border-top:1px solid rgba(255,255,255,0.12);display:flex;flex-direction:column;gap:1px;min-height:34px;justify-content:center;}
 .fm-trace-hint{font-size:10px;font-weight:600;opacity:.6;line-height:1.35;}
 .fm-trace-main{font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;}
@@ -374,6 +355,38 @@ body.fm-fullscreen .tabbar,body.fm-fullscreen .topbar{display:none!important;}
 @media(max-width:359px){.fm-val{font-size:16px;}.fm-name{font-size:12px;}}
 /* The Tenor GIF frames Kobe right-of-centre, so the wrapper crops the empty
    left side (blurry backdrop) to bring him into the middle of the card. */
+/* ===== Debrief schedule / groups ===== */
+.db-now-card{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:#fff;border-radius:14px;padding:13px 15px;margin:6px 0 12px;}
+.db-now-card.off{background:var(--surface);color:var(--text2);border:1px solid var(--border);}
+.db-now-l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;opacity:.9;}
+.db-now-act{font-size:19px;font-weight:800;margin-top:3px;line-height:1.2;}
+.db-now-next{font-size:12px;opacity:.93;margin-top:5px;}
+.db-days{margin-bottom:12px;}
+.db-days button{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2;}
+.db-dd{font-size:10px;font-weight:600;opacity:.65;}
+.db-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.db-row:last-child{border-bottom:none;}
+.db-row.past{opacity:.42;}
+.db-row.now{background:rgba(14,165,233,0.12);border-radius:9px;padding:8px;margin:2px -4px;border-bottom:none;}
+.db-t{flex:0 0 58px;font-size:12px;font-weight:700;color:var(--text3);font-variant-numeric:tabular-nums;padding-top:1px;}
+.db-s{flex:1;font-size:14px;color:var(--text);line-height:1.35;min-width:0;}
+.db-sub{display:block;font-size:11px;font-weight:600;color:var(--text3);margin-top:1px;}
+.db-tag{flex:0 0 auto;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;background:#0ea5e9;color:#fff;border-radius:5px;padding:2px 6px;align-self:center;}
+.db-meal{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);}
+.db-meal:last-child{border-bottom:none;}
+.db-meal-k{flex:0 0 68px;font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding-top:2px;}
+.db-meal-w{flex:1;font-size:13px;color:var(--text);line-height:1.35;min-width:0;}
+.db-note{font-size:12px;color:var(--text3);font-style:italic;margin:2px 0 10px;}
+.db-place{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.db-place:last-child{border-bottom:none;}
+.db-room{flex:0 0 96px;font-size:12px;font-weight:800;color:var(--text2);}
+.db-teams{flex:1;display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
+.db-team{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:var(--text);}
+.db-team.ours{background:rgba(13,148,136,0.16);border-color:#0d9488;color:var(--text);}
+.db-duty{font-size:12px;color:var(--text2);line-height:1.35;}
+.db-today{box-shadow:0 0 0 2px #0d9488 inset;}
+.db-rule{font-size:12px;color:var(--text2);line-height:1.5;padding:5px 0;border-bottom:1px solid var(--border);}
+.db-rule:last-child{border-bottom:none;}
 .kobe-wrap{width:100%;overflow:hidden;border-radius:14px;margin:4px 0 14px;}
 .kobe-wrap img{width:100%;height:auto;display:block;}
 /* Hour-by-hour Taipei forecast (Open-Meteo, no API key) — a horizontally
@@ -784,12 +797,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=312; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=313; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v312 · Jul 30, 2026 · 9:35 AM (Taiwan)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v313 · Aug 3, 2026 · 9:20 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1526,10 +1539,16 @@ var APP_VERSION=312; // bump alongside version.json's "v" on every deploy
 </div>
 <div id="pane-hype" class="pane active">
   <div id="wx-body"></div>
-  <div class="flight-countdown"></div>
+  <div id="db-now"></div>
+  <div id="db-sched"></div>
   <div class="kobe-wrap"><img src="kobe.webp" width="257" height="321" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
 </div>
-<div id="pane-mon" class="pane">
+<div id="pane-debrief" class="pane">
+  <div class="stu-title" style="color:#0d9488">Groups &amp; Places</div>
+  <div class="stu-sub">Testimony sharing rooms · duties · meals</div>
+  <div id="db-groups"></div>
+</div>
+<div id="pane-mon"<div id="pane-mon" class="pane">
   <div id="today-body"></div>
 </div>
 <div id="pane-vbs" class="pane">
@@ -1692,6 +1711,10 @@ var APP_VERSION=312; // bump alongside version.json's "v" on every deploy
   <button class="tabitem active" style="--accent:#7c3aed" onclick="go('hype',this)" aria-label="Home">
     <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20h14V9.8"/></svg>
     <span>Home</span>
+  </button>
+  <button class="tabitem" style="--accent:#0d9488" onclick="goGroups(this)" aria-label="Groups and Places">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="2.6"/><circle cx="16.5" cy="7" r="2.2"/><path d="M3.5 19c0-3 2.4-5.2 5.5-5.2s5.5 2.2 5.5 5.2M16 13.9c2.6.2 4.5 2.2 4.5 5.1"/></svg>
+    <span>Groups</span>
   </button>
   <button class="tabitem" style="--accent:#d97706;display:none" onclick="go('mon',this)" aria-label="Today">
     <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
@@ -3527,7 +3550,6 @@ function renderTodayTMF(){
   var html=''
     +'<div class="stu-title" style="color:#16a34a">'+info.label+'</div>'
     +'<div class="stu-sub">'+info.date.slice(5).replace('-','/')+' · TMF Retreat Day '+(info.idx+1)+'</div>'
-    +'<div class="flight-countdown"></div>'
     +tmfNowNextHtml(info.key)
     +'<div class="mon-quick">'
       +'<button class="mon-qbtn" style="background:#16a34a" onclick="goCheckin(document.querySelector(\'.tabbar .tabitem[aria-label=\\\'Check-In\\\']\'))">✅ Check-In</button>'
@@ -3538,431 +3560,180 @@ function renderTodayTMF(){
     +tmfSchedDayHtml(info.key)
     +tmfSgQuestionsHtml(info.key);
   document.getElementById('today-body').innerHTML=html;
-  renderFlightCountdown();
 }
 // Live countdown to flying home (OZ 714, TPE → ICN, the first leg) — ticks
 // every second via the setInterval below. Guarded with a DOM check since
 // that interval runs regardless of which tab is currently active.
-// ===== Flight home: three countdowns + a live route map =====
-// Each leg's times are stored with their real UTC offsets so the countdowns
-// are correct from any device clock/timezone. Departure/arrival labels show
-// the LOCAL time at that airport, which is how the itinerary reads.
-var FLIGHT_LEGS=[
-  {code:'OZ 714',from:'TPE',to:'ICN',dep:'2026-07-30T16:55:00+08:00',arr:'2026-07-30T20:25:00+09:00'},
-  {code:'OZ 204',from:'ICN',to:'LAX',dep:'2026-07-30T21:40:00+09:00',arr:'2026-07-30T17:40:00-07:00'}
-];
-var AIRPORTS={
-  TPE:{lat:25.0777,lon:121.2328,city:'Taipei',tz:'Asia/Taipei'},
-  ICN:{lat:37.4602,lon:126.4407,city:'Seoul',tz:'Asia/Seoul'},
-  LAX:{lat:33.9416,lon:-118.4085,city:'Los Angeles',tz:'America/Los_Angeles'}
+// ===== Debrief 2026 (Kamlin, Corona CA · Mon Aug 3 - Thu Aug 6) =====
+// Times below are minute-of-day in LOCAL California time, straight from the
+// Debrief workbook's Schedule sheet. Note the workbook's Meals sheet labels
+// its columns a day later (8/4-8/7) than the Schedule sheet (8/3-8/6);
+// today being Mon Aug 3 matches Schedule, so meals are mapped by column
+// position, not by the date written in that sheet.
+var DEBRIEF_SCHED={
+  mon:[
+    {m:810,me:840,t:'1:30p',te:'2:00p',s:"Check-In",sub:""},
+    {m:840,me:870,t:'2:00p',te:'2:30p',s:"Orientation",sub:""},
+    {m:870,me:990,t:'2:30p',te:'4:30p',s:"Testimony Sharing",sub:""},
+    {m:990,me:1050,t:'4:30p',te:'5:30p',s:"Session 1",sub:"1 on 1s"},
+    {m:1050,me:1080,t:'5:30p',te:'6:00p',s:"Free Time",sub:""},
+    {m:1080,me:1140,t:'6:00p',te:'7:00p',s:"Dinner",sub:"PHILIPPINES"},
+    {m:1140,me:1260,t:'7:00p',te:'9:00p',s:"Evening Session",sub:"Pastor Matt Park"},
+    {m:1260,me:1320,t:'9:00p',te:'10:00p',s:"Small Groups",sub:""},
+    {m:1320,me:1410,t:'10:00p',te:'11:30p',s:"Team Time",sub:""},
+    {m:1410,me:1440,t:'11:30p',te:'12:00a',s:"Sleep",sub:""},
+    {m:1440,me:1440,t:'12:00a',te:'12:00a',s:"Lights Out",sub:""}
+  ],
+  tue:[
+    {m:480,me:510,t:'8:00a',te:'8:30a',s:"Morning Prayer",sub:"(OPTIONAL)"},
+    {m:510,me:540,t:'8:30a',te:'9:00a',s:"Personal Devos",sub:""},
+    {m:540,me:570,t:'9:00a',te:'9:30a',s:"Breakfast",sub:"NORTH INDIA"},
+    {m:570,me:660,t:'9:30a',te:'11:00a',s:"Morning Session",sub:"Chris Kim"},
+    {m:660,me:720,t:'11:00a',te:'12:00p',s:"Small Groups",sub:""},
+    {m:720,me:780,t:'12:00p',te:'1:00p',s:"Lunch",sub:"SOUTH INDIA"},
+    {m:780,me:870,t:'1:00p',te:'2:30p',s:"Testimony Writing",sub:""},
+    {m:870,me:990,t:'2:30p',te:'4:30p',s:"Testimony Sharing",sub:""},
+    {m:990,me:1050,t:'4:30p',te:'5:30p',s:"Session 2",sub:"1 on 1s"},
+    {m:1050,me:1080,t:'5:30p',te:'6:00p',s:"Free Time",sub:""},
+    {m:1080,me:1140,t:'6:00p',te:'7:00p',s:"Dinner",sub:"TAIWAN"},
+    {m:1140,me:1260,t:'7:00p',te:'9:00p',s:"Evening Session",sub:"Jeesu"},
+    {m:1260,me:1320,t:'9:00p',te:'10:00p',s:"Small Groups",sub:""},
+    {m:1320,me:1410,t:'10:00p',te:'11:30p',s:"Team Time",sub:""},
+    {m:1410,me:1440,t:'11:30p',te:'12:00a',s:"Sleep",sub:""},
+    {m:1440,me:1440,t:'12:00a',te:'12:00a',s:"Lights Out",sub:""}
+  ],
+  wed:[
+    {m:480,me:510,t:'8:00a',te:'8:30a',s:"Morning Prayer",sub:"(OPTIONAL)"},
+    {m:510,me:540,t:'8:30a',te:'9:00a',s:"Personal Devos",sub:""},
+    {m:540,me:570,t:'9:00a',te:'9:30a',s:"Breakfast",sub:"CAMBODIA"},
+    {m:570,me:660,t:'9:30a',te:'11:00a',s:"Morning Session",sub:"Janette"},
+    {m:660,me:720,t:'11:00a',te:'12:00p',s:"Small Groups",sub:""},
+    {m:720,me:780,t:'12:00p',te:'1:00p',s:"Lunch",sub:"NICARAGUA"},
+    {m:780,me:870,t:'1:00p',te:'2:30p',s:"Testimony Writing",sub:""},
+    {m:870,me:990,t:'2:30p',te:'4:30p',s:"Testimony Sharing",sub:""},
+    {m:990,me:1080,t:'4:30p',te:'6:00p',s:"Free Time",sub:""},
+    {m:1080,me:1140,t:'6:00p',te:'7:00p',s:"Dinner",sub:"NORTH INDIA"},
+    {m:1140,me:1260,t:'7:00p',te:'9:00p',s:"Evening Session",sub:"PR"},
+    {m:1260,me:1410,t:'9:00p',te:'11:30p',s:"Team Time",sub:""},
+    {m:1410,me:1440,t:'11:30p',te:'12:00a',s:"Sleep",sub:""},
+    {m:1440,me:1440,t:'12:00a',te:'12:00a',s:"Lights Out",sub:""}
+  ],
+  thu:[
+    {m:480,me:510,t:'8:00a',te:'8:30a',s:"Morning Prayer",sub:"(OPTIONAL)"},
+    {m:510,me:540,t:'8:30a',te:'9:00a',s:"Personal Devos",sub:""},
+    {m:540,me:570,t:'9:00a',te:'9:30a',s:"Breakfast",sub:"PHILIPPINES"},
+    {m:570,me:660,t:'9:30a',te:'11:00a',s:"Morning Session",sub:"Anna Pellegrini"},
+    {m:660,me:720,t:'11:00a',te:'12:00p',s:"Pictures",sub:""},
+    {m:720,me:1440,t:'12:00p',te:'12:00a',s:"Pack and Clean",sub:""}
+  ],
 };
-// The three milestones asked for, in order.
-var FLIGHT_MARKS=[
-  {k:'dep-tpe',label:'Depart Taipei',   at:FLIGHT_LEGS[0].dep,ap:'TPE',done:'Departed Taipei'},
-  {k:'dep-icn',label:'Depart Seoul',    at:FLIGHT_LEGS[1].dep,ap:'ICN',done:'Departed Seoul'},
-  {k:'arr-lax',label:'Arrive LAX',      at:FLIGHT_LEGS[1].arr,ap:'LAX',done:'Landed at LAX'}
-];
-function ftime(iso){return new Date(iso).getTime();}
-// Local wall-clock at the airport, e.g. "Thu 4:55 PM".
-function localAt(iso,tz){
-  var p=new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',hour:'numeric',minute:'2-digit',hour12:true}).formatToParts(new Date(iso));
+var DEBRIEF_PLACES={"mon":[{"room":"Main Sanc","teams":["Cambodia","Taiwan"]},{"room":"Dining Room","teams":["S. India","Philippines"]},{"room":"Room B","teams":["Nicaragua","N. India"]}],"tue":[{"room":"Main Sanc","teams":["Nicaragua","Taiwan"]},{"room":"Dining Room","teams":["S. India","Cambodia"]},{"room":"Room B","teams":["Philippines","N. India"]}],"wed":[{"room":"Main Sanc","teams":["N. India","Cambodia"]},{"room":"Dining Room","teams":["Philippines","Taiwan"]},{"room":"Room B","teams":["Nicaragua","S. India"]}]};
+var DEBRIEF_MEALS={"mon":[{"k":"Breakfast","what":"sam's club pick up","det":"between 12:00-1:00 pm \u00b7 under jeesu park \u00b7 address: 1375 e ontario ave. corona, ca 92881"},{"k":"Dinner","what":"chicken bake + chips","det":"pick up by aaron jun"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges"}],"tue":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants"},{"k":"Lunch","what":"korean bibimbap","det":"provided by kamlin"},{"k":"Dinner","what":"carrot & daikon","det":"banh mi's + chips \u00b7 pick up by john song \u00b7 @ 5:00 pm \u00b7 under janette park \u00b7 (7143088073) \u00b7 address: 2276 griffin way #106, corona, ca 92879 \u00b7 details: 55 grilled chicken, 55 grilled pork (everyone gets one)"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges"}],"wed":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants"},{"k":"Lunch","what":"raising canes","det":"pick up by leaders \u00b7 @ 11:30 am \u00b7 under janette park (7143088073) \u00b7 address: 239 old nuevo rd. perris, ca 92571 \u00b7 details: one pan of fries for each team, at least 3 chicken per person"},{"k":"Dinner","what":"taco bell + chips","det":"pick up by john song"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges, any leftovers to finish"}],"thu":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants, any leftovers to finish"}]};
+var DEBRIEF_DUTIES=["taiwan - all bathrooms/trash (mop communal bathroom floors - ask keren for mop)","cambodia - team room","nindia - team room (main sanc)","sindia - team room","nicaragua - team room (dining room)","philippines - team room"];
+var DEBRIEF_RULES=["similar to intensive retreat","same team rooms and dorm rooms (if they don't remember, it's on the spreadsheet)","don't run off on your own","clean up after yourselves","clean up team rooms and own rooms","listen to your leaders or staff there","no boys in girls dorm vice versa","do not be late (if you're early, you're on time, if you're on time, you're late)","conserve water + electricity **pls emphasize this one (encourage students to not shower as often this week lol)**","toilet paper in the trash cans","any questions, message or find janette, aaron, or john song"];
+
+var DEBRIEF_DATES=['2026-08-03','2026-08-04','2026-08-05','2026-08-06'];
+var DEBRIEF_KEYS=['mon','tue','wed','thu'];
+var DEBRIEF_LABELS=['Monday','Tuesday','Wednesday','Thursday'];
+// Everything runs on California local time now that the team is home.
+function caNow(){
+  var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
   var o={};p.forEach(function(x){o[x.type]=x.value;});
-  return o.weekday+' '+o.hour+':'+o.minute+' '+o.dayPeriod;
+  return {y:+o.year,mo:+o.month,d:+o.day,min:(+o.hour%24)*60+(+o.minute)};
 }
-function fdur(ms){
-  var s=Math.max(0,Math.floor(ms/1000));
-  var d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60),ss=s%60;
-  var pad=function(n){return String(n).padStart(2,'0');};
-  return (d>0?d+'d ':'')+pad(h)+':'+pad(m)+':'+pad(ss);
+function debriefToday(){
+  var t=caNow();
+  var key=t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
+  var i=DEBRIEF_DATES.indexOf(key);
+  if(i<0)i=key<DEBRIEF_DATES[0]?0:DEBRIEF_DATES.length-1;
+  return {idx:i,key:DEBRIEF_KEYS[i],label:DEBRIEF_LABELS[i],date:DEBRIEF_DATES[i],onDay:DEBRIEF_DATES.indexOf(key)>=0,min:t.min};
 }
-// ---- map geometry (equirectangular, Pacific-centred) ----
-var MAP_LON0=108,MAP_LON1=252,MAP_LAT0=64,MAP_SC=1000/(252-108),MAP_H=347;
-var MAP_COAST='M97.1 368.1L104.9 366.9L105.0 364.0L96.4 361.9ZM113.0 357.2L117.2 362.5L117.3 365.2L113.2 364.6L114.1 368.1L123.5 367.7L121.5 360.0ZM85.6 350.9L92.1 359.7L93.9 353.7ZM88.3 315.9L85.3 333.1L82.5 330.8L83.8 340.5L87.3 344.5L88.1 342.0L90.2 343.6L87.7 348.2L97.5 348.7L101.9 352.9L103.7 350.3L111.6 357.4L110.8 348.7L95.3 344.9L94.9 333.8L100.8 325.7L98.9 316.1L92.5 315.9ZM20.9 307.7L19.4 305.0L4.3 309.9L4.6 315.9L10.2 318.1L16.2 314.7ZM674.9 309.0L667.6 303.7L667.1 312.1L669.8 311.9ZM96.9 270.9L93.7 268.8L84.1 280.9L88.5 291.9L91.5 286.2ZM173.1 207.9L169.2 215.4L173.7 217.3L179.1 211.7L182.0 213.9L185.0 207.3ZM228.9 179.3L235.3 172.4L235.5 166.7L231.7 157.1L224.3 158.4L218.2 179.1L204.1 188.7L199.5 185.4L192.2 197.7L171.0 198.4L148.7 213.2L155.9 220.0L154.2 226.3L157.5 229.0L162.0 226.0L166.7 214.2L159.6 209.1L188.1 204.2L188.3 209.4L193.0 212.0L202.9 204.1L224.0 200.4L229.0 186.5ZM235.9 128.1L231.8 143.1L224.4 143.5L221.0 148.9L221.9 155.8L229.6 155.7L233.4 148.1L244.3 152.8L250.4 145.9L260.7 144.0L259.2 136.2L254.3 139.2L249.4 137.7ZM876.7 95.2L858.6 91.9L860.7 97.3L877.4 105.4L892.3 107.6ZM825.1 68.3L826.0 73.5L839.0 82.1L833.0 76.5L835.1 68.6L828.4 69.2ZM240.7 66.9L237.6 67.9L240.3 71.1L233.9 74.3L233.3 83.8L237.4 90.6L236.8 125.2L241.3 119.9L246.6 124.0L246.8 119.2L240.0 112.1L244.3 102.0L254.5 104.3L247.6 92.0ZM693.5 44.5L690.5 42.4L675.9 45.4L680.5 50.5L687.5 47.8ZM558.7 4.7L572.7 7.1L578.5 4.9L557.4 1.5ZM535.0 -20.8L500.0 -20.8L500.0 -6.8L503.9 -9.8L500.8 -13.0L509.1 -14.7L507.6 -12.1L511.4 -9.7L526.3 -9.4L527.9 -6.4L548.9 -1.8L551.7 -3.2L551.9 -10.0L570.1 -13.7L556.5 -20.2L537.8 -20.8L539.3 -16.2L534.6 -17.9ZM1020.8 -20.8L615.7 -20.8L627.2 -14.7L612.6 -14.4L613.5 -17.9L607.8 -17.9L582.6 -11.6L594.3 -4.8L604.4 -3.1L633.5 -5.5L628.3 -2.8L633.5 1.6L617.6 6.5L607.2 5.9L596.4 17.4L601.7 20.3L601.8 24.3L612.4 29.2L621.4 27.8L625.9 30.3L625.2 37.0L636.4 34.2L645.4 38.7L659.4 35.3L654.7 44.7L605.7 66.6L649.8 55.6L664.5 45.7L678.9 40.6L685.5 35.7L680.4 32.3L704.0 18.9L705.9 20.6L698.5 22.7L696.4 33.6L722.1 27.9L720.7 23.1L728.4 21.6L778.7 31.0L801.2 40.2L818.9 40.8L822.6 47.4L831.6 53.0L833.6 59.0L852.0 72.5L853.3 78.1L862.2 81.0L861.2 85.3L865.0 91.5L896.9 104.2L898.7 117.4L895.0 110.8L884.1 109.8L889.6 128.3L885.2 147.5L886.1 164.5L890.8 173.9L899.2 182.1L912.3 204.1L926.9 208.1L935.4 215.0L947.8 239.2L957.2 246.1L954.4 251.8L951.0 251.9L970.1 263.8L971.0 272.6L985.9 286.0L990.2 282.2L981.6 275.7L974.9 259.3L953.7 235.0L952.9 223.6L964.2 228.0L970.6 243.4L981.7 251.0L983.4 255.8L991.0 260.8L991.2 266.8L1013.7 286.3L1019.0 295.7L1015.8 302.5L1020.8 310.2ZM-20.8 -20.8L-20.8 368.1L2.4 368.1L8.3 363.4L6.1 338.4L-16.2 312.1L-8.9 300.7L3.6 293.6L12.9 295.9L13.1 303.6L17.0 303.2L19.3 295.9L40.3 287.9L42.7 290.1L54.8 286.2L74.0 274.0L91.2 249.1L95.0 248.4L97.9 237.3L92.1 231.4L96.5 229.5L96.6 224.4L84.9 205.8L77.4 202.0L91.0 189.9L100.8 188.0L99.7 184.3L89.1 181.5L81.3 186.4L66.2 175.4L94.7 160.1L98.4 163.7L90.7 174.3L113.0 167.2L120.3 169.8L116.1 179.8L126.2 182.3L131.0 188.2L125.8 189.4L128.4 205.6L146.5 200.8L149.0 189.0L141.3 176.3L134.6 172.1L135.6 168.4L150.7 160.5L152.5 153.2L168.6 143.9L177.3 147.1L186.6 143.1L222.7 108.0L231.6 75.8L221.5 68.1L213.9 67.7L209.5 71.1L199.3 65.3L188.4 64.4L237.5 34.4L281.6 33.6L290.2 30.2L301.0 31.2L300.5 36.2L326.7 33.7L321.0 29.5L338.3 17.8L356.3 15.5L362.0 24.0L379.6 16.4L383.7 10.7L392.2 10.1L386.6 19.9L349.8 41.3L339.0 42.8L332.7 50.2L329.4 59.9L338.8 90.2L348.8 83.7L350.9 76.7L361.3 75.0L363.7 67.1L375.8 63.5L372.9 60.5L375.9 54.7L382.3 54.4L383.3 44.3L375.4 42.8L375.1 40.0L385.7 28.7L395.0 29.6L401.7 26.7L404.8 29.2L422.9 23.8L432.9 28.6L456.1 16.3L481.7 10.3L494.6 11.8L495.6 7.1L482.0 -4.2L500.0 -6.8L500.0 -20.8Z';
-function mapXY(lat,lon){
-  if(lon<MAP_LON0)lon+=360;
-  return [(lon-MAP_LON0)*MAP_SC,(MAP_LAT0-lat)*MAP_SC];
-}
-// Great-circle (shortest-path) points between two airports - this is why the
-// Seoul->LAX leg bows up past the Aleutians instead of running straight.
-function greatCircle(a,b,n){
-  var r=Math.PI/180;
-  var la1=a.lat*r,lo1=a.lon*r,la2=b.lat*r,lo2=b.lon*r;
-  var d=2*Math.asin(Math.sqrt(Math.pow(Math.sin((la2-la1)/2),2)+Math.cos(la1)*Math.cos(la2)*Math.pow(Math.sin((lo2-lo1)/2),2)));
-  var out=[];
-  for(var i=0;i<=n;i++){
-    var f=i/n;
-    if(d===0){out.push([a.lat,a.lon]);continue;}
-    var A=Math.sin((1-f)*d)/Math.sin(d),B=Math.sin(f*d)/Math.sin(d);
-    var x=A*Math.cos(la1)*Math.cos(lo1)+B*Math.cos(la2)*Math.cos(lo2);
-    var y=A*Math.cos(la1)*Math.sin(lo1)+B*Math.cos(la2)*Math.sin(lo2);
-    var z=A*Math.sin(la1)+B*Math.sin(la2);
-    out.push([Math.atan2(z,Math.sqrt(x*x+y*y))/r,Math.atan2(y,x)/r]);
-  }
-  return out;
-}
-var _legPts=null;
-function legPoints(){
-  if(!_legPts){
-    _legPts=[greatCircle(AIRPORTS.TPE,AIRPORTS.ICN,28),greatCircle(AIRPORTS.ICN,AIRPORTS.LAX,80)];
-  }
-  return _legPts;
-}
-function ptsToPath(pts){
-  return 'M'+pts.map(function(p){var q=mapXY(p[0],p[1]);return q[0].toFixed(1)+' '+q[1].toFixed(1);}).join('L');
-}
-// Where the plane is right now: which leg, and how far along it.
-function flightState(now){
-  var l0=FLIGHT_LEGS[0],l1=FLIGHT_LEGS[1];
-  if(now<ftime(l0.dep))return {phase:'pre',leg:0,f:0};
-  if(now<ftime(l0.arr))return {phase:'air',leg:0,f:(now-ftime(l0.dep))/(ftime(l0.arr)-ftime(l0.dep))};
-  if(now<ftime(l1.dep))return {phase:'layover',leg:0,f:1};
-  if(now<ftime(l1.arr))return {phase:'air',leg:1,f:(now-ftime(l1.dep))/(ftime(l1.arr)-ftime(l1.dep))};
-  return {phase:'done',leg:1,f:1};
-}
-// Partial polyline for the distance already flown, so the travelled part can
-// be drawn solid over the dimmed full route.
-function travelledPath(st){
-  var legs=legPoints();
-  var done=[];
-  for(var i=0;i<st.leg;i++)done.push(legs[i]);
-  var cur=legs[st.leg];
-  var upto=Math.max(1,Math.min(cur.length,Math.round(st.f*(cur.length-1))+1));
-  done.push(cur.slice(0,upto));
-  var flat=[];
-  done.forEach(function(seg){flat=flat.concat(seg);});
-  if(st.phase==='pre')return '';
-  return flat.length>1?ptsToPath(flat):'';
-}
-function planeAt(st){
-  var legs=legPoints(),cur=legs[st.leg];
-  var idx=Math.max(0,Math.min(cur.length-1,Math.round(st.f*(cur.length-1))));
-  var prev=cur[Math.max(0,idx-1)],here=cur[idx];
-  var a=mapXY(prev[0],prev[1]),b=mapXY(here[0],here[1]);
-  var ang=(idx===0)?0:Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
-  return {x:b[0],y:b[1],ang:ang};
-}
-// Every sampled point along the whole journey with the wall-clock time the
-// plane is scheduled to be there - this is what the trace/scrub reads off.
-var _route=null;
-function routePoints(){
-  if(_route)return _route;
-  var legs=legPoints(),out=[];
-  FLIGHT_LEGS.forEach(function(leg,li){
-    var t0=ftime(leg.dep),t1=ftime(leg.arr),pts=legs[li];
-    pts.forEach(function(p,i){
-      var f=i/(pts.length-1);
-      var xy=mapXY(p[0],p[1]);
-      out.push({lat:p[0],lon:p[1],t:t0+f*(t1-t0),x:xy[0],y:xy[1],leg:li,f:f});
-    });
-  });
-  _route=out;
-  return out;
-}
-function fmtClockTZ(ms,tz){
-  var p=new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',hour:'numeric',minute:'2-digit',hour12:true}).formatToParts(new Date(ms));
-  var o={};p.forEach(function(x){o[x.type]=x.value;});
-  return o.weekday+' '+o.hour+':'+o.minute+' '+o.dayPeriod;
-}
-function fmtLatLon(lat,lon){
-  var L=((lon+540)%360)-180; // wrap back into -180..180 for display
-  return Math.abs(lat).toFixed(1)+'°'+(lat>=0?'N':'S')+' '+Math.abs(L).toFixed(1)+'°'+(L>=0?'E':'W');
-}
-function fdurShort(ms){
-  var s=Math.max(0,Math.floor(ms/1000));
-  var d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60);
-  if(d>0)return d+'d '+h+'h '+m+'m';
-  if(h>0)return h+'h '+m+'m';
-  return m+'m';
-}
-var FM_VB_W=1000,FM_VB_H=MAP_H;
-// ===== Live position (real ADS-B) =====
-// airplanes.live is the one free callsign API that sends
-// `access-control-allow-origin: *`, so it can be called straight from this
-// static page. (OpenSky's is locked to their own origin and would need a
-// proxy.) Asiana's ICAO callsign prefix is AAR, so OZ 714 -> AAR714.
-var LIVE_URL='https://api.airplanes.live/v2/callsign/';
-var LIVE_CALLSIGN=['AAR714','AAR204'];
-var LIVE_MAX_AGE=180; // seconds; older than this and we fall back to schedule
-var _live=null,_liveTried=false;
-function liveLegNow(){var st=flightState(Date.now());return st.leg;}
-function pollLive(){
-  var cs=LIVE_CALLSIGN[liveLegNow()];
-  fetch(LIVE_URL+cs,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
-    _liveTried=true;
-    var ac=(d&&d.ac||[]).filter(function(x){return typeof x.lat==='number'&&typeof x.lon==='number';});
-    if(!ac.length){_live=null;return;}
-    var x=ac[0];
-    if(typeof x.seen_pos==='number'&&x.seen_pos>LIVE_MAX_AGE){_live=null;return;}
-    _live={lat:x.lat,lon:x.lon,alt:x.alt_baro,gs:x.gs,track:x.track,
-           reg:x.r,type:x.t,desc:x.desc,cs:cs,at:Date.now()};
-  }).catch(function(){_liveTried=true;_live=null;});
-}
-// Only bother polling while the tab is actually on screen.
-setInterval(function(){
-  var p=document.getElementById('pane-hype');
-  if(document.visibilityState==='visible'&&p&&p.classList.contains('active'))pollLive();
-},60000);
-// Nearest sampled route point to a lat/lon - used to draw the flown path up
-// to where the aircraft actually is.
-function nearestRouteIdx(lat,lon){
-  var pts=routePoints(),q=mapXY(lat,lon),bi=0,bd=Infinity;
-  for(var i=0;i<pts.length;i++){
-    var dx=pts[i].x-q[0],dy=pts[i].y-q[1],d=dx*dx+dy*dy;
-    if(d<bd){bd=d;bi=i;}
-  }
-  return bi;
-}
-function livePathTo(idx){
-  var pts=routePoints();
-  return idx>0?ptsToPath(pts.slice(0,idx+1).map(function(p){return [p.lat,p.lon];})):'';
-}
-function buildFlightCard(el){
-  var legs=legPoints();
-  var full=ptsToPath(legs[0])+ptsToPath(legs[1]);
-  var pin=function(code,color){
-    var q=mapXY(AIRPORTS[code].lat,AIRPORTS[code].lon);
-    return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="9" fill="'+color+'" stroke="#0b1220" stroke-width="3"/>';
-  };
-  var rows=FLIGHT_MARKS.map(function(m){
-    var ap=AIRPORTS[m.ap];
-    return '<div class="fm-row" data-k="'+m.k+'">'
-      +'<span class="fm-lbl"><span class="fm-name">'+m.label+'</span>'
-        +'<span class="fm-loc">'+localAt(m.at,ap.tz)+' '+ap.city+' time</span></span>'
-      +'<span class="fm-val">--</span>'
-    +'</div>';
-  }).join('');
-  el.innerHTML='<div class="fm-card">'
-    +'<div class="fm-mapwrap">'
-      +'<svg class="fm-svg" viewBox="0 0 '+FM_VB_W+' '+FM_VB_H+'">'
-        +'<rect x="-3000" y="-3000" width="9000" height="9000" fill="#0b1220"/>'
-        +'<path d="'+MAP_COAST+'" fill="#243a52" stroke="#3d5b7a" stroke-width="1.1"/>'
-        +'<path d="'+full+'" fill="none" stroke="#f59e0b" stroke-width="3" stroke-opacity="0.38" stroke-dasharray="9 8" stroke-linecap="round"/>'
-        +'<path class="fm-done" d="" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>'
-        +pin('TPE','#22c55e')+pin('ICN','#38bdf8')+pin('LAX','#ef4444')
-        +'<g class="fm-probe" style="display:none"><circle r="13" fill="none" stroke="#fff" stroke-width="3"/><circle r="3.5" fill="#fff"/></g>'
-        +'<g class="fm-plane"><circle r="17" fill="#fff" opacity="0.16"/>'
-          +'<path d="M20 0L-8 -11L-3 0L-8 11Z" fill="#fff" stroke="#0b1220" stroke-width="1.5"/></g>'
-      +'</svg>'
-      +'<div class="fm-badge"><span class="fm-badge-l">to LAX</span><span class="fm-badge-v">--</span></div>'
-      +'<div class="fm-live" style="display:none"></div>'
-      +'<div class="fm-zoom">'
-        +'<button type="button" data-z="in" aria-label="Zoom in">+</button>'
-        +'<button type="button" data-z="out" aria-label="Zoom out">−</button>'
-        +'<button type="button" data-z="reset" aria-label="Reset map">⟲</button>'
-        +'<button type="button" data-z="full" aria-label="Full screen">⤢</button>'
-      +'</div>'
-    +'</div>'
-    +'<div class="fm-trace"><span class="fm-trace-hint">Drag along the route for arrival times · pinch or +/− to zoom · ⤢ full screen</span></div>'
-    +'<div class="fm-phase">--</div>'
-    +rows
+var _dbDay=null; // which day the schedule list is showing (null = follow today)
+function dbSelectDay(i){_dbDay=i;renderDebrief();}
+function dbItemHtml(it,state){
+  return '<div class="db-row'+(state?' '+state:'')+'">'
+    +'<span class="db-t">'+it.t+'</span>'
+    +'<span class="db-s"><b>'+it.s+'</b>'+(it.sub?'<span class="db-sub">'+it.sub+'</span>':'')+'</span>'
+    +(state==='now'?'<span class="db-tag">now</span>':'')
   +'</div>';
-  attachFlightMap(el);
 }
-// Zoom/pan moves the SVG viewBox rather than applying a CSS transform, so
-// pointer -> map coordinate conversion stays exact linear math (the trace
-// depends on it). The viewBox aspect is kept equal to the container's aspect
-// at all times, so there is never any letterboxing to correct for - that's
-// what makes full screen (a totally different aspect) work too.
-function attachFlightMap(el){
-  var wrap=el.querySelector('.fm-mapwrap'),svg=el.querySelector('.fm-svg');
-  if(!wrap||!svg)return;
-  var st={x:0,y:0,w:FM_VB_W,h:FM_VB_H,probe:null,full:false};
-  el._fm=st;
-  var MINW=FM_VB_W/12;
-  function ratio(){
-    var r=wrap.getBoundingClientRect();
-    return (r.width&&r.height)?(r.height/r.width):(FM_VB_H/FM_VB_W);
+// "Right now / up next" for the current day only.
+function renderDebriefNow(){
+  var el=document.getElementById('db-now');
+  if(!el)return;
+  var d=debriefToday(),list=DEBRIEF_SCHED[d.key]||[];
+  if(!d.onDay){
+    el.innerHTML='<div class="db-now-card off"><div class="db-now-l">Debrief · Kamlin, Corona</div>'
+      +'<div class="db-now-act">'+(DEBRIEF_DATES.indexOf(d.date)===0?'Starts Monday Aug 3':'Debrief has wrapped')+'</div></div>';
+    return;
   }
-  function apply(){
-    // Keep the whole map centred on whichever axis it no longer fills,
-    // instead of pinning it to an edge.
-    if(st.w>=FM_VB_W)st.x=(FM_VB_W-st.w)/2;
-    else st.x=Math.max(-40,Math.min(FM_VB_W+40-st.w,st.x));
-    if(st.h>=FM_VB_H)st.y=(FM_VB_H-st.h)/2;
-    else st.y=Math.max(-30,Math.min(FM_VB_H+30-st.h,st.y));
-    svg.setAttribute('viewBox',st.x.toFixed(1)+' '+st.y.toFixed(1)+' '+st.w.toFixed(1)+' '+st.h.toFixed(1));
-  }
-  function fit(){
-    st.w=FM_VB_W; st.h=st.w*ratio();
-    // Reset the origin explicitly - carrying over a pan/zoom offset from a
-    // previous layout (e.g. leaving full screen) leaves the map off-centre.
-    st.x=(FM_VB_W-st.w)/2; st.y=(FM_VB_H-st.h)/2;
-    apply();
-  }
-  el._fmFit=fit;
-  function zoomAt(factor,cx,cy){
-    var r=wrap.getBoundingClientRect();
-    if(!r.width||!r.height)return;
-    var px=(cx-r.left)/r.width,py=(cy-r.top)/r.height;
-    var mx=st.x+px*st.w,my=st.y+py*st.h;
-    var nw=Math.max(MINW,Math.min(FM_VB_W,st.w/factor));
-    st.w=nw; st.h=nw*ratio();
-    st.x=mx-px*st.w; st.y=my-py*st.h;
-    apply();
-  }
-  function toMap(cx,cy){
-    var r=wrap.getBoundingClientRect();
-    if(!r.width||!r.height)return null;
-    return {x:st.x+((cx-r.left)/r.width)*st.w, y:st.y+((cy-r.top)/r.height)*st.h};
-  }
-  function probeAt(cx,cy){
-    var m=toMap(cx,cy); if(!m)return;
-    var pts=routePoints(),best=null,bd=Infinity;
-    for(var i=0;i<pts.length;i++){
-      var dx=pts[i].x-m.x,dy=pts[i].y-m.y,d=dx*dx+dy*dy;
-      if(d<bd){bd=d;best=pts[i];}
-    }
-    st.probe=(!best||bd>Math.pow(st.w*0.14,2))?null:best;
-    tickFlight();
-  }
-  function setFull(on){
-    st.full=on;
-    document.body.classList.toggle('fm-fullscreen',on);
-    el.querySelector('.fm-card').classList.toggle('full',on);
-    var b=el.querySelector('.fm-zoom button[data-z="full"]');
-    if(b)b.textContent=on?'✕':'⤢';
-    // Wait for the new layout before fitting, or ratio() reads stale sizes.
-    setTimeout(function(){fit();tickFlight();},120);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){fit();});});
-  }
-  el.querySelectorAll('.fm-zoom button').forEach(function(b){
-    b.addEventListener('click',function(e){
-      e.preventDefault(); e.stopPropagation();
-      var r=wrap.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-      var z=b.dataset.z;
-      if(z==='in')zoomAt(1.6,cx,cy);
-      else if(z==='out')zoomAt(1/1.6,cx,cy);
-      else if(z==='full')setFull(!st.full);
-      else {st.probe=null;fit();tickFlight();}
-    });
+  var cur=null,next=null;
+  list.forEach(function(it){
+    if(d.min>=it.m&&d.min<it.me)cur=it;
+    if(!next&&it.m>d.min)next=it;
   });
-  // ---- touch ----
-  // On iPhone the map is a big full-width block near the top of the page, so
-  // a one-finger vertical drag has to keep scrolling the page or it feels
-  // broken. touch-action:pan-y hands vertical panning to the browser, and we
-  // only claim the gesture once it's clearly horizontal (i.e. along the
-  // route). A tap still drops a probe.
-  var pinchD=null,panFrom=null,mode=null,t0=null;
-  function d2(a,b){return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);}
-  wrap.addEventListener('touchstart',function(e){
-    if(e.target.closest('.fm-zoom'))return;
-    if(e.touches.length===2){
-      e.preventDefault(); mode='pinch'; pinchD=d2(e.touches[0],e.touches[1]);
-      panFrom={x:(e.touches[0].clientX+e.touches[1].clientX)/2,y:(e.touches[0].clientY+e.touches[1].clientY)/2,vx:st.x,vy:st.y};
-    }else if(e.touches.length===1){
-      mode=null; t0={x:e.touches[0].clientX,y:e.touches[0].clientY,moved:false};
-    }
-  },{passive:false});
-  wrap.addEventListener('touchmove',function(e){
-    if(e.target.closest('.fm-zoom'))return;
-    if(e.touches.length===2&&pinchD){
-      e.preventDefault();
-      var nd=d2(e.touches[0],e.touches[1]);
-      var mx=(e.touches[0].clientX+e.touches[1].clientX)/2,my=(e.touches[0].clientY+e.touches[1].clientY)/2;
-      if(panFrom){var r=wrap.getBoundingClientRect();
-        st.x=panFrom.vx-((mx-panFrom.x)/r.width)*st.w;
-        st.y=panFrom.vy-((my-panFrom.y)/r.height)*st.h;}
-      zoomAt(nd/pinchD,mx,my); pinchD=nd; return;
-    }
-    if(e.touches.length!==1||!t0)return;
-    var dx=e.touches[0].clientX-t0.x, dy=e.touches[0].clientY-t0.y;
-    if(mode===null){
-      if(Math.abs(dx)<6&&Math.abs(dy)<6)return;             // not yet a gesture
-      // In full screen the map owns the screen, so any drag traces.
-      mode=(st.full||Math.abs(dx)>Math.abs(dy))?'trace':'scroll';
-    }
-    if(mode==='trace'){ e.preventDefault(); t0.moved=true; probeAt(e.touches[0].clientX,e.touches[0].clientY); }
-  },{passive:false});
-  function endT(e){
-    if(!e.touches.length&&mode===null&&t0&&!t0.moved)probeAt(t0.x,t0.y); // tap
-    if(e.touches.length<2){pinchD=null;panFrom=null;}
-    if(!e.touches.length){mode=null;t0=null;}
-  }
-  wrap.addEventListener('touchend',endT,{passive:false});
-  wrap.addEventListener('touchcancel',endT,{passive:false});
-  // ---- desktop ----
-  var mdown=false;
-  wrap.addEventListener('mousedown',function(e){
-    if(e.target.closest('.fm-zoom'))return;
-    e.preventDefault();mdown=true;probeAt(e.clientX,e.clientY);
-  });
-  window.addEventListener('mousemove',function(e){ if(mdown)probeAt(e.clientX,e.clientY); });
-  window.addEventListener('mouseup',function(){mdown=false;});
-  wrap.addEventListener('wheel',function(e){
-    e.preventDefault(); zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
-  },{passive:false});
-  window.addEventListener('resize',function(){ st.h=st.w*ratio(); apply(); });
-  fit();
+  var clock=(function(m){var h=Math.floor(m/60),mm=m%60,ap=h<12?'AM':'PM',h12=h%12||12;return h12+':'+String(mm).padStart(2,'0')+' '+ap;})(d.min);
+  var html='<div class="db-now-card"><div class="db-now-l">📍 Right now · '+d.label+' '+clock+'</div>'
+    +'<div class="db-now-act">'+(cur?cur.s+(cur.sub?' — '+cur.sub:''):'Between sessions')+'</div>';
+  if(next)html+='<div class="db-now-next">Up next · '+next.t+' · '+next.s+(next.sub?' — '+next.sub:'')+'</div>';
+  html+='</div>';
+  el.innerHTML=html;
 }
-function tickFlight(){
-  var els=document.querySelectorAll('.flight-countdown');
-  if(!els.length)return;
-  var now=Date.now(),sf=flightState(now);
-  var live=_live&&(now-_live.at)<150000?_live:null;
-  var phase=sf.phase==='pre'?'On the ground in Taipei'
-    :sf.phase==='layover'?'On the ground in Seoul'
-    :sf.phase==='done'?'Landed in Los Angeles'
-    :'In the air · '+FLIGHT_LEGS[sf.leg].code;
-  var done,p;
-  if(live){
-    var q=mapXY(live.lat,live.lon);
-    // ADS-B track is a compass bearing; the plane glyph points along +x, so
-    // screen rotation is bearing-90.
-    p={x:q[0],y:q[1],ang:(typeof live.track==='number'?live.track-90:0)};
-    done=livePathTo(nearestRouteIdx(live.lat,live.lon));
-    phase='Live · '+live.cs;
-  }else{
-    done=travelledPath(sf); p=planeAt(sf);
-  }
-  var toLax=ftime(FLIGHT_LEGS[1].arr)-now;
-  els.forEach(function(el){
-    if(!el.querySelector('.fm-card')){buildFlightCard(el);}
-    var q=function(sel){return el.querySelector(sel);};
-    var dp=q('.fm-done'); if(dp)dp.setAttribute('d',done);
-    var pl=q('.fm-plane'); if(pl)pl.setAttribute('transform','translate('+p.x.toFixed(1)+','+p.y.toFixed(1)+') rotate('+p.ang.toFixed(1)+')');
-    var ph=q('.fm-phase'); if(ph)ph.textContent='✈️ '+phase;
-    var bv=q('.fm-badge-v'); if(bv)bv.textContent=toLax>0?fdur(toLax):'landed';
-    var lv=q('.fm-live');
-    if(lv){
-      if(live){
-        var bits=[];
-        if(live.reg)bits.push(live.reg);
-        if(live.type)bits.push(live.type);
-        if(typeof live.alt==='number')bits.push(Math.round(live.alt/100)*100+' ft');
-        else if(live.alt)bits.push(String(live.alt));
-        if(typeof live.gs==='number')bits.push(Math.round(live.gs)+' kt');
-        lv.style.display='';
-        lv.innerHTML='<span class="fm-live-dot"></span>LIVE · '+bits.join(' · ');
-      } else lv.style.display='none';
+function renderDebriefSched(){
+  var el=document.getElementById('db-sched');
+  if(!el)return;
+  var d=debriefToday();
+  var show=(_dbDay==null)?d.idx:_dbDay;
+  var key=DEBRIEF_KEYS[show];
+  var tabs=DEBRIEF_KEYS.map(function(k,i){
+    return '<button class="'+(i===show?'on':'')+'" onclick="dbSelectDay('+i+')">'
+      +DEBRIEF_LABELS[i].slice(0,3)+'<span class="db-dd">'+DEBRIEF_DATES[i].slice(8)+'</span></button>';
+  }).join('');
+  var rows=(DEBRIEF_SCHED[key]||[]).map(function(it){
+    var state='';
+    if(show===d.idx&&d.onDay){
+      if(d.min>=it.m&&d.min<it.me)state='now';
+      else if(it.me<=d.min)state='past';
     }
-    FLIGHT_MARKS.forEach(function(m){
-      var row=q('.fm-row[data-k="'+m.k+'"]'); if(!row)return;
-      var left=ftime(m.at)-now,passed=left<=0;
-      row.classList.toggle('passed',passed);
-      row.querySelector('.fm-name').textContent=passed?'✓ '+m.done:m.label;
-      row.querySelector('.fm-val').textContent=passed?'—':fdur(left);
-    });
-    var pr=el._fm&&el._fm.probe, g=q('.fm-probe'), tr=q('.fm-trace');
-    if(pr&&g&&tr){
-      g.style.display='';
-      g.setAttribute('transform','translate('+pr.x.toFixed(1)+','+pr.y.toFixed(1)+')');
-      var away=pr.t-now;
-      tr.innerHTML='<span class="fm-trace-main">'+fmtLatLon(pr.lat,pr.lon)
-        +' · leg '+(pr.leg+1)+' '+Math.round(pr.f*100)+'%</span>'
-        +'<span class="fm-trace-sub">'
-          +(away>0?'reaches here in <b>'+fdurShort(away)+'</b>':'passed here <b>'+fdurShort(-away)+'</b> ago')
-          +' · '+fmtClockTZ(pr.t,'Asia/Taipei')+' Taipei / '+fmtClockTZ(pr.t,'America/Los_Angeles')+' LA'
-        +'</span>';
-    }else if(g&&tr){
-      g.style.display='none';
-      if(!tr.querySelector('.fm-trace-hint'))tr.innerHTML='<span class="fm-trace-hint">Drag along the route for arrival times · pinch or +/− to zoom · ⤢ full screen</span>';
-    }
-  });
+    return dbItemHtml(it,state);
+  }).join('');
+  var meals=(DEBRIEF_MEALS[key]||[]).map(function(m){
+    return '<div class="db-meal"><span class="db-meal-k">'+m.k+'</span>'
+      +'<span class="db-meal-w"><b>'+m.what+'</b>'+(m.det?'<span class="db-sub">'+m.det+'</span>':'')+'</span></div>';
+  }).join('');
+  el.innerHTML='<div class="stu-seg db-days">'+tabs+'</div>'
+    +'<div class="sgq-wrap"><div class="sgq-hdr">'+DEBRIEF_LABELS[show]+' · '+DEBRIEF_DATES[show].slice(5).replace('-','/')+'</div>'+rows+'</div>'
+    +(meals?'<div class="sgq-wrap"><div class="sgq-hdr">🍽 Meals</div>'+meals+'</div>':'');
 }
-function renderFlightCountdown(){tickFlight();}
-setInterval(tickFlight,1000);
-tickFlight();
-pollLive();
+function renderDebrief(){renderDebriefNow();renderDebriefSched();}
+function renderGroups(){
+  var el=document.getElementById('db-groups');
+  if(!el)return;
+  var d=debriefToday();
+  var dayBlocks=['mon','tue','wed'].map(function(k,i){
+    var rooms=(DEBRIEF_PLACES[k]||[]).map(function(r){
+      return '<div class="db-place"><span class="db-room">'+r.room+'</span>'
+        +'<span class="db-teams">'+r.teams.map(function(t){return '<span class="db-team'+(t.toLowerCase().indexOf('taiwan')>=0?' ours':'')+'">'+t+'</span>';}).join('')+'</span></div>';
+    }).join('');
+    var isToday=(DEBRIEF_KEYS[d.idx]===k&&d.onDay);
+    return '<div class="sgq-wrap'+(isToday?' db-today':'')+'"><div class="sgq-hdr">'+DEBRIEF_LABELS[i]+(isToday?' · today':'')+'</div>'+rooms+'</div>';
+  }).join('');
+  var duties=DEBRIEF_DUTIES.map(function(t){
+    var p=t.split(' - ');
+    var name=p[0].replace(/^nindia$/,'n. india').replace(/^sindia$/,'s. india');
+    return '<div class="db-place"><span class="db-room" style="text-transform:capitalize">'+name+'</span>'
+      +'<span class="db-teams"><span class="db-duty">'+p.slice(1).join(' - ')+'</span></span></div>';
+  }).join('');
+  var rules=DEBRIEF_RULES.map(function(t){return '<div class="db-rule">'+t+'</div>';}).join('');
+  el.innerHTML='<div class="db-note">Testimony sharing · 2:30–4:30 PM · two teams per room</div>'
+    +dayBlocks
+    +'<div class="sgq-wrap"><div class="sgq-hdr">🧹 Clean-up duties</div>'+duties+'</div>'
+    +'<div class="sgq-wrap"><div class="sgq-hdr">📋 Orientation</div>'+rules+'</div>';
+}
+function goGroups(btn){go('debrief',btn);renderGroups();}
+renderDebrief();
+renderGroups();
+setInterval(renderDebrief,30000);
 // ===== Taipei forecast =====
 // Open-Meteo needs no API key and sends CORS headers, so it works straight
 // from the static page. timezone=Asia/Taipei means the returned "time"
@@ -3970,11 +3741,11 @@ pollLive();
 // A day picker fronts the hours so you tap a day instead of scrolling
 // through the whole range. Days are capped at departure (see WX_LAST_DAY)
 // rather than a fixed count, so it stays right whichever day it's opened.
-var WX_URL='https://api.open-meteo.com/v1/forecast?latitude=25.033&longitude=121.5654'
+var WX_URL='https://api.open-meteo.com/v1/forecast?latitude=33.8753&longitude=-117.5664'
   +'&hourly=temperature_2m,precipitation_probability,weather_code'
   +'&daily=temperature_2m_max,temperature_2m_min,weather_code'
-  +'&temperature_unit=fahrenheit&timezone=Asia%2FTaipei&forecast_days=7';
-var WX_LAST_DAY='2026-07-30'; // fly home Thu Jul 30 - no point forecasting past it
+  +'&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=7';
+var WX_LAST_DAY='2026-08-06'; // debrief ends Thu Aug 6
 var _wx=null, _wxDay=0;
 // WMO weather codes -> emoji. Night variants for the clear/mostly-clear
 // codes only; everything else reads the same after dark.
@@ -4000,7 +3771,7 @@ function wxHourLabel(h){
 }
 // "YYYY-MM-DD" for the current Taiwan date, matching Open-Meteo's day keys.
 function wxTodayKey(){
-  var t=twNow();
+  var t=caNow();
   return t.y+'-'+String(t.mo).padStart(2,'0')+'-'+String(t.d).padStart(2,'0');
 }
 function wxSelectDay(i){_wxDay=i;drawWeather();}
@@ -4008,7 +3779,7 @@ function drawWeather(){
   var el=document.getElementById('wx-body');
   if(!el)return;
   if(!_wx){
-    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Taipei weather</span></div>'
+    el.innerHTML='<div class="wx-wrap"><div class="wx-hdr"><span class="wx-title">Corona weather</span></div>'
       +'<div class="wx-msg">Forecast unavailable - check your connection.</div></div>';
     return;
   }
@@ -4052,7 +3823,7 @@ function drawWeather(){
   }
   var nowTemp=(nowIdx>=0)?Math.round(h.temperature_2m[nowIdx])+'\u00b0 now':'';
   el.innerHTML='<div class="wx-wrap">'
-    +'<div class="wx-hdr"><span class="wx-title">Taipei weather</span><span class="wx-now">'+nowTemp+'</span></div>'
+    +'<div class="wx-hdr"><span class="wx-title">Corona weather</span><span class="wx-now">'+nowTemp+'</span></div>'
     +'<div class="wx-days">'+days+'</div>'
     +'<div class="wx-strip">'+cards+'</div>'
   +'</div>';

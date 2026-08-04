@@ -821,12 +821,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=317; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=318; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v317 · Aug 3, 2026 · 10:40 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v318 · Aug 3, 2026 · 11:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5426,13 +5426,13 @@ function pickRandomGroup(){
 </script>
 
 <script>
-// ESR pairings. ESR_ORDER is the team oldest -> youngest (Andrew's list;
-// Esther 3rd / Caleb 4th per his earlier note). Round 1 folds the list
-// oldest<->youngest, and each later round rotates so Andrew climbs the
-// ladder upward - Grace, Janet, Owen ... rather than jumping back to the
-// top. 13 rounds x 7 pairs = 91 = every possible pair exactly once.
+// ESR pairings. ESR_ORDER is the team oldest -> youngest. The older half
+// (Andrew Yoo .. Jane Kim) are FIXED hosts - each keeps their row every
+// round - and only the younger column rotates, so Andrew walks Grace ->
+// Janet -> Owen -> ... up the ages. 7 rounds x 7 pairs = 49 = each of the
+// 7 elders meets each of the 7 youngers exactly once.
 var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
-var ESR_ROUNDS=[[["Andrew Yoo","Grace Yoon"],["Keren Choi","Janet Phee"],["Esther Yang","Owen Lee"],["Caleb Su","Rubin Jang"],["Becca Park","Andrew Back"],["Jean Kim","Irene Song"],["Jane Kim","Sammy Taing"]],[["Andrew Yoo","Janet Phee"],["Grace Yoon","Owen Lee"],["Keren Choi","Rubin Jang"],["Esther Yang","Andrew Back"],["Caleb Su","Irene Song"],["Becca Park","Sammy Taing"],["Jean Kim","Jane Kim"]],[["Andrew Yoo","Owen Lee"],["Janet Phee","Rubin Jang"],["Grace Yoon","Andrew Back"],["Keren Choi","Irene Song"],["Esther Yang","Sammy Taing"],["Caleb Su","Jane Kim"],["Becca Park","Jean Kim"]],[["Andrew Yoo","Rubin Jang"],["Owen Lee","Andrew Back"],["Janet Phee","Irene Song"],["Grace Yoon","Sammy Taing"],["Keren Choi","Jane Kim"],["Esther Yang","Jean Kim"],["Caleb Su","Becca Park"]],[["Andrew Yoo","Andrew Back"],["Rubin Jang","Irene Song"],["Owen Lee","Sammy Taing"],["Janet Phee","Jane Kim"],["Grace Yoon","Jean Kim"],["Keren Choi","Becca Park"],["Esther Yang","Caleb Su"]],[["Andrew Yoo","Irene Song"],["Andrew Back","Sammy Taing"],["Rubin Jang","Jane Kim"],["Owen Lee","Jean Kim"],["Janet Phee","Becca Park"],["Grace Yoon","Caleb Su"],["Keren Choi","Esther Yang"]],[["Andrew Yoo","Sammy Taing"],["Irene Song","Jane Kim"],["Andrew Back","Jean Kim"],["Rubin Jang","Becca Park"],["Owen Lee","Caleb Su"],["Janet Phee","Esther Yang"],["Grace Yoon","Keren Choi"]],[["Andrew Yoo","Jane Kim"],["Sammy Taing","Jean Kim"],["Irene Song","Becca Park"],["Andrew Back","Caleb Su"],["Rubin Jang","Esther Yang"],["Owen Lee","Keren Choi"],["Janet Phee","Grace Yoon"]],[["Andrew Yoo","Jean Kim"],["Jane Kim","Becca Park"],["Sammy Taing","Caleb Su"],["Irene Song","Esther Yang"],["Andrew Back","Keren Choi"],["Rubin Jang","Grace Yoon"],["Owen Lee","Janet Phee"]],[["Andrew Yoo","Becca Park"],["Jean Kim","Caleb Su"],["Jane Kim","Esther Yang"],["Sammy Taing","Keren Choi"],["Irene Song","Grace Yoon"],["Andrew Back","Janet Phee"],["Rubin Jang","Owen Lee"]],[["Andrew Yoo","Caleb Su"],["Becca Park","Esther Yang"],["Jean Kim","Keren Choi"],["Jane Kim","Grace Yoon"],["Sammy Taing","Janet Phee"],["Irene Song","Owen Lee"],["Andrew Back","Rubin Jang"]],[["Andrew Yoo","Esther Yang"],["Caleb Su","Keren Choi"],["Becca Park","Grace Yoon"],["Jean Kim","Janet Phee"],["Jane Kim","Owen Lee"],["Sammy Taing","Rubin Jang"],["Irene Song","Andrew Back"]],[["Andrew Yoo","Keren Choi"],["Esther Yang","Grace Yoon"],["Caleb Su","Janet Phee"],["Becca Park","Owen Lee"],["Jean Kim","Rubin Jang"],["Jane Kim","Andrew Back"],["Sammy Taing","Irene Song"]]];
+var ESR_ROUNDS=[[["Andrew Yoo","Grace Yoon"],["Keren Choi","Janet Phee"],["Esther Yang","Owen Lee"],["Caleb Su","Rubin Jang"],["Becca Park","Andrew Back"],["Jean Kim","Irene Song"],["Jane Kim","Sammy Taing"]],[["Andrew Yoo","Janet Phee"],["Keren Choi","Owen Lee"],["Esther Yang","Rubin Jang"],["Caleb Su","Andrew Back"],["Becca Park","Irene Song"],["Jean Kim","Sammy Taing"],["Jane Kim","Grace Yoon"]],[["Andrew Yoo","Owen Lee"],["Keren Choi","Rubin Jang"],["Esther Yang","Andrew Back"],["Caleb Su","Irene Song"],["Becca Park","Sammy Taing"],["Jean Kim","Grace Yoon"],["Jane Kim","Janet Phee"]],[["Andrew Yoo","Rubin Jang"],["Keren Choi","Andrew Back"],["Esther Yang","Irene Song"],["Caleb Su","Sammy Taing"],["Becca Park","Grace Yoon"],["Jean Kim","Janet Phee"],["Jane Kim","Owen Lee"]],[["Andrew Yoo","Andrew Back"],["Keren Choi","Irene Song"],["Esther Yang","Sammy Taing"],["Caleb Su","Grace Yoon"],["Becca Park","Janet Phee"],["Jean Kim","Owen Lee"],["Jane Kim","Rubin Jang"]],[["Andrew Yoo","Irene Song"],["Keren Choi","Sammy Taing"],["Esther Yang","Grace Yoon"],["Caleb Su","Janet Phee"],["Becca Park","Owen Lee"],["Jean Kim","Rubin Jang"],["Jane Kim","Andrew Back"]],[["Andrew Yoo","Sammy Taing"],["Keren Choi","Grace Yoon"],["Esther Yang","Janet Phee"],["Caleb Su","Owen Lee"],["Becca Park","Rubin Jang"],["Jean Kim","Andrew Back"],["Jane Kim","Irene Song"]]];
 // General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
 // no headers; pairs read VERTICALLY (a name and the one directly below it).
 // Confirmed: that reading pairs all 82 names exactly once and yields zero
@@ -5461,7 +5461,7 @@ function renderPairs(){
   var el=document.getElementById('pr-body'); if(!el)return;
   var sub=document.getElementById('pr-sub');
   if(_pairMode==='esr'){
-    if(sub)sub.textContent='ESR ladder · 13 rounds · everyone meets everyone once';
+    if(sub)sub.textContent='ESR ladder · 7 rounds · each pairs with every younger once';
     var chips=ESR_ROUNDS.map(function(_,i){
       return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+1)+'</button>';
     }).join('');

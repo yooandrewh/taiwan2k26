@@ -822,12 +822,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=321; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=324; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v321 · Aug 4, 2026 · 7:10 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v324 · Aug 4, 2026 · 7:55 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5427,16 +5427,16 @@ function pickRandomGroup(){
 </script>
 
 <script>
-// ESR pairings, rounds 8-14. Rounds 1-7 used all 49 older-younger pairs,
-// leaving 42: 21 older-older + 21 younger-younger. Each half has 7 people
-// (ODD), so one person per side takes a bye each round - the classic
-// odd-number round robin. That needs SEVEN rounds, not six: 7 x 6 = 42,
-// which covers every remaining pairing exactly once. Six rounds would
-// have left 6 pairs never meeting. Everyone byes exactly once and meets
-// everyone else on their side once. Andrew climbs Jane, Jean, Becca,
-// Caleb, Esther, Keren and takes his bye in R14.
+// ESR pairings, rounds 8-14. R1-R7 (outer ring fixed, inner ring rotating)
+// used all 49 outer-inner pairs, leaving 42: 21 outer-outer + 21
+// inner-inner. Each ring has 7 people (ODD), so a ring can never pair
+// entirely within itself - every round needs one outer-inner pair, and
+// those are all spent. That is a straight trade: each repeat you accept
+// removes two byes. We take zero byes, so each round carries exactly one
+// repeated pairing (flagged in the UI). Seven rounds either way, since
+// both shapes deliver 6 new pairs. Andrew meets Keren in the final round.
 var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
-var ESR_ROUNDS=[{"pairs":[["Jane Kim","Andrew Yoo"],["Esther Yang","Becca Park"],["Jean Kim","Keren Choi"],["Rubin Jang","Andrew Back"],["Janet Phee","Sammy Taing"],["Irene Song","Owen Lee"]],"bye":["Caleb Su","Grace Yoon"]},{"pairs":[["Esther Yang","Caleb Su"],["Jean Kim","Andrew Yoo"],["Keren Choi","Becca Park"],["Janet Phee","Grace Yoon"],["Irene Song","Andrew Back"],["Owen Lee","Sammy Taing"]],"bye":["Jane Kim","Rubin Jang"]},{"pairs":[["Jean Kim","Jane Kim"],["Keren Choi","Caleb Su"],["Becca Park","Andrew Yoo"],["Irene Song","Rubin Jang"],["Owen Lee","Grace Yoon"],["Sammy Taing","Andrew Back"]],"bye":["Esther Yang","Janet Phee"]},{"pairs":[["Keren Choi","Esther Yang"],["Becca Park","Jane Kim"],["Andrew Yoo","Caleb Su"],["Owen Lee","Janet Phee"],["Sammy Taing","Rubin Jang"],["Andrew Back","Grace Yoon"]],"bye":["Jean Kim","Irene Song"]},{"pairs":[["Becca Park","Jean Kim"],["Andrew Yoo","Esther Yang"],["Caleb Su","Jane Kim"],["Sammy Taing","Irene Song"],["Andrew Back","Janet Phee"],["Grace Yoon","Rubin Jang"]],"bye":["Keren Choi","Owen Lee"]},{"pairs":[["Andrew Yoo","Keren Choi"],["Caleb Su","Jean Kim"],["Jane Kim","Esther Yang"],["Andrew Back","Owen Lee"],["Grace Yoon","Irene Song"],["Rubin Jang","Janet Phee"]],"bye":["Becca Park","Sammy Taing"]},{"pairs":[["Caleb Su","Becca Park"],["Jane Kim","Keren Choi"],["Esther Yang","Jean Kim"],["Grace Yoon","Sammy Taing"],["Rubin Jang","Owen Lee"],["Janet Phee","Irene Song"]],"bye":["Andrew Yoo","Andrew Back"]}];
+var ESR_ROUNDS=[{"pairs":[["Jane Kim","Andrew Yoo"],["Esther Yang","Becca Park"],["Jean Kim","Keren Choi"],["Owen Lee","Andrew Back"],["Sammy Taing","Janet Phee"],["Rubin Jang","Irene Song"]],"bye":["Caleb Su","Grace Yoon"]},{"pairs":[["Esther Yang","Caleb Su"],["Jean Kim","Andrew Yoo"],["Keren Choi","Becca Park"],["Sammy Taing","Grace Yoon"],["Rubin Jang","Andrew Back"],["Irene Song","Janet Phee"]],"bye":["Jane Kim","Owen Lee"]},{"pairs":[["Jean Kim","Jane Kim"],["Keren Choi","Caleb Su"],["Becca Park","Andrew Yoo"],["Rubin Jang","Owen Lee"],["Irene Song","Grace Yoon"],["Janet Phee","Andrew Back"]],"bye":["Esther Yang","Sammy Taing"]},{"pairs":[["Keren Choi","Esther Yang"],["Becca Park","Jane Kim"],["Andrew Yoo","Caleb Su"],["Irene Song","Sammy Taing"],["Janet Phee","Owen Lee"],["Andrew Back","Grace Yoon"]],"bye":["Jean Kim","Rubin Jang"]},{"pairs":[["Becca Park","Jean Kim"],["Andrew Yoo","Esther Yang"],["Caleb Su","Jane Kim"],["Janet Phee","Rubin Jang"],["Andrew Back","Sammy Taing"],["Grace Yoon","Owen Lee"]],"bye":["Keren Choi","Irene Song"]},{"pairs":[["Andrew Yoo","Keren Choi"],["Caleb Su","Jean Kim"],["Jane Kim","Esther Yang"],["Andrew Back","Irene Song"],["Grace Yoon","Rubin Jang"],["Owen Lee","Sammy Taing"]],"bye":["Becca Park","Janet Phee"]},{"pairs":[["Caleb Su","Becca Park"],["Jane Kim","Keren Choi"],["Esther Yang","Jean Kim"],["Grace Yoon","Janet Phee"],["Owen Lee","Irene Song"],["Sammy Taing","Rubin Jang"]],"bye":["Andrew Yoo","Andrew Back"]}];
 var ESR_R0=8; // R1-R7 are done; numbering continues from 8
 // General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
 // no headers; pairs read VERTICALLY (a name and the one directly below it).
@@ -5466,7 +5466,7 @@ function renderPairs(){
   var el=document.getElementById('pr-body'); if(!el)return;
   var sub=document.getElementById('pr-sub');
   if(_pairMode==='esr'){
-    if(sub)sub.textContent='ESR ladder · rounds 8-14 · completes every pairing';
+    if(sub)sub.textContent='ESR rounds 8-14 · no repeats · Andrew climbs to Keren';
     var chips=ESR_ROUNDS.map(function(_,i){
       return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+ESR_R0)+'</button>';
     }).join('');

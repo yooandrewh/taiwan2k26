@@ -374,6 +374,12 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .fb-syncbtn:active{opacity:.55;}
 .fb-syncbtn[disabled]{opacity:.5;}
 .fb-tools{display:flex;gap:5px;}
+.nudge{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #2563eb;border-radius:12px;padding:13px 14px;margin-bottom:12px;}
+.nudge-t{font-size:15px;font-weight:800;color:#1e3a8a;margin-bottom:4px;}
+.nudge-s{font-size:13px;color:#1e40af;line-height:1.45;margin-bottom:11px;}
+.nudge-row{display:flex;align-items:center;gap:8px;}
+.nudge-go{padding:9px 15px;border:none;border-radius:9px;background:#2563eb;color:#fff;font-size:13px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.nudge-x{padding:9px 12px;border:none;border-radius:9px;background:none;color:#1e40af;font-size:12px;font-weight:700;cursor:pointer;opacity:.75;}
 .fb-prog{font-size:12px;font-weight:700;color:var(--text2);background:var(--surface2);border-radius:8px;padding:7px 10px;margin-bottom:10px;}
 .fb-ask{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:4px 0 2px;}
 .fb-askt{font-size:13px;color:var(--text2);margin-right:2px;}
@@ -839,12 +845,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=329; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=330; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v329 · Aug 5, 2026 · 12:40 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v330 · Aug 5, 2026 · 1:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1580,6 +1586,7 @@ var APP_VERSION=329; // bump alongside version.json's "v" on every deploy
   <div id="mem-practice" style="display:none"></div>
 </div>
 <div id="pane-hype" class="pane active">
+  <div id="fb-nudge"></div>
   <div id="db-now"></div>
   <div id="db-sched"></div>
   <div class="kobe-wrap"><img src="kobe.webp" width="257" height="321" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
@@ -5858,9 +5865,48 @@ function fbToggleSignup(k,on){
   e['s_'+k]=!!on; e.edited=Date.now(); e.synced=false; e.tries=0; e.lastTry=0;
   fbSaveLog(l);
   var st=fbStatusFor(l[fbWho]); fbSetStatus(st[0],st[1].replace('&amp;','&'));
+  renderFbNudge();
   fbSync();
 }
 function goFeedback(btn){go('feedback',btn);renderFeedback();fbSync();}
+
+/* Reminder on Home. A push only reaches whoever tapped Enable, which isn't
+   everyone - this catches anybody who opens the app at all. It gets out of
+   the way on its own the moment they tick a sign-up, so it can't nag someone
+   who has already done it. */
+function fbNudgeShow(){
+  try{if(localStorage.getItem('fbNudgeOff')==='1')return false;}catch(e){}
+  if(fbWho){
+    var e=fbGetLog()[fbWho]||{};
+    for(var i=0;i<FB_SIGNUPS.length;i++)if(e['s_'+FB_SIGNUPS[i].k])return false;
+  }
+  return true;
+}
+function renderFbNudge(){
+  var el=document.getElementById('fb-nudge');
+  if(!el)return;
+  if(!fbNudgeShow()){el.innerHTML='';return;}
+  el.innerHTML='<div class="nudge">'
+    +'<div class="nudge-t">\ud83d\udcdd Sign-ups still needed</div>'
+    +'<div class="nudge-s">Please fill in the sign-up portion of the Feedback tab \u2014 '
+      +'the update letters and the monthly GCL book meeting.</div>'
+    +'<div class="nudge-row">'
+      +'<button class="nudge-go" onclick="fbNudgeGo()">Open Feedback</button>'
+      +'<button class="nudge-x" onclick="fbNudgeOff()">Not now</button>'
+    +'</div></div>';
+}
+function fbNudgeOff(){
+  try{localStorage.setItem('fbNudgeOff','1');}catch(e){}
+  renderFbNudge();
+}
+function fbNudgeGo(){
+  var b=document.querySelector('.tabbar .tabitem[aria-label="Feedback"]');
+  goFeedback(b);
+  setTimeout(function(){
+    var sec=document.querySelector('#fb-body .fb-sec');
+    if(sec)sec.scrollIntoView({behavior:'smooth',block:'center'});
+  },160);
+}
 
 /* ===== Feedback status =====
    A read-only "who has actually done this" view. It deliberately talks to a
@@ -6022,6 +6068,7 @@ window.addEventListener('online',fbSync);
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')fbSync();});
 setInterval(function(){if(document.visibilityState==='visible')fbSync();},60000);
 renderFeedback();
+renderFbNudge();
 </script>
 </body>
 </html>

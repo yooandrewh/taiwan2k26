@@ -399,7 +399,8 @@ body.fb-locked .tabbar{display:none!important;}
 .pr-name{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;}
 .pr-name.ours{background:rgba(124,58,237,0.16);border-color:#7c3aed;}
 .pr-plus{font-size:12px;font-weight:800;color:var(--text3);}
-.pr-rest{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;font-weight:700;color:var(--text3);}
+.pr-rep{background:rgba(245,158,11,0.09);border-radius:9px;padding:8px 6px;}
+.pr-reptag{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#b45309;background:rgba(245,158,11,0.2);border-radius:5px;padding:2px 6px;margin-left:auto;white-space:nowrap;}
 .pr-order{display:flex;flex-wrap:wrap;gap:5px;}
 .pr-ord{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--text2);}
 .pr-ord b{color:#7c3aed;margin-right:4px;}
@@ -822,12 +823,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=325; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=326; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v325 · Aug 4, 2026 · 8:10 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v326 · Aug 4, 2026 · 8:30 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -5427,16 +5428,21 @@ function pickRandomGroup(){
 </script>
 
 <script>
-// ESR pairings, rounds 8-14. R1-R7 (outer ring fixed, inner ring rotating)
-// used all 49 outer-inner pairs, leaving 42: 21 outer-outer + 21
-// inner-inner. Each ring has 7 people (ODD), so a ring can never pair
-// entirely within itself - every round needs one outer-inner pair, and
-// those are all spent. That is a straight trade: each repeat you accept
-// removes two byes. We take zero byes, so each round carries exactly one
-// repeated pairing (flagged in the UI). Seven rounds either way, since
-// both shapes deliver 6 new pairs. Andrew meets Keren in the final round.
+// ESR pairings, rounds 8-14. One consistent rule, not an ad-hoc list:
+//   OUTER chairs: Caleb, Jane, Esther, Jean, Keren, Becca, Andrew
+//   INNER chairs: Grace, Sammy, Irene, AndrewB, Owen, Rubin, Janet
+//   round r -> outer chair r and inner chair r step to the middle and
+//   pair with each other; the remaining six in each ring fold across
+//   them (r+1,r-1) (r+2,r-2) (r+3,r-3). The marker advances one chair.
+// Everyone is in a pair every round - no byes, no trios. The cost is
+// that middle pair: each ring has 7 (odd) so someone must always cross
+// rings, and R1-R7 used all 49 cross pairs, so the middle pair is always
+// a repeat. That is forced by parity, not a flaw. All 42 remaining pairs
+// still get covered, and Andrew climbs Jane..Keren as before.
+// Team oldest -> youngest. Drives the age list, the ring seating above,
+// and the Feedback tab's roster.
 var ESR_ORDER=["Andrew Yoo","Keren Choi","Esther Yang","Caleb Su","Becca Park","Jean Kim","Jane Kim","Sammy Taing","Irene Song","Andrew Back","Rubin Jang","Owen Lee","Janet Phee","Grace Yoon"];
-var ESR_ROUNDS=[{"pairs":[["Jane Kim","Andrew Yoo"],["Esther Yang","Becca Park"],["Jean Kim","Keren Choi"],["Sammy Taing","Janet Phee"],["Irene Song","Rubin Jang"],["Andrew Back","Owen Lee"]],"bye":["Caleb Su","Grace Yoon"]},{"pairs":[["Esther Yang","Caleb Su"],["Jean Kim","Andrew Yoo"],["Keren Choi","Becca Park"],["Irene Song","Grace Yoon"],["Andrew Back","Janet Phee"],["Owen Lee","Rubin Jang"]],"bye":["Jane Kim","Sammy Taing"]},{"pairs":[["Jean Kim","Jane Kim"],["Keren Choi","Caleb Su"],["Becca Park","Andrew Yoo"],["Andrew Back","Sammy Taing"],["Owen Lee","Grace Yoon"],["Rubin Jang","Janet Phee"]],"bye":["Esther Yang","Irene Song"]},{"pairs":[["Keren Choi","Esther Yang"],["Becca Park","Jane Kim"],["Andrew Yoo","Caleb Su"],["Owen Lee","Irene Song"],["Rubin Jang","Sammy Taing"],["Janet Phee","Grace Yoon"]],"bye":["Jean Kim","Andrew Back"]},{"pairs":[["Becca Park","Jean Kim"],["Andrew Yoo","Esther Yang"],["Caleb Su","Jane Kim"],["Rubin Jang","Andrew Back"],["Janet Phee","Irene Song"],["Grace Yoon","Sammy Taing"]],"bye":["Keren Choi","Owen Lee"]},{"pairs":[["Andrew Yoo","Keren Choi"],["Caleb Su","Jean Kim"],["Jane Kim","Esther Yang"],["Janet Phee","Owen Lee"],["Grace Yoon","Andrew Back"],["Sammy Taing","Irene Song"]],"bye":["Becca Park","Rubin Jang"]},{"pairs":[["Caleb Su","Becca Park"],["Jane Kim","Keren Choi"],["Esther Yang","Jean Kim"],["Grace Yoon","Rubin Jang"],["Sammy Taing","Owen Lee"],["Irene Song","Andrew Back"]],"bye":["Andrew Yoo","Janet Phee"]}];
+var ESR_ROUNDS=[{"pairs":[["Jane Kim","Andrew Yoo"],["Esther Yang","Becca Park"],["Jean Kim","Keren Choi"],["Sammy Taing","Janet Phee"],["Irene Song","Rubin Jang"],["Andrew Back","Owen Lee"],["Caleb Su","Grace Yoon"]],"repeat":["Caleb Su","Grace Yoon"]},{"pairs":[["Esther Yang","Caleb Su"],["Jean Kim","Andrew Yoo"],["Keren Choi","Becca Park"],["Irene Song","Grace Yoon"],["Andrew Back","Janet Phee"],["Owen Lee","Rubin Jang"],["Jane Kim","Sammy Taing"]],"repeat":["Jane Kim","Sammy Taing"]},{"pairs":[["Jean Kim","Jane Kim"],["Keren Choi","Caleb Su"],["Becca Park","Andrew Yoo"],["Andrew Back","Sammy Taing"],["Owen Lee","Grace Yoon"],["Rubin Jang","Janet Phee"],["Esther Yang","Irene Song"]],"repeat":["Esther Yang","Irene Song"]},{"pairs":[["Keren Choi","Esther Yang"],["Becca Park","Jane Kim"],["Andrew Yoo","Caleb Su"],["Owen Lee","Irene Song"],["Rubin Jang","Sammy Taing"],["Janet Phee","Grace Yoon"],["Jean Kim","Andrew Back"]],"repeat":["Jean Kim","Andrew Back"]},{"pairs":[["Becca Park","Jean Kim"],["Andrew Yoo","Esther Yang"],["Caleb Su","Jane Kim"],["Rubin Jang","Andrew Back"],["Janet Phee","Irene Song"],["Grace Yoon","Sammy Taing"],["Keren Choi","Owen Lee"]],"repeat":["Keren Choi","Owen Lee"]},{"pairs":[["Andrew Yoo","Keren Choi"],["Caleb Su","Jean Kim"],["Jane Kim","Esther Yang"],["Janet Phee","Owen Lee"],["Grace Yoon","Andrew Back"],["Sammy Taing","Irene Song"],["Becca Park","Rubin Jang"]],"repeat":["Becca Park","Rubin Jang"]},{"pairs":[["Caleb Su","Becca Park"],["Jane Kim","Keren Choi"],["Esther Yang","Jean Kim"],["Grace Yoon","Rubin Jang"],["Sammy Taing","Owen Lee"],["Irene Song","Andrew Back"],["Andrew Yoo","Janet Phee"]],"repeat":["Andrew Yoo","Janet Phee"]}];
 var ESR_R0=8; // R1-R7 are done; numbering continues from 8
 // General 1-on-1s from the Debrief workbook. The sheet is a bare grid with
 // no headers; pairs read VERTICALLY (a name and the one directly below it).
@@ -5466,17 +5472,18 @@ function renderPairs(){
   var el=document.getElementById('pr-body'); if(!el)return;
   var sub=document.getElementById('pr-sub');
   if(_pairMode==='esr'){
-    if(sub)sub.textContent='ESR rounds 8-14 · no repeats · Andrew climbs to Keren';
+    if(sub)sub.textContent='ESR rounds 8-14 · everyone paired every round';
     var chips=ESR_ROUNDS.map(function(_,i){
       return '<button class="pr-rbtn'+(i===_prRound?' on':'')+'" onclick="prRound('+i+')">R'+(i+ESR_R0)+'</button>';
     }).join('');
     var _rd=ESR_ROUNDS[_prRound];
+    var _rep=(_rd.repeat||[]).slice().sort().join('|');
     var rows=_rd.pairs.map(function(p,i){
-      return '<div class="pr-row"><span class="pr-n">'+(i+1)+'</span>'
-        +prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])+'</div>';
-    }).join('')
-    +((_rd.bye&&_rd.bye.length)?'<div class="pr-rest">Bye this round \u00b7 '
-      +_rd.bye.map(function(n){return prChip(n);}).join('')+'</div>':'');
+      var isRep=p.slice().sort().join('|')===_rep;
+      return '<div class="pr-row'+(isRep?' pr-rep':'')+'"><span class="pr-n">'+(i+1)+'</span>'
+        +prChip(p[0])+'<span class="pr-plus">+</span>'+prChip(p[1])
+        +(isRep?'<span class="pr-reptag">met before</span>':'')+'</div>';
+    }).join('');
     el.innerHTML='<div class="pr-rounds">'+chips+'</div>'
       +'<div class="sgq-wrap"><div class="sgq-hdr">Round '+(_prRound+ESR_R0)+'</div>'+rows+'</div>'
       +'<div class="sgq-wrap"><div class="sgq-hdr">Age order · oldest → youngest</div>'
@@ -5565,9 +5572,10 @@ function fbInput(k,v){
 }
 function fbPost(who,e){
   if(!FEEDBACK_ENDPOINT)return;
-  var body={person:who,edited:e.edited};
+  var body={person:who,pin:fbStoredPin(who),edited:e.edited};
   FB_SECTIONS.forEach(function(sec){body[sec.k]=e[sec.k]||'';});
-  body.signups=FB_SIGNUPS.filter(function(su){return e['s_'+su.k];}).map(function(su){return su.k;}).join(',');
+  // one boolean per sign-up, matching the Apps Script's columns
+  FB_SIGNUPS.forEach(function(su){body[su.k]=!!e['s_'+su.k];});
   fetch(FEEDBACK_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
     body:JSON.stringify(body)}).catch(function(){});
 }
@@ -5585,7 +5593,17 @@ function fbSync(){
     fbPost(who,e);
   });
   if(changed)fbSaveLog(l);
-  fetch(FEEDBACK_ENDPOINT,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  // The sheet only returns the row whose PIN matches, so the read has to be
+  // scoped to whoever is signed in on this device.
+  if(!fbWho||!fbStoredPin(fbWho))return;
+  fetch(FEEDBACK_ENDPOINT+'?person='+encodeURIComponent(fbWho)
+        +'&pin='+encodeURIComponent(fbStoredPin(fbWho)),{cache:'no-store'})
+    .then(function(r){return r.json();}).then(function(d){
+    if(d&&d.error==='pin'){
+      fbErr='That PIN doesn\'t match this name.';
+      try{localStorage.removeItem(fbPinKey(fbWho));}catch(e){}
+      renderFeedback();return;
+    }
     var rows=(d&&d.rows)||[],l2=fbGetLog(),dirty=false;
     rows.forEach(function(row){
       var who=row.person;if(!who)return;
@@ -5594,6 +5612,7 @@ function fbSync(){
       if(!e){
         e=l2[who]={edited:remoteEdited,synced:true,tries:0,lastTry:0};
         FB_SECTIONS.forEach(function(sec){e[sec.k]=row[sec.k]||'';});
+        FB_SIGNUPS.forEach(function(su){e['s_'+su.k]=!!row[su.k];});
         dirty=true;return;
       }
       // Our pending edit always wins; otherwise take the sheet if it's newer
@@ -5604,6 +5623,9 @@ function fbSync(){
         FB_SECTIONS.forEach(function(sec){
           var rv=row[sec.k]||'';
           if((e[sec.k]||'')!==rv){e[sec.k]=rv;diff=true;}
+        });
+        FB_SIGNUPS.forEach(function(su){
+          if(!!e['s_'+su.k]!==!!row[su.k]){e['s_'+su.k]=!!row[su.k];diff=true;}
         });
         if(remoteEdited!==e.edited){e.edited=remoteEdited;diff=true;}
         if(diff)dirty=true;

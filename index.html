@@ -362,11 +362,26 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .fb-bullet{border:1px solid var(--border);background:var(--surface2);color:var(--text2);border-radius:7px;padding:3px 8px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;text-transform:none;letter-spacing:0;-webkit-tap-highlight-color:transparent;}
 .fb-ta{width:100%;min-height:96px;overflow:hidden;padding:11px 12px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:15px;line-height:1.5;font-family:inherit;resize:vertical;-webkit-appearance:none;}
 .fb-ta:focus{outline:none;border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.15);}
-.fb-status{position:sticky;bottom:calc(70px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;padding:8px;border-radius:10px;background:var(--surface2);color:var(--text3);margin-top:4px;}
+/* Sticky, so the sync state is always in reach - which means it needs its own
+   opaque background or the content scrolling underneath shows through it. */
+.fb-syncbar{position:sticky;bottom:calc(70px + env(safe-area-inset-bottom));display:flex;align-items:stretch;gap:6px;margin-top:4px;padding:6px 0;background:var(--bg);z-index:5;}
+.fb-status{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;padding:8px;border-radius:10px;background:var(--surface2);color:var(--text3);text-align:center;line-height:1.35;}
 .fb-status.saving{color:#d97706;}
 .fb-status.saved{color:#16a34a;}
 .fb-status.local{color:var(--text3);}
+.fb-status.err{color:#b91c1c;background:#fee2e2;}
+.fb-syncbtn{flex:0 0 auto;padding:8px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:12px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.fb-syncbtn:active{opacity:.55;}
+.fb-syncbtn[disabled]{opacity:.5;}
 .fb-tools{display:flex;gap:5px;}
+.fb-prog{font-size:12px;font-weight:700;color:var(--text2);background:var(--surface2);border-radius:8px;padding:7px 10px;margin-bottom:10px;}
+.fb-ask{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:4px 0 2px;}
+.fb-askt{font-size:13px;color:var(--text2);margin-right:2px;}
+.fb-ynb{padding:6px 12px;border:1px solid var(--border);border-radius:16px;background:var(--surface2);color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.fb-ynb.yes{background:#16a34a;border-color:#16a34a;color:#fff;}
+.fb-ynb.quiet{margin-top:6px;font-size:11px;font-weight:600;color:var(--text3);background:none;border:none;padding:2px 0;}
+.fb-skipped .fb-lbl{color:var(--text3);}
+.fb-skipped .fb-askt{font-style:italic;color:var(--text3);}
 .fb-chk{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);line-height:1.4;cursor:pointer;}
 .fb-chk:last-child{border-bottom:none;}
 .fb-chk input{width:20px;height:20px;flex:0 0 auto;margin-top:1px;accent-color:#16a34a;}
@@ -408,6 +423,15 @@ body.fb-locked .tabbar{display:none!important;}
 .fst-chips{display:flex;gap:4px;margin-top:7px;}
 .fst-chip{flex:1;text-align:center;font-size:10px;font-weight:800;padding:4px 0;border-radius:6px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
 .fst-chip.on{background:#16a34a;border-color:#16a34a;color:#fff;}
+.fst-chip.skip{background:var(--surface2);border-style:dashed;border-color:#94a3b8;color:#64748b;}
+.fst-su{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.fst-sup{display:inline-block;font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--text3);}
+.fst-sup.on{background:#7c3aed;border-color:#7c3aed;color:#fff;}
+.fst-sect{font-size:12px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 7px;}
+.fst-surow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 11px;margin-bottom:6px;}
+.fst-sul{flex:1;min-width:0;font-size:13px;color:var(--text);}
+.fst-sun{font-size:14px;font-weight:800;color:var(--text2);}
+.fst-suw{flex-basis:100%;font-size:11px;color:var(--text3);}
 .fst-meta{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.4;}
 .fst-warn{background:#fef3c7;border:1px solid #f59e0b;color:#92400e;border-radius:12px;padding:12px;font-size:12px;line-height:1.5;margin-bottom:12px;}
 /* ===== Debrief schedule / groups ===== */
@@ -815,12 +839,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=328; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=329; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v328 · Aug 5, 2026 · 11:20 AM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v329 · Aug 5, 2026 · 12:40 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1727,6 +1751,17 @@ var APP_VERSION=328; // bump alongside version.json's "v" on every deploy
     <div id="trip-err" style="font-size:11px;color:#b91c1c;margin-bottom:8px;display:none;">Incorrect password</div>
     <button onclick="checkTripPw()" style="width:100%;padding:11px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">Unlock</button>
     <div style="margin-top:12px;"><button onclick="closeTripGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
+  </div>
+</div>
+<div id="fst-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:var(--bg);border-radius:14px;padding:28px 22px;max-width:320px;width:88%;text-align:center;">
+    <div style="font-size:30px;margin-bottom:4px;">&#128202;</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text)">Feedback Status</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Leaders only &mdash; enter PIN to view</div>
+    <input id="fst-pw" type="password" inputmode="numeric" placeholder="PIN" autocomplete="off" onkeydown="if(event.key==='Enter')checkFstPw()" style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:16px;background:var(--bg);color:var(--text);margin-bottom:8px;-webkit-appearance:none;">
+    <div id="fst-err" style="font-size:11px;color:#b91c1c;margin-bottom:8px;display:none;">Incorrect PIN</div>
+    <button onclick="checkFstPw()" style="width:100%;padding:11px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">Unlock</button>
+    <div style="margin-top:12px;"><button onclick="closeFstGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
 <div id="kid-modal" onclick="if(event.target===this)closeKidModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:250;align-items:flex-end;justify-content:center;">
@@ -5434,8 +5469,8 @@ var FB_SIGNUPS=[
   {k:'gcl', label:'Monthly GCL book meeting with LP'},
   {k:'ds',  label:'David & Susanna update letter'},
   {k:'lp',  label:'LP update letter'},
-  {k:'eric',label:'Eric update letter'},
-  {k:'last',label:'Last update letter \u2014 missionary'}
+  {k:'eric',label:'Eric update letter (Homeland Church)'},
+  {k:'last',label:'Steve &amp; Sehee update letter'}
 ];
 var FB_SECTIONS=[
   {k:'g',   label:'General notes'},
@@ -5462,7 +5497,7 @@ function fbSetStatus(cls,txt){
 }
 function fbStatusFor(e){
   if(!FEEDBACK_ENDPOINT)return ['local','Saved on this phone · sheet not connected yet'];
-  if(e.synced)return ['saved','✓ Saved &amp; synced'];
+  if(e.synced)return ['saved','✓ Synced'+(e.syncedAt?' · checked '+fstAgo(e.syncedAt):'')];
   return ['saving','Saved on this phone · will sync when online'];
 }
 var _fbTimer=null;
@@ -5471,7 +5506,9 @@ function fbInput(k,v){
   var l=fbGetLog();
   var e=l[fbWho]||(l[fbWho]={edited:0,synced:true,tries:0,lastTry:0});
   e[k]=v; e.edited=Date.now(); e.synced=false; e.tries=0; e.lastTry=0;
+  if(v.trim())e['n_'+k]='y';   // writing something IS the answer to "any notes?"
   fbSaveLog(l);
+  fbUpdateProg();
   fbSetStatus('saving','Saving…');
   clearTimeout(_fbTimer);
   // Debounce the upload only - the text is already on disk above.
@@ -5484,7 +5521,7 @@ function fbInput(k,v){
 function fbPost(who,e){
   if(!FEEDBACK_ENDPOINT)return;
   var body={person:who,pin:fbStoredPin(who),edited:e.edited};
-  FB_SECTIONS.forEach(function(sec){body[sec.k]=e[sec.k]||'';});
+  FB_SECTIONS.forEach(function(sec){body[sec.k]=e[sec.k]||'';body['n_'+sec.k]=e['n_'+sec.k]||'';});
   // one boolean per sign-up, matching the Apps Script's columns
   FB_SIGNUPS.forEach(function(su){body[su.k]=!!e['s_'+su.k];});
   fetch(FEEDBACK_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
@@ -5492,21 +5529,32 @@ function fbPost(who,e){
 }
 // Push anything unsynced, then reconcile against the sheet. Same retry shape as
 // Check-In/Scores: quick retries at first, then every 5 minutes.
-function fbSync(){
+function fbSync(force){
   if(!FEEDBACK_ENDPOINT)return;
-  var l=fbGetLog(),now=Date.now(),changed=false;
+  var l=fbGetLog(),now=Date.now(),changed=false,posted=false;
   Object.keys(l).forEach(function(who){
     var e=l[who];
     if(e.synced)return;
+    // A manual "Sync now" ignores the backoff and starts the count over -
+    // the whole point of the button is "try again, right now".
     var backoff=(e.tries||0)>=6?300000:8000;
-    if(e.lastTry&&now-e.lastTry<backoff)return;
-    e.tries=(e.tries||0)+1;e.lastTry=now;changed=true;
+    if(!force&&e.lastTry&&now-e.lastTry<backoff)return;
+    if(force)e.tries=0;
+    e.tries=(e.tries||0)+1;e.lastTry=now;changed=true;posted=true;
     fbPost(who,e);
   });
   if(changed)fbSaveLog(l);
   // The sheet only returns the row whose PIN matches, so the read has to be
   // scoped to whoever is signed in on this device.
   if(!fbWho||!fbStoredPin(fbWho))return;
+  // The POST is fire-and-forget (no-cors), so confirmation comes from the read
+  // that follows it. On a manual sync give the write a moment to land first,
+  // otherwise the read races it and reports "not synced" for something that
+  // is about to be fine.
+  if(force&&posted){setTimeout(fbRead,1600);return;}
+  fbRead();
+}
+function fbRead(){
   fetch(FEEDBACK_ENDPOINT+'?person='+encodeURIComponent(fbWho)
         +'&pin='+encodeURIComponent(fbStoredPin(fbWho)),{cache:'no-store'})
     .then(function(r){return r.json();}).then(function(d){
@@ -5522,7 +5570,7 @@ function fbSync(){
       var remoteEdited=Number(row.edited)||0;
       if(!e){
         e=l2[who]={edited:remoteEdited,synced:true,tries:0,lastTry:0};
-        FB_SECTIONS.forEach(function(sec){e[sec.k]=row[sec.k]||'';});
+        FB_SECTIONS.forEach(function(sec){e[sec.k]=row[sec.k]||'';e['n_'+sec.k]=row['n_'+sec.k]||'';});
         FB_SIGNUPS.forEach(function(su){e['s_'+su.k]=!!row[su.k];});
         dirty=true;return;
       }
@@ -5534,6 +5582,8 @@ function fbSync(){
         FB_SECTIONS.forEach(function(sec){
           var rv=row[sec.k]||'';
           if((e[sec.k]||'')!==rv){e[sec.k]=rv;diff=true;}
+          var rn=row['n_'+sec.k]||'';
+          if((e['n_'+sec.k]||'')!==rn){e['n_'+sec.k]=rn;diff=true;}
         });
         FB_SIGNUPS.forEach(function(su){
           if(!!e['s_'+su.k]!==!!row[su.k]){e['s_'+su.k]=!!row[su.k];diff=true;}
@@ -5545,8 +5595,12 @@ function fbSync(){
     // Mark as synced anything the sheet now confirms at our edit time or later.
     rows.forEach(function(row){
       var e=l2[row.person];
-      if(e&&!e.synced&&(Number(row.edited)||0)>=(e.edited||0)){e.synced=true;e.tries=0;dirty=true;}
+      if(e&&!e.synced&&(Number(row.edited)||0)>=(e.edited||0)){e.synced=true;e.syncedAt=Date.now();e.tries=0;dirty=true;}
     });
+    // A clean read that finds your row IS a confirmation, even with nothing
+    // pending - that's what lets the bar say "checked 20s ago".
+    var mine=l2[fbWho];
+    if(mine&&mine.synced&&rows.some(function(r){return r.person===fbWho;})){mine.syncedAt=Date.now();dirty=true;}
     if(dirty)fbSaveLog(l2);
     if(fbWho){
       var cur=fbGetLog()[fbWho];
@@ -5560,7 +5614,31 @@ function fbSync(){
         });
       }
     }
-  }).catch(function(){});
+    // last word, so a manual sync ends on its own verdict rather than the
+    // generic line
+    fbManualDone(true);
+  }).catch(function(){fbManualDone(false);});
+}
+/* A manual sync has to end in a definite answer - silence is the thing the
+   button exists to remove. Either the read confirms it, or we say it failed
+   and remind them the writing is still safe on the phone. */
+var _fbManual=false,_fbManualT=null;
+function fbSyncNow(){
+  if(!fbWho||!fbStoredPin(fbWho))return;
+  _fbManual=true; clearTimeout(_fbManualT);
+  fbSetStatus('saving','Syncing\u2026');
+  var b=document.getElementById('fb-syncbtn'); if(b)b.disabled=true;
+  _fbManualT=setTimeout(function(){fbManualDone(false);},15000);
+  fbSync(true);
+}
+function fbManualDone(ok){
+  if(!_fbManual)return;
+  _fbManual=false; clearTimeout(_fbManualT);
+  var b=document.getElementById('fb-syncbtn'); if(b)b.disabled=false;
+  var e=fbGetLog()[fbWho]||{};
+  if(ok&&e.synced){fbSetStatus('saved','\u2713 Synced to the sheet just now');return;}
+  if(ok){fbSetStatus('saving','Sent \u2014 the sheet hasn\u2019t confirmed yet. It\u2019ll keep trying.');return;}
+  fbSetStatus('err','Couldn\u2019t reach the sheet. Your writing is safe on this phone \u2014 it\u2019ll sync on its own.');
 }
 function fbSelect(who){
   fbWho=who;
@@ -5627,31 +5705,56 @@ function renderFeedback(){
     return;
   }
   var e=fbEntry(fbWho);
+  var answered=fbAnswered(e);
   var secs=FB_SECTIONS.map(function(sec){
     var v=(e[sec.k]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return '<div class="fb-sec">'
-      +'<div class="fb-lbl">'+sec.label
-        +'<span class="fb-tools">'
-          +'<button type="button" class="fb-bullet" onclick="fbBullet(\''+sec.k+'\')">\u2022 bullet</button>'
-          +'<button type="button" class="fb-bullet" onclick="fbExpand(\''+sec.k+'\')">\u2921 expand</button>'
-        +'</span></div>'
+    var txt=(e[sec.k]||'').trim();
+    // Anything already written counts as "yes" even on entries made before
+    // this question existed - never hide someone's words behind a prompt.
+    var q=e['n_'+sec.k]||(txt?'y':'');
+    var head='<div class="fb-lbl">'+sec.label
+      +(q==='y'?'<span class="fb-tools">'
+        +'<button type="button" class="fb-bullet" onclick="fbBullet(\''+sec.k+'\')">\u2022 bullet</button>'
+        +'<button type="button" class="fb-bullet" onclick="fbExpand(\''+sec.k+'\')">\u2921 expand</button>'
+      +'</span>':'')
+      +'</div>';
+    if(q==='n'){
+      return '<div class="fb-sec fb-skipped">'+head
+        +'<div class="fb-ask"><span class="fb-askt">\u2014 nothing to add</span>'
+        +'<button type="button" class="fb-ynb" onclick="fbSetNotes(\''+sec.k+'\',\'y\')">I do have notes</button>'
+        +'</div></div>';
+    }
+    if(q!=='y'){
+      return '<div class="fb-sec">'+head
+        +'<div class="fb-ask"><span class="fb-askt">Any notes on this?</span>'
+        +'<button type="button" class="fb-ynb yes" onclick="fbSetNotes(\''+sec.k+'\',\'y\')">Yes</button>'
+        +'<button type="button" class="fb-ynb" onclick="fbSetNotes(\''+sec.k+'\',\'n\')">Nothing to add</button>'
+        +'</div></div>';
+    }
+    return '<div class="fb-sec">'+head
       +'<textarea class="fb-ta" id="fb-'+sec.k+'" placeholder="Write anything…" '
       +'autocorrect="on" autocapitalize="sentences" spellcheck="true" autocomplete="off" '
       +'enterkeyhint="enter" '
       +'onkeydown="fbKey(event,\''+sec.k+'\')" '
-      +'oninput="fbInput(\''+sec.k+'\',this.value);fbGrow(this)">'+v+'</textarea></div>';
+      +'oninput="fbInput(\''+sec.k+'\',this.value);fbGrow(this)">'+v+'</textarea>'
+      // only offered while it's still empty - it must never be a way to
+      // accidentally bury something you already wrote
+      +(txt?'':'<button type="button" class="fb-ynb quiet" onclick="fbSetNotes(\''+sec.k+'\',\'n\')">Actually, nothing to add</button>')
+      +'</div>';
   }).join('');
   var st=fbStatusFor(e);
   body.innerHTML='<div class="fb-note">Everything saves to your phone as you type — no signal needed. '
     +'It uploads on its own once you\'re back online.</div>'
-    +secs
     +'<div class="fb-sec"><div class="fb-lbl">Sign-ups</div>'
       +FB_SIGNUPS.map(function(su){
         return '<label class="fb-chk"><input type="checkbox"'+(e['s_'+su.k]?' checked':'')
           +' onchange="fbToggleSignup(\''+su.k+'\',this.checked)"><span>'+su.label+'</span></label>';
       }).join('')
     +'</div>'
-    +'<div class="fb-status '+st[0]+'" id="fb-status">'+st[1]+'</div>';
+    +'<div class="fb-prog"><b>'+answered+' of '+FB_SECTIONS.length+'</b> sections answered</div>'
+    +secs
+    +'<div class="fb-syncbar"><div class="fb-status '+st[0]+'" id="fb-status">'+st[1]+'</div>'
+      +'<button class="fb-syncbtn" id="fb-syncbtn" onclick="fbSyncNow()">Sync now</button></div>';
   FB_SECTIONS.forEach(function(sec){var ta=document.getElementById('fb-'+sec.k);if(ta)fbGrow(ta);});
 }
 // Long answers are expected, so a box grows with its text - but only to about
@@ -5725,6 +5828,30 @@ function fbCollapse(){
     if(ta){ta.value=cur[sec.k]||'';fbGrow(ta);}
   });
 }
+function fbAnswered(e){
+  var n=0;
+  FB_SECTIONS.forEach(function(sec){
+    var txt=(e[sec.k]||'').trim(), q=e['n_'+sec.k]||(txt?'y':'');
+    if(q==='n'||(q==='y'&&txt))n++;
+  });
+  return n;
+}
+function fbUpdateProg(){
+  var el=document.querySelector('#fb-body .fb-prog');
+  if(!el||!fbWho)return;
+  el.innerHTML='<b>'+fbAnswered(fbGetLog()[fbWho]||{})+' of '+FB_SECTIONS.length+'</b> sections answered';
+}
+function fbSetNotes(k,val){
+  if(!fbWho)return;
+  // Never let "nothing to add" bury words that are already there.
+  if(val==='n'&&((fbGetLog()[fbWho]||{})[k]||'').trim()){renderFeedback();return;}
+  var l=fbGetLog(),e=l[fbWho]||(l[fbWho]={edited:0,synced:true,tries:0,lastTry:0});
+  e['n_'+k]=val; e.edited=Date.now(); e.synced=false; e.tries=0; e.lastTry=0;
+  fbSaveLog(l);
+  renderFeedback();
+  if(val==='y'){var ta=document.getElementById('fb-'+k); if(ta)ta.focus();}
+  fbSync();
+}
 function fbToggleSignup(k,on){
   if(!fbWho)return;
   var l=fbGetLog(),e=l[fbWho]||(l[fbWho]={edited:0,synced:true,tries:0,lastTry:0});
@@ -5744,6 +5871,7 @@ function goFeedback(btn){go('feedback',btn);renderFeedback();fbSync();}
    you still can't read it. Last result is cached so the tab isn't blank
    offline. */
 var FST_SEC=[{k:'g',s:'Gen'},{k:'ev',s:'EV'},{k:'vbs',s:'VBS'},{k:'tmf',s:'TMF'},{k:'hs',s:'HS'}];
+var FST_SU=[{k:'gcl',s:'GCL'},{k:'ds',s:'D&amp;S'},{k:'lp',s:'LP'},{k:'eric',s:'Eric'},{k:'last',s:'Sehee'}];
 var fstRows=null,fstAt=0,fstLoading=false,fstErr='',fstSort='roster',fstNeedsUpdate=false;
 try{var _c=JSON.parse(localStorage.getItem('fbStatCache')||'null');
     if(_c&&_c.rows){fstRows=_c.rows;fstAt=_c.t||0;}}catch(e){}
@@ -5784,17 +5912,26 @@ function renderFbStat(){
   (fstRows||[]).forEach(function(r){if(r&&r.person)byName[r.person]=r;});
   var list=FB_PEOPLE.map(function(n){
     var r=byName[n]||null;
-    var chars=(r&&r.chars)||{};
-    var filled=0,words=0;
+    var chars=(r&&r.chars)||{},notes=(r&&r.notes)||{};
+    var filled=0,words=0,wrote=0;
     FST_SEC.forEach(function(s){
       var c=Number(chars[s.k])||0;
-      if(c>0){filled++;words+=Math.max(1,Math.round(c/5.5));}
+      if(c>0){filled++;wrote++;words+=Math.max(1,Math.round(c/5.5));}
+      else if(notes[s.k]==='n')filled++;   // "nothing to add" is a real answer
     });
-    return {name:n,row:r,chars:chars,filled:filled,words:words,
+    return {name:n,row:r,chars:chars,notes:notes,filled:filled,wrote:wrote,words:words,
             signups:(r&&r.signups)||[],edited:(r&&r.edited)||0,started:!!r};
   });
   var done=list.filter(function(p){return p.filled===5;}).length;
   var started=list.filter(function(p){return p.filled>0;}).length;
+  var suCount={},suWho={};
+  FST_SU.forEach(function(su){suCount[su.k]=0;suWho[su.k]=[];});
+  list.forEach(function(p){
+    p.signups.forEach(function(k){
+      if(suCount[k]===undefined)return;
+      suCount[k]++; suWho[k].push(p.name.split(' ')[0]);
+    });
+  });
   var sorted=list.slice();
   if(fstSort==='progress')sorted.sort(function(a,b){return b.filled-a.filled||b.words-a.words||FB_PEOPLE.indexOf(a.name)-FB_PEOPLE.indexOf(b.name);});
   var h='';
@@ -5805,10 +5942,20 @@ function renderFbStat(){
   }
   if(fstErr)h+='<div class="fst-warn">'+fstErr+'</div>';
   h+='<div class="fst-sum">'
-    +'<div class="fst-card"><div class="fst-n" style="color:#16a34a">'+done+'</div><div class="fst-k">All 5 done</div></div>'
+    +'<div class="fst-card"><div class="fst-n" style="color:#16a34a">'+done+'</div><div class="fst-k">All 5 answered</div></div>'
     +'<div class="fst-card"><div class="fst-n" style="color:#d97706">'+(started-done)+'</div><div class="fst-k">In progress</div></div>'
     +'<div class="fst-card"><div class="fst-n" style="color:var(--text3)">'+(list.length-started)+'</div><div class="fst-k">Nothing yet</div></div>'
     +'</div>';
+  h+='<div class="fst-sect">Sign-ups</div>';
+  h+=FB_SIGNUPS.map(function(su){
+    var short=(FST_SU.filter(function(x){return x.k===su.k;})[0]||{}).s||su.k;
+    var who=suWho[su.k]||[];
+    return '<div class="fst-surow"><span class="fst-sup'+(who.length?' on':'')+'">'+short+'</span>'
+      +'<span class="fst-sul">'+su.label+'</span>'
+      +'<span class="fst-sun">'+who.length+'</span>'
+      +(who.length?'<div class="fst-suw">'+who.join(', ')+'</div>':'')+'</div>';
+  }).join('');
+  h+='<div class="fst-sect">Per person</div>';
   h+='<div class="fst-bar"><div class="fst-sort">'
     +'<button class="fst-sbtn'+(fstSort==='roster'?' on':'')+'" onclick="fstSetSort(\'roster\')">Roster</button>'
     +'<button class="fst-sbtn'+(fstSort==='progress'?' on':'')+'" onclick="fstSetSort(\'progress\')">Progress</button>'
@@ -5816,24 +5963,59 @@ function renderFbStat(){
   h+=sorted.map(function(p){
     var cls=p.filled===5?' done':(p.filled?'':' none');
     var chips=FST_SEC.map(function(s){
-      return '<div class="fst-chip'+((Number(p.chars[s.k])||0)>0?' on':'')+'">'+s.s+'</div>';
+      var c=(Number(p.chars[s.k])||0)>0?' on':(p.notes[s.k]==='n'?' skip':'');
+      return '<div class="fst-chip'+c+'">'+s.s+'</div>';
     }).join('');
     var meta;
     if(!p.started)meta='Hasn’t opened it yet';
-    else if(!p.filled)meta='Opened it — nothing written yet · '+fstAgo(p.edited);
-    else meta='~'+p.words+' word'+(p.words===1?'':'s')+' · last edit '+fstAgo(p.edited);
-    if(p.signups.length)meta+=' · '+p.signups.length+' sign-up'+(p.signups.length===1?'':'s');
+    else if(!p.filled)meta='Opened it — nothing answered yet · '+fstAgo(p.edited);
+    else{
+      meta=p.wrote?'~'+p.words+' word'+(p.words===1?'':'s'):'nothing written';
+      var skipped=p.filled-p.wrote;
+      if(skipped)meta+=' · '+skipped+' marked “nothing to add”';
+      meta+=' · last edit '+fstAgo(p.edited);
+    }
+    var mine=FST_SU.filter(function(su){return p.signups.indexOf(su.k)>=0;});
+    var suLine=mine.length
+      ? '<div class="fst-su">'+mine.map(function(su){return '<span class="fst-sup">'+su.s+'</span>';}).join('')+'</div>'
+      : '';
     return '<div class="fst-row'+cls+'">'
       +'<div class="fst-top"><div class="fst-nm">'+p.name+'</div>'
         +'<div class="fst-cnt'+(p.filled===5?' done':'')+'">'+p.filled+'/5</div></div>'
       +'<div class="fst-chips">'+chips+'</div>'
+      +suLine
       +'<div class="fst-meta">'+meta+'</div></div>';
   }).join('');
   h+='<div class="fb-note" style="margin-top:12px">Only counts are shown — the sheet never sends '
     +'anyone’s writing to this screen.'+(fstAt?' Last checked '+fstAgo(fstAt)+'.':'')+'</div>';
   body.innerHTML=h;
 }
-function goFbStat(btn){go('fbstat',btn);renderFbStat();fstLoad();}
+/* The board names who hasn't done their feedback, which is fine for leaders
+   and needlessly public for everyone else - so it sits behind a PIN. Once
+   unlocked it stays unlocked on that device. */
+var FST_PIN='1105',_fstBtn=null,_fstOpen=false;
+try{_fstOpen=localStorage.getItem('fstOpen')==='1';}catch(e){}
+function goFbStat(btn){
+  if(_fstOpen){fstShow(btn);return;}
+  _fstBtn=btn;
+  var g=document.getElementById('fst-gate');
+  g.style.display='flex';
+  document.getElementById('fst-pw').value='';
+  document.getElementById('fst-err').style.display='none';
+  setTimeout(function(){document.getElementById('fst-pw').focus();},100);
+}
+function checkFstPw(){
+  if(document.getElementById('fst-pw').value.trim()===FST_PIN){
+    _fstOpen=true;
+    try{localStorage.setItem('fstOpen','1');}catch(e){}
+    document.getElementById('fst-gate').style.display='none';
+    fstShow(_fstBtn);
+  }else{
+    document.getElementById('fst-err').style.display='block';
+  }
+}
+function closeFstGate(){document.getElementById('fst-gate').style.display='none';}
+function fstShow(btn){go('fbstat',btn);renderFbStat();fstLoad();}
 
 // Retry whenever the network or the tab comes back.
 window.addEventListener('online',fbSync);

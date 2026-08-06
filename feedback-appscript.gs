@@ -43,11 +43,19 @@ var NOT = {g:14, ev:15, vbs:16, tmf:17, hs:18};
 var PSHEET = 'Prayer';
 var PHEAD  = ['Timestamp','Person','Month','Request','Description','Edited'];
 
-// Paste your OneSignal REST API key between the quotes to switch the automatic
-// daily reminders on.  Leave it empty and remindMissingPrayer() just no-ops,
-// so nothing breaks if you'd rather not.
+// The App ID is public - it's already in the app's client code, which is normal.
 var ONESIGNAL_APP_ID = '4680a999-0410-4d5e-bde6-3088b553f8dd';
-var ONESIGNAL_API_KEY = '';
+
+/* The REST API key is NOT public, and this file lives in a public GitHub repo,
+   so the key must never be written into it.  Put it in Script Properties
+   instead:  Apps Script → Project Settings (gear) → Script Properties →
+   Add script property → name it ONESIGNAL_API_KEY, paste the value, Save.
+   It stays inside your Google account and never touches the repo.
+   Until it's set, remindMissingPrayer() simply does nothing. */
+function onesignalKey(){
+  try { return PropertiesService.getScriptProperties().getProperty('ONESIGNAL_API_KEY') || ''; }
+  catch(err){ return ''; }
+}
 var TEAM = ['Andrew Yoo','Keren Choi','Esther Yang','Caleb Su','Becca Park','Jean Kim',
             'Jane Kim','Sammy Taing','Irene Song','Andrew Back','Rubin Jang','Owen Lee',
             'Janet Phee','Grace Yoon'];
@@ -84,14 +92,17 @@ function missingThisMonth(){
    target only the people who still owe one instead of spamming the whole team.
    Run setupDailyReminder() ONCE to schedule it. */
 function remindMissingPrayer(){
-  if(!ONESIGNAL_API_KEY) return;
+  var key = onesignalKey();
+  if(!key){ console.log('no ONESIGNAL_API_KEY script property set - nothing sent'); return; }
   var missing = missingThisMonth();
   if(!missing.length) return;                       // everyone's in - stay quiet
   var month = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM');
   var res = UrlFetchApp.fetch('https://onesignal.com/api/v1/notifications', {
     method: 'post',
     contentType: 'application/json',
-    headers: { Authorization: 'Basic ' + ONESIGNAL_API_KEY },
+    // Legacy REST API keys use "Basic"; a newer key created via Add Key uses
+    // "Key" instead, so switch this if you generate a new one.
+    headers: { Authorization: 'Basic ' + key },
     muteHttpExceptions: true,
     payload: JSON.stringify({
       app_id: ONESIGNAL_APP_ID,

@@ -91,6 +91,10 @@ function missingThisMonth(){
    on enable, so each person's external id IS their name - that's what lets this
    target only the people who still owe one instead of spamming the whole team.
    Run setupDailyReminder() ONCE to schedule it. */
+function onesignalAuth(key){
+  return (key.indexOf('os_v2_') === 0 ? 'Key ' : 'Basic ') + key;
+}
+
 function remindMissingPrayer(){
   var key = onesignalKey();
   if(!key){ console.log('no ONESIGNAL_API_KEY script property set - nothing sent'); return; }
@@ -100,9 +104,10 @@ function remindMissingPrayer(){
   var res = UrlFetchApp.fetch('https://onesignal.com/api/v1/notifications', {
     method: 'post',
     contentType: 'application/json',
-    // Legacy REST API keys use "Basic"; a newer key created via Add Key uses
-    // "Key" instead, so switch this if you generate a new one.
-    headers: { Authorization: 'Basic ' + key },
+    // OneSignal has two key formats with two different auth schemes: the older
+    // Legacy REST API key wants "Basic", the newer os_v2_app_... key wants
+    // "Key". Pick from the key itself so this can't be got wrong by hand.
+    headers: { Authorization: onesignalAuth(key) },
     muteHttpExceptions: true,
     payload: JSON.stringify({
       app_id: ONESIGNAL_APP_ID,

@@ -929,12 +929,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=335; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=336; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v335 · Aug 5, 2026 · 9:40 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v336 · Aug 5, 2026 · 10:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -6103,7 +6103,7 @@ function prSetState(cls,txt){
   var el=document.getElementById('pr-state');
   if(el){el.className='pr-state '+cls;el.textContent=txt;}
 }
-function prSelect(who){prWho=who;try{localStorage.setItem('prWho',who);}catch(e){}renderPrayer();}
+function prSelect(who){prWho=who;try{localStorage.setItem('prWho',who);}catch(e){}renderPrayerReq();}
 var _prT=null;
 function prInput(k,v){
   if(!prWho)return;
@@ -6176,9 +6176,9 @@ function prSubmit(){
   prSaveLog(l);
   prSetState('warn','Sending\u2026');
   prSync(true);
-  renderPrayer();
+  renderPrayerReq();
 }
-function renderPrayer(){
+function renderPrayerReq(){
   var tabs=document.getElementById('pr-who'),body=document.getElementById('pr-body');
   if(!tabs||!body)return;
   var sub=document.getElementById('pr-month-sub');
@@ -6285,12 +6285,12 @@ function prNudgeGo(){
   var b=document.querySelector('.tabbar .tabitem[aria-label="Prayer Request"]');
   if(b)goPrayer(b);
 }
-function goPrayer(btn){go('prayer',btn);renderPrayer();prSync();}
+function goPrayer(btn){go('prayer',btn);renderPrayerReq();prSync();}
 function goPrList(btn){go('prlist',btn);renderPrList();prReadList();}
 window.addEventListener('online',function(){prSync();});
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')prSync();});
 setInterval(function(){if(document.visibilityState==='visible')prSync();},60000);
-renderPrayer();renderPrList();renderPrNudge();prReadList();
+renderPrayerReq();renderPrList();renderPrNudge();prReadList();
 </script>
 <script>
 var COMMITMENTS=[["Grace Yoon", ["Serve physically wherever she is — KCM, church, community, friends, classmates and family — with a faithful, humble, loving heart", "Go to the monthly GCL meetings with Pastor Peter", "Signed up for all the missionary update letters — pray for their families, health, safety and hearts", "Pray for next year's Taiwan team, that they'd experience how good God is", "Keep a missional heart and share the gospel at school, at home, with friends", "Keep praying about whether she's called to be a sender or a goer"]], ["Janet Phee", ["Keep up with the monthly Gospel Student Life meetings with LP", "Pray over the missionaries she receives support letters from, and over Taiwan as a nation — their health, safety, relationships with God", "Devote each day to reading God's word and meditating on it — the hardest one for her, and the first time she's been this consistent", "Speak kindly to family, try not to argue, pray for relationships to heal (still working out how to word this one)"]], ["Owen Lee", ["Pray at least once a day for clarity on whether he's a sender or a goer, leaning on God's understanding and not his own desires", "At every GM, find one person he doesn't know and have an intentional conversation — going after the lost sheep", "Pray for every teammate individually, every single day — the reason he asked everyone for their prayer requests", "Go to every single outreach event he's physically able to"]], ["Rubin Jang", ["Put real effort into GCL and a gospel-centered relationship with God", "Read the word every day to actually understand it, not just to have read it", "Stay spiritually connected instead of drifting back to life before missions", "Pray for this year serving KCM, and for LP and his family"]], ["Andrew Back", ["Write a personal devo on one chapter of the Bible every day, Monday through Saturday", "Read the Bible front to back, 10 minutes a day — after a year of questioning what he believed, basing it all on scripture", "A season of singleness this year — genuinely devoted to the Lord, not just nominal", "Give an extra $10 out of every paycheck to missionaries", "Keep up with the newsletters and GCL he signed up for", "Text the freshman class, and a team check-in text at least once a month", "Ask the team for prayer requests individually, at least every other week"]], ["Irene Song", ["Pray every day for the people she met in Taiwan — she kept notes on every single person because she was scared of forgetting them", "Pray daily about God's calling on her life", "Be consistent and intentional in finishing GCL with LP", "Go to at least one outreach event a month", "Lead her committee faithfully and with joy — prayerful before and after every meeting", "Pour into the freshmen, the way people were intentional with her", "One intentional hangout at least twice a month — meals, sharing testimony with friends"]], ["Sammy Taing", ["Go to 3 outreach events per quarter and share the truth with those around her", "Pray for Riverside — the campus and the families there", "Build prayer into Enrich committee time and be spiritually sensitive to what's happening at UCR", "Stay consistently in the word, a chapter a day — the thing she struggled with most in country, and the only thing that strengthened her", "End each day reflecting on how God moved and writing down the blessings"]], ["Jane Kim", ["Forgive her dad — every time she gets triggered, choose forgiveness with compassion and love", "See her discipler at least once a month, since reaching out for help is the hard part", "Pray for Taiwan every single time she gets boba — a minute of prayer per dollar spent", "Actually read the GCL and missionary newsletters properly instead of skimming, and pray through them"]], ["Jean Kim", ["Five minutes of intercession after her morning devos — praying out of love for people rather than duty", "Journal something specific God did each day, rather than just recounting the day's events"]], ["Becca Park", ["Serve at her church with a humble heart — not trying to do it all on her own, and asking for help", "Not judge how others serve; keep checking her own heart and do nothing to glorify herself", "Be a good daughter and older sister — mend those relationships, be slow to anger, love her family unconditionally"]], ["Caleb Su", ["Lead GCL with the pastor he signed up under, and actually apply it, not just teach it", "Read the whole Bible over the next year using the plan Andrew sent", "Be bolder in prayer — start praying out loud at family meals, and get the family praying out loud too", "Pray for Taiwan, the kids he met, LP and his family, and the missionaries whose letters he signed up for", "Ask his friend group how their faith is at least every other week, so it isn't only small talk"]], ["Esther Yang", ["Pray for the team's requests — building a prayer board (physical or digital) the way FPC does it", "Start a prayer request chat with her TMF students and add them to the board", "Pray for FPC and the people, and for the kids she met", "Keep accountability with the team — a one-on-one check-up about once a month", "Go to GCL again — the second time leading it, and worth it", "Be more intentional at her church instead of leaving right after service; join a community group"]], ["Keren Choi", ["A monthly dedicated prayer meeting for every missionary she knows, praying through newsletters as they come in", "Host the whole team at her house at least once this year", "Pray seriously about long-term missions this year — convicted by Steve K that most people never actually consider it", "GCL, as her schedule allows", "Find and commit to a church in LA by the end of the year — plant somewhere and grow where she's planted", "Memorize her list of favourite Bible verses within the year", "Pray before and after every personal devo", "Share the gospel with at least five future housemates"]], ["Andrew Yoo", ["Pray for every person on the team at least once a week for the next year — at least 52 times each", "Pray and discern his own next steps toward long-term missions — more convicted than he's ever been, and talking it through with his leaders"]]];

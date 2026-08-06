@@ -14,6 +14,11 @@
  *         → upserts that person's row.  The first PIN seen for a name claims
  *           the row; a different one afterwards is rejected.
  *   GET   ?person=NAME&pin=HASH  → that one row, only if the hash matches.
+ *   POST  {mode:'prayer',person,month,request,description,edited}
+ *         → upserts that person's prayer request for that month.
+ *   GET   ?prayer=YYYY-MM        → everyone's requests for that month.  These
+ *           are SHARED on purpose - the point is the team praying for each
+ *           other - so there is no PIN here, unlike the feedback rows.
  *   GET   ?status=1              → progress for everyone: how many characters
  *           are in each section, whether each was marked "nothing to add",
  *           which sign-ups are ticked, when it was last edited.  No answer
@@ -33,6 +38,81 @@ var SU  = {gcl:9, ds:10, lp:11, eric:12, last:13};
 // This is what lets the status board tell "done, nothing to add" apart from
 // "hasn't touched it".
 var NOT = {g:14, ev:15, vbs:16, tmf:17, hs:18};
+
+// ---- Monthly prayer requests (separate tab, separate shape) ----
+var PSHEET = 'Prayer';
+var PHEAD  = ['Timestamp','Person','Month','Request','Description','Edited'];
+
+// Paste your OneSignal REST API key between the quotes to switch the automatic
+// daily reminders on.  Leave it empty and remindMissingPrayer() just no-ops,
+// so nothing breaks if you'd rather not.
+var ONESIGNAL_APP_ID = '4680a999-0410-4d5e-bde6-3088b553f8dd';
+var ONESIGNAL_API_KEY = '';
+var TEAM = ['Andrew Yoo','Keren Choi','Esther Yang','Caleb Su','Becca Park','Jean Kim',
+            'Jane Kim','Sammy Taing','Irene Song','Andrew Back','Rubin Jang','Owen Lee',
+            'Janet Phee','Grace Yoon'];
+
+function getPrayerSheet(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(PSHEET);
+  if(!sh){ sh = ss.insertSheet(PSHEET); sh.appendRow(PHEAD); return sh; }
+  var hdr = sh.getRange(1, 1, 1, PHEAD.length).getValues()[0];
+  for(var c = 0; c < PHEAD.length; c++){
+    if(String(hdr[c]) !== PHEAD[c]){ sh.getRange(1, 1, 1, PHEAD.length).setValues([PHEAD]); break; }
+  }
+  return sh;
+}
+
+function monthKey(d){
+  d = d || new Date();
+  return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2);
+}
+
+/* Who still owes a request this month.  Called by the daily trigger. */
+function missingThisMonth(){
+  var mo = monthKey();
+  var data = getPrayerSheet().getDataRange().getValues();
+  var done = {};
+  for(var i = 1; i < data.length; i++){
+    if(String(data[i][2]) === mo && String(data[i][3] || '').trim()) done[String(data[i][1])] = true;
+  }
+  return TEAM.filter(function(n){ return !done[n]; });
+}
+
+/* Daily nudge to whoever hasn't submitted.  The app calls OneSignal.login(name)
+   on enable, so each person's external id IS their name - that's what lets this
+   target only the people who still owe one instead of spamming the whole team.
+   Run setupDailyReminder() ONCE to schedule it. */
+function remindMissingPrayer(){
+  if(!ONESIGNAL_API_KEY) return;
+  var missing = missingThisMonth();
+  if(!missing.length) return;                       // everyone's in - stay quiet
+  var month = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM');
+  var res = UrlFetchApp.fetch('https://onesignal.com/api/v1/notifications', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: 'Basic ' + ONESIGNAL_API_KEY },
+    muteHttpExceptions: true,
+    payload: JSON.stringify({
+      app_id: ONESIGNAL_APP_ID,
+      include_aliases: { external_id: missing },
+      target_channel: 'push',
+      headings: { en: month + ' prayer request' },
+      contents: { en: 'Your ' + month + ' prayer request isn\'t in yet - tap to write it.' },
+      url: 'https://yooandrewh.github.io/taiwan2k26/'
+    })
+  });
+  console.log(missing.length + ' still missing -> ' + res.getResponseCode() + ' ' + res.getContentText());
+}
+
+/* Run this once by hand to turn the daily reminder on (7pm, script timezone). */
+function setupDailyReminder(){
+  ScriptApp.getProjectTriggers().forEach(function(t){
+    if(t.getHandlerFunction() === 'remindMissingPrayer') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('remindMissingPrayer').timeBased().everyDays(1).atHour(19).create();
+  console.log('daily reminder scheduled for 7pm');
+}
 
 function getSheet(){
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -93,6 +173,23 @@ function doGet(e){
     return json({status: out});
   }
 
+  // ---- Monthly prayer requests: shared with the whole team by design. ----
+  if(q.prayer){
+    var pdata = getPrayerSheet().getDataRange().getValues();
+    var plist = [];
+    for(var pi = 1; pi < pdata.length; pi++){
+      if(String(pdata[pi][2]) !== String(q.prayer)) continue;
+      if(!pdata[pi][1]) continue;
+      plist.push({
+        person:      String(pdata[pi][1]),
+        request:     String(pdata[pi][3] || ''),
+        description: String(pdata[pi][4] || ''),
+        edited:      Number(pdata[pi][5]) || 0
+      });
+    }
+    return json({prayer: plist, missing: missingThisMonth()});
+  }
+
   // ---- One person's own entry.  The PIN gate is enforced HERE, on the
   //      server, so a teammate can't read someone else's answers just by
   //      hitting the URL by hand. ----
@@ -116,6 +213,23 @@ function doPost(e){
     var b = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     var who = String(b.person || '').trim();
     if(!who) return json({error: 'person'});
+
+    // ---- Prayer request upsert, keyed on person + month ----
+    if(String(b.mode || '') === 'prayer'){
+      var mo = String(b.month || monthKey());
+      var psh = getPrayerSheet();
+      var pd = psh.getDataRange().getValues();
+      var prow = 0;
+      for(var pj = 1; pj < pd.length; pj++){
+        if(String(pd[pj][1]) === who && String(pd[pj][2]) === mo){ prow = pj + 1; break; }
+      }
+      if(!prow){ psh.appendRow([new Date(), who, mo, '', '', 0]); prow = psh.getLastRow(); }
+      psh.getRange(prow, 1, 1, PHEAD.length).setValues([[
+        new Date(), who, mo,
+        String(b.request || ''), String(b.description || ''), Number(b.edited) || 0
+      ]]);
+      return json({ok: true});
+    }
     var pin = String(b.pin || '').trim();
 
     var sh = getSheet();

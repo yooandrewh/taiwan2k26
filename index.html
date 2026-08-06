@@ -409,45 +409,12 @@ body.fb-locked .tabbar{display:none!important;}
 .fb-lock-n{font-size:11px;color:var(--text3);line-height:1.5;margin-top:14px;}
 .fb-lockbtn{width:100%;margin-top:10px;padding:11px;border:1px solid var(--border);border-radius:11px;background:var(--surface2);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
 .fb-note{font-size:12px;color:var(--text3);font-style:italic;line-height:1.5;margin-bottom:12px;}
-/* ---- Feedback status (who has filled it out - counts only, never any text) ---- */
-.fst-sum{display:flex;gap:8px;margin-bottom:10px;}
-.fst-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;}
-.fst-n{font-size:22px;font-weight:800;line-height:1.1;}
-.fst-k{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.03em;margin-top:3px;}
-.fst-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.fst-sort{display:flex;gap:6px;}
-.fst-sbtn{padding:5px 10px;border:1px solid var(--border);border-radius:16px;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.fst-sbtn.on{background:#0ea5e9;border-color:#0ea5e9;color:#fff;}
-.fst-ref{margin-left:auto;padding:5px 10px;border:1px solid var(--border);border-radius:16px;background:var(--surface2);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;}
-.fst-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:7px;}
-.fst-row.done{border-color:#16a34a;background:color-mix(in srgb,#16a34a 7%,var(--surface));}
-.fst-row.none{opacity:.62;}
-.fst-top{display:flex;align-items:baseline;gap:8px;}
-.fst-nm{font-size:15px;font-weight:700;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.fst-cnt{font-size:12px;font-weight:800;color:var(--text3);flex:0 0 auto;}
-.fst-cnt.done{color:#16a34a;}
-.fst-chips{display:flex;gap:4px;margin-top:7px;}
-.fst-chip{flex:1;text-align:center;font-size:10px;font-weight:800;padding:4px 0;border-radius:6px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
-.fst-chip.on{background:#16a34a;border-color:#16a34a;color:#fff;}
-.fst-chip.skip{background:var(--surface2);border-style:dashed;border-color:#94a3b8;color:#64748b;}
-.fst-su{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
-.fst-sup{display:inline-block;font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--text3);}
-.fst-sup.on{background:#7c3aed;border-color:#7c3aed;color:#fff;}
-.fst-sect{font-size:12px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 7px;}
-.fst-surow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 11px;margin-bottom:6px;}
-.fst-sul{flex:1;min-width:0;font-size:13px;color:var(--text);}
-.fst-sun{font-size:14px;font-weight:800;color:var(--text2);}
-.fst-suw{flex-basis:100%;font-size:11px;color:var(--text3);}
-.fst-meta{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.4;}
-.fst-warn{background:#fef3c7;border:1px solid #f59e0b;color:#92400e;border-radius:12px;padding:12px;font-size:12px;line-height:1.5;margin-bottom:12px;}
 /* ===== Debrief schedule / groups ===== */
 .db-now-card{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:#fff;border-radius:14px;padding:13px 15px;margin:6px 0 12px;}
 .db-now-card.off{background:var(--surface);color:var(--text2);border:1px solid var(--border);}
 .db-now-l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;opacity:.9;}
 .db-now-act{font-size:19px;font-weight:800;margin-top:3px;line-height:1.2;}
 .db-now-next{font-size:12px;opacity:.93;margin-top:5px;}
-.db-days{margin-bottom:12px;}
-.db-days button{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2;}
 .db-dd{font-size:10px;font-weight:600;opacity:.65;}
 .db-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
 .db-row:last-child{border-bottom:none;}
@@ -473,7 +440,37 @@ body.fb-locked .tabbar{display:none!important;}
 .db-rule{font-size:12px;color:var(--text2);line-height:1.5;padding:5px 0;border-bottom:1px solid var(--border);}
 .db-rule:last-child{border-bottom:none;}
 .kobe-wrap{width:100%;max-width:200px;margin:4px auto 14px;overflow:hidden;border-radius:14px;}
+.kobe-wrap.kobe-wide{max-width:330px;margin-top:2px;}
 .kobe-wrap img{width:100%;height:auto;display:block;}
+/* Psalm 27 — centered scripture panel at the top of the home tab. The whole
+   psalm is on the page; stanzas fade up from a slight blur as you scroll to
+   them, and the only ambient motion is one very slow drifting warm light.
+   Opening (v1) and closing (v13-14) stanzas are set larger as bookends. */
+.ps27{position:relative;overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:32px 16px 26px;margin:2px 0 18px;}
+.ps27::before{content:"";position:absolute;inset:-35% -20%;pointer-events:none;background:radial-gradient(44% 34% at 50% 16%,rgba(186,152,88,0.13),transparent 70%);animation:ps27-drift 30s ease-in-out infinite alternate;}
+@media(prefers-color-scheme:dark){.ps27::before{background:radial-gradient(44% 34% at 50% 16%,rgba(226,190,120,0.11),transparent 70%);}}
+:root[data-theme="dark"] .ps27::before{background:radial-gradient(44% 34% at 50% 16%,rgba(226,190,120,0.11),transparent 70%);}
+:root[data-theme="light"] .ps27::before{background:radial-gradient(44% 34% at 50% 16%,rgba(186,152,88,0.13),transparent 70%);}
+@keyframes ps27-drift{from{transform:translate3d(-5%,-2%,0) scale(1);}to{transform:translate3d(5%,4%,0) scale(1.12);}}
+.ps27-inner{position:relative;max-width:33em;margin:0 auto;text-align:center;}
+.ps27-label{font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--text3);}
+.ps27-rule{width:40px;height:1px;background:var(--border);margin:14px auto 26px;transform:scaleX(0);transform-origin:center;transition:transform 1.1s cubic-bezier(.22,.61,.36,1);}
+.ps27-rule.ps27-in{transform:scaleX(1);}
+.ps27-ln{font-family:ui-serif,Georgia,'Iowan Old Style','Times New Roman',serif;color:var(--text2);font-size:15px;line-height:1.72;text-wrap:balance;}
+.ps27-st{margin-top:26px;}
+.ps27-st.ps27-open{margin-top:0;}
+.ps27-open .ps27-ln{font-size:18.5px;line-height:1.66;color:var(--text);}
+.ps27-close .ps27-ln{font-size:17px;line-height:1.7;color:var(--text);}
+.ps27-v{font-family:-apple-system,system-ui,sans-serif;font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--text3);vertical-align:.55em;margin-right:4px;opacity:.75;}
+.ps27-sc{font-variant:small-caps;letter-spacing:.02em;}
+.ps27-src{display:block;margin-top:26px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);opacity:.65;}
+/* reveal primitive */
+.ps27-r{opacity:0;transform:translateY(9px);filter:blur(3px);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1),filter 1s cubic-bezier(.22,.61,.36,1);}
+.ps27-r.ps27-in{opacity:1;transform:none;filter:none;}
+@media(prefers-reduced-motion:reduce){
+  .ps27::before{animation:none;}
+  .ps27-r,.ps27-rule{transition:none;opacity:1;transform:none;filter:none;}
+}
 .tacc{margin-bottom:6px;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden;}
 .tacc-h{display:flex;align-items:center;gap:11px;padding:12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tacc-date{display:flex;align-items:baseline;gap:5px;flex-shrink:0;min-width:78px;}
@@ -845,12 +842,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=332; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=333; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v332 · Aug 5, 2026 · 6:45 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v333 · Aug 5, 2026 · 8:04 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1586,11 +1583,80 @@ var APP_VERSION=332; // bump alongside version.json's "v" on every deploy
   <div id="mem-practice" style="display:none"></div>
 </div>
 <div id="pane-hype" class="pane active">
+  <div class="kobe-wrap kobe-wide"><img src="shaq-kobe.webp" width="584" height="426" alt="Shaq and Kobe in the locker room with the championship trophies"></div>
+  <div class="ps27"><div class="ps27-inner" id="ps27"></div></div>
+  <script>
+  (function(){
+    // "#n " marks the start of verse n. Lines are centered, so the NIV's
+    // poetic indents are dropped in favour of one centered column.
+    var STANZAS=[
+      ['The Lord is my light and my salvation—','whom shall I fear?','The Lord is the stronghold of my life—','of whom shall I be afraid?'],
+      ['#2 When the wicked advance against me','to devour me,','it is my enemies and my foes','who will stumble and fall.',
+       '#3 Though an army besiege me,','my heart will not fear;','though war break out against me,','even then I will be confident.'],
+      ['#4 One thing I ask from the Lord,','this only do I seek:','that I may dwell in the house of the Lord','all the days of my life,','to gaze on the beauty of the Lord','and to seek him in his temple.',
+       '#5 For in the day of trouble','he will keep me safe in his dwelling;','he will hide me in the shelter of his sacred tent','and set me high upon a rock.'],
+      ['#6 Then my head will be exalted','above the enemies who surround me;','at his sacred tent I will sacrifice with shouts of joy;','I will sing and make music to the Lord.'],
+      ['#7 Hear my voice when I call, Lord;','be merciful to me and answer me.',
+       '#8 My heart says of you, “Seek his face!”','Your face, Lord, I will seek.',
+       '#9 Do not hide your face from me,','do not turn your servant away in anger;','you have been my helper.','Do not reject me or forsake me,','God my Savior.',
+       '#10 Though my father and mother forsake me,','the Lord will receive me.',
+       '#11 Teach me your way, Lord;','lead me in a straight path','because of my oppressors.',
+       '#12 Do not turn me over to the desire of my foes,','for false witnesses rise up against me,','spouting malicious accusations.'],
+      ['#13 I remain confident of this:','I will see the goodness of the Lord','in the land of the living.',
+       '#14 Wait for the Lord;','be strong and take heart','and wait for the Lord.']
+    ];
+    // NIV sets the divine name in small caps; do the same rather than plain "Lord".
+    function sc(s){return s.replace(/\bLord\b/g,'<span class="ps27-sc">Lord</span>');}
+    function line(raw){
+      var num='',t=raw,m=t.match(/^#(\d+)\s+/);
+      if(m){num='<span class="ps27-v">'+m[1]+'</span>';t=t.slice(m[0].length);}
+      return '<div class="ps27-ln ps27-r">'+num+sc(t)+'</div>';
+    }
+    var last=STANZAS.length-1;
+    var html='<div class="ps27-label ps27-r">Psalm 27</div><div class="ps27-rule"></div>'
+      +STANZAS.map(function(st,i){
+        var cls='ps27-st'+(i===0?' ps27-open':'')+(i===last?' ps27-close':'');
+        return '<div class="'+cls+'">'+st.map(line).join('')+'</div>';
+      }).join('')
+      +'<span class="ps27-src ps27-r">Psalm 27 · NIV</span>';
+    var root=document.getElementById('ps27');
+    root.innerHTML=html;
+
+    function stagger(nodes,base,step){
+      nodes.forEach(function(n,i){n.style.transitionDelay=(base+i*step)+'ms';});
+      setTimeout(function(){nodes.forEach(function(n){n.classList.add('ps27-in');});},30);
+    }
+    function nodesIn(el){return Array.prototype.slice.call(el.querySelectorAll('.ps27-r'));}
+    // The header and opening stanza settle in on load; the rest fades up
+    // stanza by stanza as it scrolls into view.
+    stagger([root.querySelector('.ps27-label'),root.querySelector('.ps27-rule')],80,260);
+    stagger(nodesIn(root.querySelector('.ps27-open')),480,190);
+
+    var rest=Array.prototype.slice.call(root.querySelectorAll('.ps27-st')).slice(1);
+    rest.push(root.querySelector('.ps27-src'));
+    if(window.IntersectionObserver){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(!e.isIntersecting)return;
+          io.unobserve(e.target);
+          stagger(e.target.classList.contains('ps27-r')?[e.target]:nodesIn(e.target),0,110);
+        });
+      },{threshold:0.1,rootMargin:'0px 0px -8% 0px'});
+      rest.forEach(function(el){io.observe(el);});
+    }else{
+      rest.forEach(function(el){(el.classList.contains('ps27-r')?[el]:nodesIn(el)).forEach(function(n){n.classList.add('ps27-in');});});
+    }
+    // Safety net: never leave the opening stuck at opacity 0 if a transition never fires.
+    setTimeout(function(){
+      nodesIn(root.querySelector('.ps27-open')).forEach(function(n){n.classList.add('ps27-in');});
+      root.querySelector('.ps27-rule').classList.add('ps27-in');
+      root.querySelector('.ps27-label').classList.add('ps27-in');
+    },3000);
+  })();
+  </script>
   <div id="fb-nudge"></div>
   <div id="db-now"></div>
   <div id="db-sched"></div>
-  <div class="kobe-wrap"><img src="kobe.webp" width="257" height="321" alt="Kobe Bryant: &quot;What's there to be happy about? Job's not finished. Job finished?&quot;"></div>
-  <div id="db-meals"></div>
 </div>
 <div id="pane-feedback" class="pane">
   <div class="stu-title" style="color:#16a34a">Feedback</div>
@@ -1598,15 +1664,6 @@ var APP_VERSION=332; // bump alongside version.json's "v" on every deploy
   <div class="mygrp-tabs" id="fb-who"></div>
   <div id="fb-body"></div>
 </div>
-<div id="pane-fbstat" class="pane">
-  <div class="stu-title" style="color:#0ea5e9">Feedback Status</div>
-  <div class="stu-sub">Who's filled it out — nobody's answers are shown here</div>
-  <div id="fst-body"></div>
-</div>
-<div id="pane-debrief" class="pane">
-  <div class="stu-title" style="color:#0d9488">Groups &amp; Places</div>
-  <div class="stu-sub">Testimony sharing rooms · duties · meals</div>
-  <div id="db-groups"></div>
 </div>
 <div id="pane-mon"<div id="pane-mon" class="pane">
   <div id="today-body"></div>
@@ -1760,16 +1817,7 @@ var APP_VERSION=332; // bump alongside version.json's "v" on every deploy
     <div style="margin-top:12px;"><button onclick="closeTripGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
   </div>
 </div>
-<div id="fst-gate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
-  <div style="background:var(--bg);border-radius:14px;padding:28px 22px;max-width:320px;width:88%;text-align:center;">
-    <div style="font-size:30px;margin-bottom:4px;">&#128202;</div>
-    <div style="font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text)">Feedback Status</div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Leaders only &mdash; enter PIN to view</div>
-    <input id="fst-pw" type="password" inputmode="numeric" placeholder="PIN" autocomplete="off" onkeydown="if(event.key==='Enter')checkFstPw()" style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;font-size:16px;background:var(--bg);color:var(--text);margin-bottom:8px;-webkit-appearance:none;">
-    <div id="fst-err" style="font-size:11px;color:#b91c1c;margin-bottom:8px;display:none;">Incorrect PIN</div>
-    <button onclick="checkFstPw()" style="width:100%;padding:11px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">Unlock</button>
-    <div style="margin-top:12px;"><button onclick="closeFstGate()" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;">Cancel</button></div>
-  </div>
+</div>
 </div>
 <div id="kid-modal" onclick="if(event.target===this)closeKidModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:250;align-items:flex-end;justify-content:center;">
   <div class="kd-sheet">
@@ -1830,17 +1878,9 @@ var APP_VERSION=332; // bump alongside version.json's "v" on every deploy
     <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20h14V9.8"/></svg>
     <span>Home</span>
   </button>
-  <button class="tabitem" style="--accent:#0d9488" onclick="goGroups(this)" aria-label="Groups and Places">
-    <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="2.6"/><circle cx="16.5" cy="7" r="2.2"/><path d="M3.5 19c0-3 2.4-5.2 5.5-5.2s5.5 2.2 5.5 5.2M16 13.9c2.6.2 4.5 2.2 4.5 5.1"/></svg>
-    <span>Groups</span>
-  </button>
   <button class="tabitem" style="--accent:#16a34a" onclick="goFeedback(this)" aria-label="Feedback">
     <svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H9l-5 4z"/><path d="M8 8.5h8M8 11.5h5"/></svg>
     <span>Feedback</span>
-  </button>
-  <button class="tabitem" style="--accent:#0ea5e9" onclick="goFbStat(this)" aria-label="Feedback Status">
-    <svg viewBox="0 0 24 24"><path d="M4.5 20V10M9.8 20V4.5M15.2 20v-7M20.5 20V7.5"/></svg>
-    <span>Status</span>
   </button>
   <button class="tabitem" style="--accent:#b45309" onclick="go('recap',this)" aria-label="Recap">
     <svg viewBox="0 0 24 24"><path d="M6 3.5h9.5L20 8v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z"/><path d="M15 3.5V8h5"/><path d="M8.5 12h7M8.5 15.5h7M8.5 9h3"/></svg>
@@ -3757,10 +3797,6 @@ var DEBRIEF_SCHED={
     {m:720,me:1440,t:'12:00p',te:'12:00a',s:"Pack and Clean",sub:""}
   ],
 };
-var DEBRIEF_PLACES={"mon":[{"room":"Main Sanc","teams":["Cambodia","Taiwan"]},{"room":"Dining Room","teams":["S. India","Philippines"]},{"room":"Room B","teams":["Nicaragua","N. India"]}],"tue":[{"room":"Main Sanc","teams":["Nicaragua","Taiwan"]},{"room":"Dining Room","teams":["S. India","Cambodia"]},{"room":"Room B","teams":["Philippines","N. India"]}],"wed":[{"room":"Main Sanc","teams":["N. India","Cambodia"]},{"room":"Dining Room","teams":["Philippines","Taiwan"]},{"room":"Room B","teams":["Nicaragua","S. India"]}]};
-var DEBRIEF_MEALS={"mon":[{"k":"Breakfast","what":"sam's club pick up","det":"between 12:00-1:00 pm \u00b7 under jeesu park \u00b7 address: 1375 e ontario ave. corona, ca 92881"},{"k":"Dinner","what":"chicken bake + chips","det":"pick up by aaron jun"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges"}],"tue":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants"},{"k":"Lunch","what":"korean bibimbap","det":"provided by kamlin"},{"k":"Dinner","what":"carrot & daikon","det":"banh mi's + chips \u00b7 pick up by john song \u00b7 @ 5:00 pm \u00b7 under janette park \u00b7 (7143088073) \u00b7 address: 2276 griffin way #106, corona, ca 92879 \u00b7 details: 55 grilled chicken, 55 grilled pork (everyone gets one)"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges"}],"wed":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants"},{"k":"Lunch","what":"raising canes","det":"pick up by leaders \u00b7 @ 11:30 am \u00b7 under janette park (7143088073) \u00b7 address: 239 old nuevo rd. perris, ca 92571 \u00b7 details: one pan of fries for each team, at least 3 chicken per person"},{"k":"Dinner","what":"taco bell + chips","det":"pick up by john song"},{"k":"Snacks","what":"Snack Assortment","det":"watermelon, chips, candy, oranges, any leftovers to finish"}],"thu":[{"k":"Breakfast","what":"breakfast assortment","det":"bananas, muffins, mini croissants, any leftovers to finish"}]};
-var DEBRIEF_DUTIES=["taiwan - all bathrooms/trash (mop communal bathroom floors - ask keren for mop)","cambodia - team room","nindia - team room (main sanc)","sindia - team room","nicaragua - team room (dining room)","philippines - team room"];
-var DEBRIEF_RULES=["similar to intensive retreat","same team rooms and dorm rooms (if they don't remember, it's on the spreadsheet)","don't run off on your own","clean up after yourselves","clean up team rooms and own rooms","listen to your leaders or staff there","no boys in girls dorm vice versa","do not be late (if you're early, you're on time, if you're on time, you're late)","conserve water + electricity **pls emphasize this one (encourage students to not shower as often this week lol)**","toilet paper in the trash cans","any questions, message or find janette, aaron, or john song"];
 
 var DEBRIEF_DATES=['2026-08-03','2026-08-04','2026-08-05','2026-08-06'];
 var DEBRIEF_KEYS=['mon','tue','wed','thu'];
@@ -3778,8 +3814,6 @@ function debriefToday(){
   if(i<0)i=key<DEBRIEF_DATES[0]?0:DEBRIEF_DATES.length-1;
   return {idx:i,key:DEBRIEF_KEYS[i],label:DEBRIEF_LABELS[i],date:DEBRIEF_DATES[i],onDay:DEBRIEF_DATES.indexOf(key)>=0,min:t.min};
 }
-var _dbDay=null; // which day the schedule list is showing (null = follow today)
-function dbSelectDay(i){_dbDay=i;renderDebrief();}
 function dbItemHtml(it,state){
   return '<div class="db-row'+(state?' '+state:'')+'">'
     +'<span class="db-t">'+it.t+'</span>'
@@ -3813,12 +3847,10 @@ function renderDebriefSched(){
   var el=document.getElementById('db-sched');
   if(!el)return;
   var d=debriefToday();
-  var show=(_dbDay==null)?d.idx:_dbDay;
+  // Thursday only - the earlier days are done, so the day picker was just
+  // three dead tabs.
+  var show=DEBRIEF_KEYS.indexOf('thu');
   var key=DEBRIEF_KEYS[show];
-  var tabs=DEBRIEF_KEYS.map(function(k,i){
-    return '<button class="'+(i===show?'on':'')+'" onclick="dbSelectDay('+i+')">'
-      +DEBRIEF_LABELS[i].slice(0,3)+'<span class="db-dd">'+DEBRIEF_DATES[i].slice(8)+'</span></button>';
-  }).join('');
   var rows=(DEBRIEF_SCHED[key]||[]).map(function(it){
     var state='';
     if(show===d.idx&&d.onDay){
@@ -3827,44 +3859,10 @@ function renderDebriefSched(){
     }
     return dbItemHtml(it,state);
   }).join('');
-  var meals=(DEBRIEF_MEALS[key]||[]).map(function(m){
-    return '<div class="db-meal"><span class="db-meal-k">'+m.k+'</span>'
-      +'<span class="db-meal-w"><b>'+m.what+'</b>'+(m.det?'<span class="db-sub">'+m.det+'</span>':'')+'</span></div>';
-  }).join('');
-  el.innerHTML='<div class="stu-seg db-days">'+tabs+'</div>'
-    +'<div class="sgq-wrap"><div class="sgq-hdr">'+DEBRIEF_LABELS[show]+' · '+DEBRIEF_DATES[show].slice(5).replace('-','/')+'</div>'+rows+'</div>'
-  ;
-  var mealEl=document.getElementById('db-meals');
-  if(mealEl)mealEl.innerHTML=meals?'<div class="sgq-wrap"><div class="sgq-hdr">🍽 Meals · '+DEBRIEF_LABELS[show]+'</div>'+meals+'</div>':'';
+  el.innerHTML='<div class="sgq-wrap"><div class="sgq-hdr">'+DEBRIEF_LABELS[show]+' · '+DEBRIEF_DATES[show].slice(5).replace('-','/')+'</div>'+rows+'</div>';
 }
 function renderDebrief(){renderDebriefNow();renderDebriefSched();}
-function renderGroups(){
-  var el=document.getElementById('db-groups');
-  if(!el)return;
-  var d=debriefToday();
-  var dayBlocks=['mon','tue','wed'].map(function(k,i){
-    var rooms=(DEBRIEF_PLACES[k]||[]).map(function(r){
-      return '<div class="db-place"><span class="db-room">'+r.room+'</span>'
-        +'<span class="db-teams">'+r.teams.map(function(t){return '<span class="db-team'+(t.toLowerCase().indexOf('taiwan')>=0?' ours':'')+'">'+t+'</span>';}).join('')+'</span></div>';
-    }).join('');
-    var isToday=(DEBRIEF_KEYS[d.idx]===k&&d.onDay);
-    return '<div class="sgq-wrap'+(isToday?' db-today':'')+'"><div class="sgq-hdr">'+DEBRIEF_LABELS[i]+(isToday?' · today':'')+'</div>'+rooms+'</div>';
-  }).join('');
-  var duties=DEBRIEF_DUTIES.map(function(t){
-    var p=t.split(' - ');
-    var name=p[0].replace(/^nindia$/,'n. india').replace(/^sindia$/,'s. india');
-    return '<div class="db-place"><span class="db-room" style="text-transform:capitalize">'+name+'</span>'
-      +'<span class="db-teams"><span class="db-duty">'+p.slice(1).join(' - ')+'</span></span></div>';
-  }).join('');
-  var rules=DEBRIEF_RULES.map(function(t){return '<div class="db-rule">'+t+'</div>';}).join('');
-  el.innerHTML='<div class="db-note">Testimony sharing · 2:30–4:30 PM · two teams per room</div>'
-    +dayBlocks
-    +'<div class="sgq-wrap"><div class="sgq-hdr">🧹 Clean-up duties</div>'+duties+'</div>'
-    +'<div class="sgq-wrap"><div class="sgq-hdr">📋 Orientation</div>'+rules+'</div>';
-}
-function goGroups(btn){go('debrief',btn);renderGroups();}
 renderDebrief();
-renderGroups();
 setInterval(renderDebrief,30000);
 
 // Raw schedule data (minute-of-day start/end per item) — shared by the "Right now /
@@ -5915,19 +5913,6 @@ function fbNudgeGo(){
   },160);
 }
 
-/* ===== Feedback status =====
-   A read-only "who has actually done this" view. It deliberately talks to a
-   DIFFERENT endpoint action (?status=1) that returns counts only - how many
-   characters are in each section, which boxes are ticked, when it was last
-   touched - and never a word of anyone's text. That keeps the promise made on
-   the Feedback tab intact: you can see that Caleb has written his EV week,
-   you still can't read it. Last result is cached so the tab isn't blank
-   offline. */
-var FST_SEC=[{k:'g',s:'Gen'},{k:'ev',s:'EV'},{k:'vbs',s:'VBS'},{k:'tmf',s:'TMF'},{k:'hs',s:'HS'}];
-var FST_SU=[{k:'gcl',s:'GCL'},{k:'ds',s:'D&amp;S'},{k:'lp',s:'LP'},{k:'eric',s:'Eric'},{k:'last',s:'Sehee'}];
-var fstRows=null,fstAt=0,fstLoading=false,fstErr='',fstSort='roster',fstNeedsUpdate=false;
-try{var _c=JSON.parse(localStorage.getItem('fbStatCache')||'null');
-    if(_c&&_c.rows){fstRows=_c.rows;fstAt=_c.t||0;}}catch(e){}
 function fstAgo(ms){
   if(!ms)return 'never';
   var d=Date.now()-ms;
@@ -5936,143 +5921,6 @@ function fstAgo(ms){
   if(d<86400000)return Math.round(d/3600000)+'h ago';
   return Math.round(d/86400000)+'d ago';
 }
-function fstLoad(){
-  if(!FEEDBACK_ENDPOINT||fstLoading)return;
-  fstLoading=true;fstErr='';renderFbStat();
-  fetch(FEEDBACK_ENDPOINT+'?status=1',{cache:'no-store'})
-    .then(function(r){return r.json();}).then(function(d){
-      fstLoading=false;
-      if(d&&d.status){
-        fstNeedsUpdate=false;fstRows=d.status;fstAt=Date.now();
-        try{localStorage.setItem('fbStatCache',JSON.stringify({t:fstAt,rows:fstRows}));}catch(e){}
-      }else{
-        // Old Apps Script: it answers ?status=1 with an empty {rows:[]} because
-        // it only knows how to look people up one at a time.
-        fstNeedsUpdate=true;
-      }
-      renderFbStat();
-    }).catch(function(){
-      fstLoading=false;
-      fstErr=fstRows?'Couldn’t refresh — showing the last update.':'Couldn’t reach the sheet. Try again once you’re online.';
-      renderFbStat();
-    });
-}
-function fstSetSort(s){fstSort=s;renderFbStat();}
-function renderFbStat(){
-  var body=document.getElementById('fst-body');
-  if(!body)return;
-  var byName={};
-  (fstRows||[]).forEach(function(r){if(r&&r.person)byName[r.person]=r;});
-  var list=FB_PEOPLE.map(function(n){
-    var r=byName[n]||null;
-    var chars=(r&&r.chars)||{},notes=(r&&r.notes)||{};
-    var filled=0,words=0,wrote=0;
-    FST_SEC.forEach(function(s){
-      var c=Number(chars[s.k])||0;
-      if(c>0){filled++;wrote++;words+=Math.max(1,Math.round(c/5.5));}
-      else if(notes[s.k]==='n')filled++;   // "nothing to add" is a real answer
-    });
-    var signups=(r&&r.signups)||[];
-    return {name:n,row:r,chars:chars,notes:notes,filled:filled,wrote:wrote,words:words,
-            signups:signups,edited:(r&&r.edited)||0,started:!!r,
-            active:filled>0||signups.length>0};
-  });
-  var done=list.filter(function(p){return p.filled===5;}).length;
-  var started=list.filter(function(p){return p.active;}).length;
-  var suCount={},suWho={};
-  FST_SU.forEach(function(su){suCount[su.k]=0;suWho[su.k]=[];});
-  list.forEach(function(p){
-    p.signups.forEach(function(k){
-      if(suCount[k]===undefined)return;
-      suCount[k]++; suWho[k].push(p.name.split(' ')[0]);
-    });
-  });
-  var sorted=list.slice();
-  if(fstSort==='progress')sorted.sort(function(a,b){return b.filled-a.filled||b.words-a.words||FB_PEOPLE.indexOf(a.name)-FB_PEOPLE.indexOf(b.name);});
-  var h='';
-  if(fstNeedsUpdate){
-    h+='<div class="fst-warn"><b>Not connected yet.</b> The Google Sheet script needs the '
-      +'updated version pasted in (it adds a status view that reports progress without '
-      +'exposing anyone’s answers). Ask Andrew — he has the code.</div>';
-  }
-  if(fstErr)h+='<div class="fst-warn">'+fstErr+'</div>';
-  h+='<div class="fst-sum">'
-    +'<div class="fst-card"><div class="fst-n" style="color:#16a34a">'+done+'</div><div class="fst-k">All 5 answered</div></div>'
-    +'<div class="fst-card"><div class="fst-n" style="color:#d97706">'+(started-done)+'</div><div class="fst-k">In progress</div></div>'
-    +'<div class="fst-card"><div class="fst-n" style="color:var(--text3)">'+(list.length-started)+'</div><div class="fst-k">Nothing yet</div></div>'
-    +'</div>';
-  h+='<div class="fst-sect">Sign-ups</div>';
-  h+=FB_SIGNUPS.map(function(su){
-    var short=(FST_SU.filter(function(x){return x.k===su.k;})[0]||{}).s||su.k;
-    var who=suWho[su.k]||[];
-    return '<div class="fst-surow"><span class="fst-sup'+(who.length?' on':'')+'">'+short+'</span>'
-      +'<span class="fst-sul">'+su.label+'</span>'
-      +'<span class="fst-sun">'+who.length+'</span>'
-      +(who.length?'<div class="fst-suw">'+who.join(', ')+'</div>':'')+'</div>';
-  }).join('');
-  h+='<div class="fst-sect">Per person</div>';
-  h+='<div class="fst-bar"><div class="fst-sort">'
-    +'<button class="fst-sbtn'+(fstSort==='roster'?' on':'')+'" onclick="fstSetSort(\'roster\')">Roster</button>'
-    +'<button class="fst-sbtn'+(fstSort==='progress'?' on':'')+'" onclick="fstSetSort(\'progress\')">Progress</button>'
-    +'</div><button class="fst-ref" onclick="fstLoad()">'+(fstLoading?'Refreshing…':'Refresh')+'</button></div>';
-  h+=sorted.map(function(p){
-    var cls=p.filled===5?' done':(p.active?'':' none');
-    var chips=FST_SEC.map(function(s){
-      var c=(Number(p.chars[s.k])||0)>0?' on':(p.notes[s.k]==='n'?' skip':'');
-      return '<div class="fst-chip'+c+'">'+s.s+'</div>';
-    }).join('');
-    var meta;
-    if(!p.started)meta='Hasn’t opened it yet';
-    else{
-      var bits=[],skipped=p.filled-p.wrote;
-      if(p.wrote)bits.push('~'+p.words+' word'+(p.words===1?'':'s'));
-      if(skipped)bits.push(skipped+' marked “nothing to add”');
-      if(!p.filled)bits.push('no notes yet');
-      if(p.signups.length)bits.push(p.signups.length+' sign-up'+(p.signups.length===1?'':'s'));
-      bits.push('last edit '+fstAgo(p.edited));
-      meta=bits.join(' · ');
-    }
-    var mine=FST_SU.filter(function(su){return p.signups.indexOf(su.k)>=0;});
-    var suLine=mine.length
-      ? '<div class="fst-su">'+mine.map(function(su){return '<span class="fst-sup">'+su.s+'</span>';}).join('')+'</div>'
-      : '';
-    return '<div class="fst-row'+cls+'">'
-      +'<div class="fst-top"><div class="fst-nm">'+p.name+'</div>'
-        +'<div class="fst-cnt'+(p.filled===5?' done':'')+'">'+p.filled+'/5</div></div>'
-      +'<div class="fst-chips">'+chips+'</div>'
-      +suLine
-      +'<div class="fst-meta">'+meta+'</div></div>';
-  }).join('');
-  h+='<div class="fb-note" style="margin-top:12px">Only counts are shown — the sheet never sends '
-    +'anyone’s writing to this screen.'+(fstAt?' Last checked '+fstAgo(fstAt)+'.':'')+'</div>';
-  body.innerHTML=h;
-}
-/* The board names who hasn't done their feedback, which is fine for leaders
-   and needlessly public for everyone else - so it sits behind a PIN. Once
-   unlocked it stays unlocked on that device. */
-var FST_PIN='1105',_fstBtn=null,_fstOpen=false;
-try{_fstOpen=localStorage.getItem('fstOpen')==='1';}catch(e){}
-function goFbStat(btn){
-  if(_fstOpen){fstShow(btn);return;}
-  _fstBtn=btn;
-  var g=document.getElementById('fst-gate');
-  g.style.display='flex';
-  document.getElementById('fst-pw').value='';
-  document.getElementById('fst-err').style.display='none';
-  setTimeout(function(){document.getElementById('fst-pw').focus();},100);
-}
-function checkFstPw(){
-  if(document.getElementById('fst-pw').value.trim()===FST_PIN){
-    _fstOpen=true;
-    try{localStorage.setItem('fstOpen','1');}catch(e){}
-    document.getElementById('fst-gate').style.display='none';
-    fstShow(_fstBtn);
-  }else{
-    document.getElementById('fst-err').style.display='block';
-  }
-}
-function closeFstGate(){document.getElementById('fst-gate').style.display='none';}
-function fstShow(btn){go('fbstat',btn);renderFbStat();fstLoad();}
 
 // Retry whenever the network or the tab comes back.
 window.addEventListener('online',fbSync);

@@ -99,7 +99,10 @@ function remindMissingPrayer(){
   var key = onesignalKey();
   if(!key){ console.log('no ONESIGNAL_API_KEY script property set - nothing sent'); return; }
   var missing = missingThisMonth();
-  if(!missing.length) return;                       // everyone's in - stay quiet
+  // Every exit says why. A run that finishes with an empty log is impossible to
+  // tell apart from a run that never really ran.
+  if(!missing.length){ console.log('everyone has submitted for ' + monthKey() + ' - nothing to send'); return; }
+  console.log('still missing (' + missing.length + '): ' + missing.join(', '));
   var month = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM');
   var res = UrlFetchApp.fetch('https://onesignal.com/api/v1/notifications', {
     method: 'post',

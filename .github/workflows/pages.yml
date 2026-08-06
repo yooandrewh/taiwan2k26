@@ -1,0 +1,30 @@
+# Deploys the site with GitHub Actions instead of the legacy Jekyll builder.
+# The legacy builder errored on every push from v335 on (generic "Page build
+# failed", no detail), leaving the live site pinned at v334 while commits kept
+# landing. This path has no Jekyll step at all - it uploads the repo as-is.
+name: Deploy Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -375,6 +375,11 @@ body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 .fb-syncbtn[disabled]{opacity:.5;}
 .fb-tools{display:flex;gap:5px;}
 .cm-note{font-size:12px;color:var(--text3);font-style:italic;line-height:1.5;margin-bottom:12px;}
+.cm-rq{background:var(--surface2);border-radius:9px;padding:9px 11px;margin:2px 0 4px;}
+.cm-rq.none{opacity:.55;}
+.cm-rq-l{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.cm-rq-t{font-size:13.5px;color:var(--text);line-height:1.5;white-space:pre-wrap;}
+.cm-rq-d{font-size:12.5px;color:var(--text2);line-height:1.5;margin-top:4px;white-space:pre-wrap;}
 .cm-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px;margin-bottom:9px;}
 .cm-nm{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:800;color:var(--text);}
 .cm-no{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--text3);font-size:11px;font-weight:800;flex:0 0 auto;}
@@ -929,12 +934,12 @@ function appRefresh(btn){
     }).catch(function(){}).finally(done);
   }else{done();}
 }
-var APP_VERSION=336; // bump alongside version.json's "v" on every deploy
+var APP_VERSION=337; // bump alongside version.json's "v" on every deploy
 </script>
 <div class="wrap">
 <div class="topbar">
   <div class="title">Taiwan 2026</div>
-  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v336 · Aug 5, 2026 · 10:05 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
+  <div class="meta"><img src="https://hits.sh/yooandrewh.github.io/taiwan2k26.svg?view=today-total&style=flat-square&label=today+%2F+all-time&color=16a34a&labelColor=555555" alt="today / all-time hits" style="height:16px;margin-right:6px;">v337 · Aug 6, 2026 · 6:55 PM (Corona)<button class="refresh-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="font-size:13px;"></button><button class="refresh-btn" id="app-refresh-btn" onclick="appRefresh(this)" aria-label="Refresh app" title="Refresh app"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></button></div>
 </div>
 <script>
 (function(){
@@ -1924,8 +1929,8 @@ var APP_VERSION=336; // bump alongside version.json's "v" on every deploy
   <div id="pr-list"></div>
 </div>
 <div id="pane-commit" class="pane">
-  <div class="stu-title" style="color:#b45309">Commitments</div>
-  <div class="stu-sub">What the team committed to at debrief</div>
+  <div class="stu-title" style="color:#b45309">Commitments &amp; Requests</div>
+  <div class="stu-sub" id="cm-sub">Each person’s monthly prayer request and their debrief commitments</div>
   <div id="cm-body"></div>
 </div>
 <div id="pane-manual" class="pane">
@@ -2000,11 +2005,11 @@ var APP_VERSION=336; // bump alongside version.json's "v" on every deploy
     <svg viewBox="0 0 24 24"><path d="M9 4.5h9a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-14a1 1 0 0 1 1-1h1"/><path d="M9 3.2h4v2.6H9z"/><path d="M8.6 12l2 2 4.2-4.2"/></svg>
     <span>Commit</span>
   </button>
-  <button class="tabitem" style="--accent:#b45309" onclick="tryManual(this)" aria-label="Field Manual">
+  <button class="tabitem" style="--accent:#b45309;display:none" onclick="tryManual(this)" aria-label="Field Manual">
     <svg viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M4 17.5A1.5 1.5 0 0 1 5.5 16H19"/><path d="M8 7.5h7M8 11h5"/></svg>
     <span>Manual</span>
   </button>
-  <button class="tabitem" style="--accent:#0ea5e9" onclick="goPrList(this)" aria-label="Prayer List">
+  <button class="tabitem" style="--accent:#0ea5e9;display:none" onclick="goPrList(this)" aria-label="Prayer List">
     <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19.5" cy="18" r="1.6"/></svg>
     <span>Requests</span>
   </button>
@@ -6157,7 +6162,7 @@ function prReadList(cb){
       if(prWho){var me=prGetLog()[prKey(prWho,prMonthKey())];
         if(me&&me.submitted)prSetState(me.synced?'ok':'warn',
           me.synced?'\u2713 Submitted & synced':'Saved on this phone \u00b7 will sync when online');}
-      renderPrList();renderPrNudge();
+      renderPrList();renderCommit();renderPrNudge();
       if(cb)cb();
     }).catch(function(){
       if(prWho&&prSubmittedThisMonth())prSetState('warn','Saved on this phone \u00b7 will sync when online');
@@ -6302,14 +6307,28 @@ var COMMITMENTS=[["Grace Yoon", ["Serve physically wherever she is — KCM, chur
 function renderCommit(){
   var el=document.getElementById('cm-body');
   if(!el)return;
-  el.innerHTML='<div class="cm-note">From the debrief recording. It ran youngest → oldest with no names on it, '
-    +'so if anything here is put in the wrong mouth, say so and it gets fixed.</div>'
-    +COMMITMENTS.map(function(p,i){
-      return '<div class="cm-card"><div class="cm-nm"><span class="cm-no">'+(i+1)+'</span>'+p[0]+'</div>'
-        +'<ul class="cm-ul">'+p[1].map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul></div>';
+  var sub=document.getElementById('cm-sub');
+  if(sub)sub.textContent=prMonthName()+' requests · debrief commitments · by person';
+  // requests come from the sheet (prRows, kept fresh by prReadList); commitments
+  // are baked in. One card per person so the two read together.
+  var by={};
+  (prRows||[]).forEach(function(r){if(r&&(r.request||'').trim())by[r.person]=r;});
+  var esc=function(t){return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  el.innerHTML=COMMITMENTS.map(function(p){
+      var r=by[p[0]];
+      var req=r
+        ?'<div class="cm-rq"><div class="cm-rq-l">🙏 '+prMonthName()+' request</div>'
+          +'<div class="cm-rq-t">'+esc(r.request)+'</div>'
+          +(r.description?'<div class="cm-rq-d">'+esc(r.description)+'</div>':'')+'</div>'
+        :'<div class="cm-rq none"><div class="cm-rq-l">🙏 '+prMonthName()+' request</div>'
+          +'<div class="cm-rq-t">Not submitted yet</div></div>';
+      return '<div class="cm-card"><div class="cm-nm">'+esc(p[0])+'</div>'
+        +req
+        +'<div class="cm-rq-l" style="margin-top:10px">✓ Commitments</div>'
+        +'<ul class="cm-ul">'+p[1].map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>';
     }).join('');
 }
-function goCommit(btn){go('commit',btn);renderCommit();}
+function goCommit(btn){go('commit',btn);renderCommit();prReadList();}
 renderCommit();
 </script>
 </body>
